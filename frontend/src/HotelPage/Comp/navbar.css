@@ -213,6 +213,12 @@
   transform: translate(100px,-450px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
+.hm-cont1{
+  display: flex; gap: 25px;
+  justify-content: center;
+  align-items:initial;
+  margin-right: 130px;
+  }
 .hmc21-dk
 {
   font-weight: bold;

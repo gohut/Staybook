@@ -43,14 +43,14 @@ const Navbar = () => {
         <button className="login-button">Login</button>
       </div>
       <div className="hotels-menu-cont">
-        <div className="hm-cont1" style={{ display: "flex", gap: "25px" }}>
+        <div className="hm-cont1" >
           <div
             className="hmc1-c1"
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              gap: "3px",
+              gap: "5px",
             }}
           >
             <div>
