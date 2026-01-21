@@ -1,0 +1,119 @@
+.login-cont
+{
+    background-color: rgba(129, 129, 176,0.5);
+    width: 1540px;height:800px;
+    position: absolute;
+    transform: translate(0px,-670px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;align-items: center;
+}
+.main-log-cont
+{
+    background-color: white;
+    width: 850px;height: 550px;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+}
+.mnlg-cn-cls
+{
+    position: absolute;
+    font-weight: bold;
+    transform: translate(830px,0px);
+}
+.mm-lg-cn-img
+{
+    width: 350px;
+    height: 550px;
+    background-color: aqua;
+    overflow: hidden;
+}
+.mm-lg-cn-cn1
+{
+   padding: 20px 50px;
+
+}
+.mglgcn-cn11
+{
+    /* background-color: aqua; */
+    width: 400px;height: 500px;
+}
+.mm-lg-cn-img img
+{
+   width: 450px;
+}
+.cn111
+{
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+}
+.cn112
+{
+    text-align: center;
+}
+.cn113 input, .cn114 input 
+{ 
+    width: 400px; height: 40px;
+    background-color: transparent;
+    border: none;
+    border-bottom: solid 1px gray;
+    padding: 10px 10px; 
+    outline: none;
+}
+.cn133 input:focus {
+  border-color: #4f46e5;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+}
+.cn115
+{
+    /* background-color: #4f46e5; */
+    font-size: 13px;
+    padding-left: 290px;
+    /* font-weight: bold; */
+}
+.cn116
+{
+    background-color: rgb(147, 147, 255);
+    width: fit-content;
+    margin: 20px 160px;
+    padding: 5px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+}
+.cn117
+{
+    display: flex;
+}
+.cn1172
+{
+    font-size: 13px;width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(0px,-10px);
+}
+.cn1171,.cn1173
+{
+   width: 200px;height: 1px;
+   background-color: black;
+}
+.cn118
+{
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    border: grey 1px solid;
+    width: 170px;
+    padding: 5px 10px; 
+    border-radius: 25px;
+    margin: 20px 120px;
+}
+.cn119
+{
+    font-size: 14px;
+    margin: 10px 80px;
+}
