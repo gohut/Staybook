@@ -2,7 +2,7 @@ import React from 'react'
 import "./loginpge.css"
 import loginpge from "../assets/loginpge.png"
 import { FcGoogle } from "react-icons/fc";
-export default function Logincont({ showlgn, onClose }) {
+export default function Logincont({ onClose }) {
 
   return (
     <div className='login-cont'>
