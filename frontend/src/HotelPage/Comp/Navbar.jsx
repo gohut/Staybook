@@ -12,7 +12,7 @@ import "./navbar.css";
 import bgimg from "../../assets/bgimg.png";
 import logo from "../../assets/logo.png";
 import { MdKeyboardArrowDown } from "react-icons/md";
-const Navbar = () => {
+const Navbar = ({ onLoginClick }) => {
   const [activeTab, setActiveTab] = useState("Hotels");
 
   const navItems = [
@@ -40,7 +40,7 @@ const Navbar = () => {
           {" "}
           <img src={logo} alt="" />
         </div>
-        <button className="login-button">Login</button>
+        <button className="login-button" onClick={onLoginClick}>Login</button>
       </div>
       <div className="hotels-menu-cont">
         <div className="hm-cont1" style={{ display: "flex", gap: "25px" }}>
