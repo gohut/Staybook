@@ -1,0 +1,110 @@
+/* CompletedNosw.css */
+.completed-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-head h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.page-head p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.cn-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cn-card p {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.cn-card h3 {
+  font-size: 22px;
+  margin-top: 6px;
+}
+
+.cn-card.completed h3 { color: #2563eb; }
+.cn-card.noshow h3 { color: #ef4444; }
+.cn-card.rate h3 { color: #111827; }
+.cn-card.revenue h3 { color: #ef4444; }
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tab {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 13px;
+}
+
+.tab.active {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+.table-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+td span {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.status.completed {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+}
+
+.green {
+  color: #16a34a;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #6b7280;
+  font-size: 12px;
+}

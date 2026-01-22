@@ -1,0 +1,28 @@
+.listings-header {
+  margin-bottom: 20px;
+}
+
+.sort-tabs {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.sort-tabs span {
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.sort-tabs .active {
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
+}
+.listings-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.sort-tabs span {
+  font-size: 14px;
+}

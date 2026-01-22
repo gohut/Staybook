@@ -1,0 +1,43 @@
+/* Vnavbar.css */
+.u-vnav {
+  width: 260px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+}
+
+.u-logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #6366f1;
+  margin-bottom: 24px;
+}
+
+.u-vnav nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.u-vnav button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.u-vnav button.active {
+  background: linear-gradient(90deg, #7c3aed, #6366f1);
+  color: #fff;
+}
+
+.u-vnav button svg {
+  font-size: 18px;
+}

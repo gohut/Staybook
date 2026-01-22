@@ -1,0 +1,21 @@
+.search-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 140px;
+  gap: 12px;
+  padding: 16px 40px;
+  background: #fff;
+}
+
+.search-bar input {
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.search-bar button {
+  background: #2563eb;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+}

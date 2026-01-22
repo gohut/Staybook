@@ -1,0 +1,109 @@
+/* Acsettings.css */
+.as-wrap {
+  max-width: 1000px;
+}
+
+.as-head {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.as-head p {
+  color: #6b7280;
+}
+
+.as-tabs {
+  display: flex;
+  gap: 24px;
+  background: #fff;
+  padding: 14px 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.as-tabs button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: none;
+  border: none;
+  padding-bottom: 8px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.as-tabs button.active {
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
+}
+
+.as-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.as-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.as-field label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.as-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.as-input input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.as-save {
+  margin-top: 18px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+}
+
+.as-danger {
+  margin-top: 28px;
+  background: #fff;
+  border: 1px solid #fecaca;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.as-danger h3 {
+  color: #b91c1c;
+}
+
+.as-danger p {
+  color: #6b7280;
+  margin: 8px 0 14px;
+}
+
+.as-delete {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+}

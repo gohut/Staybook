@@ -1,0 +1,103 @@
+/* Hnavbar.css */
+
+.h-navbar {
+  height: 70px;
+  background: #ffffff;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: calc(100% - 260px); /* matches Vnavbar */
+  z-index: 10;
+}
+
+/* Search */
+.h-search {
+  display: flex;
+  align-items: center;
+  width: 420px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 10px 14px;
+  gap: 10px;
+}
+
+.h-search input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.search-icon {
+  color: #64748b;
+  font-size: 18px;
+}
+
+/* Right side */
+.h-actions {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+/* Notification */
+.notification {
+  position: relative;
+  cursor: pointer;
+  color: #334155;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+/* Profile */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.profile-text .name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.profile-text .role {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Avatar */
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: #2563eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}

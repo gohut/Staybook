@@ -1,20 +1,45 @@
-import React from "react";
-import Vnavbar from "./Vnavbar";
-import Hnavbar from "./Hnavbar";
-import AdminDashboard from "./AdminDashboard";
-import "./layout.css";
+// Partner_portal.jsx (MODIFIED ONLY WHERE REQUIRED)
+import { useState } from "react";
+
+// import PartnerDashboard from "./PartnerDashboard";
+// import PropertyManagement from "./PropertyManagement";
+// import Photosmedia from "./Photosmedia";
+// import Availabilitypr from "./Availabilitypr";
+// import Reservation from "./Reservation";
+// import CompletedNosw from "./CompletedNosw";
+// import Notification from "./Notification";
+
+
+import PHnavbar from "./Navbars/PHnavbar";
+import PVnavbar from "./Navbars/PVnavbar";
+import PartnerDashboard from "./Dashboard/PartnerDashboard";
+import PropertyManagement from "./Property_Management/PropertyManagement";
+import Photosmedia from "./Photos_Media/Photosmedia";
+import Availabilitypr from "./Availability_Pricing/Availabilitypr";
+import Reservation from "./Reservation/Reservation";
+import CompletedNosw from "./Complete_No_shows/CompletedNosw";
+import Notification from "./Notifications/Notification";
+import "./Partner_portal.css";
 
 const Partner_portal = () => {
+  const [active, setActive] = useState("dashboard");
+
   return (
     <div className="layout">
-      <Vnavbar />
+      <PVnavbar active={active} setActive={setActive} />
 
       <div className="right-section">
-        <Hnavbar title="Admin Dashboard" />
+        <PHnavbar />
 
-        <main className="scroll-area">
-          <AdminDashboard />
-        </main>
+        <div className="content-scroll">
+          {active === "dashboard" && <PartnerDashboard />}
+          {active === "property" && <PropertyManagement />}
+          {active === "photos" && <Photosmedia />}
+          {active === "availability" && <Availabilitypr />}
+          {active === "reservations" && <Reservation />}
+          {active === "completed" && <CompletedNosw />}
+          {active === "notifications" && <Notification />}
+        </div>
       </div>
     </div>
   );

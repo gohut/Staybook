@@ -1,0 +1,142 @@
+/* Availabilitypr.css */
+.availability-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-head h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.page-head p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.select-box {
+  background: #f3f4f6;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.icon-btn {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.filter-right {
+  display: flex;
+  gap: 10px;
+}
+
+.outline-btn {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.legend-dot.available { background: #dcfce7; }
+.legend-dot.low { background: #fef9c3; }
+.legend-dot.full { background: #fee2e2; }
+.legend-dot.closed { background: #f3f4f6; }
+
+.calendar {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+.day-card {
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 12px;
+  border: 1px solid transparent;
+}
+
+.day-card h4 {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.day-card.available { background: #ecfdf5; border-color: #86efac; }
+.day-card.low { background: #fefce8; border-color: #fde047; }
+.day-card.full { background: #fef2f2; border-color: #fca5a5; }
+.day-card.closed { background: #f3f4f6; }
+
+.day-card.active {
+  border: 2px solid #2563eb;
+}
+
+.day {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.avail {
+  color: #374151;
+}
+
+.closed {
+  color: #6b7280;
+}

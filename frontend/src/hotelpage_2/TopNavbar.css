@@ -1,0 +1,37 @@
+.top-navbar {
+  display: flex;
+  align-items: center;
+  padding: 14px 40px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.logo span {
+  color: #16a34a;
+}
+
+.nav-links {
+  display: flex;
+  gap: 26px;
+  margin-left: 40px;
+}
+
+.nav-links div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.nav-links .active {
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 6px;
+}
