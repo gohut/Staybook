@@ -1,12 +1,10 @@
 
-import TopNavbar from "./Top_Navbar/TopNavbar"
-import SearchBar from "./Search_Bar/SearchBar"
-
-import ListingsHeader from "./Listing_header/ListingsHeader"
-import PropertyCard from "./Property_Cards/PropertyCard"
-
-import "./StaybookSrh.css"
+import TopNavbar from "../../Top_Navbar/TopNavbar";
+import SearchBar from "./Search_Bar/SearchBar";
+import ListingsHeader from "./Listing_header/ListingsHeader";
+import PropertyCard from "./Property_Cards/PropertyCard";
 import FiltersSidebar from "./Side_Barfilter/FiltersSidebar";
+import "./StaybookSrh.css";
 
 const StaybookSearchPage = () => {
 
