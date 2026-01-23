@@ -1,0 +1,162 @@
+/* PaymentSuccess.css */
+.success-wrapper {
+  min-height: 100vh;
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  font-family: "Inter", sans-serif;
+}
+
+.success-card {
+  background: #fff;
+  width: 520px;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.success-icon {
+  font-size: 56px;
+  color: #22c55e;
+  display: block;
+  margin: 0 auto 16px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.confirmation-box {
+  background: #f1f7ff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.confirmation-box span {
+  display: block;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.confirmation-box strong {
+  font-size: 18px;
+  color: #2563eb;
+}
+
+h3 {
+  margin: 20px 0 12px;
+}
+
+.booking-box {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.booking-title {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.booking-title span {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.booking-title strong {
+  display: block;
+}
+
+.booking-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #555;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.summary-box {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.summary-row.total {
+  font-weight: 600;
+  color: #22c55e;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 12px 0;
+}
+
+.next-box {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px 0;
+}
+
+.next-box h4 {
+  margin-bottom: 8px;
+}
+
+.next-box ul {
+  padding-left: 18px;
+  font-size: 14px;
+  color: #555;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.primary-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.secondary-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}

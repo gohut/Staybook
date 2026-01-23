@@ -1,0 +1,159 @@
+/* RoomsContainer.css */
+.rooms-wrapper {
+  max-width: 1180px;
+  margin: auto;
+  padding: 20px 0;
+}
+
+.room-card {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.recommend {
+  background: #eaf4ff;
+  padding: 10px 14px;
+  font-size: 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.badge {
+  border: 1px solid #4da6ff;
+  color: #4da6ff;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.room-grid {
+  display: flex;
+  
+  gap: 20px;
+  padding: 16px;
+}
+
+.room-img {
+  height: 160px;
+  background: #ddd;
+  border-radius: 12px;
+  position: relative;
+}
+
+.photo-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: #d3aeae;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.img-arrow {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.specs {
+  font-size: 13px;
+  padding-left: 16px;
+  columns: 2;
+  margin: 10px 0;
+}
+
+.rate-plan {
+  border-left: 1px solid #eee;
+  padding-left: 16px;
+  margin-bottom: 16px;
+  display: flex; gap: 50px;
+  
+}
+
+.benefits {
+  font-size: 13px;
+  padding-left: 16px;
+  margin: 8px 0;
+}
+
+.benefits li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.experience {
+  background: #eef6ff;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin: 10px 0;
+}
+
+.price-box {
+  margin-top: 10px;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.taxes {
+  font-size: 12px;
+  color: #555;
+}
+
+.cta {
+  margin-top: 10px;
+  padding: 10px 18px;
+  background: #4da6ff;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.login-hint {
+  font-size: 12px;
+  margin-top: 6px;
+}
+
+.link {
+  color: #1a73e8;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.room-types {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+}
+
+.filters button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 13px;
+}
+
+.filters .active {
+  border-color: #4da6ff;
+  color: #4da6ff;
+}

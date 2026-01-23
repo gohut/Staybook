@@ -1,0 +1,128 @@
+/* ContactPayment.css */
+.contact-payment {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.input-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.input-row input,
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+.method {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.method.active {
+  border: 2px solid #0b72ff;
+  background: #f5f9ff;
+  color: #0b72ff;
+}
+
+.upi-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.outline {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #0b72ff;
+  background: #f5f9ff;
+  color: #0b72ff;
+}
+
+.qr-box {
+  background: #f5f9ff;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.primary {
+  margin-top: 16px;
+  padding: 14px;
+  width: 100%;
+  border-radius: 12px;
+  background: #0b72ff;
+  color: #fff;
+  border: none;
+}
+
+.primary.disabled {
+  background: #9ca3af;
+}
+
+.sub-title {
+  margin: 16px 0;
+  font-weight: 500;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.option-card {
+  padding: 18px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.bank-select {
+  margin: 16px 0;
+}
+
+.card-row {
+  display: flex;
+  gap: 16px;
+}
+
+.card-input {
+  position: relative;
+}
+
+.card-icons {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.pay-btn {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.terms {
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-top: 12px;
+}

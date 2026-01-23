@@ -1,0 +1,28 @@
+/* BookingSummary.css */
+.booking-summary {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.summary-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  color: #0b72ff;
+  margin-top: 12px;
+}

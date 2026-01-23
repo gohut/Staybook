@@ -1,0 +1,142 @@
+/* GuestPhotos.css */
+.guest-photos-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  max-width: 1180px;
+  margin: 20px auto;
+}
+
+.guest-photos-card h3 {
+  margin-bottom: 12px;
+}
+
+.guest-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.guest-img {
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 14px;
+  cursor: pointer;
+  position: relative;
+}
+
+.guest-img .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+/* MODAL */
+.photo-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  color: #fff;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.modal-header button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.modal-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.modal-body img {
+  max-height: 80%;
+  max-width: 80%;
+  border-radius: 14px;
+}
+
+.nav {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nav.left {
+  left: 30px;
+}
+
+.nav.right {
+  right: 30px;
+}
+
+.modal-footer {
+  padding: 12px 20px;
+  background: #111;
+}
+
+.tabs {
+  display: flex;
+  gap: 18px;
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+.tabs .active {
+  color: #fff;
+  font-weight: 600;
+}
+
+.thumbs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.thumbs img {
+  height: 60px;
+  width: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.thumbs img.active {
+  opacity: 1;
+  outline: 2px solid #4da6ff;
+}
