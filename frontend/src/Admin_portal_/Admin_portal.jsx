@@ -2,16 +2,26 @@
 import React, { useState } from "react";
 // import Vnavbar from "./Vnavbar";
 // import Hnavbar from "./Hnavbar";
+// import Vnavbar from "./Navbars/Vnavbar";
+// import Hnavbar from "./Navbars/Hnavbar";
+// import AdminDashboard from "./AdminDashboard";
+// import BookingRevenue from "./Bookingrevenue";
+// import HotelRegistration from "./HotelRegistration";
+// import CouponOff from "./CouponOff";
+// import CouponCr from "./CouponCr";
+// import Reports from "./Reports";
+// import Settings from "./Settings";
+import "./Admin_portal.css";
+
 import Vnavbar from "./Navbars/Vnavbar";
 import Hnavbar from "./Navbars/Hnavbar";
-import AdminDashboard from "./AdminDashboard";
-import BookingRevenue from "./Bookingrevenue";
-import HotelRegistration from "./HotelRegistration";
-import CouponOff from "./CouponOff";
-import CouponCr from "./CouponCr";
-import Reports from "./Reports";
-import Settings from "./Settings";
-import "./layout.css";
+import AdminDashboard from "./Dashboard/AdminDashboard";
+import BookingRevenue from "./Booking_Revenue/BookingRevenue";
+import HotelRegistration from "./Hotel_Registration/HotelRegistration";
+import CouponOff from "./Coupons_Offers/CouponOff";
+import CouponCr from "./Coupons_Offers/CouponCr";
+import Reports from "./Reports/Reports";
+import Settings from "./Settings/Settings";
 
 const Admin_portal = () => {
   const [active, setActive] = useState("dashboard");

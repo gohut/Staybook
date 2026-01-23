@@ -1,12 +1,14 @@
 // User_portal.jsx (MODIFIED)
 import React, { useState } from "react";
-import UVnavbar from "./UVnavbar";
-import Profileov from "./Profileov";
-import Mytrips from "./Mytrips";
-import Businesshis from "./Businesshis";
-import Vouchers from "./Vouchers";
-import Acsettings from "./Acsettings";
+
 import "./userlayout.css";
+
+import UVnavbar from "./UVnavbar";
+import Profileov from "./Profile_overview/Profileov";
+import Mytrips from "./My_trips/Mytrips";
+import Businesshis from "./Booking_history/Businesshis";
+import Vouchers from "./Vouchers/Vouchers";
+import Acsettings from "./Account_settings/Acsettings";
 
 const User_portal = () => {
   const [active, setActive] = useState("profile");
