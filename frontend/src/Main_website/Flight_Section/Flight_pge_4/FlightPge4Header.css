@@ -1,0 +1,191 @@
+/* FlightPge4Header.css */
+
+.fp4h-wrap {
+  width: 100%;
+  max-width: 1020px;
+  margin: 26px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 310px;
+  gap: 16px;
+}
+
+.fp4h-leftCard {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 14px 14px 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+}
+
+.fp4h-leftTop {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.fp4h-logoBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  border: 1px solid #e9e9e9;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.fp4h-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(180deg, #ff3a3a, #c91414);
+  border-radius: 8px;
+  position: relative;
+}
+
+.fp4h-logo::after {
+  content: "";
+  position: absolute;
+  inset: 8px 10px 10px 10px;
+  background: radial-gradient(circle at 30% 30%, #ffcc99 0 35%, transparent 36%);
+  opacity: 0.9;
+}
+
+.fp4h-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.fp4h-titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fp4h-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fp4h-viewBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #1a73e8;
+  font-weight: 900;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fp4h-viewBtn:hover {
+  text-decoration: underline;
+}
+
+.fp4h-metaRow {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #666;
+}
+
+.fp4h-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fp4h-divider {
+  height: 1px;
+  background: #efefef;
+  margin: 10px 0;
+}
+
+.fp4h-bottomRow {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  font-weight: 800;
+  color: #777;
+}
+
+.fp4h-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fp4h-dotIc {
+  color: #b3b3b3;
+  font-size: 10px;
+  transform: translateY(-1px);
+}
+
+.fp4h-smallIc {
+  color: #b3b3b3;
+  font-size: 16px;
+}
+
+/* RIGHT CARD */
+.fp4h-rightCard {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+}
+
+.fp4h-rightHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.fp4h-rightTitle {
+  font-size: 14px;
+  font-weight: 900;
+  color: #222;
+}
+
+.fp4h-amount {
+  font-size: 18px;
+  font-weight: 900;
+  color: #2f9e44;
+}
+
+.fp4h-rightLine {
+  height: 1px;
+  background: #efefef;
+  margin: 8px 0 10px;
+}
+
+.fp4h-breakRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 12px;
+  font-weight: 800;
+  color: #555;
+}
+
+.fp4h-breakRight {
+  color: #333;
+  font-weight: 900;
+}
+
+@media (max-width: 980px) {
+  .fp4h-wrap {
+    grid-template-columns: 1fr;
+  }
+}

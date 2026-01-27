@@ -1,0 +1,248 @@
+/* PaymentOptionsAndScan.css */
+
+.po-wrap {
+  width: 100%;
+  max-width: 1020px;
+  margin: 14px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 18px;
+}
+
+/* LEFT CARD */
+.po-leftCard {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e7e7e7;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.po-title {
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #222;
+  border-bottom: 1px solid #ededed;
+}
+
+.po-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.po-item {
+  padding: 16px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.po-item:hover {
+  background: #fafcff;
+}
+
+.po-item.last {
+  border-bottom: none;
+}
+
+.po-left {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.po-icBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  background: #f4f6f8;
+  border: 1px solid #e9eef2;
+  color: #2862b6;
+}
+
+.po-icBox.upi {
+  color: #ff7a00;
+}
+
+.po-icBox.card {
+  color: #1d6fd8;
+}
+
+.po-icBox.emi {
+  color: #21a28a;
+}
+
+.po-icBox.bank {
+  color: #2462d2;
+}
+
+.po-icBox.later {
+  color: #3a6b99;
+}
+
+.po-icBox.gift {
+  color: #2462d2;
+}
+
+.po-text .po-main {
+  font-size: 14px;
+  font-weight: 900;
+  color: #222;
+}
+
+.po-text .po-sub {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #7a7a7a;
+}
+
+.po-arrow {
+  color: #1a73e8;
+  font-size: 14px;
+}
+
+.po-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.po-pill {
+  background: #2bd39a;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* RIGHT CARD */
+.po-rightCard {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e7e7e7;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+  padding: 14px 14px 10px;
+  height: fit-content;
+}
+
+.po-scanTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.po-scanTitle {
+  font-size: 14px;
+  font-weight: 900;
+  color: #222;
+}
+
+.po-scanSub {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #666;
+  line-height: 1.2;
+}
+
+.po-qrBox {
+  width: 140px;
+  height: 90px;
+  border: 2px solid #111;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+}
+
+.po-qrFake {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.25) 0,
+      rgba(0, 0, 0, 0.25) 2px,
+      transparent 2px,
+      transparent 6px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.25) 0,
+      rgba(0, 0, 0, 0.25) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+  opacity: 0.25;
+}
+
+.po-qrBtn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  cursor: pointer;
+  background: #3aa2ff;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 8px 18px;
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(58, 162, 255, 0.25);
+}
+
+.po-qrBtn:hover {
+  background: #1f86e6;
+}
+
+.po-payIcons {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.po-payIcons svg {
+  font-size: 20px;
+  color: #444;
+}
+
+.po-upiMark {
+  color: #ff7a00 !important;
+  font-size: 20px !important;
+}
+
+.po-miniBlack,
+.po-miniBlack2 {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: #111;
+  opacity: 0.92;
+}
+
+.po-miniBlack2 {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #111;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+  .po-wrap {
+    grid-template-columns: 1fr;
+  }
+}

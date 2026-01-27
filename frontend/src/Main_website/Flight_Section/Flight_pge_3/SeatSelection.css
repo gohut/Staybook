@@ -1,0 +1,296 @@
+/* SeatSelection.css ✅ UPDATED */
+
+/* ✅ TOP SPACE (arrow mark) */
+.ss-wrapV2 {
+  width: 100%;
+  background: #dff0f8;
+  padding: 55px 0 80px; /* <-- spacing above seats block */
+  display: flex;
+  justify-content: center;
+}
+
+.ss-cardV2 {
+  width: 760px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 12px 28px rgba(10, 30, 60, 0.08);
+  border: 1px solid #e6eef3;
+  overflow: hidden;
+}
+
+/* Header */
+.ss-headV2 {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid #eef6fb;
+  background: linear-gradient(#fff, #fbfdff);
+}
+
+.ss-headLeftV2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ss-icV2 {
+  color: #c77b00;
+  font-size: 16px;
+}
+
+.ss-headV2 h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 900;
+  color: #222;
+}
+
+/* Info Bar */
+.ss-infoV2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px;
+  background: #f4fbff;
+  border-bottom: 1px solid #edf6fa;
+  font-weight: 700;
+  font-size: 12px;
+  color: #556;
+}
+
+.ss-dotsV2 {
+  color: #8aa;
+}
+
+/* Sub Route Row */
+.ss-subV2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eef6fa;
+}
+
+.ss-routeV2 strong {
+  font-size: 13px;
+  font-weight: 900;
+  color: #1f3544;
+}
+
+.ss-subSmallV2 {
+  font-size: 11px;
+  color: #7b8a94;
+  margin-top: 3px;
+}
+
+.ss-priceV2 {
+  text-align: right;
+}
+
+.ss-priceTopV2 {
+  font-weight: 900;
+  font-size: 14px;
+  color: #4b4b4b;
+}
+
+.ss-priceSubV2 {
+  font-size: 11px;
+  color: #8aa;
+}
+
+/* Seat Area */
+.ss-seatAreaV2 {
+  display: flex;
+  gap: 26px;
+  padding: 22px;
+  background: #bfe0f5;
+  align-items: flex-start;
+}
+
+/* Legend */
+.ss-legendV2 {
+  width: 165px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 6px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.03);
+  font-weight: 800;
+  color: #2b4450;
+  margin-top: 88px; /* aligns like screenshot */
+}
+
+.ss-legItemV2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.ss-boxV2 {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ss-boxV2.free {
+  background: #45d2b0;
+}
+.ss-boxV2.paid {
+  background: #ff4f2a;
+}
+.ss-boxV2.blue {
+  background: #5ea9ff;
+}
+.ss-boxV2.empty {
+  background: #fff;
+  border: 1px solid #e0e6ea;
+}
+.ss-boxV2.light {
+  background: #fff;
+  opacity: 0.85;
+}
+
+.ss-xV2 {
+  margin-left: 6px;
+  font-weight: 900;
+  color: #444;
+}
+
+/* ✅ Seats grid card WITHOUT nose */
+.ss-seatGridWrapV2 {
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 16px 18px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+  border: 1px solid #edf1f5;
+}
+
+/* small header icon */
+.ss-seatGridHeaderV2 {
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.ss-toiletV2 {
+  font-size: 16px;
+}
+
+/* Columns */
+.ss-colsV2 {
+  display: grid;
+  grid-template-columns: 22px repeat(3, 56px) 40px repeat(3, 56px) 22px;
+  gap: 8px;
+  color: #6a7780;
+  font-weight: 900;
+  font-size: 12px;
+  justify-items: center;
+  align-items: center;
+  margin: 8px 0 10px;
+}
+
+/* Rows */
+.ss-rowsV2 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.ss-rowsV2::-webkit-scrollbar {
+  width: 8px;
+}
+.ss-rowsV2::-webkit-scrollbar-thumb {
+  background: #cfe7f7;
+  border-radius: 10px;
+}
+
+/* row */
+.ss-rowV2 {
+  display: grid;
+  grid-template-columns: 22px repeat(3, 56px) 40px repeat(3, 56px) 22px;
+  gap: 8px;
+  align-items: center;
+  justify-items: center;
+}
+
+.ss-rowNumV2 {
+  font-size: 12px;
+  color: #7a8b95;
+  font-weight: 900;
+  text-align: center;
+}
+
+.ss-rowNumV2.right {
+  text-align: center;
+}
+
+.ss-gapV2 {
+  width: 40px;
+}
+
+/* seat */
+.ss-seatV2 {
+  width: 56px;
+  height: 34px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ss-seatV2.paid {
+  background: #ff4f2a;
+  color: #2a1a12;
+}
+
+.ss-seatV2.free {
+  background: #45d2b0;
+  color: #053;
+}
+
+.ss-seatV2.blue {
+  background: #bfe2ff;
+  color: #2b4b6b;
+}
+
+.ss-seatV2.blocked {
+  background: #fff;
+  border: 1px solid #d6d6d6;
+  color: #9a9a9a;
+}
+
+/* Footer */
+.ss-footerV2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 22px;
+  background: transparent;
+}
+
+.ss-continueV2 {
+  background: linear-gradient(180deg, #2f8ff9, #1a73e8);
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 22px;
+  font-weight: 900;
+  box-shadow: 0 10px 18px rgba(26, 115, 232, 0.18);
+  cursor: pointer;
+}
+
+.ss-skipV2 {
+  color: #1a73e8;
+  font-weight: 900;
+  text-decoration: none;
+  font-size: 13px;
+}
