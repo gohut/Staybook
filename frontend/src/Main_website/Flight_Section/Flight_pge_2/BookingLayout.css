@@ -1,0 +1,37 @@
+.bl-wrap {
+  width: 100%;
+  background: #e8f2f9;
+  padding: 0;
+}
+
+.bl-inner {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  padding: 14px 14px 22px;
+  align-items: start;
+}
+
+.bl-leftScroll {
+  height: calc(100vh - 90px);
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.bl-leftScroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.bl-leftScroll::-webkit-scrollbar-thumb {
+  background: #cfe2f2;
+  border-radius: 10px;
+}
+
+.bl-rightFixed {
+  position: sticky;
+  top: 14px;
+  height: fit-content;
+}

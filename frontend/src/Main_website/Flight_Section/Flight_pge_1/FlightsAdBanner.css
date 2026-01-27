@@ -1,0 +1,78 @@
+.fab-wrap {
+  width: 100%;
+  padding: 0 10px 10px;
+}
+
+.fab-banner {
+  background: #163fcb;
+  border-radius: 8px;
+  height: 78px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.fab-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fab-visa {
+  font-size: 34px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+.fab-head {
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.fab-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fab-yellowBox {
+  background: #ffcc00;
+  border-radius: 6px;
+  padding: 8px 12px;
+  text-align: center;
+  min-width: 140px;
+}
+
+.fab-small {
+  font-size: 10px;
+  font-weight: 900;
+  color: #333;
+}
+
+.fab-amt {
+  font-size: 20px;
+  font-weight: 900;
+  color: #111;
+}
+
+.fab-btn {
+  border: none;
+  background: #ffcc00;
+  color: #111;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.fab-btn:hover {
+  filter: brightness(0.95);
+}

@@ -1,0 +1,19 @@
+.fp1-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+  padding: 0 18px 18px;
+  background: #f2f2f2;
+  align-items: start;
+}
+
+.fp1-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-self: start;
+}
+
+.fp1-right {
+  align-self: start;
+}
