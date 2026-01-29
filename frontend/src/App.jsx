@@ -8,7 +8,6 @@ import StaybookSearchPage from "./Main_website/Hotel_Section/Hotel_pge_2/Stayboo
 import Hotelpge3 from './Main_website/Hotel_Section/Hotel_pge_3/Hotelpge3';
 import Hotelpge4 from './Main_website/Hotel_Section/Hotel_pge_4/Hotelpge4';
 import Hotelpge5 from './Main_website/Hotel_Section/Hotel_pge_5/Hotelpge5';
-
 import Hmstaypge2 from './Main_website/HomeStay_Section/HmStay_pge_2/Hmstaypge2';
 
 import Flightpge1 from './Main_website/Flight_Section/Flight_pge_1/Flightpge1';
@@ -23,14 +22,12 @@ import Landingpge from './Main_website/Landing_page/Landingpge';
 
 function App() {
   return (
-
       <Routes>
         {/* <Route path="/" element={<Hotelpage />} /> */}
 
-
         <Route path="/" element={<Landingpge/>} />
 
-      </Routes>
+    </Routes>
  
   )
 }

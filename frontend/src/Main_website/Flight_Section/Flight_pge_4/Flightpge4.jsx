@@ -1,10 +1,13 @@
 import FlightPge4Header from "./FlightPge4Header";
 import PaymentOptionsAndScan from "./PaymentOptionsAndScan";
+
 import "./Flightpge4.css";
+import TopNavbar from "../../Top_Navbar/TopNavbar";
 
 export default function Flightpge4() {
   return (
     <div className="fp4-page">
+      <TopNavbar/>
       <FlightPge4Header />
       <PaymentOptionsAndScan/>
 
