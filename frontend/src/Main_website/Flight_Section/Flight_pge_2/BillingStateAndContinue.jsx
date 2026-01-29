@@ -1,5 +1,7 @@
 import "./BillingStateAndContinue.css";
 import { FaLock, FaChevronDown } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
 
 const INDIAN_STATES = [
   "Andhra Pradesh",
@@ -41,6 +43,8 @@ const INDIAN_STATES = [
 ];
 
 export default function BillingStateAndContinue() {
+  const navigate = useNavigate();
+
   return (
     <section className="bsc-wrap">
       {/* STATE BOX */}
@@ -92,7 +96,7 @@ export default function BillingStateAndContinue() {
 
       {/* CONTINUE + ACCORDIONS */}
       <div className="bsc-actions">
-        <button className="bsc-continue" type="button">
+        <button className="bsc-continue" type="button"  onClick={() => navigate("/flight3")}>
           CONTINUE
         </button>
 

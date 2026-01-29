@@ -1,6 +1,7 @@
 // PropertyCard.jsx
 import { FaStar, FaStarHalfAlt, FaRegStar, FaSpa, FaMapMarkerAlt } from "react-icons/fa";
 import "./PropertyCard.css";
+import { useNavigate } from "react-router-dom";
 
 /* ⭐ STAR SUB-COMPONENT */
 const StarRating = ({ rating }) => {
@@ -21,8 +22,10 @@ const StarRating = ({ rating }) => {
 
 /* 🏨 PROPERTY CARD */
 const PropertyCard = ({ data }) => {
+      const navigate = useNavigate();
+
   return (
-    <div className="property-card">
+    <div className="property-card" onClick={() => navigate("/hotel3")}>
       {/* LEFT IMAGES */}
       <div className="pc-images">
         <img className="main-img" src={data.images.main} alt={data.name} />

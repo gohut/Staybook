@@ -1,8 +1,11 @@
 import React from "react";
 import "./SeatSelection.css";
 import { FaChair } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function SeatSelection() {
+    const navigate = useNavigate();
+
   return (
     <section className="ss-wrapV2">
       <div className="ss-cardV2">
@@ -132,7 +135,7 @@ export default function SeatSelection() {
 
         {/* Footer */}
         <div className="ss-footerV2">
-          <button className="ss-continueV2">CONTINUE</button>
+          <button className="ss-continueV2" onClick={() => navigate("/flight4")}>CONTINUE</button>
           <a className="ss-skipV2" href="#skip">
             Skip to cabs
           </a>

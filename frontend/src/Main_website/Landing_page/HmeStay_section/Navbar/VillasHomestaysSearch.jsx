@@ -62,8 +62,8 @@ export default function VillasHomestaysSearch() {
         </div>
       </div>
 
-      {/* <button className="vh-search-btn">SEARCH</button>
- */}
+      <button className="vh-search-btn">SEARCH</button>
+
 
     </div>
   );

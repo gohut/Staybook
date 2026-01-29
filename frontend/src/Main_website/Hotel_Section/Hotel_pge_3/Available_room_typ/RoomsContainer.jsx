@@ -1,13 +1,9 @@
 // RoomsContainer.jsx
+import { useNavigate } from "react-router-dom";
 import {
-  FaBed,
-  FaBath,
   FaUtensils,
   FaGlassCheers,
   FaSpa,
-  FaSnowflake,
-  FaConciergeBell,
-  FaTshirt,
   FaChevronRight,
 } from "react-icons/fa";
 import "./RoomsContainer.css";
@@ -36,34 +32,41 @@ const Experience = () => (
   </div>
 );
 
-const RatePlan = ({ title, price, taxes, cta }) => (
-  <div className="rate-plan">
-    <div>
-            <h4>{title}</h4>
+const RatePlan = ({ title, price, taxes, cta }) => {
+  const navigate = useNavigate();
 
-    <ul className="benefits">
-      <li><FaUtensils /> Breakfast included</li>
-      <li><FaUtensils /> Lunch or Dinner included</li>
-      <li><FaGlassCheers /> 10% off on Food & Beverage services</li>
-      <li><FaSpa /> 10% off on session of Spa</li>
-      <li>• Non-Refundable</li>
-    </ul>
+  return (
+    <div className="rate-plan">
+      <div>
+        <h4>{title}</h4>
 
-    <a className="link">More Details</a>
+        <ul className="benefits">
+          <li><FaUtensils /> Breakfast included</li>
+          <li><FaUtensils /> Lunch or Dinner included</li>
+          <li><FaGlassCheers /> 10% off on Food & Beverage services</li>
+          <li><FaSpa /> 10% off on session of Spa</li>
+          <li>• Non-Refundable</li>
+        </ul>
 
-    <Experience />
-    </div>
+        <a className="link">More Details</a>
+        <Experience />
+      </div>
 
-    <div className="price-box">
-      <div className="price">₹ {price.toLocaleString()}</div>
-      <div className="taxes">+ ₹ {taxes.toLocaleString()} Taxes & Fees per night</div>
-      <button className="cta">{cta}</button>
-      <div className="login-hint">
-        Login Now and get this for <b>₹{(price - 139).toLocaleString()}</b> or less
+      <div className="price-box">
+        <div className="price">₹ {price.toLocaleString()}</div>
+        <div className="taxes">
+          + ₹ {taxes.toLocaleString()} Taxes & Fees per night
+        </div>
+        <button className="cta" onClick={() => navigate("/hotel4")}>
+          {cta}
+        </button>
+        <div className="login-hint">
+          Login Now and get this for <b>₹{(price - 139).toLocaleString()}</b> or less
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const RoomCard = ({ recommend, name, photos, specs, ratePlans }) => (
   <div className="room-card">

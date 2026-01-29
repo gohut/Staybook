@@ -1,6 +1,10 @@
 import React from 'react'
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+
 export default function HotelNav() {
+    const navigate = useNavigate();
+
   return (
     <div>
               <div className="hotels-menu-cont" >
@@ -146,6 +150,9 @@ export default function HotelNav() {
           </div>
         </div>
       </div>
+
+       <button className="vh-search-btn" onClick={() => navigate("/hotel2")} style={{position:"absolute", transform:"translate(660px,-50px)"}}>SEARCH</button>
+
     </div>
   )
 }

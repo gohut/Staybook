@@ -2,6 +2,8 @@
 import "./FlightsResultsList.css";
 import { FaLock } from "react-icons/fa";
 import FlightsAdBanner from "./FlightsAdBanner";
+import { useNavigate } from "react-router-dom";
+
 
 const FLIGHTS = [
   {
@@ -97,6 +99,8 @@ const FLIGHTS = [
 ];
 
 function FlightCard({ f }) {
+  const navigate = useNavigate();
+
   return (
     <article className="frl-card">
       <div className="frl-topNote">Free Seat with VISA Signature*</div>
@@ -138,7 +142,7 @@ function FlightCard({ f }) {
 
         {/* CTA */}
         <div className="frl-actions">
-          <button className="frl-btn" type="button">
+          <button className="frl-btn" type="button"  onClick={() => navigate("/flight2")}>
             VIEW PRICES
           </button>
           <button className="frl-lock" type="button">
@@ -151,7 +155,7 @@ function FlightCard({ f }) {
         <button className="frl-link blue" type="button">
           Add to compare <span className="frl-plus">+</span>
         </button>
-        <button className="frl-link" type="button">
+        <button className="frl-link" type="button" onClick={() => navigate("/flight2")}>
           View Flight Details
         </button>
       </div>

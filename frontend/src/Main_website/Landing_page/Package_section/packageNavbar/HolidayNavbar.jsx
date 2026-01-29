@@ -149,6 +149,7 @@ export default function HolidayNavbar() {
           </div>
         )}
       </div>
+       <button className="vh-search-btn">SEARCH</button>
     </div>
   );
 }
