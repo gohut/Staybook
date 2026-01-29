@@ -18,7 +18,7 @@ function App() {
 
       <Routes>
         {/* <Route path="/" element={<Hotelpage />} /> */}
-        <Route path="/" element={<Flightpge4/>} />
+        <Route path="/" element={<Flightpge1/>} />
       </Routes>
  
   )
