@@ -5,6 +5,7 @@ import Admin_portal from './Admin_portal_/Admin_portal';
 import User_portal from './User_profile/User_portal';
 import Partner_portal from './Partner_Portal/Partner_portal';
 import StaybookSearchPage from "./Main_website/Hotel_Section/Hotel_pge_2/StaybookSearchPage"
+
 import Hotelpge3 from './Main_website/Hotel_Section/Hotel_pge_3/Hotelpge3';
 import Hotelpge4 from './Main_website/Hotel_Section/Hotel_pge_4/Hotelpge4';
 import Hotelpge5 from './Main_website/Hotel_Section/Hotel_pge_5/Hotelpge5';
@@ -26,6 +27,21 @@ function App() {
         {/* <Route path="/" element={<Hotelpage />} /> */}
 
         <Route path="/" element={<Landingpge/>} />
+        <Route path="/flight1" element={<Flightpge1/>} />
+        <Route path="/flight2" element={<Flightpge2/>} />
+        <Route path="/flight3" element={<Flightpge3/>} />
+        <Route path="/flight4" element={<Flightpge4/>} />
+
+        <Route path="/hotel2" element={<StaybookSearchPage/>} />
+        <Route path="/hotel3" element={<Hotelpge3/>} />
+        <Route path="/hotel4" element={<Hotelpge4/>} />
+        <Route path="/hotel5" element={<Hotelpge5/>} />
+
+        
+
+
+
+
 
     </Routes>
  

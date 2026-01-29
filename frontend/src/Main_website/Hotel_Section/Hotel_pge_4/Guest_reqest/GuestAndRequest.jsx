@@ -1,8 +1,10 @@
 // GuestAndRequest.jsx
 import "./GuestAndRequest.css";
 import { FaUserPlus, FaBell } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; 
 
 const GuestAndRequest = () => {
+  const navigate = useNavigate();
   return (
     <div className="guest-wrapper">
       {/* GUEST DETAILS */}
@@ -91,7 +93,7 @@ const GuestAndRequest = () => {
           </span>
         </label>
 
-        <button className="pay-btn">PAY NOW</button>
+        <button className="pay-btn" onClick={() => navigate("/hotel5")}>PAY NOW</button>
       </div>
     </div>
   );

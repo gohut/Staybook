@@ -3,8 +3,11 @@ import React from "react";
 import { FaExchangeAlt } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import "./flightnav.css";
+import { useNavigate } from "react-router-dom";
 
 export default function FlightNav() {
+  const navigate = useNavigate();
+
   return (
     <div className="flight-nav-wrapper">
       <div className="trip-type">
@@ -59,6 +62,8 @@ export default function FlightNav() {
         <button>Doctor and Nurses</button>
         <button className="tracker">Flight Tracker</button>
       </div>
+       <button className="vh-search-btn"  onClick={() => navigate("/flight1")} >SEARCH</button>
+
     </div>
   );
 }

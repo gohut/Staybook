@@ -31,6 +31,7 @@ const ProgressRow = ({ label, value, percent, color }) => (
 export default function AdminDashboard() {
   return (
     <div className="dashboard">
+      
       <div>
         <h1 className="title">Admin Dashboard</h1>
         <p className="subtitle">
