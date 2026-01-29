@@ -1,0 +1,177 @@
+/* DayPlanSection.css */
+.dayplan-wrapper {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  font-family: Inter, sans-serif;
+}
+
+.plan-summary {
+  display: flex;
+  gap: 40px;
+  padding: 14px 20px;
+  background: #eef7ff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+}
+
+.pill.active {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.dayplan-body {
+  display: flex;
+}
+
+.date-column {
+  width: 180px;
+  border-right: 1px solid #e5e7eb;
+  padding: 16px;
+}
+
+.date-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.date-column li {
+  padding: 8px 0;
+  color: #6b7280;
+}
+
+.date-column li.active {
+  font-weight: 700;
+  color: #111827;
+}
+
+.day-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.day-tag {
+  background: #ff7a59;
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.location {
+  font-weight: 700;
+}
+
+.included {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.section {
+  border-top: 1px solid #e5e7eb;
+  padding: 16px 0;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.section-title.between {
+  justify-content: space-between;
+}
+
+.note span {
+  color: red;
+  font-weight: 600;
+}
+
+.info-box {
+  background: #eef7ff;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.info-box span {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.transfer-card,
+.hotel-card {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.transfer-card img,
+.hotel-card img {
+  width: 180px;
+  border-radius: 8px;
+}
+
+.actions {
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.read {
+  color: #2563eb;
+}
+
+.hotel-info ul {
+  padding-left: 18px;
+  margin: 6px 0;
+}
+
+.hotel-info li {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.link {
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.add-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #eef7ff;
+  padding: 16px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.add-box svg {
+  font-size: 22px;
+  color: #3b82f6;
+}
+
+.add {
+  margin-left: auto;
+  color: #2563eb;
+  font-weight: 700;
+}

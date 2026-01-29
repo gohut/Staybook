@@ -1,0 +1,17 @@
+/* ReviewBookingHeader.css */
+.review-booking-wrapper {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.review-booking-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #000000;
+  text-align: left;
+}
+

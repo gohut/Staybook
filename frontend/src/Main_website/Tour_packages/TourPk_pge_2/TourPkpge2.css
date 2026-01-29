@@ -1,0 +1,55 @@
+/* TourPkpge2.css */
+body {
+  margin: 0;
+  background: #f5f7fa;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+}
+
+.tour-page {
+  width: 100%;
+}
+
+/* header spacing */
+.header-search-wrapper {
+  margin-bottom: 18px;
+}
+
+/* main layout */
+.tour-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  padding: 0 16px 40px;
+}
+
+/* right side */
+.packages-area {
+  flex: 1;
+}
+
+/* top tab */
+.packages-tabs {
+  background: #fff;
+  padding: 14px 18px;
+  border-radius: 14px 14px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e88ff;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+/* cards grid */
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding-top: 16px;
+}
+
+/* responsive */
+@media (max-width: 1024px) {
+  .packages-grid {
+    grid-template-columns: 1fr;
+  }
+}

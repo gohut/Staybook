@@ -1,0 +1,128 @@
+/* FareSummary.css */
+.fare-wrapper {
+  width: 320px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.update-box {
+  background: #fde9c9;
+  padding: 12px;
+  font-size: 13px;
+}
+
+.update-head {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.price-box {
+  background: #eaf4ff;
+  padding: 14px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.off {
+  background: #ff6a6a;
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.price-box h1 {
+  margin: 6px 0;
+}
+
+.price-box span {
+  font-size: 13px;
+  color: #555;
+}
+
+.fare-breakup {
+  padding: 14px;
+}
+
+.fare-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fare-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.coupon {
+  background: #c6f3e5;
+  padding: 2px 6px;
+  margin-left: 6px;
+  font-size: 12px;
+}
+
+.edit {
+  color: #1b66ff;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.minus {
+  color: #d11;
+}
+
+.emi-bar {
+  background: #2e43b8;
+  color: #fff;
+  text-align: center;
+  padding: 8px;
+  font-size: 13px;
+}
+
+.info-box {
+  padding: 14px;
+}
+
+.info-box label {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.info-box a {
+  color: #1b66ff;
+}
+
+.pay-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  background: #aaa;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+}
+
+.timer-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #fff1f1;
+}
+
+.timer {
+  border: 2px solid #ff6a6a;
+  padding: 8px;
+  border-radius: 50%;
+  font-weight: 700;
+}

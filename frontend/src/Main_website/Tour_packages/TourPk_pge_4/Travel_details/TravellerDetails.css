@@ -1,0 +1,68 @@
+/* TravellerDetails.css */
+.traveller-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.login-strip {
+  background: #f3f7fb;
+  padding: 10px;
+  margin: 12px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-strip a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.traveller-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed #dcdcdc;
+}
+
+.user-icon {
+  font-size: 28px;
+  color: #9bbce3;
+}
+
+.add-text {
+  color: #007bff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.age-note {
+  margin-left: auto;
+  font-size: 12px;
+  color: #999;
+}
+
+.form-section h4 {
+  margin: 16px 0 6px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-section input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

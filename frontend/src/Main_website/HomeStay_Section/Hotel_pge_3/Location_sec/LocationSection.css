@@ -1,0 +1,86 @@
+/* LocationSection.css */
+.location-wrapper {
+  background: #f2f2f2;
+  padding: 16px 0;
+}
+
+.location-card {
+  max-width: 1180px;
+  margin: auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid #e6e6e6;
+}
+
+.location-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.location-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  align-items: center;
+}
+
+.location-search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #fff;
+}
+
+.location-search svg {
+  color: #888;
+  font-size: 14px;
+}
+
+.location-search input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.nearby {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.location-map {
+  height: 300px;
+  border-radius: 14px;
+  background: #e9edf2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.view-map-btn {
+  background: #fff;
+  border: 1px solid #4da6ff;
+  color: #1a73e8;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}

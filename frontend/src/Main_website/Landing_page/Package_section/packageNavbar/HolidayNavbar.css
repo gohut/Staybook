@@ -1,0 +1,129 @@
+/* HolidayNavbar.css */
+.holiday-wrapper {
+  width: 1200px;
+  padding: 20px 10px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: sans-serif;
+  position: absolute;
+  transform: translate(150px, -400px);
+}
+
+.icon-nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 13px;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.tab-nav {
+  display: flex;
+  background: #f5faff;
+}
+
+.tab-item {
+  padding: 14px 22px;
+  cursor: pointer;
+  font-size: 14px;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-item.active {
+  color: #008cff;
+  border-bottom: 3px solid #008cff;
+  background: #eaf4ff;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.search-box {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.field {
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.field span {
+  font-size: 12px;
+  color: #777;
+}
+
+.field strong {
+  display: block;
+  font-size: 18px;
+}
+
+.field small {
+  font-size: 12px;
+  color: #999;
+}
+
+.search-btn {
+  background: linear-gradient(90deg, #53b2fe, #065af3);
+  color: #fff;
+  border: none;
+  padding: 16px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.dropdown {
+  display: flex;
+  gap: 40px;
+}
+
+.dropdown .left {
+  min-width: 260px;
+}
+
+.dropdown h4 {
+  color: #008cff;
+  margin-bottom: 10px;
+}
+
+.dropdown ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dropdown li {
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.dropdown .right {
+  display: flex;
+  gap: 16px;
+}
+
+.card {
+  width: 130px;
+  height: 100px;
+  background: #f3f3f3;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+}

@@ -1,0 +1,18 @@
+*
+{
+    padding: 0;margin: 0;
+    box-sizing: border-box;
+}
+.hotelpage-mn
+{
+
+   width: 100%;max-width: 1747px;
+}
+.FlightContent
+{
+    padding: 10px 100px;
+}
+.Hmstaycontent
+{
+    padding: 10px 150px;
+}

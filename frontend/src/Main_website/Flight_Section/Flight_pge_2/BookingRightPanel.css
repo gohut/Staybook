@@ -1,0 +1,158 @@
+.brp-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.brp-card {
+  background: #fff;
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.brp-title {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 900;
+  color: #222;
+}
+
+.brp-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: 800;
+  color: #444;
+}
+
+.brp-total {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #ededed;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 900;
+  color: #222;
+}
+
+.brp-couponHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brp-gift {
+  color: #ff5a5a;
+  font-size: 18px;
+}
+
+.brp-input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e2e2;
+  outline: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.brp-couponCard {
+  margin-top: 12px;
+  border-radius: 10px;
+  border: 1px solid #e9e9e9;
+  padding: 12px;
+  background: #f9fbff;
+}
+
+.brp-couponTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brp-badge {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: #333;
+}
+
+.brp-lock {
+  font-size: 14px;
+}
+
+.brp-couponSub {
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #666;
+  line-height: 1.3;
+}
+
+.brp-unlock {
+  margin-top: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #1a73e8;
+  color: #fff;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.brp-unlock:hover {
+  background: #1558b0;
+}
+
+.brp-mini {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid #f1f1f1;
+}
+
+.brp-mini b {
+  font-size: 12px;
+  font-weight: 900;
+  color: #222;
+}
+
+.brp-off {
+  margin-left: 10px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #18a773;
+}
+
+.brp-mini p {
+  margin: 6px 0 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #777;
+  line-height: 1.3;
+}
+
+.brp-apply {
+  border: none;
+  background: transparent;
+  color: #1a73e8;
+  font-weight: 900;
+  font-size: 12px;
+  cursor: pointer;
+  height: fit-content;
+  margin-top: 2px;
+}
+
+.brp-apply:hover {
+  text-decoration: underline;
+}

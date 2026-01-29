@@ -1,0 +1,48 @@
+/* Tourpkpge4.css */
+.tour-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: #f2f4f7;
+}
+
+.tour-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tour-right {
+  width: 340px;
+  position: sticky;
+  top: 90px;
+  height: fit-content;
+}
+
+/* common card look to match design */
+.tour-left > div,
+.tour-right > div {
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+}
+
+/* spacing consistency */
+.tour-left > div {
+  padding: 16px;
+}
+
+/* responsive */
+@media (max-width: 1024px) {
+  .tour-layout {
+    flex-direction: column;
+  }
+
+  .tour-right {
+    width: 100%;
+    position: static;
+  }
+}

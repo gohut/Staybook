@@ -1,0 +1,67 @@
+/* HeaderSearch.css */
+.header-wrapper {
+  width: 100%;
+  background: linear-gradient(180deg, #0b2b47, #0a3b63);
+  padding: 14px 24px;
+}
+
+.header-bar {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.field {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 6px 10px;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 10px;
+  color: #9fc4e8;
+  margin-bottom: 2px;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.input svg {
+  font-size: 14px;
+}
+
+.input.muted {
+  color: #cfdff0;
+}
+
+.search-btn {
+  margin-left: auto;
+  background: #2b8cff;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 22px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.search-btn svg {
+  font-size: 14px;
+}
+
+.search-btn:hover {
+  background: #1f78e0;
+}

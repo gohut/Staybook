@@ -1,0 +1,45 @@
+/* ExperienceAirlines.css */
+.airline-section {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  margin-bottom: 28px;
+}
+
+.airline-section h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.airline-cards {
+  display: flex;
+  gap: 18px;
+}
+
+.airline-card {
+  flex: 1;
+  height: 120px;
+  background: linear-gradient(180deg, #3b78c2, #5aa0e6);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  font-weight: 600;
+  padding: 16px;
+}
+
+.airline-card span {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  z-index: 2;
+}
+
+.airline-card img {
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  height: 110px;
+}

@@ -1,0 +1,145 @@
+/* PackageAddOns.css */
+.addons-wrapper {
+  border: 1px solid #ddd;
+  background: #fff;
+  margin-top: 20px;
+}
+
+.addons-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 16px;
+  font-weight: 600;
+}
+
+.insurance-strip {
+  background: #fff1e6;
+  padding: 14px 16px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.insurance-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.green-check {
+  color: #2db36c;
+  font-size: 18px;
+}
+
+.insurance-left h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.insurance-left p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.insurance-card {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 12px;
+  border: 1px solid #e6e6e6;
+}
+
+.card-left {
+  max-width: 70%;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shield-icon {
+  font-size: 18px;
+  color: #1b66ff;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.badge {
+  background: #eadcff;
+  color: #6a2bd9;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.claims {
+  font-size: 12px;
+  color: #666;
+  margin: 6px 0;
+}
+
+.card-left h5 {
+  margin: 10px 0 6px;
+  font-size: 14px;
+}
+
+.card-left ul {
+  padding-left: 16px;
+  margin: 0;
+}
+
+.card-left li {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.view-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: #1b66ff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.card-right {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tc-link {
+  color: #1b66ff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.price {
+  margin: 12px 0;
+}
+
+.amount {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.per {
+  display: block;
+  font-size: 12px;
+  color: #666;
+}
+
+.select-btn {
+  padding: 6px 18px;
+  border: 1px solid #1b66ff;
+  background: #fff;
+  color: #1b66ff;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}

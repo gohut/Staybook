@@ -1,0 +1,200 @@
+.frl-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.frl-card {
+  background: #fff;
+  border: 1px solid #ededed;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.frl-topNote {
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #222;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.frl-row {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 210px 140px 180px 140px 140px 220px;
+  align-items: center;
+  gap: 10px;
+}
+
+.frl-airline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.frl-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #ff7a00;
+  color: #fff;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+}
+
+.frl-name {
+  font-size: 13px;
+  font-weight: 900;
+  color: #222;
+}
+
+.frl-code {
+  font-size: 11px;
+  font-weight: 700;
+  color: #8a8a8a;
+  margin-top: 2px;
+}
+
+.frl-timeBlock {
+  text-align: center;
+}
+
+.frl-time {
+  font-size: 16px;
+  font-weight: 900;
+  color: #222;
+}
+
+.frl-city {
+  font-size: 11px;
+  font-weight: 700;
+  color: #777;
+  margin-top: 2px;
+}
+
+.frl-midBlock {
+  text-align: center;
+}
+
+.frl-duration {
+  font-size: 12px;
+  font-weight: 900;
+  color: #777;
+}
+
+.frl-line {
+  height: 2px;
+  background: #dfe6ef;
+  margin: 8px 18px;
+  border-radius: 999px;
+}
+
+.frl-stop {
+  font-size: 11px;
+  font-weight: 800;
+  color: #9a9a9a;
+}
+
+.frl-priceBlock {
+  text-align: right;
+}
+
+.frl-price {
+  font-size: 18px;
+  font-weight: 900;
+  color: #111;
+}
+
+.frl-per {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9a9a9a;
+  margin-top: 2px;
+}
+
+.frl-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.frl-btn {
+  border: 1px solid #66a6ff;
+  background: #eaf3ff;
+  color: #1a73e8;
+  font-weight: 900;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.frl-btn:hover {
+  background: #dbeeff;
+}
+
+.frl-lock {
+  border: none;
+  background: #f3f7ff;
+  color: #1a73e8;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.frl-lock:hover {
+  background: #e7f0ff;
+}
+
+.frl-linksRow {
+  padding: 0 14px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.frl-link {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+  color: #1a73e8;
+}
+
+.frl-link.blue {
+  color: #1a73e8;
+}
+
+.frl-plus {
+  margin-left: 6px;
+  font-weight: 900;
+}
+
+.frl-promo {
+  background: #fdebd2;
+  padding: 10px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #4b4b4b;
+  border-top: 1px solid #f1dfc7;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.frl-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4fb6;
+}

@@ -1,0 +1,119 @@
+/* PackageGallery.css */
+.package-gallery {
+  width: 100%;
+  font-family: Inter, sans-serif;
+}
+
+.gallery-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 4px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  color: #374151;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 3fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.gallery-main {
+  position: relative;
+  border-radius: 10px;
+  background: url("/img/main.jpg") center/cover no-repeat;
+  min-height: 260px;
+}
+
+.view-gallery {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.gallery-side {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.img {
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  min-height: 120px;
+}
+
+.img1 { background-image: url("/img/1.jpg"); }
+.img2 { background-image: url("/img/2.jpg"); }
+.img3 { background-image: url("/img/3.jpg"); }
+.img4 { background-image: url("/img/4.jpg"); }
+
+.property {
+  position: relative;
+  background-image: url("/img/5.jpg");
+}
+
+.property span {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.gallery-tabs {
+  display: flex;
+  gap: 24px;
+  margin-top: 18px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+  align-items: center;
+}
+
+.gallery-tabs span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.gallery-tabs .active {
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 8px;
+}
+
+.share {
+  margin-left: auto;
+  font-size: 14px;
+  color: #2563eb;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  cursor: pointer;
+}

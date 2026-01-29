@@ -1,0 +1,44 @@
+/* Hotelpge5.css */
+.checkout-page {
+  padding: 30px;
+  font-family: "Inter", sans-serif;
+  background: #fafafa;
+}
+
+.checkout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.checkout-header h2 {
+  margin: 0;
+}
+
+.razorpay-text {
+  font-weight: 600;
+  color: #0b72ff;
+}
+
+.secure-text {
+  color: #22c55e;
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.checkout-content {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.checkout-footer {
+  margin-top: 30px;
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  color: #555;
+}

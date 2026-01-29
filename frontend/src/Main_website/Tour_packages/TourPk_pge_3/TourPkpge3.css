@@ -1,0 +1,27 @@
+/* Tourpkpge3.css */
+.tour-page {
+  width: 100%;
+  background: #f4f6f9;
+}
+
+.tour-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.tour-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tour-right {
+  width: 360px;
+  position: sticky;
+  top: 90px;
+}

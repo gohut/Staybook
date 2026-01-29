@@ -1,0 +1,35 @@
+/* VillasCities.css */
+.cities-wrapper {
+  background: #fff;
+  border-radius: 16px;
+  padding: 26px 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 22px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.city-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.city-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #d9d9d9;
+}
+
+.city-item h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.city-item p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #666;
+}
