@@ -1,6 +1,7 @@
 // HolidayNavbar.jsx
 import React, { useState } from "react";
 import "./HolidayNavbar.css";
+import { useNavigate } from "react-router-dom"; 
 import {
   FaPlane,
   FaHotel,
@@ -19,6 +20,7 @@ const tabs = [
 ];
 
 export default function HolidayNavbar() {
+    const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Search");
 
   return (
@@ -149,7 +151,7 @@ export default function HolidayNavbar() {
           </div>
         )}
       </div>
-       <button className="vh-search-btn">SEARCH</button>
+       <button className="vh-search-btn" onClick={() => navigate("/tourpkge2")}>SEARCH</button>
     </div>
   );
 }

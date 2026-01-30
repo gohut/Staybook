@@ -7,7 +7,7 @@ const Hnavbar = () => {
   return (
     <header className="h-navbar">
       {/* Search */}
-      <div className="h-search">
+      <div className="hrl-search">
         <FiSearch className="search-icon" />
         <input
           type="text"

@@ -16,18 +16,19 @@
 }
 
 /* Search */
-.h-search {
+.hrl-search {
   display: flex;
   align-items: center;
-  width: 420px;
+  width: 420px;height: 55px;
   background: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 14px;
   padding: 10px 14px;
   gap: 10px;
+  
 }
 
-.h-search input {
+.hrl-search input {
   border: none;
   outline: none;
   width: 100%;

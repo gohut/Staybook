@@ -11,6 +11,7 @@ import Hotelpge4 from './Main_website/Hotel_Section/Hotel_pge_4/Hotelpge4';
 import Hotelpge5 from './Main_website/Hotel_Section/Hotel_pge_5/Hotelpge5';
 import Hmstaypge2 from './Main_website/HomeStay_Section/HmStay_pge_2/Hmstaypge2';
 
+
 import Flightpge1 from './Main_website/Flight_Section/Flight_pge_1/Flightpge1';
 import Flightpge2 from './Main_website/Flight_Section/Flight_pge_2/Flightpge2'; 
 import Flightpge3 from './Main_website/Flight_Section/Flight_pge_3/Flightpge3';
@@ -36,6 +37,22 @@ function App() {
         <Route path="/hotel3" element={<Hotelpge3/>} />
         <Route path="/hotel4" element={<Hotelpge4/>} />
         <Route path="/hotel5" element={<Hotelpge5/>} />
+
+
+         <Route path="/tourpkge2" element={<TourPkpge2/>} />
+          <Route path="/tourpkge3" element={<Tourpkpge3/>} />
+          <Route path="/tourpkge4" element={<Tourpkpge4/>} />
+
+          <Route path="/hstaypge2" element={<Hmstaypge2/>} />
+
+          <Route path="/admin" element={<Admin_portal/>} />
+                    <Route path="/user" element={<User_portal/>} />
+                              <Route path="/partner" element={<Partner_portal/>} />
+
+
+
+
+        
 
         
 

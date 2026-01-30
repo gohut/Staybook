@@ -1,8 +1,9 @@
 // FareSummary.jsx
 import { FaChevronUp, FaMinusCircle, FaCheckSquare } from "react-icons/fa";
 import "./FareSummary.css";
-
+import { useNavigate } from "react-router-dom"; 
 const FareSummary = () => {
+    const navigate = useNavigate();
   return (
     <div className="fare-wrapper">
       <div className="update-box">
@@ -79,7 +80,7 @@ const FareSummary = () => {
             <a>Terms of Service</a> and <a>Privacy Policy</a> of MakeMyTrip
           </span>
         </label>
-        <button className="pay-btn">PROCEED TO PAYMENTS</button>
+        <button className="pay-btn" onClick={() => navigate("/hotel5")}>PROCEED TO PAYMENTS</button>
       </div>
 
       <div className="timer-box">
