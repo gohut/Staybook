@@ -5,7 +5,7 @@ import {
   FiAlertCircle,
   FiDollarSign,
 } from "react-icons/fi";
-import "./PartnerDashboard.css";
+import "./PartnerDashboard.scss";
 
 /* ================= REUSABLE COMPONENTS ================= */
 

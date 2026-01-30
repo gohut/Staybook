@@ -6,7 +6,7 @@ import {
   FiAlertTriangle,
   FiUsers,
 } from "react-icons/fi";
-import "./settings.css";
+import "./settings.scss";
 
 const Settings = () => {
   return (

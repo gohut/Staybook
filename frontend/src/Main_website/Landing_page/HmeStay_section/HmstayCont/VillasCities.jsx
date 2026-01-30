@@ -1,6 +1,6 @@
 // VillasCities.jsx
 import React from "react";
-import "./VillasCities.css";
+import "./VillasCities.scss";
 import img from "../../../../assets/Flight/place1.jpg";
 
 export default function VillasCities() {

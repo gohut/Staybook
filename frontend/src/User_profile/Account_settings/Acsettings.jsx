@@ -12,7 +12,7 @@ import {
   FiTrash2,
   FiSave,
 } from "react-icons/fi";
-import "./Acsettings.css";
+import "./Acsettings.scss";
 
 const ProfileDetails = () => (
   <div className="as-card">

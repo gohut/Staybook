@@ -1,4 +1,4 @@
-import "./ListingsHeader.css";
+import "./ListingsHeader.scss";
 
 const ListingsHeader = () => {
   return (

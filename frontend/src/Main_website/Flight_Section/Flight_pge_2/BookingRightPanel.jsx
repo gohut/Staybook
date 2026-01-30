@@ -1,4 +1,4 @@
-import "./BookingRightPanel.css";
+import "./BookingRightPanel.scss";
 import { FaTag, FaGift } from "react-icons/fa";
 
 export default function BookingRightPanel() {

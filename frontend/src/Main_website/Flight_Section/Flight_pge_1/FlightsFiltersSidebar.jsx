@@ -1,4 +1,4 @@
-import "./FlightsFiltersSidebar.css";
+import "./FlightsFiltersSidebar.scss";
 import { useMemo, useState } from "react";
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
 

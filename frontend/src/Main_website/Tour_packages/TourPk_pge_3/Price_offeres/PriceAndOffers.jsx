@@ -1,5 +1,5 @@
 // PriceAndOffers.jsx
-import "./PriceAndOffers.css";
+import "./PriceAndOffers.scss";
 import { FaPercent, FaTag, FaRupeeSign } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; 
 

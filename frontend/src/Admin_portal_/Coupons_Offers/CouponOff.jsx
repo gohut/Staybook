@@ -1,7 +1,7 @@
 // CouponOff.jsx
 import React from "react";
 import { FiTag, FiPlus } from "react-icons/fi";
-import "./CouponOff.css";
+import "./CouponOff.scss";
 
 const CouponOff = ({ onCreate }) => {
   return (

@@ -1,7 +1,7 @@
 // FlagshipHotels.jsx
 import React from "react";
 import { FaClipboardList, FaUtensils, FaPlane } from "react-icons/fa";
-import "./FlagshipHotels.css";
+import "./FlagshipHotels.scss";
 import img1 from  "../../../../assets/Flight/place1.jpg"
 export default function FlagshipHotels() {
   return (

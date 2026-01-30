@@ -1,6 +1,6 @@
 // PackageCard.jsx
 import { FaCheckCircle } from "react-icons/fa";
-import "./PackageCard.css";
+import "./PackageCard.scss";
 import { useNavigate } from "react-router-dom"; 
 export default function PackageCard() {
     const navigate = useNavigate();

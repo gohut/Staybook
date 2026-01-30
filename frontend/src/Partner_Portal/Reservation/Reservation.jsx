@@ -1,5 +1,5 @@
 // Reservation.jsx
-import "./Reservation.css";
+import "./Reservation.scss";
 import { FiEye, FiMail, FiPhone, FiSearch, FiFilter, FiCalendar } from "react-icons/fi";
 
 const StatCard = ({ label, value, type }) => (

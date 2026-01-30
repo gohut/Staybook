@@ -1,5 +1,5 @@
 // FlightPge4Header.jsx
-import "./FlightPge4Header.css";
+import "./FlightPge4Header.scss";
 import { FaChevronDown, FaRegClock, FaRegCalendarAlt } from "react-icons/fa";
 import { MdFlightTakeoff } from "react-icons/md";
 

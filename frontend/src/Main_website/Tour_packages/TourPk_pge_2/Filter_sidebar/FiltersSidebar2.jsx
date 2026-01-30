@@ -1,6 +1,6 @@
 // FiltersSidebar.jsx
 import { FiChevronUp, FiSearch } from "react-icons/fi";
-import "./FiltersSidebar2.css";
+import "./FiltersSidebar2.scss";
 
 export default function FiltersSidebar2() {
   return (

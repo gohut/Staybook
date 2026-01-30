@@ -10,7 +10,7 @@ import {
   FaTshirt,
   FaChevronRight,
 } from "react-icons/fa";
-import "./RoomsContainer.css";
+import "./RoomsContainer.scss";
 
 const RoomImage = ({ photos }) => (
   <div className="room-img">

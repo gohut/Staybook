@@ -1,6 +1,6 @@
 // Hotelpge5.jsx  (CHANGE THIS FILE)
 import React, { useState } from "react";
-import "./hotelpage5.css";
+import "./hotelpage5.scss";
 import ContactPayment from "./Contact_info/ContactPayment";
 import BookingSummary from "./Booking_sumry/BookingSummary";
 import PaymentSuccess from "./Payment_success/PaymentSuccess";

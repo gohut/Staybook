@@ -1,4 +1,4 @@
-import "./FlightsAdBanner.css";
+import "./FlightsAdBanner.scss";
 
 export default function FlightsAdBanner() {
   return (

@@ -3,7 +3,7 @@ import TopNavbar from '../../Top_Navbar/TopNavbar'
 import HotelOverview from './Hotel_overview/HotelOverview'
 import RoomsContainer from './Available_room_typ/RoomsContainer'
 import LocationSection from './Location_sec/LocationSection'
-import './hotelpge3.css'
+import './hotelpge3.scss'
 import GuestPhotos from './Photos_section/GuestPhotos'
 import UserReviews from './User_review/UserReviews'
 export default function Hotelpge3() {

@@ -1,7 +1,7 @@
 // PackageAddOns.jsx
 import { FaCheckCircle, FaChevronUp } from "react-icons/fa";
 import { BsShieldCheck } from "react-icons/bs";
-import "./PackageAddOns.css";
+import "./PackageAddOns.scss";
 
 const PackageAddOns = () => {
   return (

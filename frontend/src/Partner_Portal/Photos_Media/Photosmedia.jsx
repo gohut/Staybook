@@ -1,5 +1,5 @@
 // Photosmedia.jsx
-import "./Photosmedia.css";
+import "./Photosmedia.scss";
 import { FiUpload, FiImage } from "react-icons/fi";
 
 const Tab = ({ label, active }) => (

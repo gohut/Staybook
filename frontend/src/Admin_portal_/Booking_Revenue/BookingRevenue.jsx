@@ -1,6 +1,6 @@
 // BookingsRevenue.jsx
 import React from "react";
-import "./bookingrevenue.css";
+import "./bookingrevenue.scss";
 
 const data = [
   {

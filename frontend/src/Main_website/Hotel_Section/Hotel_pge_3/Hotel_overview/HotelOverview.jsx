@@ -1,5 +1,5 @@
 // HotelOverview.jsx
-import "./HotelOverview.css";
+import "./HotelOverview.scss";
 
 const HotelOverview = () => {
   return (

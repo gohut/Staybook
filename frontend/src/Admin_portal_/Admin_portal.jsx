@@ -11,7 +11,7 @@ import React, { useState } from "react";
 // import CouponCr from "./CouponCr";
 // import Reports from "./Reports";
 // import Settings from "./Settings";
-import "./Admin_portal.css";
+import "./Admin_portal.scss";
 
 import Vnavbar from "./Navbars/Vnavbar";
 import Hnavbar from "./Navbars/Hnavbar";

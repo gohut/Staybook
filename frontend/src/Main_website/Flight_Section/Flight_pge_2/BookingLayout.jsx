@@ -1,4 +1,4 @@
-import "./BookingLayout.css";
+import "./BookingLayout.scss";
 import BookingLeftPanel from "./BookingLeftPanel";
 import BookingRightPanel from "./BookingRightPanel";
 import TripSecure from "./TripSecure";  

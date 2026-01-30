@@ -4,7 +4,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
-import "./UserReviews.css";
+import "./UserReviews.scss";
 
 const ratingBars = [
   { label: "Excellent", value: 51 },

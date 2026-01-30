@@ -1,6 +1,6 @@
 // ResultsHeader.jsx
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import "./ResultsHeader.css";
+import "./ResultsHeader.scss";
 
 const ResultsHeader = () => {
   return (

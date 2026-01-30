@@ -1,5 +1,5 @@
 // FlightsFiltersAndHeader.jsx
-import "./FlightsFiltersAndHeader.css";
+import "./FlightsFiltersAndHeader.scss";
 import { useMemo, useState } from "react";
 import {
   FaCheckSquare,

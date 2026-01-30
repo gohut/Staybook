@@ -10,7 +10,7 @@ import {
   FiSettings,
 } from "react-icons/fi";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
-import "./PVnavbar.css";
+import "./PVnavbar.scss";
 
 const PVnavbar = ({ active, setActive }) => {
   return (

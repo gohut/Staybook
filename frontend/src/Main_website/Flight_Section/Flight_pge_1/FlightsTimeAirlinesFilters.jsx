@@ -1,4 +1,4 @@
-import "./FlightsTimeAirlinesFilters.css";
+import "./FlightsTimeAirlinesFilters.scss";
 import { useMemo, useState } from "react";
 import { FaRegSquare, FaCheckSquare } from "react-icons/fa";
 import { FiSunrise, FiSun, FiSunset, FiMoon } from "react-icons/fi";

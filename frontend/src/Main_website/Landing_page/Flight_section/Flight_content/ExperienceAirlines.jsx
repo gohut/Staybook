@@ -1,6 +1,6 @@
 // ExperienceAirlines.jsx
 import React from "react";
-import "./ExperienceAirlines.css";
+import "./ExperienceAirlines.scss";
 import img2 from  "../../../../assets/Flight/image1.png"
 export default function ExperienceAirlines() {
   return (

@@ -1,4 +1,4 @@
-import "./TripSecure.css";
+import "./TripSecure.scss";
 import { FaCheckCircle, FaSuitcase, FaUserShield, FaBoxOpen } from "react-icons/fa";
 
 export default function TripSecure() {

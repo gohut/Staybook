@@ -9,7 +9,7 @@ import {
   MdDescription,
   MdSettings,
 } from "react-icons/md";
-import "./Vnavbar.css";
+import "./Vnavbar.scss";
 
 const Vnavbar = ({ active, setActive }) => {
   const s = 25;

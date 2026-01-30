@@ -1,7 +1,7 @@
 // CouponCr.jsx
 import React from "react";
 import { FiX } from "react-icons/fi";
-import "./CouponCr.css";
+import "./CouponCr.scss";
 
 const CouponCr = ({ onClose }) => {
   return (

@@ -15,7 +15,7 @@ import {
   FaShieldAlt,
   FaChevronDown,
 } from "react-icons/fa";
-import "./VillasHomestaysSearch.css";
+import "./VillasHomestaysSearch.scss";
 import { useNavigate } from "react-router-dom"; 
 
 export default function VillasHomestaysSearch() {

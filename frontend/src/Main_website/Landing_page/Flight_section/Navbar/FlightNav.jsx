@@ -2,7 +2,7 @@
 import React from "react";
 import { FaExchangeAlt } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import "./flightnav.css";
+import "./flightnav.scss";
 import { useNavigate } from "react-router-dom";
 
 export default function FlightNav() {

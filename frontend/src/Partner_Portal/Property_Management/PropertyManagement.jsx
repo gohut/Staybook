@@ -1,5 +1,5 @@
 // PropertyManagement.jsx
-import "./PropertyManagement.css";
+import "./PropertyManagement.scss";
 import { FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
 
 const InfoField = ({ label, value, full }) => (

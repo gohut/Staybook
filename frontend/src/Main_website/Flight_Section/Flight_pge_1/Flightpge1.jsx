@@ -6,7 +6,7 @@ import FlightsFiltersSidebar from "./FlightsFiltersSidebar";
 import FlightsResultsList from "./FlightsResultsList";
 import FlightsTimeAirlinesFilters from "./FlightsTimeAirlinesFilters";
 import TopNavbar from "../../Top_Navbar/TopNavbar";
-import "./Flightpge1.css";
+import "./Flightpge1.scss";
 
 export default function Flightpge1() {
   return (

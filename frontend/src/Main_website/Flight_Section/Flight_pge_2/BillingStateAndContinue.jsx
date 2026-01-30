@@ -1,4 +1,4 @@
-import "./BillingStateAndContinue.css";
+import "./BillingStateAndContinue.scss";
 import { FaLock, FaChevronDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 

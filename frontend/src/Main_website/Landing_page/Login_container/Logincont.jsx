@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import "./loginpge.css"
+import "./loginpge.scss"
 import loginpge from "../../../assets/loginpge.png"
 import { FcGoogle } from "react-icons/fc";
 

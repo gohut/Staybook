@@ -8,7 +8,7 @@ import {
   FaBus,
   FaTaxi,
 } from "react-icons/fa";
-import "./navbar.css";
+import "./navbar.scss";
 import bgimg from "../../../assets/bgimg.png";
 import logo from "../../../assets/logo.png";
 import { MdKeyboardArrowDown } from "react-icons/md";

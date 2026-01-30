@@ -1,6 +1,6 @@
 // AdminDashboard.jsx
 import React from "react";
-import "./AdminDashboard.css";
+import "./AdminDashboard.scss";
 
 import {
   FaHotel,

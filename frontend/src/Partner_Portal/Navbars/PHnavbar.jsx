@@ -1,6 +1,6 @@
 // PHnavbar.jsx
 import { FiSearch, FiBell, FiChevronDown } from "react-icons/fi";
-import "./PHnavbar.css";
+import "./PHnavbar.scss";
 
 const PHnavbar = () => {
   return (

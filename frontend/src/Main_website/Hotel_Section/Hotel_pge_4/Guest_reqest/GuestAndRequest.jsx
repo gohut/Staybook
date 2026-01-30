@@ -1,5 +1,5 @@
 // GuestAndRequest.jsx
-import "./GuestAndRequest.css";
+import "./GuestAndRequest.scss";
 import { FaUserPlus, FaBell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; 
 

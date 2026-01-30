@@ -1,4 +1,4 @@
-import "./BookingTopNavbar.css";
+import "./BookingTopNavbar.scss";
 import logo from "../../../assets/logo.png";
 import {
   FaPlane,

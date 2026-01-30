@@ -8,7 +8,7 @@ import {
   FiXCircle,
   FiAlertTriangle,
 } from "react-icons/fi";
-import "./ReviewPop.css";
+import "./ReviewPop.scss";
 
 const ReviewPop = ({ onClose }) => {
   return (

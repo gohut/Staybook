@@ -1,6 +1,6 @@
 // TravellerDetails.jsx
 import { FaUserCircle, FaChevronDown } from "react-icons/fa";
-import "./TravellerDetails.css";
+import "./TravellerDetails.scss";
 
 const TravellerDetails = () => {
   return (

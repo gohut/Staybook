@@ -1,5 +1,5 @@
 // ReviewBooking.jsx
-import "./ReviewBooking.css";
+import "./ReviewBooking.scss";
 import {
   FaStar,
   FaUtensils,

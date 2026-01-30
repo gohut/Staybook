@@ -1,7 +1,7 @@
 // OffersSection.jsx
 import React from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import "./OffersSection.css";
+import "./OffersSection.scss";
 import img from "../../../../assets/Flight/place1.jpg"
 export default function OffersSection() {
   return (
