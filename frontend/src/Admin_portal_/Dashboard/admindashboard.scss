@@ -26,7 +26,7 @@ body {
   gap: 20px;
 }
 
-.stat-card {
+.adm-stat-card {
   background: #ffffff;
   padding: 20px;
   border-radius: 14px;
@@ -38,6 +38,10 @@ body {
   height: 36px;
   border-radius: 10px;
   margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
 .stat-icon.blue { background: #e0edff; }
@@ -65,7 +69,7 @@ body {
 .stat-trend.up { color: #16a34a; }
 .stat-trend.down { color: #dc2626; }
 
-.card {
+.adm-qa-card {
   background: #ffffff;
   padding: 22px;
   border-radius: 16px;
@@ -89,7 +93,7 @@ body {
 .quick.purple { border: 2px solid #e9d5ff; color: #7c3aed; }
 .quick.green { border: 2px solid #bbf7d0; color: #15803d; }
 
-.grid-2 {
+.admn-dbt-grid-2 {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 24px;

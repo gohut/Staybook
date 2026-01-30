@@ -2,16 +2,35 @@
 import React from "react";
 import "./AdminDashboard.scss";
 
-const StatCard = ({ icon, value, label, trend, positive }) => (
-  <div className="stat-card">
-    <div className={`stat-icon ${icon}`} />
-    <div className="stat-value">{value}</div>
-    <div className="stat-label">{label}</div>
-    <div className={`stat-trend ${positive ? "up" : "down"}`}>
-      {trend} vs last month
+import {
+  FaHotel,
+  FaClock,
+  FaCalendarAlt,
+  FaDollarSign,
+  FaTag,
+  FaArrowUp,
+  FaArrowDown
+} from "react-icons/fa";
+
+
+const StatCard = ({ Icon, iconClass, value, label, trend, positive }) => {
+  return (
+    <div className="adm-stat-card">
+      <div className={`stat-icon ${iconClass}`}>
+        <Icon />
+      </div>
+
+      <div className="stat-value">{value}</div>
+      <div className="stat-label">{label}</div>
+
+      <div className={`stat-trend ${positive ? "up" : "down"}`}>
+        {trend} vs last month
+      </div>
     </div>
-  </div>
-);
+  );
+};
+
+
 
 const ProgressRow = ({ label, value, percent, color }) => (
   <div className="progress-row">
@@ -40,24 +59,68 @@ export default function AdminDashboard() {
       </div>
 
       <div className="stats">
-        <StatCard value="1,247" label="Total Hotels Onboarded" trend="+12.5%" positive icon="blue" />
-        <StatCard value="23" label="Pending Verifications" trend="-8.2%" icon="orange" />
-        <StatCard value="8,934" label="Total Bookings (Month)" trend="+24.1%" positive icon="green" />
-        <StatCard value="$124,567" label="Commission Revenue" trend="+18.9%" positive icon="emerald" />
-        <StatCard value="47" label="Active Coupons" trend="+3" positive icon="purple" />
+
+
+<StatCard
+  value="1,247"
+  label="Total Hotels Onboarded"
+  trend="+12.5%"
+  positive={true}
+  Icon={FaHotel}
+  iconClass="blue"
+/>
+
+<StatCard
+  value="892"
+  label="Pending Approvals"
+  trend="-4.2%"
+  positive={false}
+  Icon={FaClock}
+  iconClass="orange"
+/>
+
+<StatCard
+  value="2,108"
+  label="Completed Bookings"
+  trend="+8.1%"
+  positive={true}
+  Icon={FaCalendarAlt}
+  iconClass="green"
+/>
+
+<StatCard
+  value="₹5.6L"
+  label="Monthly Revenue"
+  trend="+15.9%"
+  positive={true}
+  Icon={FaDollarSign}
+  iconClass="green"
+/>
+
+<StatCard
+  value="120"
+  label="Active Offers"
+  trend="-2.3%"
+  positive={false}
+  Icon={FaTag}
+  iconClass="red"
+/>
       </div>
 
-      <div className="card">
+      <div className="adm-qa-card">
         <h3>Quick Actions</h3>
         <div className="quick-actions">
-          <div className="quick blue">Verify Pending Hotels</div>
-          <div className="quick purple">Create New Coupon</div>
-          <div className="quick green">View Revenue Reports</div>
+          <div className="quick blue"> <FaClock />
+Verify Pending Hotels</div>
+          <div className="quick purple"> <FaTag />
+Create New Coupon</div>
+          <div className="quick green"><FaDollarSign />
+ View Revenue Reports</div>
         </div>
       </div>
 
-      <div className="grid-2">
-        <div className="card">
+      <div className="admn-dbt-grid-2">
+        <div className="addbtgr-card">
           <h3>Daily Booking Trend</h3>
           {[
             ["Jan 10", 245],
@@ -79,8 +142,12 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        <div className="card">
+        <div className="admn-bsd-card">
           <h3>Booking Status Distribution</h3>
+          {/* <StatCard value="1,247" label="Total Hotels Onboarded" trend="+12.5%" positive={true} Icon={FaClock} iconClass="blue"/>
+          <StatCard value="1,247" label="Total Hotels Onboarded" trend="+12.5%" positive={true} Icon={FaClock} iconClass="blue"/>
+          <StatCard value="1,247" label="Total Hotels Onboarded" trend="+12.5%" positive={true} Icon={FaClock} iconClass="blue"/>
+          <StatCard value="1,247" label="Total Hotels Onboarded" trend="+12.5%" positive={true} Icon={FaClock} iconClass="blue"/> */}
           <ProgressRow label="Confirmed" value="5,234 (59%)" percent="59%" color="green" />
           <ProgressRow label="Pending" value="892 (10%)" percent="10%" color="orange" />
           <ProgressRow label="Completed" value="2,108 (23%)" percent="23%" color="blue" />
@@ -92,7 +159,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="card">
+      <div className="admn-bsd-card">
         <h3>Commission Revenue by Hotel</h3>
         {[
           ["Grand Plaza", "$24,500"],

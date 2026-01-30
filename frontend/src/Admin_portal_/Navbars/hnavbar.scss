@@ -11,7 +11,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: calc(100% - 260px); /* matches Vnavbar */
+  width: calc(100% - 260px); 
   z-index: 10;
 }
 
@@ -19,7 +19,7 @@
 .hrl-search {
   display: flex;
   align-items: center;
-  width: 420px;height: 55px;
+  width: 420px;height: 50px;
   background: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 14px;

@@ -1,5 +1,6 @@
 // Vnavbar.jsx
 import React from "react";
+import logo from "../../assets/logo.png"
 import {
   MdDashboard,
   MdHotel,
@@ -16,7 +17,7 @@ const Vnavbar = ({ active, setActive }) => {
   return (
     <aside className="v-navbar">
       <div>
-        <h2 className="logo">StayBook</h2>
+        <div  className="vnav-logo"> <img src={logo} alt="" /></div>
         <p className="subtitle">Admin Operations</p>
       </div>
 
