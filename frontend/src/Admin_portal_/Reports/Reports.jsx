@@ -63,7 +63,7 @@ const Reports = () => {
         </div>
       </div>
 
-      <div className="card">
+      <div className="admn-btot-card">
         <h3>Booking Trends Over Time</h3>
         {trends.map(([m, v, p, amt]) => (
           <div className="trend-row" key={m}>
@@ -77,7 +77,7 @@ const Reports = () => {
         ))}
       </div>
 
-      <div className="card">
+      <div className="admn-bsd-card">
         <h3>Booking Sources Distribution</h3>
         {sources.map(([n, v, p, c]) => (
           <div className="source-row" key={n}>

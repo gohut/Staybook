@@ -1,47 +1,48 @@
 /* Settings.css */
-.st-container { padding: 24px; }
+.adm-st-container { padding: 2px; 
+
+
+}
 .subtitle { color: #6b7280; margin-bottom: 20px; }
 
-.card {
+.adm-st-card {
   background: #fff;
   border-radius: 14px;
   padding: 20px;
   margin-bottom: 22px;
 }
 
-.card-head {
+.admst-card-head {
   display: flex;
   gap: 14px;
   margin-bottom: 18px;
 }
 
-.card-head svg {
+.admst-card-head svg {
   font-size: 22px;
   color: #2563eb;
 }
 
-.card-head p {
+.admst-card-head p {
   font-size: 13px;
   color: #6b7280;
 }
 
-.grid-3 {
+.adm-st-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
-.grid-2 {
+.adm-st-grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   margin-top: 16px;
+
+
 }
 
-label {
-  font-size: 13px;
-  color: #374151;
-}
 
 input, select {
   width: 100%;
@@ -94,14 +95,14 @@ input, select {
   transform: translateX(20px);
 }
 
-.admin-row {
+.adm-st-admin-row {
   display: flex;
   justify-content: space-between;
   padding: 14px 0;
   border-top: 1px solid #f1f5f9;
 }
 
-.badge {
+.adm-st-badge {
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 12px;
@@ -110,7 +111,7 @@ input, select {
 .badge.blue { background: #e0e7ff; color: #3730a3; }
 .badge.green { background: #dcfce7; color: #166534; }
 
-.add-admin {
+.adm-st-add-admin {
   border: 2px dashed #cbd5f5;
   padding: 14px;
   text-align: center;
@@ -119,20 +120,20 @@ input, select {
   color: #2563eb;
 }
 
-.actions {
+.adm-st-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
 }
 
-.actions .outline {
+.adm-st-actions .adm-st-outline {
   background: #fff;
   border: 1px solid #cbd5f5;
   padding: 8px 16px;
   border-radius: 10px;
 }
 
-.actions .primary {
+.adm-st-actions .adm-st-primary {
   background: #2563eb;
   color: #fff;
   border: none;
