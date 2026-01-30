@@ -16,8 +16,10 @@ import {
   FaChevronDown,
 } from "react-icons/fa";
 import "./VillasHomestaysSearch.css";
+import { useNavigate } from "react-router-dom"; 
 
 export default function VillasHomestaysSearch() {
+    const navigate = useNavigate();
   return (
     <div className="vh-wrapper">
 
@@ -62,7 +64,7 @@ export default function VillasHomestaysSearch() {
         </div>
       </div>
 
-      <button className="vh-search-btn">SEARCH</button>
+      <button className="vh-search-btn" onClick={() => navigate("/hstaypge2")} >SEARCH</button>
 
 
     </div>

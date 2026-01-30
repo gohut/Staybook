@@ -1,8 +1,10 @@
 // PriceAndOffers.jsx
 import "./PriceAndOffers.css";
 import { FaPercent, FaTag, FaRupeeSign } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; 
 
 const PriceAndOffers = () => {
+    const navigate = useNavigate();
   return (
     <div className="price-offer-wrapper">
       {/* PRICE CARD */}
@@ -20,7 +22,7 @@ const PriceAndOffers = () => {
 
         <p className="tax-text">Excluding applicable taxes</p>
 
-        <button className="pay-btn">PROCEED TO PAYMENT</button>
+        <button className="pay-btn" onClick={() => navigate("/tourpkge4")}>PROCEED TO PAYMENT</button>
       </div>
 
       {/* COUPONS */}

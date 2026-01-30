@@ -14,13 +14,12 @@ export default function Tourpkpge3() {
       <SearchBar />
 
       <div className="tour-content">
-        {/* LEFT MAIN CONTENT */}
+
         <div className="tour-left">
           <PackageGallery />
           <DayPlanSection />
         </div>
 
-        {/* RIGHT STICKY SIDEBAR */}
         <div className="tour-right">
           <PriceAndOffers />
         </div>

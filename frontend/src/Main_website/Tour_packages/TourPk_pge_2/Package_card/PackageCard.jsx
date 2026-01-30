@@ -1,10 +1,12 @@
 // PackageCard.jsx
 import { FaCheckCircle } from "react-icons/fa";
 import "./PackageCard.css";
-
+import { useNavigate } from "react-router-dom"; 
 export default function PackageCard() {
+    const navigate = useNavigate();
+
   return (
-    <div className="pkg-card">
+    <div className="pkg-card" onClick={() => navigate("/tourpkge3")}>
       <img
         className="pkg-img"
         src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"

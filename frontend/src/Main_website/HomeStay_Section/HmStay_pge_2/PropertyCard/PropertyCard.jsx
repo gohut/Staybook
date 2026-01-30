@@ -1,10 +1,11 @@
 // PropertyCard.jsx
 import { FaHeart, FaStar, FaMapMarkerAlt } from "react-icons/fa";
 import "./PropertyCard.css";
-
+import { useNavigate } from "react-router-dom"; 
 const PropertyCard = () => {
+    const navigate = useNavigate();
   return (
-    <div className="property-card">
+    <div className="property-card" onClick={() => navigate("/hotel3")}>
       <div className="card-left">
         <div className="main-img">
           <img
