@@ -1,16 +1,75 @@
+/* ProceedToPay.scss */
+
+/* ===== Variables ===== */
+$ptp-white: #fff;
+
+$ptp-border: #e9e9e9;
+
+$ptp-blue: #1a73e8;
+$ptp-blue-dark: #1558b0;
+
+$ptp-gray-666: #666;
+$ptp-check-border: #c7c7c7;
+
+$ptp-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+$ptp-btn-shadow: 0 8px 18px rgba(26, 115, 232, 0.25);
+
+$ptp-max-width: 860px;
+
+/* ===== Mixins ===== */
+@mixin ptp-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin ptp-card {
+  background: $ptp-white;
+  border: 1px solid $ptp-border;
+  border-radius: 6px;
+  box-shadow: $ptp-shadow;
+}
+
+@mixin ptp-btn-reset {
+  border: none;
+  cursor: pointer;
+}
+
+@mixin ptp-check($box-class) {
+  input {
+    display: none;
+
+    &:checked + #{$box-class} {
+      background: $ptp-blue;
+      border-color: $ptp-blue;
+
+      &::after {
+        content: "";
+        width: 8px;
+        height: 4px;
+        border-left: 2px solid $ptp-white;
+        border-bottom: 2px solid $ptp-white;
+        position: absolute;
+        top: 4px;
+        left: 3px;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}
+
+/* ===== Styles ===== */
 .ptp-wrap {
   width: 100%;
-  max-width: 860px;
+  max-width: $ptp-max-width;
   margin: 14px auto 0;
-  background: #fff;
-  border: 1px solid #e9e9e9;
-  border-radius: 6px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  @include ptp-card;
   padding: 12px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
+  @include ptp-flex(space-between, center, 16px);
 }
 
 .ptp-check {
@@ -19,48 +78,29 @@
   gap: 10px;
   font-size: 10px;
   font-weight: 800;
-  color: #666;
+  color: $ptp-gray-666;
   line-height: 1.3;
-}
 
-.ptp-check input {
-  display: none;
+  @include ptp-check(".ptp-box");
 }
 
 .ptp-box {
   width: 16px;
   height: 16px;
   border-radius: 4px;
-  border: 2px solid #c7c7c7;
+  border: 2px solid $ptp-check-border;
   position: relative;
   flex: 0 0 auto;
 }
 
-.ptp-check input:checked + .ptp-box {
-  background: #1a73e8;
-  border-color: #1a73e8;
-}
-
-.ptp-check input:checked + .ptp-box::after {
-  content: "";
-  width: 8px;
-  height: 4px;
-  border-left: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  position: absolute;
-  top: 4px;
-  left: 3px;
-  transform: rotate(-45deg);
-}
-
 .ptp-link {
-  color: #1a73e8;
+  color: $ptp-blue;
   font-weight: 900;
   text-decoration: none;
-}
 
-.ptp-link:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .ptp-btn {
@@ -68,14 +108,14 @@
   padding: 0 16px;
   border: none;
   border-radius: 18px;
-  background: #1a73e8;
-  color: #fff;
+  background: $ptp-blue;
+  color: $ptp-white;
   font-weight: 900;
   font-size: 11px;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(26,115,232,0.25);
-}
+  box-shadow: $ptp-btn-shadow;
 
-.ptp-btn:hover {
-  background: #1558b0;
+  &:hover {
+    background: $ptp-blue-dark;
+  }
 }

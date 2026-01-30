@@ -1,58 +1,95 @@
-/* OffersSection.css */
+/* OffersSection.scss */
+
+/* =======================
+   Variables
+======================= */
+$offerssection-bg: #fff;
+
+$offerssection-color-primary: #1a73e8;
+$offerssection-color-primary-2: #1976d2;
+
+$offerssection-color-text: #444;
+$offerssection-color-muted: #555;
+$offerssection-color-muted-2: #777;
+
+$offerssection-radius-lg: 16px;
+$offerssection-radius-md: 12px;
+$offerssection-radius-sm: 8px;
+
+$offerssection-shadow-wrapper: 0 6px 20px rgba(0, 0, 0, 0.15);
+$offerssection-shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+/* =======================
+   Mixins
+======================= */
+@mixin offerssection-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin offerssection-panel($radius: $offerssection-radius-lg, $padding: 22px, $shadow: null) {
+  background: $offerssection-bg;
+  border-radius: $radius;
+  padding: $padding;
+
+  @if $shadow != null {
+    box-shadow: $shadow;
+  }
+}
+
+/* =======================
+   Styles
+======================= */
 .offers-wrapper {
-  background: #fff;
-  border-radius: 16px;
-  padding: 22px;
+  @include offerssection-panel($offerssection-radius-lg, 22px, $offerssection-shadow-wrapper);
   margin-top: 26px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .offers-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include offerssection-flex(space-between, center);
   margin-bottom: 18px;
 }
 
 .offers-tabs {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
+  @include offerssection-flex(flex-start, center, 16px);
 
-.offers-tabs h2 {
-  margin-right: 10px;
-}
+  h2 {
+    margin-right: 10px;
+  }
 
-.offers-tabs span {
-  font-size: 14px;
-  cursor: pointer;
-  color: #444;
-}
+  span {
+    font-size: 14px;
+    cursor: pointer;
+    color: $offerssection-color-text;
+  }
 
-.offers-tabs .active {
-  color: #1a73e8;
-  font-weight: 700;
-  border-bottom: 2px solid #1a73e8;
-  padding-bottom: 4px;
+  .active {
+    color: $offerssection-color-primary;
+    font-weight: 700;
+    border-bottom: 2px solid $offerssection-color-primary;
+    padding-bottom: 4px;
+  }
 }
 
 .offers-nav {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
+  @include offerssection-flex(flex-start, center, 10px);
 
-.offers-nav a {
-  font-size: 14px;
-  font-weight: 700;
-  color: #1a73e8;
-  text-decoration: none;
-}
+  a {
+    font-size: 14px;
+    font-weight: 700;
+    color: $offerssection-color-primary;
+    text-decoration: none;
+  }
 
-.offers-nav svg {
-  font-size: 22px;
-  cursor: pointer;
+  svg {
+    font-size: 22px;
+    cursor: pointer;
+  }
 }
 
 .offers-grid {
@@ -62,34 +99,33 @@
 }
 
 .offer-card {
-  display: flex;
-  gap: 14px;
-  background: #fff;
-  border-radius: 12px;
+  @include offerssection-flex(flex-start, stretch, 14px);
+  background: $offerssection-bg;
+  border-radius: $offerssection-radius-md;
   padding: 14px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
+  box-shadow: $offerssection-shadow-card;
 
-.offer-card img {
-  width: 140px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 8px;
-}
+  img {
+    width: 140px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: $offerssection-radius-sm;
+  }
 
-.offer-card small {
-  font-size: 11px;
-  color: #777;
-}
+  small {
+    font-size: 11px;
+    color: $offerssection-color-muted-2;
+  }
 
-.offer-card h4 {
-  font-size: 14px;
-  margin: 6px 0;
-}
+  h4 {
+    font-size: 14px;
+    margin: 6px 0;
+  }
 
-.offer-card p {
-  font-size: 13px;
-  color: #555;
+  p {
+    font-size: 13px;
+    color: $offerssection-color-muted;
+  }
 }
 
 .link {
@@ -97,9 +133,9 @@
   margin-top: 6px;
   font-size: 13px;
   font-weight: 700;
-  color: #1a73e8;
-}
+  color: $offerssection-color-primary;
 
-.link.blue {
-  color: #1976d2;
+  &.blue {
+    color: $offerssection-color-primary-2;
+  }
 }

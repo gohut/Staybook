@@ -1,4 +1,58 @@
-/* RoomsContainer.css */
+/* RoomsContainer.scss */
+
+/* =======================
+   Variables
+======================= */
+$roomscontainer-bg-card: #fff;
+$roomscontainer-bg-img: #ddd;
+
+$roomscontainer-bg-recommend: #eaf4ff;
+$roomscontainer-bg-experience: #eef6ff;
+$roomscontainer-bg-photo-badge: #d3aeae;
+
+$roomscontainer-color-primary: #4da6ff;
+$roomscontainer-color-link: #1a73e8;
+$roomscontainer-color-white: #fff;
+$roomscontainer-color-text-muted: #555;
+
+$roomscontainer-border-card: #e6e6e6;
+$roomscontainer-border-soft: #eee;
+$roomscontainer-border-light: #ddd;
+
+$roomscontainer-radius-lg: 14px;
+$roomscontainer-radius-md: 12px;
+$roomscontainer-radius-sm: 10px;
+$roomscontainer-radius-xs: 8px;
+$roomscontainer-radius-badge: 6px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin roomscontainer-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin roomscontainer-btn-base($radius: $roomscontainer-radius-xs) {
+  border: none;
+  border-radius: $radius;
+  font-weight: 600;
+}
+
+@mixin roomscontainer-panel($bg, $radius: $roomscontainer-radius-sm, $padding: 10px) {
+  background: $bg;
+  border-radius: $radius;
+  padding: $padding;
+}
+
+/* =======================
+   Styles
+======================= */
 .rooms-wrapper {
   max-width: 1180px;
   margin: auto;
@@ -6,42 +60,39 @@
 }
 
 .room-card {
-  background: #fff;
-  border: 1px solid #e6e6e6;
-  border-radius: 14px;
+  background: $roomscontainer-bg-card;
+  border: 1px solid $roomscontainer-border-card;
+  border-radius: $roomscontainer-radius-lg;
   margin-bottom: 20px;
   overflow: hidden;
 }
 
 .recommend {
-  background: #eaf4ff;
+  background: $roomscontainer-bg-recommend;
   padding: 10px 14px;
   font-size: 14px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
+  @include roomscontainer-flex(flex-start, center, 10px);
 }
 
 .badge {
-  border: 1px solid #4da6ff;
-  color: #4da6ff;
+  border: 1px solid $roomscontainer-color-primary;
+  color: $roomscontainer-color-primary;
   font-size: 11px;
   padding: 2px 8px;
-  border-radius: 6px;
+  border-radius: $roomscontainer-radius-badge;
   font-weight: 600;
 }
 
 .room-grid {
   display: flex;
-  
   gap: 20px;
   padding: 16px;
 }
 
 .room-img {
   height: 160px;
-  background: #ddd;
-  border-radius: 12px;
+  background: $roomscontainer-bg-img;
+  border-radius: $roomscontainer-radius-md;
   position: relative;
 }
 
@@ -49,10 +100,10 @@
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background: #d3aeae;
+  background: $roomscontainer-bg-photo-badge;
   font-size: 12px;
   padding: 4px 8px;
-  border-radius: 12px;
+  border-radius: $roomscontainer-radius-md;
   font-weight: 600;
 }
 
@@ -71,29 +122,25 @@
 }
 
 .rate-plan {
-  border-left: 1px solid #eee;
+  border-left: 1px solid $roomscontainer-border-soft;
   padding-left: 16px;
   margin-bottom: 16px;
-  display: flex; gap: 50px;
-  
+  display: flex;
+  gap: 50px;
 }
 
 .benefits {
   font-size: 13px;
   padding-left: 16px;
   margin: 8px 0;
-}
 
-.benefits li {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  li {
+    @include roomscontainer-flex(flex-start, center, 6px);
+  }
 }
 
 .experience {
-  background: #eef6ff;
-  padding: 10px;
-  border-radius: 10px;
+  @include roomscontainer-panel($roomscontainer-bg-experience, $roomscontainer-radius-sm, 10px);
   font-size: 13px;
   margin: 10px 0;
 }
@@ -109,17 +156,15 @@
 
 .taxes {
   font-size: 12px;
-  color: #555;
+  color: $roomscontainer-color-text-muted;
 }
 
 .cta {
   margin-top: 10px;
   padding: 10px 18px;
-  background: #4da6ff;
-  border: none;
-  color: #fff;
-  border-radius: 8px;
-  font-weight: 600;
+  background: $roomscontainer-color-primary;
+  color: $roomscontainer-color-white;
+  @include roomscontainer-btn-base($roomscontainer-radius-xs);
 }
 
 .login-hint {
@@ -128,32 +173,30 @@
 }
 
 .link {
-  color: #1a73e8;
+  color: $roomscontainer-color-link;
   font-size: 13px;
   cursor: pointer;
 }
 
 .room-types {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include roomscontainer-flex(space-between, center);
   margin: 14px 0;
 }
 
 .filters {
   display: flex;
   gap: 10px;
-}
 
-.filters button {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background: #fff;
-  font-size: 13px;
-}
+  button {
+    padding: 6px 12px;
+    border-radius: $roomscontainer-radius-xs;
+    border: 1px solid $roomscontainer-border-light;
+    background: $roomscontainer-bg-card;
+    font-size: 13px;
+  }
 
-.filters .active {
-  border-color: #4da6ff;
-  color: #4da6ff;
+  .active {
+    border-color: $roomscontainer-color-primary;
+    color: $roomscontainer-color-primary;
+  }
 }

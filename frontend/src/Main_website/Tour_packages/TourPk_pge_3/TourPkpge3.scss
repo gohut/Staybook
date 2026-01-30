@@ -1,27 +1,58 @@
-/* Tourpkpge3.css */
+/* Tourpkpge3.scss */
+
+/* =======================
+   Variables
+======================= */
+$tourpkpge3-bg: #f4f6f9;
+
+$tourpkpge3-max-width: 1200px;
+
+$tourpkpge3-gap: 20px;
+
+$tourpkpge3-right-width: 360px;
+$tourpkpge3-sticky-top: 90px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin tourpkpge3-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin tourpkpge3-flex-col($gap) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+/* =======================
+   Styles
+======================= */
 .tour-page {
   width: 100%;
-  background: #f4f6f9;
+  background: $tourpkpge3-bg;
 }
 
 .tour-content {
-  max-width: 1200px;
+  max-width: $tourpkpge3-max-width;
   margin: 0 auto;
   padding: 16px;
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  @include tourpkpge3-flex(flex-start, flex-start, $tourpkpge3-gap);
 }
 
 .tour-left {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include tourpkpge3-flex-col($tourpkpge3-gap);
 }
 
 .tour-right {
-  width: 360px;
+  width: $tourpkpge3-right-width;
   position: sticky;
-  top: 90px;
+  top: $tourpkpge3-sticky-top;
 }

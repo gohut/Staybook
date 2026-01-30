@@ -1,65 +1,98 @@
-/* ContactPayment.css */
+/* ContactPayment.scss */
+
+/* ===== Variables ===== */
+$cp-white: #fff;
+
+$cp-border: #ddd;
+
+$cp-blue: #0b72ff;
+$cp-blue-soft: #f5f9ff;
+
+$cp-muted: #666;
+
+$cp-disabled: #9ca3af;
+
+$cp-radius: 12px;
+$cp-radius-input: 10px;
+
+/* ===== Mixins ===== */
+@mixin cp-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin cp-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid $cp-border;
+  border-radius: $cp-radius-input;
+}
+
+@mixin cp-card($pad, $radius: $cp-radius) {
+  background: $cp-white;
+  padding: $pad;
+  border-radius: $radius;
+}
+
+/* ===== Styles ===== */
 .contact-payment {
-  background: #fff;
-  padding: 24px;
-  border-radius: 12px;
+  @include cp-card(24px);
 }
 
 .input-row {
-  display: flex;
-  gap: 16px;
+  @include cp-flex(flex-start, stretch, 16px);
   margin-bottom: 24px;
 }
 
 .input-row input,
 input,
 select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+  @include cp-input;
 }
 
 .payment-methods {
-  display: flex;
-  gap: 16px;
+  @include cp-flex(flex-start, center, 16px);
   margin: 16px 0 24px;
 }
 
 .method {
   flex: 1;
   padding: 14px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  border: 1px solid $cp-border;
+  border-radius: $cp-radius;
   text-align: center;
   cursor: pointer;
-}
 
-.method.active {
-  border: 2px solid #0b72ff;
-  background: #f5f9ff;
-  color: #0b72ff;
+  &.active {
+    border: 2px solid $cp-blue;
+    background: $cp-blue-soft;
+    color: $cp-blue;
+  }
 }
 
 .upi-actions {
-  display: flex;
-  gap: 16px;
+  @include cp-flex(flex-start, stretch, 16px);
   margin-bottom: 16px;
 }
 
 .outline {
   flex: 1;
   padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #0b72ff;
-  background: #f5f9ff;
-  color: #0b72ff;
+  border-radius: $cp-radius-input;
+  border: 1px solid $cp-blue;
+  background: $cp-blue-soft;
+  color: $cp-blue;
 }
 
 .qr-box {
-  background: #f5f9ff;
+  background: $cp-blue-soft;
   padding: 24px;
-  border-radius: 12px;
+  border-radius: $cp-radius;
   text-align: center;
 }
 
@@ -67,14 +100,14 @@ select {
   margin-top: 16px;
   padding: 14px;
   width: 100%;
-  border-radius: 12px;
-  background: #0b72ff;
-  color: #fff;
+  border-radius: $cp-radius;
+  background: $cp-blue;
+  color: $cp-white;
   border: none;
-}
 
-.primary.disabled {
-  background: #9ca3af;
+  &.disabled {
+    background: $cp-disabled;
+  }
 }
 
 .sub-title {
@@ -91,8 +124,8 @@ select {
 
 .option-card {
   padding: 18px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  border: 1px solid $cp-border;
+  border-radius: $cp-radius;
   cursor: pointer;
 }
 
@@ -101,8 +134,7 @@ select {
 }
 
 .card-row {
-  display: flex;
-  gap: 16px;
+  @include cp-flex(flex-start, stretch, 16px);
 }
 
 .card-input {
@@ -123,6 +155,6 @@ select {
 .terms {
   text-align: center;
   font-size: 13px;
-  color: #666;
+  color: $cp-muted;
   margin-top: 12px;
 }

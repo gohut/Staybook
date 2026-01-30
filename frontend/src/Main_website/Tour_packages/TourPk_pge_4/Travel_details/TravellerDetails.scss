@@ -1,46 +1,86 @@
-/* TravellerDetails.css */
+/* TravellerDetails.scss */
+
+/* =======================
+   Variables
+======================= */
+$travellerdetails-bg: #fff;
+$travellerdetails-bg-strip: #f3f7fb;
+
+$travellerdetails-border: #e0e0e0;
+$travellerdetails-border-dashed: #dcdcdc;
+$travellerdetails-border-input: #ccc;
+
+$travellerdetails-color-link: #007bff;
+
+$travellerdetails-color-icon: #9bbce3;
+$travellerdetails-color-muted: #999;
+
+$travellerdetails-radius-input: 4px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin travellerdetails-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin travellerdetails-between {
+  @include travellerdetails-flex(space-between, center);
+}
+
+@mixin travellerdetails-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid $travellerdetails-border-input;
+  border-radius: $travellerdetails-radius-input;
+}
+
+/* =======================
+   Styles
+======================= */
 .traveller-card {
-  background: #fff;
-  border: 1px solid #e0e0e0;
+  background: $travellerdetails-bg;
+  border: 1px solid $travellerdetails-border;
   padding: 16px;
   margin-bottom: 24px;
 }
 
 .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include travellerdetails-between;
   font-weight: 600;
 }
 
 .login-strip {
-  background: #f3f7fb;
+  background: $travellerdetails-bg-strip;
   padding: 10px;
   margin: 12px 0;
-  display: flex;
-  justify-content: space-between;
-}
+  @include travellerdetails-between;
 
-.login-strip a {
-  color: #007bff;
-  text-decoration: none;
+  a {
+    color: $travellerdetails-color-link;
+    text-decoration: none;
+  }
 }
 
 .traveller-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  @include travellerdetails-flex(flex-start, center, 12px);
   padding: 10px 0;
-  border-bottom: 1px dashed #dcdcdc;
+  border-bottom: 1px dashed $travellerdetails-border-dashed;
 }
 
 .user-icon {
   font-size: 28px;
-  color: #9bbce3;
+  color: $travellerdetails-color-icon;
 }
 
 .add-text {
-  color: #007bff;
+  color: $travellerdetails-color-link;
   font-weight: 500;
   cursor: pointer;
 }
@@ -48,21 +88,20 @@
 .age-note {
   margin-left: auto;
   font-size: 12px;
-  color: #999;
+  color: $travellerdetails-color-muted;
 }
 
-.form-section h4 {
-  margin: 16px 0 6px;
+.form-section {
+  h4 {
+    margin: 16px 0 6px;
+  }
+
+  input {
+    @include travellerdetails-input;
+  }
 }
 
 .form-row {
   display: flex;
   gap: 12px;
-}
-
-.form-section input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }

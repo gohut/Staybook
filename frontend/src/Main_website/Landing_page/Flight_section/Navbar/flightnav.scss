@@ -1,114 +1,144 @@
-/* src/Components/Flights/flightnav.css */
+/* src/Components/Flights/flightnav.scss */
+
+/* =======================
+   Variables
+======================= */
+$flightnav-bg: #fff;
+$flightnav-bg-swap: #f5f8ff;
+
+$flightnav-color-text: #555;
+$flightnav-color-label: #666;
+$flightnav-color-muted: #777;
+$flightnav-color-disabled: #aaa;
+
+$flightnav-color-primary: #1a73e8;
+
+$flightnav-border: #ddd;
+$flightnav-border-soft: #eee;
+
+$flightnav-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+$flightnav-radius-sm: 5px;
+$flightnav-radius-md: 10px;
+$flightnav-radius-btn: 8px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin flightnav-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin flightnav-btn-base {
+  padding: 8px 14px;
+  border-radius: $flightnav-radius-btn;
+  border: 1px solid $flightnav-border;
+  background: $flightnav-bg;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* =======================
+   Styles
+======================= */
 .flight-nav-wrapper {
   width: 1200px;
-  background: #fff;
+  background: $flightnav-bg;
   padding: 100px 84px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: $flightnav-shadow;
   position: absolute;
-  transform: translate(150px,-450px);
-  border-radius:5px;
-
-
+  transform: translate(150px, -450px);
+  border-radius: $flightnav-radius-sm;
 }
 
 .trip-type {
-  display: flex;
-  align-items: center;
-  gap: 18px;
+  @include flightnav-flex(flex-start, center, 18px);
   font-size: 14px;
-  
-}
 
-.trip-type label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
+  label {
+    @include flightnav-flex(flex-start, center, 6px);
+    font-weight: 500;
+  }
 }
 
 .trip-right-text {
   margin-left: auto;
   font-size: 13px;
-  color: #555;
+  color: $flightnav-color-text;
 }
 
 .flight-search-box {
   margin-top: 16px;
   display: flex;
   align-items: stretch;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+  border: 1px solid $flightnav-border;
+  border-radius: $flightnav-radius-md;
   overflow: hidden;
 }
 
 .field {
   padding: 14px;
   min-width: 180px;
-  border-right: 1px solid #eee;
-}
+  border-right: 1px solid $flightnav-border-soft;
 
-.field:last-child {
-  border-right: none;
-}
+  &:last-child {
+    border-right: none;
+  }
 
-.field .label {
-  font-size: 12px;
-  color: #666;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+  .label {
+    font-size: 12px;
+    color: $flightnav-color-label;
+    @include flightnav-flex(flex-start, center, 4px);
+  }
 
-.field h3 {
-  margin: 4px 0;
-  font-size: 22px;
-}
+  h3 {
+    margin: 4px 0;
+    font-size: 22px;
+  }
 
-.field p {
-  font-size: 12px;
-  color: #777;
+  p {
+    font-size: 12px;
+    color: $flightnav-color-muted;
+  }
 }
 
 .swap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flightnav-flex(center, center);
   padding: 0 12px;
-  background: #f5f8ff;
+  background: $flightnav-bg-swap;
 }
 
 .disabled {
-  color: #aaa;
+  color: $flightnav-color-disabled;
 }
 
 .special-fares {
   margin-top: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include flightnav-flex(flex-start, center, 10px);
   flex-wrap: wrap;
-}
 
-.special-fares .title {
-  font-weight: 700;
-  font-size: 13px;
-  margin-right: 6px;
-}
+  .title {
+    font-weight: 700;
+    font-size: 13px;
+    margin-right: 6px;
+  }
 
-.special-fares button {
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background: #fff;
-  font-size: 13px;
-  cursor: pointer;
-}
+  button {
+    @include flightnav-btn-base;
 
-.special-fares button.active {
-  border-color: #1a73e8;
-  color: #1a73e8;
-}
+    &.active {
+      border-color: $flightnav-color-primary;
+      color: $flightnav-color-primary;
+    }
+  }
 
-.special-fares .tracker {
-  margin-left: auto;
+  .tracker {
+    margin-left: auto;
+  }
 }

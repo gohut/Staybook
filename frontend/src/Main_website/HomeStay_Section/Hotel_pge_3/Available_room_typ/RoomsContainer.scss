@@ -1,4 +1,41 @@
-/* RoomsContainer.css */
+/* RoomsContainer.scss */
+
+/* ===== Variables ===== */
+$rooms-white: #fff;
+
+$rooms-border: #e6e6e6;
+$rooms-border-soft: #eee;
+$rooms-border-btn: #ddd;
+
+$rooms-blue: #1a73e8;
+$rooms-blue-2: #4da6ff;
+
+$rooms-reco-bg: #eaf4ff;
+$rooms-exp-bg: #eef6ff;
+
+$rooms-gray-ddd: #ddd;
+
+$rooms-text-555: #555;
+
+/* ===== Mixins ===== */
+@mixin rooms-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin rooms-card($radius: 14px) {
+  background: $rooms-white;
+  border: 1px solid $rooms-border;
+  border-radius: $radius;
+  overflow: hidden;
+}
+
+/* ===== Styles ===== */
 .rooms-wrapper {
   max-width: 1180px;
   margin: auto;
@@ -6,25 +43,20 @@
 }
 
 .room-card {
-  background: #fff;
-  border: 1px solid #e6e6e6;
-  border-radius: 14px;
+  @include rooms-card;
   margin-bottom: 20px;
-  overflow: hidden;
 }
 
 .recommend {
-  background: #eaf4ff;
+  background: $rooms-reco-bg;
   padding: 10px 14px;
   font-size: 14px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
+  @include rooms-flex(flex-start, center, 10px);
 }
 
 .badge {
-  border: 1px solid #4da6ff;
-  color: #4da6ff;
+  border: 1px solid $rooms-blue-2;
+  color: $rooms-blue-2;
   font-size: 11px;
   padding: 2px 8px;
   border-radius: 6px;
@@ -33,14 +65,13 @@
 
 .room-grid {
   display: flex;
-  
   gap: 20px;
   padding: 16px;
 }
 
 .room-img {
   height: 160px;
-  background: #ddd;
+  background: $rooms-gray-ddd;
   border-radius: 12px;
   position: relative;
 }
@@ -71,27 +102,25 @@
 }
 
 .rate-plan {
-  border-left: 1px solid #eee;
+  border-left: 1px solid $rooms-border-soft;
   padding-left: 16px;
   margin-bottom: 16px;
-  display: flex; gap: 50px;
-  
+  display: flex;
+  gap: 50px;
 }
 
 .benefits {
   font-size: 13px;
   padding-left: 16px;
   margin: 8px 0;
-}
 
-.benefits li {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  li {
+    @include rooms-flex(flex-start, center, 6px);
+  }
 }
 
 .experience {
-  background: #eef6ff;
+  background: $rooms-exp-bg;
   padding: 10px;
   border-radius: 10px;
   font-size: 13px;
@@ -109,15 +138,15 @@
 
 .taxes {
   font-size: 12px;
-  color: #555;
+  color: $rooms-text-555;
 }
 
 .cta {
   margin-top: 10px;
   padding: 10px 18px;
-  background: #4da6ff;
+  background: $rooms-blue-2;
   border: none;
-  color: #fff;
+  color: $rooms-white;
   border-radius: 8px;
   font-weight: 600;
 }
@@ -128,32 +157,29 @@
 }
 
 .link {
-  color: #1a73e8;
+  color: $rooms-blue;
   font-size: 13px;
   cursor: pointer;
 }
 
 .room-types {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include rooms-flex(space-between, center);
   margin: 14px 0;
 }
 
 .filters {
-  display: flex;
-  gap: 10px;
-}
+  @include rooms-flex(flex-start, center, 10px);
 
-.filters button {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background: #fff;
-  font-size: 13px;
-}
+  button {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid $rooms-border-btn;
+    background: $rooms-white;
+    font-size: 13px;
+  }
 
-.filters .active {
-  border-color: #4da6ff;
-  color: #4da6ff;
+  .active {
+    border-color: $rooms-blue-2;
+    color: $rooms-blue-2;
+  }
 }

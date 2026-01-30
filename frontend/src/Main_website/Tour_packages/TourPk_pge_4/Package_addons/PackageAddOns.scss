@@ -1,68 +1,130 @@
-/* PackageAddOns.css */
+/* PackageAddOns.scss */
+
+/* =======================
+   Variables
+======================= */
+$packageaddons-bg: #fff;
+
+$packageaddons-border: #ddd;
+$packageaddons-border-soft: #eee;
+$packageaddons-border-card: #e6e6e6;
+
+$packageaddons-bg-strip: #fff1e6;
+
+$packageaddons-color-muted: #666;
+
+$packageaddons-color-success: #2db36c;
+
+$packageaddons-color-primary: #1b66ff;
+
+$packageaddons-badge-bg: #eadcff;
+$packageaddons-badge-color: #6a2bd9;
+
+$packageaddons-radius-md: 8px;
+$packageaddons-radius-sm: 6px;
+$packageaddons-radius-xs: 6px;
+$packageaddons-radius-badge: 12px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin packageaddons-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin packageaddons-between {
+  @include packageaddons-flex(space-between, center);
+}
+
+@mixin packageaddons-link {
+  color: $packageaddons-color-primary;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* =======================
+   Styles
+======================= */
 .addons-wrapper {
-  border: 1px solid #ddd;
-  background: #fff;
+  border: 1px solid $packageaddons-border;
+  background: $packageaddons-bg;
   margin-top: 20px;
 }
 
 .addons-header {
-  display: flex;
-  justify-content: space-between;
+  @include packageaddons-between;
   padding: 14px 16px;
   font-weight: 600;
 }
 
 .insurance-strip {
-  background: #fff1e6;
+  background: $packageaddons-bg-strip;
   padding: 14px 16px;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border-top: 1px solid $packageaddons-border-soft;
+  border-bottom: 1px solid $packageaddons-border-soft;
 }
 
 .insurance-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include packageaddons-flex(flex-start, center, 10px);
+
+  h4 {
+    margin: 0;
+    font-size: 15px;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: $packageaddons-color-muted;
+  }
 }
 
 .green-check {
-  color: #2db36c;
+  color: $packageaddons-color-success;
   font-size: 18px;
-}
-
-.insurance-left h4 {
-  margin: 0;
-  font-size: 15px;
-}
-
-.insurance-left p {
-  margin: 2px 0 0;
-  font-size: 13px;
-  color: #666;
 }
 
 .insurance-card {
   display: flex;
   justify-content: space-between;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: $packageaddons-radius-md;
   margin: 12px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid $packageaddons-border-card;
 }
 
 .card-left {
   max-width: 70%;
+
+  h5 {
+    margin: 10px 0 6px;
+    font-size: 14px;
+  }
+
+  ul {
+    padding-left: 16px;
+    margin: 0;
+  }
+
+  li {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
 }
 
 .title-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include packageaddons-flex(flex-start, center, 8px);
 }
 
 .shield-icon {
   font-size: 18px;
-  color: #1b66ff;
+  color: $packageaddons-color-primary;
 }
 
 .title {
@@ -70,40 +132,23 @@
 }
 
 .badge {
-  background: #eadcff;
-  color: #6a2bd9;
+  background: $packageaddons-badge-bg;
+  color: $packageaddons-badge-color;
   font-size: 11px;
   padding: 3px 8px;
-  border-radius: 12px;
+  border-radius: $packageaddons-radius-badge;
 }
 
 .claims {
   font-size: 12px;
-  color: #666;
+  color: $packageaddons-color-muted;
   margin: 6px 0;
-}
-
-.card-left h5 {
-  margin: 10px 0 6px;
-  font-size: 14px;
-}
-
-.card-left ul {
-  padding-left: 16px;
-  margin: 0;
-}
-
-.card-left li {
-  font-size: 13px;
-  margin-bottom: 6px;
 }
 
 .view-link {
   display: inline-block;
   margin-top: 6px;
-  color: #1b66ff;
-  font-size: 13px;
-  cursor: pointer;
+  @include packageaddons-link;
 }
 
 .card-right {
@@ -114,9 +159,7 @@
 }
 
 .tc-link {
-  color: #1b66ff;
-  font-size: 13px;
-  cursor: pointer;
+  @include packageaddons-link;
 }
 
 .price {
@@ -131,15 +174,15 @@
 .per {
   display: block;
   font-size: 12px;
-  color: #666;
+  color: $packageaddons-color-muted;
 }
 
 .select-btn {
   padding: 6px 18px;
-  border: 1px solid #1b66ff;
-  background: #fff;
-  color: #1b66ff;
-  border-radius: 6px;
+  border: 1px solid $packageaddons-color-primary;
+  background: $packageaddons-bg;
+  color: $packageaddons-color-primary;
+  border-radius: $packageaddons-radius-sm;
   font-weight: 600;
   cursor: pointer;
 }

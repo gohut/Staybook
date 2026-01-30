@@ -1,16 +1,62 @@
-/* LocationSection.css */
+/* LocationSection.scss */
+
+/* ===== Variables ===== */
+$ls-bg: #f2f2f2;
+
+$ls-white: #fff;
+
+$ls-border: #e6e6e6;
+$ls-border-input: #dcdcdc;
+
+$ls-blue: #1a73e8;
+$ls-blue-2: #4da6ff;
+
+$ls-icon: #888;
+
+$ls-map-bg: #e9edf2;
+
+$ls-max-width: 1180px;
+
+/* ===== Mixins ===== */
+@mixin ls-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin ls-card($radius: 16px, $pad: 16px) {
+  max-width: $ls-max-width;
+  margin: auto;
+  background: $ls-white;
+  border-radius: $radius;
+  padding: $pad;
+  border: 1px solid $ls-border;
+}
+
+@mixin ls-input {
+  border: 1px solid $ls-border-input;
+  border-radius: 8px;
+  background: $ls-white;
+}
+
+@mixin ls-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Styles ===== */
 .location-wrapper {
-  background: #f2f2f2;
+  background: $ls-bg;
   padding: 16px 0;
 }
 
 .location-card {
-  max-width: 1180px;
-  margin: auto;
-  background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  border: 1px solid #e6e6e6;
+  @include ls-card;
 }
 
 .location-title {
@@ -20,67 +66,53 @@
 }
 
 .location-toolbar {
-  display: flex;
-  gap: 12px;
+  @include ls-flex(flex-start, center, 12px);
   margin-bottom: 14px;
-  align-items: center;
 }
 
 .location-search {
   flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
+  @include ls-flex(flex-start, center, 8px);
+  @include ls-input;
   padding: 8px 10px;
-  background: #fff;
-}
 
-.location-search svg {
-  color: #888;
-  font-size: 14px;
-}
+  svg {
+    color: $ls-icon;
+    font-size: 14px;
+  }
 
-.location-search input {
-  border: none;
-  outline: none;
-  width: 100%;
-  font-size: 14px;
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+  }
 }
 
 .nearby {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
+  @include ls-flex(flex-start, center, 6px);
+  @include ls-input;
   padding: 8px 12px;
   font-size: 14px;
-  background: #fff;
   cursor: pointer;
 }
 
 .location-map {
   height: 300px;
   border-radius: 14px;
-  background: #e9edf2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: $ls-map-bg;
+  @include ls-center;
   position: relative;
   overflow: hidden;
 }
 
 .view-map-btn {
-  background: #fff;
-  border: 1px solid #4da6ff;
-  color: #1a73e8;
+  background: $ls-white;
+  border: 1px solid $ls-blue-2;
+  color: $ls-blue;
   padding: 10px 18px;
   border-radius: 10px;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  @include ls-flex(flex-start, center, 6px);
   cursor: pointer;
 }

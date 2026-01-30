@@ -1,26 +1,42 @@
+/* Layout.scss */
 
+/* ===== Variables ===== */
+$layout-sidebar-width: 260px;
+$layout-sidebar-offset: 280px;
+$layout-header-height: 70px;
+$layout-padding: 24px;
+$layout-blur: 4px;
 
-.layout {
+/* ===== Mixins ===== */
+@mixin layout-flex {
   display: flex;
+}
+
+@mixin layout-calc-width($offset) {
+  width: calc(100% - #{$offset});
+}
+
+/* ===== Styles ===== */
+.layout {
+  @include layout-flex;
   overflow: hidden;
 }
 
-
 .right-section_A {
-  margin-left: 280px;
-  width: calc(100% - 260px);
+  margin-left: $layout-sidebar-offset;
+  @include layout-calc-width($layout-sidebar-width);
 }
-
 
 .scroll-area {
-  margin-top: 70px;
-  height: calc(100vh - 70px);
+  margin-top: $layout-header-height;
+  height: calc(100vh - #{$layout-header-height});
   overflow-y: auto;
-  padding: 24px;
+  padding: $layout-padding;
 }
 
-
-.blurred .right-section {
-  filter: blur(4px);
-  pointer-events: none;
+.blurred {
+  .right-section {
+    filter: blur($layout-blur);
+    pointer-events: none;
+  }
 }

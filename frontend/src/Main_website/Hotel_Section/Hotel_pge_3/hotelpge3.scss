@@ -1,36 +1,79 @@
-/* searchbar-row.css */
-.searchbar-row {
+/* searchbar-row.scss */
+
+/* =======================
+   Variables
+======================= */
+$searchbarrow-bg: #ffffff;
+$searchbarrow-bg-field: #f8f8f8;
+$searchbarrow-bg-breadcrumb: #fafafa;
+
+$searchbarrow-color-white: #fff;
+$searchbarrow-color-black: #000;
+
+$searchbarrow-color-text: #555;
+$searchbarrow-color-label: #666;
+$searchbarrow-color-sep: #999;
+
+$searchbarrow-color-link: #1a73e8;
+
+$searchbarrow-border-bottom: #e6e6e6;
+$searchbarrow-border-field: #dcdcdc;
+
+$searchbarrow-radius: 8px;
+
+$searchbarrow-gradient-start: #4da6ff;
+$searchbarrow-gradient-end: #0066ff;
+
+/* =======================
+   Mixins
+======================= */
+@mixin searchbarrow-flex($justify: flex-start, $align: center, $gap: null) {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin searchbarrow-field-base($min-width) {
+  background: $searchbarrow-bg-field;
+  border: 1px solid $searchbarrow-border-field;
+  border-radius: $searchbarrow-radius;
+  padding: 6px 10px;
+  min-width: $min-width;
+}
+
+/* =======================
+   Styles
+======================= */
+.searchbar-row {
+  @include searchbarrow-flex(flex-start, center, 12px);
   padding: 14px 20px;
-  background: #ffffff;
-  border-bottom: 1px solid #e6e6e6;
+  background: $searchbarrow-bg;
+  border-bottom: 1px solid $searchbarrow-border-bottom;
 }
 
 .search-field {
-  background: #f8f8f8;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
-  padding: 6px 10px;
-  min-width: 170px;
-}
+  @include searchbarrow-field-base(170px);
 
-.search-field.large {
-  min-width: 320px;
-}
+  &.large {
+    min-width: 320px;
+  }
 
-.search-field label {
-  font-size: 11px;
-  color: #666;
-  display: block;
-  margin-bottom: 2px;
-}
+  label {
+    font-size: 11px;
+    color: $searchbarrow-color-label;
+    display: block;
+    margin-bottom: 2px;
+  }
 
-.search-field .value {
-  font-size: 14px;
-  font-weight: 600;
-  color: #000;
+  .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: $searchbarrow-color-black;
+  }
 }
 
 .search-btn {
@@ -38,10 +81,10 @@
   padding: 12px 36px;
   font-size: 15px;
   font-weight: 600;
-  color: #fff;
-  background: linear-gradient(90deg, #4da6ff, #0066ff);
+  color: $searchbarrow-color-white;
+  background: linear-gradient(90deg, $searchbarrow-gradient-start, $searchbarrow-gradient-end);
   border: none;
-  border-radius: 8px;
+  border-radius: $searchbarrow-radius;
   cursor: pointer;
 }
 
@@ -49,21 +92,21 @@
 .breadcrumb-row {
   padding: 10px 20px;
   font-size: 13px;
-  background: #fafafa;
-  color: #555;
-}
+  background: $searchbarrow-bg-breadcrumb;
+  color: $searchbarrow-color-text;
 
-.breadcrumb-row .link {
-  color: #1a73e8;
-  cursor: pointer;
-}
+  .link {
+    color: $searchbarrow-color-link;
+    cursor: pointer;
+  }
 
-.breadcrumb-row .sep {
-  margin: 0 6px;
-  color: #999;
-}
+  .sep {
+    margin: 0 6px;
+    color: $searchbarrow-color-sep;
+  }
 
-.breadcrumb-row .current {
-  color: #000;
-  font-weight: 500;
+  .current {
+    color: $searchbarrow-color-black;
+    font-weight: 500;
+  }
 }

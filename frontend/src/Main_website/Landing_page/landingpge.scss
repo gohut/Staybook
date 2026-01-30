@@ -1,18 +1,38 @@
-*
-{
-    padding: 0;margin: 0;
-    box-sizing: border-box;
-}
-.hotelpage-mn
-{
+/* HotelPage.scss */
 
-   width: 100%;max-width: 1747px;
+/* =======================
+   Variables
+======================= */
+$hotelpage-max-width: 1747px;
+
+$hotelpage-flight-padding: 10px 100px;
+$hotelpage-hmstay-padding: 10px 150px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin hotelpage-reset {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-.FlightContent
-{
-    padding: 10px 100px;
+
+/* =======================
+   Styles
+======================= */
+* {
+  @include hotelpage-reset;
 }
-.Hmstaycontent
-{
-    padding: 10px 150px;
+
+.hotelpage-mn {
+  width: 100%;
+  max-width: $hotelpage-max-width;
+}
+
+.FlightContent {
+  padding: $hotelpage-flight-padding;
+}
+
+.Hmstaycontent {
+  padding: $hotelpage-hmstay-padding;
 }

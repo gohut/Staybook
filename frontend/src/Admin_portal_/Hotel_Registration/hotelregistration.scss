@@ -1,71 +1,118 @@
-/* HotelRegistration.css */
+/* HotelRegistration.scss */
 
-.hr-container {
-  padding: 24px;
+/* ===== Variables ===== */
+$hr-white: #fff;
+
+$hr-gray-500: #6b7280;
+$hr-slate-300: #94a3b8;
+
+$hr-slate-50: #f1f5f9;
+$hr-gray-200: #e5e7eb;
+
+$hr-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+
+$hr-blue-600: #2563eb;
+
+$hr-pill-complete-bg: #e0f2fe;
+$hr-pill-complete-text: #075985;
+
+$hr-pill-incomplete-bg: #fef3c7;
+$hr-pill-incomplete-text: #92400e;
+
+$hr-pill-pending-bg: #ffedd5;
+$hr-pill-pending-text: #9a3412;
+
+$hr-pill-approved-bg: #dcfce7;
+$hr-pill-approved-text: #166534;
+
+$hr-pill-rejected-bg: #fee2e2;
+$hr-pill-rejected-text: #991b1b;
+
+/* ===== Mixins ===== */
+@mixin hr-grid($cols, $gap) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
 }
 
-.hr-container h1 {
-  font-size: 26px;
-  font-weight: 600;
+@mixin hr-card($padding, $radius) {
+  background: $hr-white;
+  padding: $padding;
+  border-radius: $radius;
+  box-shadow: $hr-shadow;
+}
+
+@mixin hr-pill($bg, $color) {
+  background: $bg;
+  color: $color;
+}
+
+@mixin hr-btn($bg, $color) {
+  background: $bg;
+  color: $color;
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
+.hr-container {
+  padding: 24px;
+
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+  }
 }
 
 .subtitle {
-  color: #6b7280;
+  color: $hr-gray-500;
   margin-bottom: 20px;
 }
 
 .stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  @include hr-grid(4, 16px);
   margin-bottom: 24px;
 }
 
 .stat-card {
-  background: #fff;
-  padding: 18px;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-}
+  @include hr-card(18px, 12px);
 
-.stat-card h2 {
-  font-size: 24px;
-  margin-bottom: 4px;
-}
+  h2 {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
 
-.stat-card span {
-  color: #6b7280;
-  font-size: 14px;
+  span {
+    color: $hr-gray-500;
+    font-size: 14px;
+  }
 }
 
 .table-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-}
+  @include hr-card(16px, 14px);
 
-.table-card table {
-  width: 100%;
-  border-collapse: collapse;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
 
-.table-card th {
-  text-align: left;
-  padding: 12px;
-  font-size: 13px;
-  color: #6b7280;
-  border-bottom: 1px solid #e5e7eb;
-}
+  th {
+    text-align: left;
+    padding: 12px;
+    font-size: 13px;
+    color: $hr-gray-500;
+    border-bottom: 1px solid $hr-gray-200;
+  }
 
-.table-card td {
-  padding: 14px 12px;
-  border-bottom: 1px solid #f1f5f9;
+  td {
+    padding: 14px 12px;
+    border-bottom: 1px solid $hr-slate-50;
+  }
 }
 
 .muted {
   font-size: 12px;
-  color: #94a3b8;
+  color: $hr-slate-300;
 }
 
 .pill {
@@ -73,47 +120,40 @@
   border-radius: 999px;
   font-size: 12px;
   font-weight: 500;
-}
 
-.pill.complete {
-  background: #e0f2fe;
-  color: #075985;
-}
+  &.complete {
+    @include hr-pill($hr-pill-complete-bg, $hr-pill-complete-text);
+  }
 
-.pill.incomplete {
-  background: #fef3c7;
-  color: #92400e;
-}
+  &.incomplete {
+    @include hr-pill($hr-pill-incomplete-bg, $hr-pill-incomplete-text);
+  }
 
-.pill.pending {
-  background: #ffedd5;
-  color: #9a3412;
-}
+  &.pending {
+    @include hr-pill($hr-pill-pending-bg, $hr-pill-pending-text);
+  }
 
-.pill.approved {
-  background: #dcfce7;
-  color: #166534;
-}
+  &.approved {
+    @include hr-pill($hr-pill-approved-bg, $hr-pill-approved-text);
+  }
 
-.pill.rejected {
-  background: #fee2e2;
-  color: #991b1b;
+  &.rejected {
+    @include hr-pill($hr-pill-rejected-bg, $hr-pill-rejected-text);
+  }
 }
 
 .review-btn {
-  background: #2563eb;
-  color: #fff;
-  border: none;
+  @include hr-btn($hr-blue-600, $hr-white);
   padding: 6px 14px;
   border-radius: 8px;
-  cursor: pointer;
 }
-/* add to hotelregistration.css */
+
+/* add to hotelregistration.scss */
 .blur-wrap {
   filter: blur(4px);
   pointer-events: none;
-}
 
-.blur-wrap + .rp-overlay {
-  pointer-events: all;
+  + .rp-overlay {
+    pointer-events: all;
+  }
 }

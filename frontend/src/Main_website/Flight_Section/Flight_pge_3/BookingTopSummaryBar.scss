@@ -1,9 +1,74 @@
-/* BookingTopSummaryBar.css ✅ UPDATED (exact overflow like img1) */
+/* BookingTopSummaryBar.scss */
 
+/* ===== Variables ===== */
+$btsb2-white: #fff;
+
+$btsb2-bg-start: #0a1b2d;
+$btsb2-bg-end: #12395b;
+
+$btsb2-blue: #1a73e8;
+
+$btsb2-border: #e9e9e9;
+$btsb2-border-row: #f1f1f1;
+$btsb2-border-total: #ededed;
+
+$btsb2-title: #222;
+$btsb2-text: #333;
+$btsb2-muted: #555;
+$btsb2-gray-666: #666;
+$btsb2-dark-111: #111;
+
+$btsb2-step-muted: rgba(255, 255, 255, 0.75);
+
+$btsb2-wrap-height: 210px;
+$btsb2-max-width: 1220px;
+
+$btsb2-right-width: 320px;
+
+$btsb2-gap-lg: 18px;
+$btsb2-gap-md: 16px;
+
+/* ===== Mixins ===== */
+@mixin btsb2-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin btsb2-grid($cols, $gap: null) {
+  display: grid;
+  grid-template-columns: $cols;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin btsb2-card($pad: null) {
+  background: $btsb2-white;
+  border-radius: 10px;
+  border: 1px solid $btsb2-border;
+
+  @if $pad != null {
+    padding: $pad;
+  }
+}
+
+@mixin btsb2-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
 .btsb2-wrap {
   position: relative;
   width: 100%;
-  height: 210px; /* fixed like screenshot */
+  height: $btsb2-wrap-height; /* fixed like screenshot */
   overflow: visible;
 }
 
@@ -11,7 +76,7 @@
 .btsb2-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #0a1b2d, #12395b);
+  background: linear-gradient(90deg, $btsb2-bg-start, $btsb2-bg-end);
   z-index: 0;
 }
 
@@ -20,64 +85,54 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1220px;
+  max-width: $btsb2-max-width;
   margin: 0 auto;
   padding: 18px 14px 0;
 }
 
 /* title + steps */
 .btsb2-titleRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include btsb2-flex(space-between, center);
   margin-bottom: 14px;
-}
 
-.btsb2-titleRow h2 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 900;
-  color: #fff;
+  h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+    color: $btsb2-white;
+  }
 }
 
 .btsb2-steps {
-  display: flex;
-  gap: 30px;
+  @include btsb2-flex(flex-start, center, 30px);
 }
 
 .btsb2-step {
-  border: none;
-  background: transparent;
-  cursor: pointer;
+  @include btsb2-btn-reset;
   font-size: 13px;
   font-weight: 800;
-  color: rgba(255, 255, 255, 0.75);
-}
+  color: $btsb2-step-muted;
 
-.btsb2-step:hover {
-  color: #fff;
+  &:hover {
+    color: $btsb2-white;
+  }
 }
 
 /* grid */
 .btsb2-grid {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 18px;
+  @include btsb2-grid(1fr $btsb2-right-width, $btsb2-gap-lg);
   align-items: start;
 }
 
 /* left */
 .btsb2-left {
-  display: flex;
+  @include btsb2-flex(flex-start, stretch, $btsb2-gap-md);
   flex-direction: column;
-  gap: 16px;
 }
 
 /* common card */
 .btsb2-card {
-  background: #fff;
-  border-radius: 10px;
-  border: 1px solid #e9e9e9;
+  @include btsb2-card;
 }
 
 /* trip big card */
@@ -87,33 +142,29 @@
 }
 
 .btsb2-cardHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include btsb2-flex(space-between, center);
   font-size: 16px;
   font-weight: 900;
-  color: #222;
+  color: $btsb2-title;
 }
 
 .btsb2-down {
   font-size: 18px;
-  color: #666;
+  color: $btsb2-gray-666;
 }
 
 .btsb2-sub {
   margin-top: 8px;
   font-size: 13px;
   font-weight: 800;
-  color: #555;
+  color: $btsb2-muted;
 }
 
 /* mini cards */
 .btsb2-mini {
   height: 48px;
   padding: 0 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include btsb2-flex(space-between, center);
 }
 
 .btsb2-miniLeft {
@@ -122,20 +173,18 @@
   align-items: center;
   font-size: 15px;
   font-weight: 900;
-  color: #222;
+  color: $btsb2-title;
 }
 
 .btsb2-name {
   font-size: 14px;
   font-weight: 800;
-  color: #666;
+  color: $btsb2-gray-666;
 }
 
 .btsb2-edit {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: #1a73e8;
+  @include btsb2-btn-reset;
+  color: $btsb2-blue;
   font-size: 16px;
 }
 
@@ -145,39 +194,33 @@
 }
 
 .btsb2-fareCard {
-  background: #fff;
-  border-radius: 10px;
-  border: 1px solid #e9e9e9;
-  padding: 18px;
+  @include btsb2-card(18px);
   height: fit-content;
   min-height: 150px;
-}
 
-.btsb2-fareCard h3 {
-  margin: 0 0 12px;
-  font-size: 16px;
-  font-weight: 900;
-  color: #222;
+  h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 900;
+    color: $btsb2-title;
+  }
 }
 
 .btsb2-fareRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include btsb2-flex(space-between, center);
   padding: 12px 0;
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 1px solid $btsb2-border-row;
   font-size: 14px;
   font-weight: 800;
-  color: #333;
+  color: $btsb2-text;
 }
 
 .btsb2-total {
   padding-top: 14px;
   margin-top: 6px;
-  border-top: 1px solid #ededed;
-  display: flex;
-  justify-content: space-between;
+  border-top: 1px solid $btsb2-border-total;
+  @include btsb2-flex(space-between, center);
   font-size: 15px;
   font-weight: 900;
-  color: #111;
+  color: $btsb2-dark-111;
 }

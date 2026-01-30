@@ -1,17 +1,36 @@
-/* ReviewBookingHeader.css */
-.review-booking-wrapper {
+/* ReviewBookingHeader.scss */
+
+/* ===== Variables ===== */
+$rbh-white: #ffffff;
+
+$rbh-border: #e5e5e5;
+
+$rbh-text: #000000;
+
+$rbh-max-width: 1200px;
+
+/* ===== Mixins ===== */
+@mixin rbh-container {
+  max-width: $rbh-max-width;
+  margin: 0 auto;
+}
+
+@mixin rbh-full-width {
   width: 100%;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e5e5;
+}
+
+/* ===== Styles ===== */
+.review-booking-wrapper {
+  @include rbh-full-width;
+  background: $rbh-white;
+  border-bottom: 1px solid $rbh-border;
 }
 
 .review-booking-header {
-  max-width: 1200px;
-  margin: 0 auto;
+  @include rbh-container;
   padding: 18px 24px;
   font-size: 22px;
   font-weight: 700;
-  color: #000000;
+  color: $rbh-text;
   text-align: left;
 }
-

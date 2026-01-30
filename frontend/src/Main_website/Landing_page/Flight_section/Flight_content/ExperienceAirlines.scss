@@ -1,16 +1,57 @@
-/* ExperienceAirlines.css */
-.airline-section {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  margin-bottom: 28px;
+/* ExperienceAirlines.scss */
+
+/* =======================
+   Variables
+======================= */
+$experienceairlines-bg: #ffffff;
+$experienceairlines-color-white: #fff;
+
+$experienceairlines-radius: 14px;
+
+$experienceairlines-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+$experienceairlines-gradient-start: #3b78c2;
+$experienceairlines-gradient-end: #5aa0e6;
+
+/* =======================
+   Mixins
+======================= */
+@mixin experienceairlines-panel($padding: 24px) {
+  background: $experienceairlines-bg;
+  border-radius: $experienceairlines-radius;
+  padding: $padding;
+  box-shadow: $experienceairlines-shadow;
 }
 
-.airline-section h2 {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 18px;
+@mixin experienceairlines-abs($top: null, $right: null, $bottom: null, $left: null) {
+  position: absolute;
+
+  @if $top != null {
+    top: $top;
+  }
+  @if $right != null {
+    right: $right;
+  }
+  @if $bottom != null {
+    bottom: $bottom;
+  }
+  @if $left != null {
+    left: $left;
+  }
+}
+
+/* =======================
+   Styles
+======================= */
+.airline-section {
+  @include experienceairlines-panel(24px);
+  margin-bottom: 28px;
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
 }
 
 .airline-cards {
@@ -21,25 +62,21 @@
 .airline-card {
   flex: 1;
   height: 120px;
-  background: linear-gradient(180deg, #3b78c2, #5aa0e6);
-  border-radius: 14px;
+  background: linear-gradient(180deg, $experienceairlines-gradient-start, $experienceairlines-gradient-end);
+  border-radius: $experienceairlines-radius;
   position: relative;
   overflow: hidden;
-  color: #fff;
+  color: $experienceairlines-color-white;
   font-weight: 600;
   padding: 16px;
-}
 
-.airline-card span {
-  position: absolute;
-  top: 14px;
-  left: 16px;
-  z-index: 2;
-}
+  span {
+    @include experienceairlines-abs(14px, null, null, 16px);
+    z-index: 2;
+  }
 
-.airline-card img {
-  position: absolute;
-  right: -10px;
-  bottom: -10px;
-  height: 110px;
+  img {
+    @include experienceairlines-abs(null, -10px, -10px, null);
+    height: 110px;
+  }
 }

@@ -1,23 +1,82 @@
+/* FlightsResultsList.scss */
+
+/* ===== Variables ===== */
+$frl-white: #fff;
+
+$frl-border: #ededed;
+$frl-border-item: #f1f1f1;
+
+$frl-dark-111: #111;
+$frl-dark-222: #222;
+$frl-gray-777: #777;
+$frl-gray-8a: #8a8a8a;
+$frl-gray-9a: #9a9a9a;
+$frl-gray-4b: #4b4b4b;
+
+$frl-line: #dfe6ef;
+
+$frl-airline-logo-bg: #ff7a00;
+
+$frl-blue: #1a73e8;
+$frl-btn-border: #66a6ff;
+$frl-btn-bg: #eaf3ff;
+$frl-btn-hover: #dbeeff;
+
+$frl-lock-bg: #f3f7ff;
+$frl-lock-hover: #e7f0ff;
+
+$frl-promo-bg: #fdebd2;
+$frl-promo-border: #f1dfc7;
+
+$frl-dot: #ff4fb6;
+
+$frl-card-radius: 10px;
+
+/* ===== Mixins ===== */
+@mixin frl-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin frl-card {
+  background: $frl-white;
+  border: 1px solid $frl-border;
+  border-radius: $frl-card-radius;
+  overflow: hidden;
+}
+
+@mixin frl-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+@mixin frl-pill {
+  border-radius: 999px;
+}
+
+/* ===== Styles ===== */
 .frl-wrap {
   width: 100%;
-  display: flex;
+  @include frl-flex(flex-start, stretch, 16px);
   flex-direction: column;
-  gap: 16px;
 }
 
 .frl-card {
-  background: #fff;
-  border: 1px solid #ededed;
-  border-radius: 10px;
-  overflow: hidden;
+  @include frl-card;
 }
 
 .frl-topNote {
   padding: 10px 14px;
   font-size: 12px;
   font-weight: 800;
-  color: #222;
-  border-bottom: 1px solid #f1f1f1;
+  color: $frl-dark-222;
+  border-bottom: 1px solid $frl-border-item;
 }
 
 .frl-row {
@@ -29,17 +88,15 @@
 }
 
 .frl-airline {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include frl-flex(flex-start, center, 10px);
 }
 
 .frl-logo {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #ff7a00;
-  color: #fff;
+  background: $frl-airline-logo-bg;
+  color: $frl-white;
   font-weight: 900;
   display: grid;
   place-items: center;
@@ -48,13 +105,13 @@
 .frl-name {
   font-size: 13px;
   font-weight: 900;
-  color: #222;
+  color: $frl-dark-222;
 }
 
 .frl-code {
   font-size: 11px;
   font-weight: 700;
-  color: #8a8a8a;
+  color: $frl-gray-8a;
   margin-top: 2px;
 }
 
@@ -65,13 +122,13 @@
 .frl-time {
   font-size: 16px;
   font-weight: 900;
-  color: #222;
+  color: $frl-dark-222;
 }
 
 .frl-city {
   font-size: 11px;
   font-weight: 700;
-  color: #777;
+  color: $frl-gray-777;
   margin-top: 2px;
 }
 
@@ -82,20 +139,20 @@
 .frl-duration {
   font-size: 12px;
   font-weight: 900;
-  color: #777;
+  color: $frl-gray-777;
 }
 
 .frl-line {
   height: 2px;
-  background: #dfe6ef;
+  background: $frl-line;
   margin: 8px 18px;
-  border-radius: 999px;
+  @include frl-pill;
 }
 
 .frl-stop {
   font-size: 11px;
   font-weight: 800;
-  color: #9a9a9a;
+  color: $frl-gray-9a;
 }
 
 .frl-priceBlock {
@@ -105,42 +162,40 @@
 .frl-price {
   font-size: 18px;
   font-weight: 900;
-  color: #111;
+  color: $frl-dark-111;
 }
 
 .frl-per {
   font-size: 11px;
   font-weight: 700;
-  color: #9a9a9a;
+  color: $frl-gray-9a;
   margin-top: 2px;
 }
 
 .frl-actions {
-  display: flex;
+  @include frl-flex(flex-start, flex-end, 8px);
   flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
 }
 
 .frl-btn {
-  border: 1px solid #66a6ff;
-  background: #eaf3ff;
-  color: #1a73e8;
+  border: 1px solid $frl-btn-border;
+  background: $frl-btn-bg;
+  color: $frl-blue;
   font-weight: 900;
   padding: 8px 14px;
   border-radius: 20px;
   cursor: pointer;
   font-size: 12px;
-}
 
-.frl-btn:hover {
-  background: #dbeeff;
+  &:hover {
+    background: $frl-btn-hover;
+  }
 }
 
 .frl-lock {
   border: none;
-  background: #f3f7ff;
-  color: #1a73e8;
+  background: $frl-lock-bg;
+  color: $frl-blue;
   font-weight: 800;
   font-size: 12px;
   padding: 8px 12px;
@@ -149,30 +204,26 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-}
 
-.frl-lock:hover {
-  background: #e7f0ff;
+  &:hover {
+    background: $frl-lock-hover;
+  }
 }
 
 .frl-linksRow {
   padding: 0 14px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include frl-flex(space-between, center);
 }
 
 .frl-link {
-  border: none;
-  background: transparent;
-  cursor: pointer;
+  @include frl-btn-reset;
   font-size: 12px;
   font-weight: 900;
-  color: #1a73e8;
-}
+  color: $frl-blue;
 
-.frl-link.blue {
-  color: #1a73e8;
+  &.blue {
+    color: $frl-blue;
+  }
 }
 
 .frl-plus {
@@ -181,20 +232,18 @@
 }
 
 .frl-promo {
-  background: #fdebd2;
+  background: $frl-promo-bg;
   padding: 10px 14px;
   font-size: 11px;
   font-weight: 700;
-  color: #4b4b4b;
-  border-top: 1px solid #f1dfc7;
-  display: flex;
-  gap: 10px;
-  align-items: center;
+  color: $frl-gray-4b;
+  border-top: 1px solid $frl-promo-border;
+  @include frl-flex(flex-start, center, 10px);
 }
 
 .frl-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ff4fb6;
+  background: $frl-dot;
 }

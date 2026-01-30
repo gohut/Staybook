@@ -1,29 +1,77 @@
-/* DayPlanSection.css */
+/* DayPlanSection.scss */
+
+/* =======================
+   Variables
+======================= */
+$dayplansection-font-family: Inter, sans-serif;
+
+$dayplansection-bg: #fff;
+$dayplansection-bg-soft: #eef7ff;
+
+$dayplansection-color-primary: #2563eb;
+$dayplansection-color-blue: #3b82f6;
+
+$dayplansection-color-muted: #6b7280;
+$dayplansection-color-dark: #111827;
+
+$dayplansection-color-white: #fff;
+$dayplansection-color-tag: #ff7a59;
+
+$dayplansection-color-danger: red;
+
+$dayplansection-border: #e5e7eb;
+
+$dayplansection-radius-pill: 20px;
+$dayplansection-radius-md: 10px;
+$dayplansection-radius-sm: 8px;
+$dayplansection-radius-xs: 6px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin dayplansection-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin dayplansection-softbox($padding, $radius: $dayplansection-radius-xs) {
+  background: $dayplansection-bg-soft;
+  padding: $padding;
+  border-radius: $radius;
+}
+
+/* =======================
+   Styles
+======================= */
 .dayplan-wrapper {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  font-family: Inter, sans-serif;
+  background: $dayplansection-bg;
+  border: 1px solid $dayplansection-border;
+  font-family: $dayplansection-font-family;
 }
 
 .plan-summary {
-  display: flex;
-  gap: 40px;
+  @include dayplansection-flex(flex-start, center, 40px);
   padding: 14px 20px;
-  background: #eef7ff;
+  background: $dayplansection-bg-soft;
   font-weight: 600;
   font-size: 14px;
 }
 
 .pill {
   padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid #3b82f6;
-  color: #3b82f6;
-}
+  border-radius: $dayplansection-radius-pill;
+  border: 1px solid $dayplansection-color-blue;
+  color: $dayplansection-color-blue;
 
-.pill.active {
-  background: #3b82f6;
-  color: #fff;
+  &.active {
+    background: $dayplansection-color-blue;
+    color: $dayplansection-color-white;
+  }
 }
 
 .dayplan-body {
@@ -32,24 +80,24 @@
 
 .date-column {
   width: 180px;
-  border-right: 1px solid #e5e7eb;
+  border-right: 1px solid $dayplansection-border;
   padding: 16px;
-}
 
-.date-column ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
-}
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
 
-.date-column li {
-  padding: 8px 0;
-  color: #6b7280;
-}
+  li {
+    padding: 8px 0;
+    color: $dayplansection-color-muted;
 
-.date-column li.active {
-  font-weight: 700;
-  color: #111827;
+    &.active {
+      font-weight: 700;
+      color: $dayplansection-color-dark;
+    }
+  }
 }
 
 .day-content {
@@ -58,17 +106,15 @@
 }
 
 .day-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  @include dayplansection-flex(flex-start, center, 12px);
   margin-bottom: 16px;
 }
 
 .day-tag {
-  background: #ff7a59;
-  color: #fff;
+  background: $dayplansection-color-tag;
+  color: $dayplansection-color-white;
   padding: 4px 12px;
-  border-radius: 20px;
+  border-radius: $dayplansection-radius-pill;
   font-size: 13px;
 }
 
@@ -78,42 +124,40 @@
 
 .included {
   font-size: 13px;
-  color: #6b7280;
+  color: $dayplansection-color-muted;
 }
 
 .section {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid $dayplansection-border;
   padding: 16px 0;
 }
 
 .section-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include dayplansection-flex(flex-start, center, 8px);
   font-weight: 700;
-  color: #111827;
+  color: $dayplansection-color-dark;
+
+  &.between {
+    justify-content: space-between;
+  }
 }
 
-.section-title.between {
-  justify-content: space-between;
-}
-
-.note span {
-  color: red;
-  font-weight: 600;
+.note {
+  span {
+    color: $dayplansection-color-danger;
+    font-weight: 600;
+  }
 }
 
 .info-box {
-  background: #eef7ff;
-  padding: 10px;
-  border-radius: 6px;
+  @include dayplansection-softbox(10px, $dayplansection-radius-xs);
   margin-top: 10px;
   font-size: 14px;
-}
 
-.info-box span {
-  color: #2563eb;
-  font-weight: 600;
+  span {
+    color: $dayplansection-color-primary;
+    font-weight: 600;
+  }
 }
 
 .transfer-card,
@@ -121,57 +165,55 @@
   display: flex;
   gap: 16px;
   margin-top: 14px;
-}
 
-.transfer-card img,
-.hotel-card img {
-  width: 180px;
-  border-radius: 8px;
+  img {
+    width: 180px;
+    border-radius: $dayplansection-radius-sm;
+  }
 }
 
 .actions {
-  color: #2563eb;
+  color: $dayplansection-color-primary;
   font-weight: 600;
   font-size: 13px;
 }
 
 .read {
-  color: #2563eb;
+  color: $dayplansection-color-primary;
 }
 
-.hotel-info ul {
-  padding-left: 18px;
-  margin: 6px 0;
-}
+.hotel-info {
+  ul {
+    padding-left: 18px;
+    margin: 6px 0;
+  }
 
-.hotel-info li {
-  font-size: 14px;
-  margin-bottom: 4px;
+  li {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
 }
 
 .link {
-  color: #2563eb;
+  color: $dayplansection-color-primary;
   font-weight: 600;
   font-size: 14px;
 }
 
 .add-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #eef7ff;
-  padding: 16px;
-  border-radius: 10px;
+  @include dayplansection-flex(flex-start, center, 12px);
+  @include dayplansection-softbox(16px, $dayplansection-radius-md);
   margin: 20px 0;
-}
 
-.add-box svg {
-  font-size: 22px;
-  color: #3b82f6;
+  svg {
+    font-size: 22px;
+    color: $dayplansection-color-blue;
+  }
 }
 
 .add {
   margin-left: auto;
-  color: #2563eb;
+  color: $dayplansection-color-primary;
   font-weight: 700;
 }
+

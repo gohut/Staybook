@@ -1,28 +1,44 @@
+/* ListingsHeader.scss */
+
+/* =======================
+   Variables
+======================= */
+$listingsheader-color-muted: #6b7280;
+$listingsheader-color-primary: #2563eb;
+
+/* =======================
+   Mixins
+======================= */
+@mixin listingsheader-tab-text($size: 14px) {
+  font-size: $size;
+  cursor: pointer;
+}
+
+/* =======================
+   Styles
+======================= */
 .listings-header {
   margin-bottom: 20px;
+
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
 }
 
 .sort-tabs {
   display: flex;
   gap: 16px;
   margin-top: 10px;
-}
 
-.sort-tabs span {
-  cursor: pointer;
-  color: #6b7280;
-}
+  span {
+    @include listingsheader-tab-text(14px);
+    color: $listingsheader-color-muted;
+  }
 
-.sort-tabs .active {
-  color: #2563eb;
-  border-bottom: 2px solid #2563eb;
-}
-.listings-header h2 {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.sort-tabs span {
-  font-size: 14px;
+  .active {
+    color: $listingsheader-color-primary;
+    border-bottom: 2px solid $listingsheader-color-primary;
+  }
 }

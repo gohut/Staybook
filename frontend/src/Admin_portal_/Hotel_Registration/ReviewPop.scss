@@ -1,17 +1,62 @@
-/* ReviewPop.css */
+/* ReviewPop.scss */
+
+/* ===== Variables ===== */
+$rp-white: #fff;
+
+$rp-overlay-bg: rgba(0, 0, 0, 0.45);
+
+$rp-gray-200: #e5e7eb;
+$rp-gray-500: #6b7280;
+$rp-slate-100: #f8fafc;
+$rp-slate-300: #cbd5e1;
+$rp-slate-400: #94a3b8;
+
+$rp-blue-600: #2563eb;
+$rp-green-600: #16a34a;
+$rp-red-600: #dc2626;
+
+/* ===== Mixins ===== */
+@mixin rp-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin rp-grid($cols, $gap) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
+}
+
+@mixin rp-btn-base {
+  border: none;
+  border-radius: 8px;
+}
+
+@mixin rp-btn($bg, $color: null) {
+  background: $bg;
+
+  @if $color != null {
+    color: $color;
+  }
+}
+
+/* ===== Styles ===== */
 .rp-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: $rp-overlay-bg;
   backdrop-filter: blur(6px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include rp-flex(center, center);
   z-index: 2000;
 }
 
 .rp-modal {
-  background: #fff;
+  background: $rp-white;
   width: 900px;
   max-height: 90vh;
   overflow-y: auto;
@@ -20,17 +65,15 @@
 }
 
 .rp-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e5e7eb;
+  @include rp-flex(space-between, center);
+  border-bottom: 1px solid $rp-gray-200;
   padding-bottom: 12px;
   margin-bottom: 20px;
-}
 
-.rp-header p {
-  color: #6b7280;
-  font-size: 14px;
+  p {
+    color: $rp-gray-500;
+    font-size: 14px;
+  }
 }
 
 .close {
@@ -43,107 +86,89 @@ h3 {
 }
 
 .rp-card {
-  background: #f8fafc;
+  background: $rp-slate-100;
   border-radius: 12px;
   padding: 16px;
 }
 
 .grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  @include rp-grid(2, 20px);
 }
 
 label {
   display: block;
   font-size: 13px;
-  color: #6b7280;
+  color: $rp-gray-500;
   margin-top: 12px;
 }
 
 .doc-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f8fafc;
+  @include rp-flex(space-between, center);
+  background: $rp-slate-100;
   padding: 14px;
   border-radius: 12px;
   margin-bottom: 12px;
-}
 
-.doc-row > div:first-child {
-  display: flex;
-  gap: 12px;
-}
+  > div:first-child {
+    @include rp-flex(flex-start, stretch, 12px);
+  }
 
-.doc-row span {
-  font-size: 13px;
-  color: #6b7280;
+  span {
+    font-size: 13px;
+    color: $rp-gray-500;
+  }
 }
 
 .doc-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
+  @include rp-flex(flex-start, center, 10px);
 
-.doc-actions .ok {
-  color: #16a34a;
-  font-size: 20px;
-}
+  .ok {
+    color: $rp-green-600;
+    font-size: 20px;
+  }
 
-.doc-actions button {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 8px;
+  button {
+    @include rp-btn($rp-blue-600, $rp-white);
+    @include rp-btn-base;
+    padding: 6px 14px;
+  }
 }
 
 .photos {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  @include rp-grid(4, 14px);
 }
 
 .photo-box {
   height: 100px;
-  background: #e5e7eb;
+  background: $rp-gray-200;
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #94a3b8;
+  @include rp-flex(center, center);
+  color: $rp-slate-400;
 }
 
 .rp-footer {
-  display: flex;
-  justify-content: space-between;
+  @include rp-flex(space-between, stretch);
   margin-top: 24px;
-}
 
-.rp-footer button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-weight: 500;
+  button {
+    @include rp-flex(flex-start, center, 8px);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
 }
 
 .reject {
-  background: #dc2626;
-  color: #fff;
+  @include rp-btn($rp-red-600, $rp-white);
   border: none;
 }
 
 .request {
-  background: #fff;
-  border: 1px solid #cbd5e1;
+  background: $rp-white;
+  border: 1px solid $rp-slate-300;
 }
 
 .approve {
-  background: #16a34a;
-  color: #fff;
+  @include rp-btn($rp-green-600, $rp-white);
   border: none;
 }

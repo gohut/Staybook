@@ -1,21 +1,45 @@
+/* SearchBar.scss */
+
+/* =======================
+   Variables
+======================= */
+$searchbar-bg: #fff;
+
+$searchbar-color-primary: #2563eb;
+$searchbar-color-white: #fff;
+
+$searchbar-border-color: #e5e7eb;
+
+$searchbar-radius: 8px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin searchbar-radius-border($radius: $searchbar-radius, $border: 1px solid $searchbar-border-color) {
+  border: $border;
+  border-radius: $radius;
+}
+
+/* =======================
+   Styles
+======================= */
 .search-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr) 140px;
   gap: 12px;
   padding: 16px 40px;
-  background: #fff;
-}
+  background: $searchbar-bg;
 
-.search-bar input {
-  padding: 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-}
+  input {
+    padding: 12px;
+    @include searchbar-radius-border($searchbar-radius, 1px solid $searchbar-border-color);
+  }
 
-.search-bar button {
-  background: #2563eb;
-  color: #fff;
-  border-radius: 8px;
-  border: none;
-  font-weight: 600;
+  button {
+    background: $searchbar-color-primary;
+    color: $searchbar-color-white;
+    border-radius: $searchbar-radius;
+    border: none;
+    font-weight: 600;
+  }
 }

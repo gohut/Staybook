@@ -1,28 +1,55 @@
-/* BookingSummary.css */
+/* BookingSummary.scss */
+
+/* =======================
+   Variables
+======================= */
+$bookingsummary-bg: #fff;
+
+$bookingsummary-color-text: #555;
+$bookingsummary-color-total: #0b72ff;
+
+$bookingsummary-radius: 12px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin bookingsummary-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin bookingsummary-between {
+  @include bookingsummary-flex(space-between, center);
+}
+
+/* =======================
+   Styles
+======================= */
 .booking-summary {
-  background: #fff;
+  background: $bookingsummary-bg;
   padding: 24px;
-  border-radius: 12px;
+  border-radius: $bookingsummary-radius;
 }
 
 .summary-item {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+  @include bookingsummary-flex(flex-start, center, 12px);
   margin-bottom: 12px;
-  color: #555;
+  color: $bookingsummary-color-text;
 }
 
 .price-row {
-  display: flex;
-  justify-content: space-between;
+  @include bookingsummary-between;
   margin: 10px 0;
 }
 
 .total {
-  display: flex;
-  justify-content: space-between;
+  @include bookingsummary-between;
   font-size: 18px;
-  color: #0b72ff;
+  color: $bookingsummary-color-total;
   margin-top: 12px;
 }

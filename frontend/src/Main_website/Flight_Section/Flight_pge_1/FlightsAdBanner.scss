@@ -1,30 +1,66 @@
+/* FlightsAdBanner.scss */
+
+/* ===== Variables ===== */
+$fab-white: #ffffff;
+
+$fab-banner-bg: #163fcb;
+$fab-banner-border: rgba(255, 255, 255, 0.25);
+
+$fab-yellow: #ffcc00;
+
+$fab-dark-333: #333;
+$fab-dark-111: #111;
+
+$fab-wrap-pad-x: 10px;
+$fab-wrap-pad-bottom: 10px;
+
+$fab-banner-radius: 8px;
+$fab-banner-height: 78px;
+
+$fab-box-radius: 6px;
+
+/* ===== Mixins ===== */
+@mixin fab-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin fab-btn-base {
+  border: none;
+  font-weight: 900;
+  border-radius: $fab-box-radius;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
 .fab-wrap {
   width: 100%;
-  padding: 0 10px 10px;
+  padding: 0 $fab-wrap-pad-x $fab-wrap-pad-bottom;
 }
 
 .fab-banner {
-  background: #163fcb;
-  border-radius: 8px;
-  height: 78px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: $fab-banner-bg;
+  border-radius: $fab-banner-radius;
+  height: $fab-banner-height;
+  @include fab-flex(space-between, center);
   padding: 14px 18px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.25);
+  border: 1px solid $fab-banner-border;
 }
 
 .fab-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  @include fab-flex(flex-start, center, 14px);
 }
 
 .fab-visa {
   font-size: 34px;
   font-weight: 900;
-  color: #ffffff;
+  color: $fab-white;
   letter-spacing: 1px;
   font-style: italic;
 }
@@ -32,19 +68,17 @@
 .fab-head {
   font-size: 18px;
   font-weight: 900;
-  color: #fff;
+  color: $fab-white;
   line-height: 1.15;
 }
 
 .fab-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  @include fab-flex(flex-start, center, 16px);
 }
 
 .fab-yellowBox {
-  background: #ffcc00;
-  border-radius: 6px;
+  background: $fab-yellow;
+  border-radius: $fab-box-radius;
   padding: 8px 12px;
   text-align: center;
   min-width: 140px;
@@ -53,26 +87,23 @@
 .fab-small {
   font-size: 10px;
   font-weight: 900;
-  color: #333;
+  color: $fab-dark-333;
 }
 
 .fab-amt {
   font-size: 20px;
   font-weight: 900;
-  color: #111;
+  color: $fab-dark-111;
 }
 
 .fab-btn {
-  border: none;
-  background: #ffcc00;
-  color: #111;
-  font-weight: 900;
+  @include fab-btn-base;
+  background: $fab-yellow;
+  color: $fab-dark-111;
   font-size: 12px;
   padding: 10px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-}
 
-.fab-btn:hover {
-  filter: brightness(0.95);
+  &:hover {
+    filter: brightness(0.95);
+  }
 }

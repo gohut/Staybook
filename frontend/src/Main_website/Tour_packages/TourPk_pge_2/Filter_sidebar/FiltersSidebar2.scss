@@ -1,8 +1,64 @@
-/* FiltersSidebar.css */
+/* FiltersSidebar.scss */
+
+/* =======================
+   Variables
+======================= */
+$filterssidebar-bg: #fff;
+
+$filterssidebar-color-black: #000;
+$filterssidebar-color-text: #333;
+$filterssidebar-color-muted: #555;
+$filterssidebar-color-muted-2: #777;
+$filterssidebar-color-disabled: #bbb;
+
+$filterssidebar-color-primary: #1e88ff;
+
+$filterssidebar-border: #ddd;
+$filterssidebar-divider: #e9e9e9;
+
+$filterssidebar-range-track: #dfe8f2;
+
+$filterssidebar-shadow-thumb: 0 2px 6px rgba(0, 0, 0, 0.25);
+
+$filterssidebar-radius-lg: 14px;
+$filterssidebar-radius-md: 12px;
+$filterssidebar-radius-sm: 10px;
+$filterssidebar-radius-xs: 6px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin filterssidebar-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin filterssidebar-grid-check {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+@mixin filterssidebar-input($height: 40px, $radius: $filterssidebar-radius-sm) {
+  width: 100%;
+  height: $height;
+  border-radius: $radius;
+  border: 1px solid $filterssidebar-border;
+}
+
+/* =======================
+   Styles
+======================= */
 .filters-wrap {
   width: 300px;
-  background: #fff;
-  border-radius: 14px;
+  background: $filterssidebar-bg;
+  border-radius: $filterssidebar-radius-lg;
   padding: 18px;
   font-family: system-ui, sans-serif;
 }
@@ -12,17 +68,15 @@
 }
 
 .filters-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include filterssidebar-flex(space-between, center);
   font-size: 17px;
   font-weight: 600;
-  color: #000;
+  color: $filterssidebar-color-black;
 }
 
 .divider {
   height: 1px;
-  background: #e9e9e9;
+  background: $filterssidebar-divider;
   margin: 8px 0;
 }
 
@@ -37,13 +91,13 @@
   top: 50%;
   width: 100%;
   height: 4px;
-  background: #dfe8f2;
-  border-radius: 6px;
+  background: $filterssidebar-range-track;
+  border-radius: $filterssidebar-radius-xs;
   transform: translateY(-50%);
-}
 
-.range-track.active {
-  background: #1e88ff;
+  &.active {
+    background: $filterssidebar-color-primary;
+  }
 }
 
 .range-thumb {
@@ -51,20 +105,24 @@
   top: 50%;
   width: 18px;
   height: 18px;
-  background: #fff;
+  background: $filterssidebar-bg;
   border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  box-shadow: $filterssidebar-shadow-thumb;
   transform: translateY(-50%);
+
+  &.left {
+    left: 0;
+  }
+
+  &.right {
+    right: 0;
+  }
 }
 
-.range-thumb.left { left: 0; }
-.range-thumb.right { right: 0; }
-
 .range-label {
-  display: flex;
-  justify-content: space-between;
+  @include filterssidebar-flex(space-between, center);
   font-size: 14px;
-  color: #555;
+  color: $filterssidebar-color-muted;
 }
 
 .pill-row {
@@ -75,23 +133,23 @@
 
 .pill {
   padding: 10px 16px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
+  border-radius: $filterssidebar-radius-sm;
+  border: 1px solid $filterssidebar-border;
   font-size: 14px;
-  background: #fff;
-  color: #333;
-}
+  background: $filterssidebar-bg;
+  color: $filterssidebar-color-text;
 
-.pill.active {
-  border-color: #333;
-  color: #333;
-  background: #fff;
-}
+  &.active {
+    border-color: $filterssidebar-color-text;
+    color: $filterssidebar-color-text;
+    background: $filterssidebar-bg;
+  }
 
-.pill.disabled {
-  color: #bbb;
-  background: #fff;
-  border-color: #ddd;
+  &.disabled {
+    color: $filterssidebar-color-disabled;
+    background: $filterssidebar-bg;
+    border-color: $filterssidebar-border;
+  }
 }
 
 .check-list {
@@ -99,19 +157,16 @@
   flex-direction: column;
   gap: 10px;
   margin-top: 12px;
-}
 
-.check-list label {
-  display: grid;
-  grid-template-columns: 18px 1fr auto;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-}
+  label {
+    @include filterssidebar-grid-check;
+    font-size: 15px;
+  }
 
-.check-list em {
-  color: #777;
-  font-style: normal;
+  em {
+    color: $filterssidebar-color-muted-2;
+    font-style: normal;
+  }
 }
 
 .hotel-grid {
@@ -122,56 +177,50 @@
 }
 
 .hotel-box {
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  border: 1px solid $filterssidebar-border;
+  border-radius: $filterssidebar-radius-md;
   padding: 10px 0;
   text-align: center;
   font-size: 14px;
-}
 
-.hotel-box span {
-  display: block;
-  color: #777;
-  font-size: 13px;
+  span {
+    display: block;
+    color: $filterssidebar-color-muted-2;
+    font-size: 13px;
+  }
 }
 
 .city-search {
   position: relative;
   margin: 12px 0;
-}
 
-.city-search input {
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  padding: 0 36px 0 12px;
-}
+  input {
+    @include filterssidebar-input(40px, $filterssidebar-radius-sm);
+    padding: 0 36px 0 12px;
+  }
 
-.city-search svg {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #777;
+  svg {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $filterssidebar-color-muted-2;
+  }
 }
 
 .show-more {
   margin-top: 10px;
-  color: #1e88ff;
+  color: $filterssidebar-color-primary;
   font-size: 15px;
   cursor: pointer;
 }
 
 .single-check {
-  display: grid;
-  grid-template-columns: 18px 1fr auto;
-  gap: 10px;
-  align-items: center;
+  @include filterssidebar-grid-check;
   font-size: 15px;
-}
 
-.single-check em {
-  color: #777;
-  font-style: normal;
+  em {
+    color: $filterssidebar-color-muted-2;
+    font-style: normal;
+  }
 }

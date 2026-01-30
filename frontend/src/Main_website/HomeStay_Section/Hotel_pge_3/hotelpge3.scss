@@ -1,36 +1,71 @@
-/* searchbar-row.css */
-.searchbar-row {
+/* SearchbarRow.scss */
+
+/* ===== Variables ===== */
+$sbr-white: #ffffff;
+
+$sbr-border: #e6e6e6;
+$sbr-border-input: #dcdcdc;
+
+$sbr-field-bg: #f8f8f8;
+
+$sbr-text-000: #000;
+$sbr-text-555: #555;
+$sbr-text-666: #666;
+$sbr-text-999: #999;
+
+$sbr-blue: #1a73e8;
+$sbr-btn-blue-1: #4da6ff;
+$sbr-btn-blue-2: #0066ff;
+
+$sbr-bc-bg: #fafafa;
+
+/* ===== Mixins ===== */
+@mixin sbr-flex($justify: flex-start, $align: center, $gap: null) {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin sbr-btn-reset {
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
+.searchbar-row {
+  @include sbr-flex(flex-start, center, 12px);
   padding: 14px 20px;
-  background: #ffffff;
-  border-bottom: 1px solid #e6e6e6;
+  background: $sbr-white;
+  border-bottom: 1px solid $sbr-border;
 }
 
 .search-field {
-  background: #f8f8f8;
-  border: 1px solid #dcdcdc;
+  background: $sbr-field-bg;
+  border: 1px solid $sbr-border-input;
   border-radius: 8px;
   padding: 6px 10px;
   min-width: 170px;
-}
 
-.search-field.large {
-  min-width: 320px;
-}
+  &.large {
+    min-width: 320px;
+  }
 
-.search-field label {
-  font-size: 11px;
-  color: #666;
-  display: block;
-  margin-bottom: 2px;
-}
+  label {
+    font-size: 11px;
+    color: $sbr-text-666;
+    display: block;
+    margin-bottom: 2px;
+  }
 
-.search-field .value {
-  font-size: 14px;
-  font-weight: 600;
-  color: #000;
+  .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: $sbr-text-000;
+  }
 }
 
 .search-btn {
@@ -38,8 +73,8 @@
   padding: 12px 36px;
   font-size: 15px;
   font-weight: 600;
-  color: #fff;
-  background: linear-gradient(90deg, #4da6ff, #0066ff);
+  color: $sbr-white;
+  background: linear-gradient(90deg, $sbr-btn-blue-1, $sbr-btn-blue-2);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -49,21 +84,21 @@
 .breadcrumb-row {
   padding: 10px 20px;
   font-size: 13px;
-  background: #fafafa;
-  color: #555;
-}
+  background: $sbr-bc-bg;
+  color: $sbr-text-555;
 
-.breadcrumb-row .link {
-  color: #1a73e8;
-  cursor: pointer;
-}
+  .link {
+    color: $sbr-blue;
+    cursor: pointer;
+  }
 
-.breadcrumb-row .sep {
-  margin: 0 6px;
-  color: #999;
-}
+  .sep {
+    margin: 0 6px;
+    color: $sbr-text-999;
+  }
 
-.breadcrumb-row .current {
-  color: #000;
-  font-weight: 500;
+  .current {
+    color: $sbr-text-000;
+    font-weight: 500;
+  }
 }

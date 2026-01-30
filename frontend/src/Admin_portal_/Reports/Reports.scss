@@ -1,57 +1,168 @@
-/* Reports.css */
-.rp-container { padding: 24px; }
-.rp-head { display: flex; justify-content: space-between; align-items: center; }
-.rp-actions button {
-  background: #2563eb; color: #fff; border: none;
-  padding: 8px 14px; border-radius: 10px; margin-left: 10px;
-  display: inline-flex; gap: 6px;
-}
-.rp-actions .outline {
-  background: #fff; color: #2563eb; border: 1px solid #c7d2fe;
-}
-.rp-filters {
-  display: flex; gap: 12px; margin: 16px 0;
-}
-.rp-filters select, .rp-filters .date {
-  padding: 8px 12px; border-radius: 10px; border: 1px solid #e5e7eb;
-  background: #fff; display: flex; gap: 6px;
-}
-.stats-row {
-  display: grid; grid-template-columns: repeat(4,1fr);
-  gap: 16px; margin-bottom: 24px;
-}
-.stat-card {
-  background: #fff; padding: 18px; border-radius: 12px;
-}
-.stat-card span { font-size: 13px; color: #6b7280; }
-.stat-card h2 { margin: 6px 0; }
-.up { color: #16a34a; }
-.down { color: #dc2626; }
+/* Reports.scss */
 
-.card {
-  background: #fff; padding: 20px; border-radius: 14px;
+/* ===== Variables ===== */
+$rp-white: #fff;
+
+$rp-blue-600: #2563eb;
+$rp-indigo-200: #c7d2fe;
+
+$rp-gray-200: #e5e7eb;
+$rp-gray-500: #6b7280;
+
+$rp-slate-50: #f1f5f9;
+
+$rp-green-600: #16a34a;
+$rp-red-600: #dc2626;
+
+$rp-fill-green: #22c55e;
+$rp-fill-orange: #f97316;
+$rp-fill-purple: #a855f7;
+$rp-fill-pink: #ec4899;
+
+/* ===== Mixins ===== */
+@mixin rp-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin rp-grid-repeat($cols, $gap) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
+}
+
+@mixin rp-card($padding, $radius) {
+  background: $rp-white;
+  padding: $padding;
+  border-radius: $radius;
+}
+
+@mixin rp-btn($bg, $color, $border: null) {
+  background: $bg;
+  color: $color;
+  border: $border;
+}
+
+/* ===== Styles ===== */
+.rp-container {
+  padding: 24px;
+}
+
+.rp-head {
+  @include rp-flex(space-between, center);
+}
+
+.rp-actions {
+  button {
+    @include rp-btn($rp-blue-600, $rp-white, none);
+    padding: 8px 14px;
+    border-radius: 10px;
+    margin-left: 10px;
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .outline {
+    @include rp-btn($rp-white, $rp-blue-600, 1px solid $rp-indigo-200);
+  }
+}
+
+.rp-filters {
+  @include rp-flex(flex-start, center, 12px);
+  margin: 16px 0;
+
+  select,
+  .date {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid $rp-gray-200;
+    background: $rp-white;
+    display: flex;
+    gap: 6px;
+  }
+}
+
+.stats-row {
+  @include rp-grid-repeat(4, 16px);
   margin-bottom: 24px;
 }
-.trend-row, .source-row {
+
+.stat-card {
+  @include rp-card(18px, 12px);
+
+  span {
+    font-size: 13px;
+    color: $rp-gray-500;
+  }
+
+  h2 {
+    margin: 6px 0;
+  }
+}
+
+.up {
+  color: $rp-green-600;
+}
+
+.down {
+  color: $rp-red-600;
+}
+
+.card {
+  @include rp-card(20px, 14px);
+  margin-bottom: 24px;
+}
+
+.trend-row,
+.source-row {
   display: grid;
   grid-template-columns: 220px 1fr 80px 100px;
   align-items: center;
   gap: 12px;
   margin: 10px 0;
 }
-.source-row { grid-template-columns: 180px 1fr 140px; }
+
+.source-row {
+  grid-template-columns: 180px 1fr 140px;
+}
+
 .bar {
-  height: 8px; background: #f1f5f9; border-radius: 999px;
+  height: 8px;
+  background: $rp-slate-50;
+  border-radius: 999px;
 }
+
 .fill {
-  height: 100%; background: #2563eb; border-radius: 999px;
+  height: 100%;
+  background: $rp-blue-600;
+  border-radius: 999px;
+
+  &.green {
+    background: $rp-fill-green;
+  }
+
+  &.orange {
+    background: $rp-fill-orange;
+  }
+
+  &.purple {
+    background: $rp-fill-purple;
+  }
+
+  &.pink {
+    background: $rp-fill-pink;
+  }
 }
-.fill.green { background: #22c55e; }
-.fill.orange { background: #f97316; }
-.fill.purple { background: #a855f7; }
-.fill.pink { background: #ec4899; }
+
 .total {
-  display: flex; justify-content: space-between;
-  border-top: 1px solid #e5e7eb; padding-top: 12px;
-  margin-top: 12px; font-weight: 600;
+  @include rp-flex(space-between, center);
+  border-top: 1px solid $rp-gray-200;
+  padding-top: 12px;
+  margin-top: 12px;
+  font-weight: 600;
 }

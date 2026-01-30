@@ -1,14 +1,70 @@
-.bsc-wrap {
+/* BookingSideCard.scss */
+
+/* ===== Variables ===== */
+$bsc-white: #fff;
+
+$bsc-border: #e9e9e9;
+$bsc-border-select: #e3e3e3;
+
+$bsc-title: #222;
+
+$bsc-gray-444: #444;
+$bsc-gray-666: #666;
+$bsc-gray-777: #777;
+$bsc-gray-7a: #7a7a7a;
+$bsc-gray-9a: #9a9a9a;
+$bsc-gray-333: #333;
+
+$bsc-blue: #1a73e8;
+$bsc-blue-dark: #1558b0;
+
+$bsc-blue-border: #a8d0ff;
+$bsc-blue-soft: #f7fbff;
+$bsc-blue-soft-2: #eaf3ff;
+
+$bsc-check-border: #c7c7c7;
+
+$bsc-focus-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+$bsc-continue-shadow: 0 6px 14px rgba(26, 115, 232, 0.25);
+
+$bsc-radius: 10px;
+
+/* ===== Mixins ===== */
+@mixin bsc-flex($justify: flex-start, $align: stretch, $gap: null) {
   display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin bsc-card($radius: $bsc-radius) {
+  background: $bsc-white;
+  border: 1px solid $bsc-border;
+  border-radius: $radius;
+}
+
+@mixin bsc-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+@mixin bsc-pill {
+  border-radius: 999px;
+}
+
+/* ===== Styles ===== */
+.bsc-wrap {
+  @include bsc-flex(flex-start, stretch, 14px);
   flex-direction: column;
-  gap: 14px;
 }
 
 /* STATE CARD */
 .bsc-card {
-  background: #fff;
-  border: 1px solid #e9e9e9;
-  border-radius: 10px;
+  @include bsc-card;
   padding: 14px;
 }
 
@@ -16,21 +72,23 @@
   margin: 0 0 12px;
   font-size: 13px;
   font-weight: 900;
-  color: #222;
+  color: $bsc-title;
 }
 
 .bsc-sub {
   font-size: 10px;
   font-weight: 800;
-  color: #7a7a7a;
+  color: $bsc-gray-7a;
 }
 
-.bsc-field label {
-  display: block;
-  font-size: 11px;
-  font-weight: 900;
-  color: #666;
-  margin-bottom: 8px;
+.bsc-field {
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 900;
+    color: $bsc-gray-666;
+    margin-bottom: 8px;
+  }
 }
 
 .bsc-selectWrap {
@@ -40,19 +98,19 @@
 .bsc-select {
   width: 100%;
   border-radius: 8px;
-  border: 1px solid #e3e3e3;
+  border: 1px solid $bsc-border-select;
   padding: 10px 38px 10px 10px;
   font-size: 12px;
   font-weight: 800;
   outline: none;
   appearance: none;
-  background: #fff;
+  background: $bsc-white;
   cursor: pointer;
-}
 
-.bsc-select:focus {
-  border-color: #1a73e8;
-  box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
+  &:focus {
+    border-color: $bsc-blue;
+    box-shadow: $bsc-focus-shadow;
+  }
 }
 
 .bsc-dd {
@@ -60,7 +118,7 @@
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #777;
+  color: $bsc-gray-777;
   pointer-events: none;
   font-size: 14px;
 }
@@ -73,48 +131,44 @@
   gap: 10px;
   font-size: 12px;
   font-weight: 800;
-  color: #444;
+  color: $bsc-gray-444;
   cursor: pointer;
-}
 
-.bsc-check input {
-  display: none;
+  input {
+    display: none;
+
+    &:checked + .bsc-box {
+      background: $bsc-blue;
+      border-color: $bsc-blue;
+
+      &::after {
+        content: "";
+        width: 8px;
+        height: 4px;
+        border-left: 2px solid $bsc-white;
+        border-bottom: 2px solid $bsc-white;
+        position: absolute;
+        top: 4px;
+        left: 3px;
+        transform: rotate(-45deg);
+      }
+    }
+  }
 }
 
 .bsc-box {
   width: 16px;
   height: 16px;
   border-radius: 4px;
-  border: 2px solid #c7c7c7;
+  border: 2px solid $bsc-check-border;
   position: relative;
-}
-
-.bsc-check input:checked + .bsc-box {
-  background: #1a73e8;
-  border-color: #1a73e8;
-}
-
-.bsc-check input:checked + .bsc-box::after {
-  content: "";
-  width: 8px;
-  height: 4px;
-  border-left: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  position: absolute;
-  top: 4px;
-  left: 3px;
-  transform: rotate(-45deg);
 }
 
 /* LOCK BAR */
 .bsc-lockBar {
-  background: #fff;
-  border: 1px solid #e9e9e9;
-  border-radius: 10px;
+  @include bsc-card;
   padding: 12px 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include bsc-flex(space-between, center);
 }
 
 .bsc-lockLeft {
@@ -123,38 +177,37 @@
   gap: 10px;
   font-size: 12px;
   font-weight: 800;
-  color: #333;
+  color: $bsc-gray-333;
 }
 
 .bsc-lockIc {
-  color: #1a73e8;
+  color: $bsc-blue;
 }
 
 .bsc-lockBlue {
-  color: #1a73e8;
+  color: $bsc-blue;
   font-weight: 900;
 }
 
 .bsc-lockBtn {
-  border: 1px solid #a8d0ff;
-  background: #f7fbff;
-  color: #1a73e8;
+  border: 1px solid $bsc-blue-border;
+  background: $bsc-blue-soft;
+  color: $bsc-blue;
   font-weight: 900;
   font-size: 11px;
   padding: 8px 16px;
   border-radius: 18px;
   cursor: pointer;
-}
 
-.bsc-lockBtn:hover {
-  background: #eaf3ff;
+  &:hover {
+    background: $bsc-blue-soft-2;
+  }
 }
 
 /* CONTINUE + ACCORDIONS */
 .bsc-actions {
-  display: flex;
+  @include bsc-flex(flex-start, stretch, 12px);
   flex-direction: column;
-  gap: 12px;
 }
 
 .bsc-continue {
@@ -162,22 +215,20 @@
   height: 38px;
   border: none;
   border-radius: 20px;
-  background: #1a73e8;
-  color: #fff;
+  background: $bsc-blue;
+  color: $bsc-white;
   font-weight: 900;
   font-size: 12px;
   cursor: pointer;
-  box-shadow: 0 6px 14px rgba(26,115,232,0.25);
-}
+  box-shadow: $bsc-continue-shadow;
 
-.bsc-continue:hover {
-  background: #1558b0;
+  &:hover {
+    background: $bsc-blue-dark;
+  }
 }
 
 .bsc-accordion {
-  background: #fff;
-  border: 1px solid #e9e9e9;
-  border-radius: 8px;
+  @include bsc-card(8px);
   overflow: hidden;
 }
 
@@ -185,12 +236,12 @@
   padding: 14px;
   font-size: 12px;
   font-weight: 900;
-  color: #666;
+  color: $bsc-gray-666;
 }
 
 .bsc-accSub {
   margin-left: 12px;
   font-size: 11px;
   font-weight: 800;
-  color: #9a9a9a;
+  color: $bsc-gray-9a;
 }

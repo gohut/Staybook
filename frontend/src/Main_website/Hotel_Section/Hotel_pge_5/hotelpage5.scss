@@ -1,31 +1,55 @@
-/* Hotelpge5.css */
+/* Hotelpge5.scss */
+
+/* =======================
+   Variables
+======================= */
+$hotelpge5-font-family: "Inter", sans-serif;
+
+$hotelpge5-bg-page: #fafafa;
+
+$hotelpge5-color-razorpay: #0b72ff;
+$hotelpge5-color-secure: #22c55e;
+$hotelpge5-color-footer: #555;
+
+/* =======================
+   Mixins
+======================= */
+@mixin hotelpge5-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+/* =======================
+   Styles
+======================= */
 .checkout-page {
   padding: 30px;
-  font-family: "Inter", sans-serif;
-  background: #fafafa;
+  font-family: $hotelpge5-font-family;
+  background: $hotelpge5-bg-page;
 }
 
 .checkout-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
+  @include hotelpge5-flex(space-between, flex-start);
 
-.checkout-header h2 {
-  margin: 0;
+  h2 {
+    margin: 0;
+  }
 }
 
 .razorpay-text {
   font-weight: 600;
-  color: #0b72ff;
+  color: $hotelpge5-color-razorpay;
 }
 
 .secure-text {
-  color: #22c55e;
+  color: $hotelpge5-color-secure;
   margin-top: 6px;
-  display: flex;
-  gap: 6px;
-  align-items: center;
+  @include hotelpge5-flex(flex-start, center, 6px);
 }
 
 .checkout-content {
@@ -37,8 +61,7 @@
 
 .checkout-footer {
   margin-top: 30px;
-  display: flex;
-  gap: 24px;
+  @include hotelpge5-flex(flex-start, stretch, 24px);
   font-size: 14px;
-  color: #555;
+  color: $hotelpge5-color-footer;
 }

@@ -1,21 +1,73 @@
-/* FlagshipHotels.css */
+/* FlagshipHotels.scss */
+
+/* =======================
+   Variables
+======================= */
+$flagshiphotels-bg-section: #eef6ff;
+$flagshiphotels-bg-card: #ffffff;
+
+$flagshiphotels-color-white: #fff;
+$flagshiphotels-color-text: #333;
+$flagshiphotels-color-primary: #1976d2;
+
+$flagshiphotels-radius-lg: 16px;
+$flagshiphotels-radius-md: 14px;
+$flagshiphotels-radius-sm: 12px;
+
+$flagshiphotels-shadow-section: 0 4px 14px rgba(0, 0, 0, 0.08);
+$flagshiphotels-shadow-card: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+/* =======================
+   Mixins
+======================= */
+@mixin flagshiphotels-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin flagshiphotels-shadow-box($bg, $radius, $padding, $shadow) {
+  background: $bg;
+  border-radius: $radius;
+  padding: $padding;
+  box-shadow: $shadow;
+}
+
+@mixin flagshiphotels-abs($bottom: null, $left: null) {
+  position: absolute;
+
+  @if $bottom != null {
+    bottom: $bottom;
+  }
+  @if $left != null {
+    left: $left;
+  }
+}
+
+/* =======================
+   Styles
+======================= */
 .flagship-section {
-  background: #eef6ff;
-  border-radius: 16px;
-  padding: 26px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  @include flagshiphotels-shadow-box(
+    $flagshiphotels-bg-section,
+    $flagshiphotels-radius-lg,
+    26px,
+    $flagshiphotels-shadow-section
+  );
 }
 
 .flagship-top {
-  display: flex;
-  gap: 28px;
-  align-items: center;
-}
+  @include flagshiphotels-flex(flex-start, center, 28px);
 
-.flagship-top h2 {
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 1.2;
+  h2 {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
 }
 
 .hotel-cards {
@@ -26,24 +78,22 @@
 .hotel-card {
   width: 150px;
   height: 110px;
-  border-radius: 14px;
+  border-radius: $flagshiphotels-radius-md;
   overflow: hidden;
   position: relative;
-}
 
-.hotel-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.hotel-card span {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
+  span {
+    @include flagshiphotels-abs(10px, 10px);
+    font-size: 12px;
+    font-weight: 600;
+    color: $flagshiphotels-color-white;
+  }
 }
 
 .info-cards {
@@ -53,27 +103,27 @@
 }
 
 .info-card {
-  background: #ffffff;
+  @include flagshiphotels-shadow-box(
+    $flagshiphotels-bg-card,
+    $flagshiphotels-radius-sm,
+    16px,
+    $flagshiphotels-shadow-card
+  );
   flex: 1;
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
+  @include flagshiphotels-flex(flex-start, center, 12px);
 
-.info-card svg {
-  font-size: 28px;
-  color: #1976d2;
-}
+  svg {
+    font-size: 28px;
+    color: $flagshiphotels-color-primary;
+  }
 
-.info-card p {
-  font-size: 14px;
-  color: #333;
-}
+  p {
+    font-size: 14px;
+    color: $flagshiphotels-color-text;
+  }
 
-.info-card span {
-  color: #1976d2;
-  font-weight: 600;
+  span {
+    color: $flagshiphotels-color-primary;
+    font-weight: 600;
+  }
 }

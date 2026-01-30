@@ -1,85 +1,180 @@
-/* SeatSelection.css ✅ UPDATED */
+/* SeatSelection.scss */
 
+/* ===== Variables ===== */
+$ss-white: #fff;
+
+$ss-wrap-bg: #dff0f8;
+$ss-seat-area-bg: #bfe0f5;
+
+$ss-border-card: #e6eef3;
+$ss-border-head: #eef6fb;
+$ss-border-sub: #eef6fa;
+$ss-border-info: #edf6fa;
+
+$ss-grid-border: #edf1f5;
+
+$ss-info-bg: #f4fbff;
+$ss-head-bg-1: #fff;
+$ss-head-bg-2: #fbfdff;
+
+$ss-text-222: #222;
+$ss-text-444: #444;
+$ss-text-4b: #4b4b4b;
+
+$ss-blue: #1a73e8;
+$ss-blue-2: #2f8ff9;
+
+$ss-ic-orange: #c77b00;
+
+$ss-muted-556: #556;
+$ss-muted-8aa: #8aa;
+
+$ss-route: #1f3544;
+$ss-subsmall: #7b8a94;
+
+$ss-legend-text: #2b4450;
+
+$ss-cols: #6a7780;
+
+$ss-scroll-thumb: #cfe7f7;
+
+$ss-row-num: #7a8b95;
+
+$ss-seat-text: rgba(0, 0, 0, 0.65);
+
+$ss-seat-paid: #ff4f2a;
+$ss-seat-free: #45d2b0;
+$ss-seat-blue: #bfe2ff;
+
+$ss-seat-paid-text: #2a1a12;
+$ss-seat-free-text: #053;
+$ss-seat-blue-text: #2b4b6b;
+
+$ss-seat-blocked-border: #d6d6d6;
+$ss-seat-blocked-text: #9a9a9a;
+
+$ss-legend-blue: #5ea9ff;
+$ss-legend-empty-border: #e0e6ea;
+
+$ss-shadow-card: 0 12px 28px rgba(10, 30, 60, 0.08);
+$ss-shadow-legend: 0 6px 12px rgba(0, 0, 0, 0.03);
+$ss-shadow-grid: 0 10px 22px rgba(0, 0, 0, 0.06);
+$ss-shadow-continue: 0 10px 18px rgba(26, 115, 232, 0.18);
+
+$ss-wrap-pad-top: 55px;
+$ss-wrap-pad-bottom: 80px;
+
+/* ===== Mixins ===== */
+@mixin ss-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin ss-card($radius, $border: null, $shadow: null, $bg: $ss-white) {
+  background: $bg;
+  border-radius: $radius;
+
+  @if $border != null {
+    border: $border;
+  }
+
+  @if $shadow != null {
+    box-shadow: $shadow;
+  }
+}
+
+@mixin ss-pill {
+  border-radius: 999px;
+}
+
+@mixin ss-scrollbar($width, $thumb, $radius) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb;
+    border-radius: $radius;
+  }
+}
+
+/* ===== Styles ===== */
 /* ✅ TOP SPACE (arrow mark) */
 .ss-wrapV2 {
   width: 100%;
-  background: #dff0f8;
-  padding: 55px 0 80px; /* <-- spacing above seats block */
-  display: flex;
-  justify-content: center;
+  background: $ss-wrap-bg;
+  padding: $ss-wrap-pad-top 0 $ss-wrap-pad-bottom; /* <-- spacing above seats block */
+  @include ss-flex(center, stretch);
 }
 
 .ss-cardV2 {
   width: 760px;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 12px 28px rgba(10, 30, 60, 0.08);
-  border: 1px solid #e6eef3;
+  @include ss-card(6px, 1px solid $ss-border-card, $ss-shadow-card);
   overflow: hidden;
 }
 
 /* Header */
 .ss-headV2 {
-  display: flex;
-  align-items: center;
+  @include ss-flex(flex-start, center);
   padding: 10px 14px;
-  border-bottom: 1px solid #eef6fb;
-  background: linear-gradient(#fff, #fbfdff);
+  border-bottom: 1px solid $ss-border-head;
+  background: linear-gradient($ss-head-bg-1, $ss-head-bg-2);
+
+  h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 900;
+    color: $ss-text-222;
+  }
 }
 
 .ss-headLeftV2 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include ss-flex(flex-start, center, 10px);
 }
 
 .ss-icV2 {
-  color: #c77b00;
+  color: $ss-ic-orange;
   font-size: 16px;
-}
-
-.ss-headV2 h3 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 900;
-  color: #222;
 }
 
 /* Info Bar */
 .ss-infoV2 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include ss-flex(space-between, center);
   padding: 10px 18px;
-  background: #f4fbff;
-  border-bottom: 1px solid #edf6fa;
+  background: $ss-info-bg;
+  border-bottom: 1px solid $ss-border-info;
   font-weight: 700;
   font-size: 12px;
-  color: #556;
+  color: $ss-muted-556;
 }
 
 .ss-dotsV2 {
-  color: #8aa;
+  color: $ss-muted-8aa;
 }
 
 /* Sub Route Row */
 .ss-subV2 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include ss-flex(space-between, center);
   padding: 12px 16px;
-  border-bottom: 1px solid #eef6fa;
+  border-bottom: 1px solid $ss-border-sub;
 }
 
-.ss-routeV2 strong {
-  font-size: 13px;
-  font-weight: 900;
-  color: #1f3544;
+.ss-routeV2 {
+  strong {
+    font-size: 13px;
+    font-weight: 900;
+    color: $ss-route;
+  }
 }
 
 .ss-subSmallV2 {
   font-size: 11px;
-  color: #7b8a94;
+  color: $ss-subsmall;
   margin-top: 3px;
 }
 
@@ -90,21 +185,19 @@
 .ss-priceTopV2 {
   font-weight: 900;
   font-size: 14px;
-  color: #4b4b4b;
+  color: $ss-text-4b;
 }
 
 .ss-priceSubV2 {
   font-size: 11px;
-  color: #8aa;
+  color: $ss-muted-8aa;
 }
 
 /* Seat Area */
 .ss-seatAreaV2 {
-  display: flex;
-  gap: 26px;
+  @include ss-flex(flex-start, flex-start, 26px);
   padding: 22px;
-  background: #bfe0f5;
-  align-items: flex-start;
+  background: $ss-seat-area-bg;
 }
 
 /* Legend */
@@ -114,16 +207,14 @@
   border-radius: 6px;
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: $ss-shadow-legend;
   font-weight: 800;
-  color: #2b4450;
+  color: $ss-legend-text;
   margin-top: 88px; /* aligns like screenshot */
 }
 
 .ss-legItemV2 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include ss-flex(flex-start, center, 10px);
   padding: 8px 0;
   font-size: 13px;
 }
@@ -133,47 +224,47 @@
   height: 14px;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.08);
-}
 
-.ss-boxV2.free {
-  background: #45d2b0;
-}
-.ss-boxV2.paid {
-  background: #ff4f2a;
-}
-.ss-boxV2.blue {
-  background: #5ea9ff;
-}
-.ss-boxV2.empty {
-  background: #fff;
-  border: 1px solid #e0e6ea;
-}
-.ss-boxV2.light {
-  background: #fff;
-  opacity: 0.85;
+  &.free {
+    background: $ss-seat-free;
+  }
+
+  &.paid {
+    background: $ss-seat-paid;
+  }
+
+  &.blue {
+    background: $ss-legend-blue;
+  }
+
+  &.empty {
+    background: $ss-white;
+    border: 1px solid $ss-legend-empty-border;
+  }
+
+  &.light {
+    background: $ss-white;
+    opacity: 0.85;
+  }
 }
 
 .ss-xV2 {
   margin-left: 6px;
   font-weight: 900;
-  color: #444;
+  color: $ss-text-444;
 }
 
 /* ✅ Seats grid card WITHOUT nose */
 .ss-seatGridWrapV2 {
   flex: 1;
-  background: #fff;
-  border-radius: 8px;
+  @include ss-card(8px, 1px solid $ss-grid-border, $ss-shadow-grid);
   padding: 16px 16px 18px;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
-  border: 1px solid #edf1f5;
 }
 
 /* small header icon */
 .ss-seatGridHeaderV2 {
   height: 24px;
-  display: flex;
-  align-items: center;
+  @include ss-flex(flex-start, center);
 }
 
 .ss-toiletV2 {
@@ -185,7 +276,7 @@
   display: grid;
   grid-template-columns: 22px repeat(3, 56px) 40px repeat(3, 56px) 22px;
   gap: 8px;
-  color: #6a7780;
+  color: $ss-cols;
   font-weight: 900;
   font-size: 12px;
   justify-items: center;
@@ -195,20 +286,13 @@
 
 /* Rows */
 .ss-rowsV2 {
-  display: flex;
+  @include ss-flex(flex-start, stretch, 10px);
   flex-direction: column;
-  gap: 10px;
   max-height: 420px;
   overflow-y: auto;
   padding-right: 6px;
-}
 
-.ss-rowsV2::-webkit-scrollbar {
-  width: 8px;
-}
-.ss-rowsV2::-webkit-scrollbar-thumb {
-  background: #cfe7f7;
-  border-radius: 10px;
+  @include ss-scrollbar(8px, $ss-scroll-thumb, 10px);
 }
 
 /* row */
@@ -222,13 +306,13 @@
 
 .ss-rowNumV2 {
   font-size: 12px;
-  color: #7a8b95;
+  color: $ss-row-num;
   font-weight: 900;
   text-align: center;
-}
 
-.ss-rowNumV2.right {
-  text-align: center;
+  &.right {
+    text-align: center;
+  }
 }
 
 .ss-gapV2 {
@@ -244,52 +328,50 @@
   place-items: center;
   font-weight: 900;
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.65);
-}
+  color: $ss-seat-text;
 
-.ss-seatV2.paid {
-  background: #ff4f2a;
-  color: #2a1a12;
-}
+  &.paid {
+    background: $ss-seat-paid;
+    color: $ss-seat-paid-text;
+  }
 
-.ss-seatV2.free {
-  background: #45d2b0;
-  color: #053;
-}
+  &.free {
+    background: $ss-seat-free;
+    color: $ss-seat-free-text;
+  }
 
-.ss-seatV2.blue {
-  background: #bfe2ff;
-  color: #2b4b6b;
-}
+  &.blue {
+    background: $ss-seat-blue;
+    color: $ss-seat-blue-text;
+  }
 
-.ss-seatV2.blocked {
-  background: #fff;
-  border: 1px solid #d6d6d6;
-  color: #9a9a9a;
+  &.blocked {
+    background: $ss-white;
+    border: 1px solid $ss-seat-blocked-border;
+    color: $ss-seat-blocked-text;
+  }
 }
 
 /* Footer */
 .ss-footerV2 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include ss-flex(space-between, center);
   padding: 14px 22px;
   background: transparent;
 }
 
 .ss-continueV2 {
-  background: linear-gradient(180deg, #2f8ff9, #1a73e8);
-  color: #fff;
+  background: linear-gradient(180deg, $ss-blue-2, $ss-blue);
+  color: $ss-white;
   border: none;
   padding: 12px 22px;
   border-radius: 22px;
   font-weight: 900;
-  box-shadow: 0 10px 18px rgba(26, 115, 232, 0.18);
+  box-shadow: $ss-shadow-continue;
   cursor: pointer;
 }
 
 .ss-skipV2 {
-  color: #1a73e8;
+  color: $ss-blue;
   font-weight: 900;
   text-decoration: none;
   font-size: 13px;
