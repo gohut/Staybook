@@ -1,4 +1,4 @@
-import "./FlightDelayProtection.css";
+import "./FlightDelayProtection.scss";
 import { useState } from "react";
 import { FaClock, FaInfoCircle, FaPlus, FaShieldAlt } from "react-icons/fa";
 

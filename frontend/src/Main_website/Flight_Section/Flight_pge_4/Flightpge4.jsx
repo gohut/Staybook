@@ -1,7 +1,7 @@
 import FlightPge4Header from "./FlightPge4Header";
 import PaymentOptionsAndScan from "./PaymentOptionsAndScan";
 
-import "./Flightpge4.css";
+import "./Flightpge4.scss";
 import TopNavbar from "../../Top_Navbar/TopNavbar";
 
 export default function Flightpge4() {

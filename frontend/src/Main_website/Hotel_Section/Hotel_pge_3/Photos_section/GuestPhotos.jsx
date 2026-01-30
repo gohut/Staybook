@@ -5,7 +5,7 @@ import {
   FaChevronRight,
   FaTimes,
 } from "react-icons/fa";
-import "./GuestPhotos.css";
+import "./GuestPhotos.scss";
 
 const photos = [
   "/images/p1.jpg",

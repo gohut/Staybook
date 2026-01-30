@@ -6,7 +6,7 @@ import {
   FiUsers,
   FiChevronRight,
 } from "react-icons/fi";
-import "./mytrips.css";
+import "./mytrips.scss";
 
 const trips = [
   {

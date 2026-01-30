@@ -4,7 +4,7 @@ import Navbar from "./MainNavbar/Navbar"
 import LuxeSelection from "./Hotel_section/Main_Cont/LuxeSelection";
 import Logincont from "./Login_container/Logincont";
 import Footer from '../../Components/Footer';
-import './landingpge.css';
+import './landingpge.scss';
 import ExperienceAirlines from './Flight_section/Flight_content/ExperienceAirlines';
 import FlagshipHotels from './Flight_section/Flight_content/FlagshipHotels';
 import HandpickedCollections from './Flight_section/Flight_content/HandpickedCollections';

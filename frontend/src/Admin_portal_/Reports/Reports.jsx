@@ -1,7 +1,7 @@
 // Reports.jsx
 import React from "react";
 import { FiDownload, FiCalendar } from "react-icons/fi";
-import "./Reports.css";
+import "./Reports.scss";
 
 const trends = [
   ["Jul", 234, "+12%", "$45,600"],

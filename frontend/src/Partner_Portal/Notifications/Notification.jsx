@@ -1,5 +1,5 @@
 // Notification.jsx
-import "./Notification.css";
+import "./Notification.scss";
 import {
   FiBell,
   FiCalendar,

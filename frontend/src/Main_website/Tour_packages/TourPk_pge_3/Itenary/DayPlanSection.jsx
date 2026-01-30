@@ -1,5 +1,5 @@
 // DayPlanSection.jsx
-import "./DayPlanSection.css";
+import "./DayPlanSection.scss";
 import {
   FaPlane,
   FaCar,

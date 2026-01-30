@@ -1,6 +1,6 @@
 // PropertyCard.jsx
 import { FaStar, FaStarHalfAlt, FaRegStar, FaSpa, FaMapMarkerAlt } from "react-icons/fa";
-import "./PropertyCard.css";
+import "./PropertyCard.scss";
 import { useNavigate } from "react-router-dom";
 
 /* ⭐ STAR SUB-COMPONENT */

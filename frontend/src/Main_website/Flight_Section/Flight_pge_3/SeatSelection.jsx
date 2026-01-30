@@ -1,5 +1,5 @@
 import React from "react";
-import "./SeatSelection.css";
+import "./SeatSelection.scss";
 import { FaChair } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 

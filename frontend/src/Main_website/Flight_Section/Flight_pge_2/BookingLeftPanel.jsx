@@ -1,4 +1,4 @@
-import "./BookingLeftPanel.css";
+import "./BookingLeftPanel.scss";
 import {
   FaChevronRight,
   FaInfoCircle,

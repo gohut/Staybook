@@ -1,6 +1,6 @@
 // AdminDashboard.jsx
 import React from "react";
-import "./AdminDashboard.css";
+import "./AdminDashboard.scss";
 
 const StatCard = ({ icon, value, label, trend, positive }) => (
   <div className="stat-card">

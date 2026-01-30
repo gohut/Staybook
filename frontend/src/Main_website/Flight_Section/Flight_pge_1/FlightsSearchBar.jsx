@@ -1,4 +1,4 @@
-import "./FlightsSearchBar.css";
+import "./FlightsSearchBar.scss";
 import { FaExchangeAlt } from "react-icons/fa";
 import { IoChevronDownOutline } from "react-icons/io5";
 

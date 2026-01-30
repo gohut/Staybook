@@ -1,5 +1,5 @@
 // GuestAndRequest.jsx
-import "./GuestAndRequest.css";
+import "./GuestAndRequest.scss";
 import { FaUserPlus, FaBell } from "react-icons/fa";
 
 const GuestAndRequest = () => {

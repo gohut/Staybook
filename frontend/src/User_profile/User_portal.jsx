@@ -1,7 +1,7 @@
 // User_portal.jsx (MODIFIED)
 import React, { useState } from "react";
 
-import "./userlayout.css";
+import "./userlayout.scss";
 
 import UVnavbar from "./UVnavbar";
 import Profileov from "./Profile_overview/Profileov";

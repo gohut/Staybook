@@ -7,7 +7,7 @@ import {
   FiFileText,
   FiSettings,
 } from "react-icons/fi";
-import "./Vnavbar.css";
+import "./Vnavbar.scss";
 
 const UVnavbar = ({ active, setActive }) => {
   return (

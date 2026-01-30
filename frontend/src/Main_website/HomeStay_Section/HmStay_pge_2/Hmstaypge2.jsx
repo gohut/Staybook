@@ -5,7 +5,7 @@ import SearchHeader from "./SearchBar/SearchHeader";
 import FilterSidebar from "./FilterBar/FilterSidebar";
 import ResultsHeader from "./ResultHeader/ResultsHeader";
 import PropertyCard from "./PropertyCard/PropertyCard";
-import "./hmstaypge2.css";
+import "./hmstaypge2.scss";
 
 export default function Hmstaypge2() {
   return (

@@ -1,6 +1,6 @@
 // LocationSection.jsx
 import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
-import "./LocationSection.css";
+import "./LocationSection.scss";
 
 const LocationSection = () => {
   return (

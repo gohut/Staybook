@@ -5,7 +5,7 @@ import SearchBar from "./Search_Bar/SearchBar";
 import PackageGallery from "./Packag_Gallery/PackageGallery";
 import DayPlanSection from "./Itenary/DayPlanSection";
 import PriceAndOffers from "./Price_offeres/PriceAndOffers";
-import "./Tourpkpge3.css";
+import "./Tourpkpge3.scss";
 
 export default function Tourpkpge3() {
   return (

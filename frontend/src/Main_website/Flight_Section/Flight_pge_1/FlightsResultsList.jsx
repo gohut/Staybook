@@ -1,5 +1,5 @@
 // FlightsResultsList.jsx
-import "./FlightsResultsList.css";
+import "./FlightsResultsList.scss";
 import { FaLock } from "react-icons/fa";
 import FlightsAdBanner from "./FlightsAdBanner";
 import { useNavigate } from "react-router-dom";

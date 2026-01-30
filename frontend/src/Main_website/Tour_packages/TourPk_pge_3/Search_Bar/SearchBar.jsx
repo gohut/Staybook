@@ -1,5 +1,5 @@
 // SearchBar.jsx
-import "./SearchBar.css";
+import "./SearchBar.scss";
 import { FaMapMarkerAlt, FaCalendarAlt, FaUserFriends } from "react-icons/fa";
 
 const SearchBar = () => {

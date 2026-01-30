@@ -1,6 +1,6 @@
 // HolidayNavbar.jsx
 import React, { useState } from "react";
-import "./HolidayNavbar.css";
+import "./HolidayNavbar.scss";
 import { useNavigate } from "react-router-dom"; 
 import {
   FaPlane,

@@ -1,6 +1,6 @@
 // FareSummary.jsx
 import { FaChevronUp, FaMinusCircle, FaCheckSquare } from "react-icons/fa";
-import "./FareSummary.css";
+import "./FareSummary.scss";
 import { useNavigate } from "react-router-dom"; 
 const FareSummary = () => {
     const navigate = useNavigate();

@@ -1,6 +1,6 @@
 // HeaderSearch.jsx
 import { FaMapMarkerAlt, FaCalendarAlt, FaUserFriends, FaSearch } from "react-icons/fa";
-import "./HeaderSearch.css";
+import "./HeaderSearch.scss";
 
 const HeaderSearch = () => {
   return (

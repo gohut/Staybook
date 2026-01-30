@@ -1,4 +1,4 @@
-import "./BookingTopSummaryBar.css";
+import "./BookingTopSummaryBar.scss";
 import { FaChevronDown, FaPen } from "react-icons/fa";
 
 export default function BookingTopSummaryBar() {

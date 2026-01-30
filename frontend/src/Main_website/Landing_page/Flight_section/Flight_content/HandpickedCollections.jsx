@@ -1,7 +1,7 @@
 // HandpickedCollections.jsx
 import React from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import "./HandpickedCollections.css";
+import "./HandpickedCollections.scss";
 import img1 from  "../../../../assets/Flight/place1.jpg"
 
 export default function HandpickedCollections() {

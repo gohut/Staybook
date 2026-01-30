@@ -1,4 +1,4 @@
-import "./TravellerDetails.css";
+import "./TravellerDetails.scss";
 import { FaUserCircle, FaUser, FaInfoCircle, FaChevronDown } from "react-icons/fa";
 
 export default function TravellerDetails() {

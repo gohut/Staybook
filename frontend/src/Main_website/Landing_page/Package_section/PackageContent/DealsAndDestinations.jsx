@@ -1,6 +1,6 @@
 // DealsAndDestinations.jsx
 import React from "react";
-import "./DealsAndDestinations.css";
+import "./DealsAndDestinations.scss";
 import img from "../../../../assets/Flight/place1.jpg"
 
 const honeymoonList = [

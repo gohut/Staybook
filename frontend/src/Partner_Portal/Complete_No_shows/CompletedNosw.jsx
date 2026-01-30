@@ -1,5 +1,5 @@
 // CompletedNosw.jsx
-import "./CompletedNosw.css";
+import "./CompletedNosw.scss";
 import { FiCheckCircle, FiXCircle, FiTrendingDown, FiDollarSign, FiClock } from "react-icons/fi";
 
 const StatCard = ({ label, value, type }) => (

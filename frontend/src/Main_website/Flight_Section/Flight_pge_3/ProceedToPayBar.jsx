@@ -1,4 +1,4 @@
-import "./ProceedToPayBar.css";
+import "./ProceedToPayBar.scss";
 
 export default function ProceedToPayBar() {
   return (

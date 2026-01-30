@@ -1,5 +1,5 @@
 import { FaPlane, FaHotel, FaHome, FaUmbrellaBeach, FaTrain, FaBus, FaTaxi } from "react-icons/fa";
-import "./TopNavbar.css";
+import "./TopNavbar.scss";
 
 const TopNavbar = () => {
   return (

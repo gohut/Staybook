@@ -8,7 +8,7 @@ import {
   FiRotateCcw,
   FiClock,
 } from "react-icons/fi";
-import "./Businesshis.css";
+import "./Businesshis.scss";
 
 const bookings = [
   {

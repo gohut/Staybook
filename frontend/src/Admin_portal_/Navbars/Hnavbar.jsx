@@ -1,7 +1,7 @@
 import React from "react";
 import { FiSearch, FiBell } from "react-icons/fi";
 import { MdPerson } from "react-icons/md";
-import "./Hnavbar.css";
+import "./Hnavbar.scss";
 
 const Hnavbar = () => {
   return (

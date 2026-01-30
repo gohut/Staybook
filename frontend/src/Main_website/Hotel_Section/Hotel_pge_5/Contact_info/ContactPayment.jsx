@@ -1,6 +1,6 @@
 // ContactPayment.jsx
 import React, { useState } from "react";
-import "./ContactPayment.css";
+import "./ContactPayment.scss";
 import {
   FaMobileAlt,
   FaCreditCard,

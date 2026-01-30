@@ -6,7 +6,7 @@ import {
   FiDownload,
   FiEye,
 } from "react-icons/fi";
-import "./Vouchers.css";
+import "./Vouchers.scss";
 
 const vouchers = [
   {

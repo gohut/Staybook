@@ -1,6 +1,6 @@
 // PropertyCard.jsx
 import { FaHeart, FaStar, FaMapMarkerAlt } from "react-icons/fa";
-import "./PropertyCard.css";
+import "./PropertyCard.scss";
 import { useNavigate } from "react-router-dom"; 
 const PropertyCard = () => {
     const navigate = useNavigate();

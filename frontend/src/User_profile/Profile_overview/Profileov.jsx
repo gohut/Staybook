@@ -6,7 +6,7 @@ import {
   FiAward,
   FiClock,
 } from "react-icons/fi";
-import "./Profileov.css";
+import "./Profileov.scss";
 
 const Profileov = () => {
   return (

@@ -4,7 +4,7 @@ import {
   FaMapMarkedAlt,
   FaChevronRight,
 } from "react-icons/fa";
-import "./FilterSidebar.css";
+import "./FilterSidebar.scss";
 
 const FilterSidebar = () => {
   return (

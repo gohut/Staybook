@@ -19,7 +19,7 @@ import Availabilitypr from "./Availability_Pricing/Availabilitypr";
 import Reservation from "./Reservation/Reservation";
 import CompletedNosw from "./Complete_No_shows/CompletedNosw";
 import Notification from "./Notifications/Notification";
-import "./Partner_portal.css";
+import "./Partner_portal.scss";
 
 const Partner_portal = () => {
   const [active, setActive] = useState("dashboard");

@@ -1,6 +1,6 @@
 // PaymentSuccess.jsx
 import React from "react";
-import "./PaymentSuccess.css";
+import "./PaymentSuccess.scss";
 import {
   FaCheckCircle,
   FaHotel,

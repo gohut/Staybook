@@ -1,5 +1,5 @@
 // Availabilitypr.jsx
-import "./Availabilitypr.css";
+import "./Availabilitypr.scss";
 import { FiChevronLeft, FiChevronRight, FiDollarSign, FiLock } from "react-icons/fi";
 
 const Legend = ({ label, type }) => (

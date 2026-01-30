@@ -1,6 +1,6 @@
 import React from 'react'
 import TopNavbar from '../../Top_Navbar/TopNavbar'
-import './hotelpge4.css'
+import './hotelpge4.scss'
 import ReviewBooking from './Review_Booking/ReviewBooking'
 import GuestAndRequest from './Guest_reqest/GuestAndRequest'
 export default function Hotelpge4() {

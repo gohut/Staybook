@@ -1,5 +1,5 @@
 // FiltersSidebar.jsx
-import "./FiltersSidebar.css";
+import "./FiltersSidebar.scss";
 
 const Section = ({ title, children }) => (
   <div className="filter-section">

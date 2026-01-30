@@ -1,4 +1,4 @@
-import "./PaymentOptionsAndScan.css";
+import "./PaymentOptionsAndScan.scss";
 import { FaChevronRight } from "react-icons/fa";
 import { MdQrCode2 } from "react-icons/md";
 import { SiGooglepay, SiPhonepe, SiPaytm } from "react-icons/si";

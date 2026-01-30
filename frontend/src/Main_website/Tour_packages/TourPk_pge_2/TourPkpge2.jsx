@@ -4,7 +4,7 @@ import TopNavbar from "../../Top_Navbar/TopNavbar";
 import HeaderSearch from "./Header_search/HeaderSearch";
 import FiltersSidebar2 from "./Filter_sidebar/FiltersSidebar2";
 import PackageCard from "./Package_card/PackageCard";
-import "./TourPkpge2.css";
+import "./TourPkpge2.scss";
 
 export default function TourPkpge2() {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./hotelregistration.css";
+import "./hotelregistration.scss";
 import ReviewPop from "./ReviewPop";
 const rows = [
   {

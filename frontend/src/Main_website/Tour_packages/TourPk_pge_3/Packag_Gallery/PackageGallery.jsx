@@ -1,5 +1,5 @@
 // PackageGallery.jsx
-import "./PackageGallery.css";
+import "./PackageGallery.scss";
 import { FaShareAlt, FaImages } from "react-icons/fa";
 
 const PackageGallery = () => {
