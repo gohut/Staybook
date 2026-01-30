@@ -4,27 +4,27 @@ import "./PHnavbar.css";
 
 const PHnavbar = () => {
   return (
-    <header className="ph-navbar">
-      <div className="ph-left">
+    <header className="ptr-ph-navbar">
+      <div className="ptr-ph-left">
         <h1>Dashboard</h1>
       </div>
 
-      <div className="ph-right">
-        <div className="search-box">
+      <div className="ptr-ph-right">
+        <div className="ptr-search-box">
           <FiSearch />
           <input type="text" placeholder="Search reservations..." />
         </div>
 
-        <div className="icon-bell">
+        <div className="ptr-icon-bell">
           <FiBell />
-          <span className="badge">2</span>
+          <span className="ptr-badge">2</span>
         </div>
 
-        <div className="profile">
-          <div className="avatar">PM</div>
-          <div className="profile-info">
-            <span className="name">Property Manager</span>
-            <span className="email">manager@grandplaza.com</span>
+        <div className="ptr-profile">
+          <div className="ptr-avatar">PM</div>
+          <div className="ptr-profile-info">
+            <span className="ptr-name">Property Manager</span>
+            <span className="ptr-email">manager@grandplaza.com</span>
           </div>
           <FiChevronDown />
         </div>

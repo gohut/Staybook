@@ -1,4 +1,4 @@
-.ph-navbar {
+.ptr-ph-navbar {
   height: 70px;
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
@@ -14,39 +14,40 @@
   
 }
 
-.ph-navbar h1 {
+.ptr-ph-navbar h1 {
   font-size: 22px;
   font-weight: 600;
 }
 
-.ph-right {
+.ptr-ph-right {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.search-box {
+.ptr-search-box {
   display: flex;
   align-items: center;
   gap: 8px;
   background: #f3f4f6;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-radius: 10px;
+  height: 40px;
 }
 
-.search-box input {
+.ptr-search-box input {
   border: none;
   background: transparent;
   outline: none;
 }
 
-.icon-bell {
+.ptr-icon-bell {
   position: relative;
   font-size: 20px;
   cursor: pointer;
 }
 
-.badge {
+.ptr-badge {
   position: absolute;
   top: -6px;
   right: -6px;
@@ -57,13 +58,13 @@
   border-radius: 999px;
 }
 
-.profile {
+.ptr-profile {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
-.avatar {
+.ptr-avatar {
   width: 36px;
   height: 36px;
   background: #2563eb;
@@ -74,12 +75,12 @@
   font-weight: 600;
 }
 
-.name {
+.ptr-name {
   font-size: 14px;
   font-weight: 600;
 }
 
-.email {
+.ptr-email {
   font-size: 12px;
   color: #6b7280;
 }

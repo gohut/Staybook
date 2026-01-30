@@ -1,13 +1,5 @@
-// Partner_portal.jsx (MODIFIED ONLY WHERE REQUIRED)
-import { useState } from "react";
 
-// import PartnerDashboard from "./PartnerDashboard";
-// import PropertyManagement from "./PropertyManagement";
-// import Photosmedia from "./Photosmedia";
-// import Availabilitypr from "./Availabilitypr";
-// import Reservation from "./Reservation";
-// import CompletedNosw from "./CompletedNosw";
-// import Notification from "./Notification";
+import { useState } from "react";
 
 
 import PHnavbar from "./Navbars/PHnavbar";
