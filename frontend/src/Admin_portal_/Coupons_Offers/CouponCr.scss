@@ -1,31 +1,81 @@
-/* CouponCr.css */
+/* CouponCr.scss */
+
+/* ===== Variables ===== */
+$couponcr-white: #fff;
+$couponcr-black-overlay: rgba(0, 0, 0, 0.4);
+$couponcr-gray-200: #e5e7eb;
+$couponcr-indigo-200: #cbd5f5;
+$couponcr-blue-600: #2563eb;
+
+/* ===== Mixins ===== */
+@mixin couponcr-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin couponcr-flex-between-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin couponcr-btn-base {
+  padding: 8px 16px;
+}
+
+/* ===== Styles ===== */
 .modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.4);
-  display: flex; align-items: center; justify-content: center;
+  position: fixed;
+  inset: 0;
+  background: $couponcr-black-overlay;
+  @include couponcr-flex-center;
   backdrop-filter: blur(6px);
   z-index: 1000;
 }
+
 .modal {
-  background: #fff; width: 700px; max-height: 90vh;
-  border-radius: 16px; padding: 24px; overflow-y: auto;
+  background: $couponcr-white;
+  width: 700px;
+  max-height: 90vh;
+  border-radius: 16px;
+  padding: 24px;
+  overflow-y: auto;
 }
+
 .modal-head {
-  display: flex; justify-content: space-between; align-items: center;
+  @include couponcr-flex-between-center;
 }
+
 .form-grid {
-  display: grid; grid-template-columns: repeat(2,1fr);
-  gap: 14px; margin-top: 20px;
+  
+  gap: 14px;
+  margin-top: 20px;
+
+  input,
+  select {
+    padding: 10px;
+    border: 1px solid $couponcr-gray-200;
+    border-radius: 8px;
+  }
 }
-.form-grid input, .form-grid select {
-  padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px;
-}
+
 .actions {
-  display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;
-}
-.actions .cancel {
-  background: #fff; border: 1px solid #cbd5f5; padding: 8px 16px;
-}
-.actions .create {
-  background: #2563eb; color: #fff; border: none; padding: 8px 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+
+  .cancel {
+    background: $couponcr-white;
+    border: 1px solid $couponcr-indigo-200;
+    @include couponcr-btn-base;
+  }
+
+  .create {
+    background: $couponcr-blue-600;
+    color: $couponcr-white;
+    border: none;
+    padding: 8px 18px;
+  }
 }

@@ -1,18 +1,71 @@
-/* CompletedNosw.css */
+/* CompletedNosw.scss */
+
+/* =======================
+   Variables
+======================= */
+$completednosw-bg: #fff;
+
+$completednosw-color-primary: #2563eb;
+$completednosw-color-danger: #ef4444;
+
+$completednosw-color-success: #16a34a;
+
+$completednosw-color-dark: #111827;
+$completednosw-color-muted: #6b7280;
+
+$completednosw-border: #e5e7eb;
+
+$completednosw-bg-tab-active: #f3f4f6;
+
+$completednosw-bg-status: #dbeafe;
+$completednosw-color-status: #1e40af;
+
+$completednosw-radius-lg: 14px;
+$completednosw-radius-pill: 999px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin completednosw-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin completednosw-between {
+  @include completednosw-flex(space-between, center);
+}
+
+@mixin completednosw-card($padding: 18px, $radius: $completednosw-radius-lg) {
+  background: $completednosw-bg;
+  border: 1px solid $completednosw-border;
+  border-radius: $radius;
+  padding: $padding;
+}
+
+/* =======================
+   Styles
+======================= */
 .completed-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.page-head h2 {
-  font-size: 22px;
-  font-weight: 600;
-}
+.page-head {
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+  }
 
-.page-head p {
-  font-size: 14px;
-  color: #6b7280;
+  p {
+    font-size: 14px;
+    color: $completednosw-color-muted;
+  }
 }
 
 .stats-grid {
@@ -22,29 +75,35 @@
 }
 
 .cn-card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  @include completednosw-card(18px, $completednosw-radius-lg);
+  @include completednosw-between;
 
-.cn-card p {
-  font-size: 13px;
-  color: #6b7280;
-}
+  p {
+    font-size: 13px;
+    color: $completednosw-color-muted;
+  }
 
-.cn-card h3 {
-  font-size: 22px;
-  margin-top: 6px;
-}
+  h3 {
+    font-size: 22px;
+    margin-top: 6px;
+  }
 
-.cn-card.completed h3 { color: #2563eb; }
-.cn-card.noshow h3 { color: #ef4444; }
-.cn-card.rate h3 { color: #111827; }
-.cn-card.revenue h3 { color: #ef4444; }
+  &.completed h3 {
+    color: $completednosw-color-primary;
+  }
+
+  &.noshow h3 {
+    color: $completednosw-color-danger;
+  }
+
+  &.rate h3 {
+    color: $completednosw-color-dark;
+  }
+
+  &.revenue h3 {
+    color: $completednosw-color-danger;
+  }
+}
 
 .tabs {
   display: flex;
@@ -53,21 +112,21 @@
 
 .tab {
   padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
+  border-radius: $completednosw-radius-pill;
+  border: 1px solid $completednosw-border;
+  background: $completednosw-bg;
   font-size: 13px;
-}
 
-.tab.active {
-  background: #f3f4f6;
-  font-weight: 600;
+  &.active {
+    background: $completednosw-bg-tab-active;
+    font-weight: 600;
+  }
 }
 
 .table-card {
-  background: #fff;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
+  background: $completednosw-bg;
+  border-radius: $completednosw-radius-lg;
+  border: 1px solid $completednosw-border;
   overflow: hidden;
 }
 
@@ -76,35 +135,38 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 14px;
   font-size: 13px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid $completednosw-border;
   text-align: left;
 }
 
-td span {
-  display: block;
-  font-size: 12px;
-  color: #6b7280;
+td {
+  span {
+    display: block;
+    font-size: 12px;
+    color: $completednosw-color-muted;
+  }
 }
 
-.status.completed {
-  background: #dbeafe;
-  color: #1e40af;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 11px;
+.status {
+  &.completed {
+    background: $completednosw-bg-status;
+    color: $completednosw-color-status;
+    padding: 4px 10px;
+    border-radius: $completednosw-radius-pill;
+    font-size: 11px;
+  }
 }
 
 .green {
-  color: #16a34a;
+  color: $completednosw-color-success;
 }
 
 .time {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #6b7280;
+  @include completednosw-flex(flex-start, center, 6px);
+  color: $completednosw-color-muted;
   font-size: 12px;
 }

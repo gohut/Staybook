@@ -1,96 +1,146 @@
-/* FiltersSidebar.css */
+/* FiltersSidebar.scss */
+
+/* =======================
+   Variables
+======================= */
+$filterssidebar-font-family: Inter, sans-serif;
+
+$filterssidebar-bg: #fff;
+$filterssidebar-bg-mapbox: #f1f5f9;
+
+$filterssidebar-color-primary: #2563eb;
+$filterssidebar-color-blue: #3b82f6;
+$filterssidebar-color-text: #374151;
+$filterssidebar-color-count: #9ca3af;
+$filterssidebar-color-white: #fff;
+
+$filterssidebar-border: #e5e7eb;
+
+$filterssidebar-map-gradient-start: #dbeafe;
+$filterssidebar-map-gradient-end: #c7d2fe;
+
+$filterssidebar-radius-lg: 12px;
+$filterssidebar-radius-md: 10px;
+$filterssidebar-radius-sm: 8px;
+$filterssidebar-radius-xs: 6px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin filterssidebar-box($bg: $filterssidebar-bg, $radius: $filterssidebar-radius-lg, $padding: 14px) {
+  background: $bg;
+  border-radius: $radius;
+  padding: $padding;
+}
+
+@mixin filterssidebar-input-border($radius: $filterssidebar-radius-sm) {
+  border: 1px solid $filterssidebar-border;
+  border-radius: $radius;
+}
+
+@mixin filterssidebar-flex($align: center, $gap: null) {
+  display: flex;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+/* =======================
+   Styles
+======================= */
 .filters-sidebar {
   width: 320px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 14px;
+  @include filterssidebar-box($filterssidebar-bg, $filterssidebar-radius-lg, 14px);
   margin: 10px;
-  font-family: Inter, sans-serif;
+  font-family: $filterssidebar-font-family;
   font-size: 13px;
 }
 
 .map-box {
-  background: #f1f5f9;
-  border-radius: 10px;
-  padding: 8px;
+  @include filterssidebar-box($filterssidebar-bg-mapbox, $filterssidebar-radius-md, 8px);
   margin-bottom: 14px;
 }
 
 .map-preview {
   height: 90px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #dbeafe, #c7d2fe);
+  border-radius: $filterssidebar-radius-sm;
+  background: linear-gradient(
+    135deg,
+    $filterssidebar-map-gradient-start,
+    $filterssidebar-map-gradient-end
+  );
   margin-bottom: 8px;
 }
 
 .map-btn {
   width: 100%;
-  border: 2px solid #3b82f6;
-  color: #2563eb;
-  background: #fff;
+  border: 2px solid $filterssidebar-color-blue;
+  color: $filterssidebar-color-primary;
+  background: $filterssidebar-bg;
   padding: 8px 0;
-  border-radius: 8px;
+  border-radius: $filterssidebar-radius-sm;
   font-weight: 600;
   cursor: pointer;
 }
 
-.search-box input {
-  width: 100%;
-  /* padding: 8px 10px; */
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  margin-bottom: 14px;
+.search-box {
+  input {
+    width: 100%;
+    /* padding: 8px 10px; */
+    @include filterssidebar-input-border($filterssidebar-radius-sm);
+    margin-bottom: 14px;
+  }
 }
 
 .filter-section {
   padding: 12px 0;
-  border-top: 1px solid #e5e7eb;
-}
+  border-top: 1px solid $filterssidebar-border;
 
-.filter-section h4 {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 10px;
+  h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
 }
 
 .filter-item {
   display: flex;
   width: 250px;
   align-items: center;
+  color: $filterssidebar-color-text;
 
-  color: #374151;
+  input {
+    accent-color: $filterssidebar-color-primary;
+  }
+
+  .count {
+    margin-left: auto;
+    color: $filterssidebar-color-count;
+  }
 }
 
-.filter-item input {
-  accent-color: #2563eb;
-}
-
-.filter-item .count {
-  margin-left: auto;
-  color: #9ca3af;
-}
-.label{
+.label {
   width: 500px;
 }
+
 .budget {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  @include filterssidebar-flex(center, 6px);
   margin-top: 8px;
-}
 
-.budget input {
-  width: 60px;
-  padding: 6px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-}
+  input {
+    width: 60px;
+    padding: 6px;
+    @include filterssidebar-input-border($filterssidebar-radius-xs);
+  }
 
-.budget button {
-  border: none;
-  background: #3b82f6;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
+  button {
+    border: none;
+    background: $filterssidebar-color-blue;
+    color: $filterssidebar-color-white;
+    padding: 6px 10px;
+    border-radius: $filterssidebar-radius-xs;
+    cursor: pointer;
+  }
 }

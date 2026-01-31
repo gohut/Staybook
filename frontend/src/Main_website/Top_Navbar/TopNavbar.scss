@@ -1,37 +1,62 @@
-.top-navbar {
+/* TopNavbar.scss */
+
+/* =======================
+   Variables
+======================= */
+$topnavbar-bg: #fff;
+
+$topnavbar-color-primary: #2563eb;
+$topnavbar-color-success: #16a34a;
+$topnavbar-color-text: #374151;
+
+$topnavbar-border: #e5e7eb;
+
+/* =======================
+   Mixins
+======================= */
+@mixin topnavbar-flex($justify: flex-start, $align: center, $gap: null) {
   display: flex;
-  align-items: center;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+/* =======================
+   Styles
+======================= */
+.top-navbar {
+  @include topnavbar-flex(flex-start, center);
   padding: 14px 40px;
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  background: $topnavbar-bg;
+  border-bottom: 1px solid $topnavbar-border;
 }
 
 .logo {
   font-size: 22px;
   font-weight: 700;
-  color: #2563eb;
-}
+  color: $topnavbar-color-primary;
 
-.logo span {
-  color: #16a34a;
+  span {
+    color: $topnavbar-color-success;
+  }
 }
 
 .nav-links {
-  display: flex;
-  gap: 26px;
+  @include topnavbar-flex(flex-start, center, 26px);
   margin-left: 40px;
-}
 
-.nav-links div {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #374151;
-  cursor: pointer;
-}
+  div {
+    @include topnavbar-flex(flex-start, center, 6px);
+    color: $topnavbar-color-text;
+    cursor: pointer;
+  }
 
-.nav-links .active {
-  color: #2563eb;
-  border-bottom: 2px solid #2563eb;
-  padding-bottom: 6px;
+  .active {
+    color: $topnavbar-color-primary;
+    border-bottom: 2px solid $topnavbar-color-primary;
+    padding-bottom: 6px;
+  }
 }

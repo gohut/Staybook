@@ -1,119 +1,164 @@
-.login-cont
-{
-    background-color: rgba(129, 129, 176,0.5);
-    width: 1540px;height:800px;
-    position: absolute;
-    transform: translate(0px,-600px);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;align-items: center;
-}
-.main-log-cont
-{
-    background-color: white;
-    width: 850px;height: 550px;
-    border-radius: 5px;
-    overflow: hidden;
-    display: flex;
-}
-.mnlg-cn-cls
-{
-    position: absolute;
-    font-weight: bold;
-    transform: translate(830px,0px);
-}
-.mm-lg-cn-img
-{
-    width: 350px;
-    height: 550px;
-    background-color: aqua;
-    overflow: hidden;
-}
-.mm-lg-cn-cn1
-{
-   padding: 20px 50px;
+/* Login.scss */
 
+/* =======================
+   Variables
+======================= */
+$login-bg-overlay: rgba(129, 129, 176, 0.5);
+$login-bg-white: white;
+$login-bg-aqua: aqua;
+
+$login-color-black: black;
+$login-color-grey: grey;
+$login-color-gray: gray;
+
+$login-color-focus: #4f46e5;
+$login-shadow-focus: 0 0 0 2px rgba(79, 70, 229, 0.3);
+
+$login-bg-btn: rgb(147, 147, 255);
+
+$login-border-radius-sm: 5px;
+$login-border-radius-pill: 50px;
+$login-border-radius-pill-2: 25px;
+
+$login-z-overlay: 1000;
+
+/* =======================
+   Mixins
+======================= */
+@mixin login-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.mglgcn-cn11
-{
-    /* background-color: aqua; */
-    width: 400px;height: 500px;
+
+@mixin login-size($w, $h) {
+  width: $w;
+  height: $h;
 }
-.mm-lg-cn-img img
-{
-   width: 450px;
+
+/* =======================
+   Styles
+======================= */
+.login-cont {
+  background-color: $login-bg-overlay;
+  @include login-size(1540px, 800px);
+  position: absolute;
+  transform: translate(0px, -600px);
+  z-index: $login-z-overlay;
+  @include login-flex-center;
 }
-.cn111
-{
-    font-weight: bold;
-    font-size: 25px;
-    text-align: center;
+
+.main-log-cont {
+  background-color: $login-bg-white;
+  @include login-size(850px, 550px);
+  border-radius: $login-border-radius-sm;
+  overflow: hidden;
+  display: flex;
 }
-.cn112
-{
-    text-align: center;
+
+.mnlg-cn-cls {
+  position: absolute;
+  font-weight: bold;
+  transform: translate(830px, 0px);
 }
-.cn113 input, .cn114 input 
-{ 
-    width: 400px; height: 40px;
+
+.mm-lg-cn-img {
+  @include login-size(350px, 550px);
+  background-color: $login-bg-aqua;
+  overflow: hidden;
+
+  img {
+    width: 450px;
+  }
+}
+
+.mm-lg-cn-cn1 {
+  padding: 20px 50px;
+}
+
+.mglgcn-cn11 {
+  /* background-color: aqua; */
+  @include login-size(400px, 500px);
+}
+
+.cn111 {
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+}
+
+.cn112 {
+  text-align: center;
+}
+
+.cn113,
+.cn114 {
+  input {
+    @include login-size(400px, 40px);
     background-color: transparent;
     border: none;
-    border-bottom: solid 1px gray;
-    padding: 10px 10px; 
+    border-bottom: solid 1px $login-color-gray;
+    padding: 10px 10px;
     outline: none;
+  }
 }
-.cn133 input:focus {
-  border-color: #4f46e5;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+
+.cn133 {
+  input {
+    &:focus {
+      border-color: $login-color-focus;
+      outline: none;
+      box-shadow: $login-shadow-focus;
+    }
+  }
 }
-.cn115
-{
-    /* background-color: #4f46e5; */
-    font-size: 13px;
-    padding-left: 290px;
-    /* font-weight: bold; */
+
+.cn115 {
+  /* background-color: #4f46e5; */
+  font-size: 13px;
+  padding-left: 290px;
+  /* font-weight: bold; */
 }
-.cn116
-{
-    background-color: rgb(147, 147, 255);
-    width: fit-content;
-    margin: 20px 160px;
-    padding: 5px 25px;
-    border-radius: 50px;
-    font-weight: bold;
+
+.cn116 {
+  background-color: $login-bg-btn;
+  width: fit-content;
+  margin: 20px 160px;
+  padding: 5px 25px;
+  border-radius: $login-border-radius-pill;
+  font-weight: bold;
 }
-.cn117
-{
-    display: flex;
+
+.cn117 {
+  display: flex;
 }
-.cn1172
-{
-    font-size: 13px;width: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translate(0px,-10px);
+
+.cn1172 {
+  font-size: 13px;
+  width: 140px;
+  @include login-flex-center;
+  transform: translate(0px, -10px);
 }
-.cn1171,.cn1173
-{
-   width: 200px;height: 1px;
-   background-color: black;
+
+.cn1171,
+.cn1173 {
+  @include login-size(200px, 1px);
+  background-color: $login-color-black;
 }
-.cn118
-{
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
-    border: grey 1px solid;
-    width: 170px;
-    padding: 5px 10px; 
-    border-radius: 25px;
-    margin: 20px 120px;
+
+.cn118 {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  border: $login-color-grey 1px solid;
+  width: 170px;
+  padding: 5px 10px;
+  border-radius: $login-border-radius-pill-2;
+  margin: 20px 120px;
 }
-.cn119
-{
-    font-size: 14px;
-    margin: 10px 80px;
+
+.cn119 {
+  font-size: 14px;
+  margin: 10px 80px;
 }

@@ -1,25 +1,84 @@
-/* PaymentSuccess.css */
+/* PaymentSuccess.scss */
+
+/* =======================
+   Variables
+======================= */
+$paymentsuccess-font-family: "Inter", sans-serif;
+
+$paymentsuccess-bg-page: #fafafa;
+$paymentsuccess-bg-card: #fff;
+$paymentsuccess-bg-soft: #fafafa;
+$paymentsuccess-bg-confirmation: #f1f7ff;
+
+$paymentsuccess-color-success: #22c55e;
+$paymentsuccess-color-primary: #2563eb;
+$paymentsuccess-color-muted: #6b7280;
+$paymentsuccess-color-text: #555;
+$paymentsuccess-color-white: #fff;
+
+$paymentsuccess-border-light: #eee;
+$paymentsuccess-border-hr: #e5e7eb;
+$paymentsuccess-border-btn: #d1d5db;
+
+$paymentsuccess-radius-lg: 16px;
+$paymentsuccess-radius-md: 12px;
+
+$paymentsuccess-shadow-card: 0 10px 30px rgba(0, 0, 0, 0.05);
+
+/* =======================
+   Mixins
+======================= */
+@mixin paymentsuccess-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin paymentsuccess-center {
+  @include paymentsuccess-flex(center, center);
+}
+
+@mixin paymentsuccess-box($bg: $paymentsuccess-bg-soft, $radius: $paymentsuccess-radius-md, $padding: 16px) {
+  background: $bg;
+  border-radius: $radius;
+  padding: $padding;
+}
+
+@mixin paymentsuccess-btn-base {
+  flex: 1;
+  padding: 14px;
+  border-radius: $paymentsuccess-radius-md;
+  font-size: 14px;
+  @include paymentsuccess-center;
+  gap: 8px;
+}
+
+/* =======================
+   Styles
+======================= */
 .success-wrapper {
   min-height: 100vh;
-  background: #fafafa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: $paymentsuccess-bg-page;
+  @include paymentsuccess-center;
   padding: 40px 0;
-  font-family: "Inter", sans-serif;
+  font-family: $paymentsuccess-font-family;
 }
 
 .success-card {
-  background: #fff;
+  background: $paymentsuccess-bg-card;
   width: 520px;
   padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border-radius: $paymentsuccess-radius-lg;
+  box-shadow: $paymentsuccess-shadow-card;
 }
 
 .success-icon {
   font-size: 56px;
-  color: #22c55e;
+  color: $paymentsuccess-color-success;
   display: block;
   margin: 0 auto 16px;
 }
@@ -31,27 +90,25 @@ h2 {
 
 .subtitle {
   text-align: center;
-  color: #6b7280;
+  color: $paymentsuccess-color-muted;
   font-size: 14px;
   margin-bottom: 24px;
 }
 
 .confirmation-box {
-  background: #f1f7ff;
-  border-radius: 12px;
-  padding: 16px;
+  @include paymentsuccess-box($paymentsuccess-bg-confirmation);
   margin-bottom: 24px;
-}
 
-.confirmation-box span {
-  display: block;
-  font-size: 13px;
-  color: #6b7280;
-}
+  span {
+    display: block;
+    font-size: 13px;
+    color: $paymentsuccess-color-muted;
+  }
 
-.confirmation-box strong {
-  font-size: 18px;
-  color: #2563eb;
+  strong {
+    font-size: 18px;
+    color: $paymentsuccess-color-primary;
+  }
 }
 
 h3 {
@@ -59,8 +116,8 @@ h3 {
 }
 
 .booking-box {
-  border: 1px solid #eee;
-  border-radius: 12px;
+  border: 1px solid $paymentsuccess-border-light;
+  border-radius: $paymentsuccess-radius-md;
   padding: 16px;
 }
 
@@ -68,30 +125,28 @@ h3 {
   display: flex;
   gap: 12px;
   margin-bottom: 12px;
-}
 
-.booking-title span {
-  font-size: 13px;
-  color: #6b7280;
-}
+  span {
+    font-size: 13px;
+    color: $paymentsuccess-color-muted;
+  }
 
-.booking-title strong {
-  display: block;
+  strong {
+    display: block;
+  }
 }
 
 .booking-row {
   display: flex;
   gap: 8px;
   align-items: center;
-  color: #555;
+  color: $paymentsuccess-color-text;
   font-size: 14px;
   margin-top: 6px;
 }
 
 .summary-box {
-  background: #fafafa;
-  border-radius: 12px;
-  padding: 16px;
+  @include paymentsuccess-box($paymentsuccess-bg-soft);
 }
 
 .summary-row {
@@ -99,34 +154,32 @@ h3 {
   justify-content: space-between;
   font-size: 14px;
   margin: 8px 0;
-}
 
-.summary-row.total {
-  font-weight: 600;
-  color: #22c55e;
+  &.total {
+    font-weight: 600;
+    color: $paymentsuccess-color-success;
+  }
 }
 
 hr {
   border: none;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid $paymentsuccess-border-hr;
   margin: 12px 0;
 }
 
 .next-box {
-  background: #fafafa;
-  border-radius: 12px;
-  padding: 16px;
+  @include paymentsuccess-box($paymentsuccess-bg-soft);
   margin: 20px 0;
-}
 
-.next-box h4 {
-  margin-bottom: 8px;
-}
+  h4 {
+    margin-bottom: 8px;
+  }
 
-.next-box ul {
-  padding-left: 18px;
-  font-size: 14px;
-  color: #555;
+  ul {
+    padding-left: 18px;
+    font-size: 14px;
+    color: $paymentsuccess-color-text;
+  }
 }
 
 .actions {
@@ -135,28 +188,14 @@ hr {
 }
 
 .primary-btn {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
+  @include paymentsuccess-btn-base;
   border: none;
-  background: #2563eb;
-  color: #fff;
-  font-size: 14px;
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
+  background: $paymentsuccess-color-primary;
+  color: $paymentsuccess-color-white;
 }
 
 .secondary-btn {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #d1d5db;
-  background: #fff;
-  font-size: 14px;
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
+  @include paymentsuccess-btn-base;
+  border: 1px solid $paymentsuccess-border-btn;
+  background: $paymentsuccess-bg-card;
 }

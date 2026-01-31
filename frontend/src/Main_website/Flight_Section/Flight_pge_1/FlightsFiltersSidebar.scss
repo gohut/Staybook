@@ -1,78 +1,139 @@
+/* FlightsFiltersSidebar.scss */
+
+/* ===== Variables ===== */
+$ffs-white: #fff;
+
+$ffs-border: #e9e9e9;
+$ffs-border-soft: #efefef;
+$ffs-border-item: #f1f1f1;
+
+$ffs-title: #222;
+$ffs-text: #333;
+
+$ffs-gray-bc: #bcbcbc;
+$ffs-gray-6c: #6c6c6c;
+
+$ffs-hover-bg: #fbfbfb;
+
+$ffs-blue: #1a73e8;
+
+$ffs-track-bg: #e6e6e6;
+$ffs-knob-border: #d0d0d0;
+$ffs-knob-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+
+$ffs-footer-bg: #fafafa;
+
+$ffs-width: 280px;
+$ffs-radius: 10px;
+
+/* ===== Mixins ===== */
+@mixin ffs-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin ffs-grid($cols, $gap: null) {
+  display: grid;
+  grid-template-columns: $cols;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin ffs-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+@mixin ffs-card($radius: $ffs-radius) {
+  background: $ffs-white;
+  border: 1px solid $ffs-border;
+  border-radius: $radius;
+  overflow: hidden;
+}
+
+@mixin ffs-pill {
+  border-radius: 999px;
+}
+
+/* ===== Styles ===== */
 .ffs-wrap {
-  width: 280px;
+  width: $ffs-width;
 }
 
 .ffs-card {
-  background: #fff;
-  border: 1px solid #e9e9e9;
-  border-radius: 10px;
-  overflow: hidden;
+  @include ffs-card;
 }
 
 .ffs-section {
   padding: 16px 14px;
-  border-bottom: 1px solid #efefef;
-}
+  border-bottom: 1px solid $ffs-border-soft;
 
-.ffs-section:last-child {
-  border-bottom: none;
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .ffs-title {
   margin: 0 0 12px;
   font-size: 14px;
   font-weight: 900;
-  color: #222;
+  color: $ffs-title;
 }
 
 .ffs-list {
-  display: flex;
+  @include ffs-flex(flex-start, stretch);
   flex-direction: column;
 }
 
 .ffs-item {
   width: 100%;
-  display: grid;
-  grid-template-columns: 18px 1fr auto;
-  gap: 10px;
+  @include ffs-grid(18px 1fr auto, 10px);
   align-items: center;
   padding: 10px 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  border-bottom: 1px solid #f1f1f1;
-  text-align: left;
-}
+  border-bottom: 1px solid $ffs-border-item;
+  @include ffs-btn-reset;
 
-.ffs-item:last-child {
-  border-bottom: none;
-}
+  &:last-child {
+    border-bottom: none;
+  }
 
-.ffs-item:hover {
-  background: #fbfbfb;
+  &:hover {
+    background: $ffs-hover-bg;
+  }
+
+  &.active {
+    .ffs-box {
+      color: $ffs-blue;
+    }
+  }
 }
 
 .ffs-box {
   font-size: 16px;
-  color: #bcbcbc;
+  color: $ffs-gray-bc;
   display: inline-flex;
-}
-
-.ffs-item.active .ffs-box {
-  color: #1a73e8;
 }
 
 .ffs-label {
   font-size: 12px;
   font-weight: 700;
-  color: #333;
+  color: $ffs-text;
   line-height: 1.2;
 }
 
 .ffs-price {
   font-size: 12px;
   font-weight: 900;
-  color: #333;
+  color: $ffs-text;
 }
 
 /* slider replica */
@@ -83,16 +144,16 @@
 .ffs-track {
   position: relative;
   height: 4px;
-  border-radius: 999px;
-  background: #e6e6e6;
+  @include ffs-pill;
+  background: $ffs-track-bg;
   margin: 10px 6px 16px;
 }
 
 .ffs-fill {
   width: 78%;
   height: 4px;
-  border-radius: 999px;
-  background: #1a73e8;
+  @include ffs-pill;
+  background: $ffs-blue;
 }
 
 .ffs-knob {
@@ -103,23 +164,22 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #d0d0d0;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  background: $ffs-white;
+  border: 2px solid $ffs-knob-border;
+  box-shadow: $ffs-knob-shadow;
 }
 
 .ffs-range {
-  display: flex;
-  justify-content: space-between;
+  @include ffs-flex(space-between, center);
   font-size: 12px;
   font-weight: 800;
-  color: #6c6c6c;
+  color: $ffs-gray-6c;
 }
 
 .ffs-footerNote {
   padding: 10px 14px;
   font-size: 12px;
   font-weight: 700;
-  color: #6c6c6c;
-  background: #fafafa;
+  color: $ffs-gray-6c;
+  background: $ffs-footer-bg;
 }

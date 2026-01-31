@@ -1,16 +1,61 @@
-/* LocationSection.css */
+/* LocationSection.scss */
+
+/* =======================
+   Variables
+======================= */
+$locationsection-bg-wrap: #f2f2f2;
+$locationsection-bg-card: #fff;
+$locationsection-bg-map: #e9edf2;
+
+$locationsection-border-card: #e6e6e6;
+$locationsection-border-input: #dcdcdc;
+$locationsection-border-btn: #4da6ff;
+
+$locationsection-color-link: #1a73e8;
+$locationsection-color-icon: #888;
+
+$locationsection-radius-lg: 16px;
+$locationsection-radius-md: 14px;
+$locationsection-radius-sm: 10px;
+$locationsection-radius-xs: 8px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin locationsection-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin locationsection-box($bg: $locationsection-bg-card, $radius: $locationsection-radius-lg, $padding: 16px) {
+  background: $bg;
+  border-radius: $radius;
+  padding: $padding;
+}
+
+@mixin locationsection-border-radius($border-color, $radius: $locationsection-radius-xs) {
+  border: 1px solid $border-color;
+  border-radius: $radius;
+}
+
+/* =======================
+   Styles
+======================= */
 .location-wrapper {
-  background: #f2f2f2;
+  background: $locationsection-bg-wrap;
   padding: 16px 0;
 }
 
 .location-card {
   max-width: 1180px;
   margin: auto;
-  background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  border: 1px solid #e6e6e6;
+  @include locationsection-box($locationsection-bg-card, $locationsection-radius-lg, 16px);
+  border: 1px solid $locationsection-border-card;
 }
 
 .location-title {
@@ -20,67 +65,55 @@
 }
 
 .location-toolbar {
-  display: flex;
-  gap: 12px;
+  @include locationsection-flex(flex-start, center, 12px);
   margin-bottom: 14px;
-  align-items: center;
 }
 
 .location-search {
   flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
+  @include locationsection-flex(flex-start, center, 8px);
+  @include locationsection-border-radius($locationsection-border-input, $locationsection-radius-xs);
   padding: 8px 10px;
-  background: #fff;
-}
+  background: $locationsection-bg-card;
 
-.location-search svg {
-  color: #888;
-  font-size: 14px;
-}
+  svg {
+    color: $locationsection-color-icon;
+    font-size: 14px;
+  }
 
-.location-search input {
-  border: none;
-  outline: none;
-  width: 100%;
-  font-size: 14px;
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+  }
 }
 
 .nearby {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
+  @include locationsection-flex(flex-start, center, 6px);
+  @include locationsection-border-radius($locationsection-border-input, $locationsection-radius-xs);
   padding: 8px 12px;
   font-size: 14px;
-  background: #fff;
+  background: $locationsection-bg-card;
   cursor: pointer;
 }
 
 .location-map {
   height: 300px;
-  border-radius: 14px;
-  background: #e9edf2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: $locationsection-radius-md;
+  background: $locationsection-bg-map;
+  @include locationsection-flex(center, center);
   position: relative;
   overflow: hidden;
 }
 
 .view-map-btn {
-  background: #fff;
-  border: 1px solid #4da6ff;
-  color: #1a73e8;
+  background: $locationsection-bg-card;
+  border: 1px solid $locationsection-border-btn;
+  color: $locationsection-color-link;
   padding: 10px 18px;
-  border-radius: 10px;
+  border-radius: $locationsection-radius-sm;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  @include locationsection-flex(flex-start, center, 6px);
   cursor: pointer;
 }

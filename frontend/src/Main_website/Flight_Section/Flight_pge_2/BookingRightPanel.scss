@@ -1,51 +1,92 @@
-.brp-wrap {
+/* BookingRightPanel.scss */
+
+/* ===== Variables ===== */
+$brp-white: #fff;
+
+$brp-border: #e9e9e9;
+$brp-border-light: #ededed;
+$brp-border-item: #f1f1f1;
+$brp-input-border: #e2e2e2;
+
+$brp-title: #222;
+$brp-text: #444;
+$brp-text-333: #333;
+$brp-text-666: #666;
+$brp-text-777: #777;
+
+$brp-blue: #1a73e8;
+$brp-blue-dark: #1558b0;
+
+$brp-green: #18a773;
+$brp-red: #ff5a5a;
+
+$brp-coupon-bg: #f9fbff;
+
+/* ===== Mixins ===== */
+@mixin brp-flex($justify: flex-start, $align: stretch, $gap: null) {
   display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin brp-card($padding, $radius: 10px, $border: 1px solid $brp-border, $bg: $brp-white) {
+  background: $bg;
+  border: $border;
+  border-radius: $radius;
+  padding: $padding;
+}
+
+@mixin brp-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
+.brp-wrap {
+  @include brp-flex(flex-start, stretch, 14px);
   flex-direction: column;
-  gap: 14px;
 }
 
 .brp-card {
-  background: #fff;
-  border: 1px solid #e9e9e9;
-  border-radius: 10px;
-  padding: 14px;
+  @include brp-card(14px);
 }
 
 .brp-title {
   margin: 0 0 12px;
   font-size: 14px;
   font-weight: 900;
-  color: #222;
+  color: $brp-title;
 }
 
 .brp-row {
-  display: flex;
-  justify-content: space-between;
+  @include brp-flex(space-between, center);
   padding: 8px 0;
   font-size: 12px;
   font-weight: 800;
-  color: #444;
+  color: $brp-text;
 }
 
 .brp-total {
   margin-top: 8px;
   padding-top: 10px;
-  border-top: 1px solid #ededed;
-  display: flex;
-  justify-content: space-between;
+  border-top: 1px solid $brp-border-light;
+  @include brp-flex(space-between, center);
   font-size: 13px;
   font-weight: 900;
-  color: #222;
+  color: $brp-title;
 }
 
 .brp-couponHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include brp-flex(space-between, center);
 }
 
 .brp-gift {
-  color: #ff5a5a;
+  color: $brp-red;
   font-size: 18px;
 }
 
@@ -54,7 +95,7 @@
   margin-top: 6px;
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid $brp-input-border;
   outline: none;
   font-size: 12px;
   font-weight: 700;
@@ -63,15 +104,13 @@
 .brp-couponCard {
   margin-top: 12px;
   border-radius: 10px;
-  border: 1px solid #e9e9e9;
+  border: 1px solid $brp-border;
   padding: 12px;
-  background: #f9fbff;
+  background: $brp-coupon-bg;
 }
 
 .brp-couponTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include brp-flex(space-between, center);
 }
 
 .brp-badge {
@@ -80,7 +119,7 @@
   align-items: center;
   font-size: 12px;
   font-weight: 900;
-  color: #333;
+  color: $brp-text-333;
 }
 
 .brp-lock {
@@ -91,7 +130,7 @@
   margin-top: 10px;
   font-size: 11px;
   font-weight: 800;
-  color: #666;
+  color: $brp-text-666;
   line-height: 1.3;
 }
 
@@ -100,59 +139,55 @@
   width: 100%;
   border: none;
   border-radius: 8px;
-  background: #1a73e8;
-  color: #fff;
+  background: $brp-blue;
+  color: $brp-white;
   font-weight: 900;
   font-size: 12px;
   padding: 10px 12px;
   cursor: pointer;
-}
 
-.brp-unlock:hover {
-  background: #1558b0;
+  &:hover {
+    background: $brp-blue-dark;
+  }
 }
 
 .brp-mini {
   margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  @include brp-flex(space-between, stretch, 10px);
   padding: 10px 0;
-  border-top: 1px solid #f1f1f1;
-}
+  border-top: 1px solid $brp-border-item;
 
-.brp-mini b {
-  font-size: 12px;
-  font-weight: 900;
-  color: #222;
+  b {
+    font-size: 12px;
+    font-weight: 900;
+    color: $brp-title;
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: $brp-text-777;
+    line-height: 1.3;
+  }
 }
 
 .brp-off {
   margin-left: 10px;
   font-size: 11px;
   font-weight: 900;
-  color: #18a773;
-}
-
-.brp-mini p {
-  margin: 6px 0 0;
-  font-size: 11px;
-  font-weight: 700;
-  color: #777;
-  line-height: 1.3;
+  color: $brp-green;
 }
 
 .brp-apply {
-  border: none;
-  background: transparent;
-  color: #1a73e8;
+  @include brp-btn-reset;
+  color: $brp-blue;
   font-weight: 900;
   font-size: 12px;
-  cursor: pointer;
   height: fit-content;
   margin-top: 2px;
-}
 
-.brp-apply:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }

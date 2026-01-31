@@ -1,58 +1,89 @@
-/* SearchHeader.css */
+/* SearchHeader.scss */
+
+/* ===== Variables ===== */
+$sh-white: #ffffff;
+
+$sh-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+
+$sh-label: #6b6b6b;
+$sh-text: #222;
+
+$sh-border: #dcdcdc;
+
+$sh-icon: #888;
+
+$sh-blue: #1a73e8;
+$sh-blue-dark: #155ec4;
+
+$sh-radius: 6px;
+
+/* ===== Mixins ===== */
+@mixin sh-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin sh-btn-reset {
+  border: none;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
 .search-header {
   width: 100%;
   padding: 18px 24px;
-  background: #ffffff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  background: $sh-white;
+  box-shadow: $sh-shadow;
 }
 
 .search-box {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  @include sh-flex(flex-start, center, 14px);
 }
 
 .field {
-  display: flex;
+  @include sh-flex(flex-start, stretch);
   flex-direction: column;
   min-width: 200px;
 }
 
 .label {
   font-size: 11px;
-  color: #6b6b6b;
+  color: $sh-label;
   margin-bottom: 4px;
   font-weight: 600;
 }
 
 .input {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include sh-flex(flex-start, center, 8px);
   padding: 10px 12px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
+  border: 1px solid $sh-border;
+  border-radius: $sh-radius;
   font-size: 14px;
-  color: #222;
-  background: #fff;
-}
+  color: $sh-text;
+  background: $sh-white;
 
-.input svg {
-  color: #888;
-  font-size: 14px;
+  svg {
+    color: $sh-icon;
+    font-size: 14px;
+  }
 }
 
 .search-btn {
   margin-top: 16px;
   padding: 12px 26px;
   border: none;
-  border-radius: 6px;
-  background: #1a73e8;
-  color: #fff;
+  border-radius: $sh-radius;
+  background: $sh-blue;
+  color: $sh-white;
   font-weight: 600;
   cursor: pointer;
-}
 
-.search-btn:hover {
-  background: #155ec4;
+  &:hover {
+    background: $sh-blue-dark;
+  }
 }

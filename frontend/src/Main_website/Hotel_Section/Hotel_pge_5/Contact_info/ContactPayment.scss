@@ -1,8 +1,61 @@
-/* ContactPayment.css */
+/* ContactPayment.scss */
+
+/* =======================
+   Variables
+======================= */
+$contactpayment-bg: #fff;
+
+$contactpayment-bg-soft: #f5f9ff;
+
+$contactpayment-color-primary: #0b72ff;
+$contactpayment-color-white: #fff;
+
+$contactpayment-color-muted: #666;
+$contactpayment-color-disabled: #9ca3af;
+
+$contactpayment-border: #ddd;
+
+$contactpayment-radius-lg: 12px;
+$contactpayment-radius-md: 10px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin contactpayment-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin contactpayment-input-base($radius: $contactpayment-radius-md) {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid $contactpayment-border;
+  border-radius: $radius;
+}
+
+@mixin contactpayment-card($padding: 14px, $radius: $contactpayment-radius-lg) {
+  padding: $padding;
+  border: 1px solid $contactpayment-border;
+  border-radius: $radius;
+  cursor: pointer;
+}
+
+@mixin contactpayment-panel($padding: 24px, $radius: $contactpayment-radius-lg) {
+  background: $contactpayment-bg;
+  padding: $padding;
+  border-radius: $radius;
+}
+
+/* =======================
+   Styles
+======================= */
 .contact-payment {
-  background: #fff;
-  padding: 24px;
-  border-radius: 12px;
+  @include contactpayment-panel(24px, $contactpayment-radius-lg);
 }
 
 .input-row {
@@ -14,10 +67,7 @@
 .input-row input,
 input,
 select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+  @include contactpayment-input-base($contactpayment-radius-md);
 }
 
 .payment-methods {
@@ -28,17 +78,14 @@ select {
 
 .method {
   flex: 1;
-  padding: 14px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  @include contactpayment-card(14px, $contactpayment-radius-lg);
   text-align: center;
-  cursor: pointer;
-}
 
-.method.active {
-  border: 2px solid #0b72ff;
-  background: #f5f9ff;
-  color: #0b72ff;
+  &.active {
+    border: 2px solid $contactpayment-color-primary;
+    background: $contactpayment-bg-soft;
+    color: $contactpayment-color-primary;
+  }
 }
 
 .upi-actions {
@@ -50,16 +97,16 @@ select {
 .outline {
   flex: 1;
   padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #0b72ff;
-  background: #f5f9ff;
-  color: #0b72ff;
+  border-radius: $contactpayment-radius-md;
+  border: 1px solid $contactpayment-color-primary;
+  background: $contactpayment-bg-soft;
+  color: $contactpayment-color-primary;
 }
 
 .qr-box {
-  background: #f5f9ff;
+  background: $contactpayment-bg-soft;
   padding: 24px;
-  border-radius: 12px;
+  border-radius: $contactpayment-radius-lg;
   text-align: center;
 }
 
@@ -67,14 +114,14 @@ select {
   margin-top: 16px;
   padding: 14px;
   width: 100%;
-  border-radius: 12px;
-  background: #0b72ff;
-  color: #fff;
+  border-radius: $contactpayment-radius-lg;
+  background: $contactpayment-color-primary;
+  color: $contactpayment-color-white;
   border: none;
-}
 
-.primary.disabled {
-  background: #9ca3af;
+  &.disabled {
+    background: $contactpayment-color-disabled;
+  }
 }
 
 .sub-title {
@@ -91,8 +138,8 @@ select {
 
 .option-card {
   padding: 18px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  border: 1px solid $contactpayment-border;
+  border-radius: $contactpayment-radius-lg;
   cursor: pointer;
 }
 
@@ -123,6 +170,6 @@ select {
 .terms {
   text-align: center;
   font-size: 13px;
-  color: #666;
+  color: $contactpayment-color-muted;
   margin-top: 12px;
 }

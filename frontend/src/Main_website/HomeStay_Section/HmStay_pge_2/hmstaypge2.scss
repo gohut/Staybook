@@ -1,37 +1,56 @@
+/* Hmstaypge2.scss */
 
+/* ===== Variables ===== */
+$hmstay-bg: #f2f2f2;
 
-/* Hmstaypge2.css */
+$hmstay-max-width: 1400px;
+$hmstay-pad-x: 16px;
+
+$hmstay-gap-left: 16px;
+$hmstay-results-gap: 12px;
+
+/* ===== Mixins ===== */
+@mixin hmstay-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+/* ===== Styles ===== */
 .hmstay-page {
   width: 100%;
-  background: #f2f2f2;
+  background: $hmstay-bg;
 }
 
 .hmstay-body {
-  display: flex;
-  align-items: flex-start;
+  @include hmstay-flex(flex-start, flex-start);
   width: 100%;
-  max-width: 1400px;
+  max-width: $hmstay-max-width;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 $hmstay-pad-x;
   box-sizing: border-box;
 }
 
 .hmstay-content {
   flex: 1;
-  margin-left: 16px;
+  margin-left: $hmstay-gap-left;
+
+  /* spacing below result header */
+  .results-header {
+    margin-bottom: $hmstay-results-gap;
+  }
+
+  /* property card alignment */
+  .property-card {
+    width: 100%;
+  }
 }
 
 /* ensures sidebar sticks to left like image */
 .filter-sidebar {
   flex-shrink: 0;
-}
-
-/* spacing below result header */
-.hmstay-content .results-header {
-  margin-bottom: 12px;
-}
-
-/* property card alignment */
-.hmstay-content .property-card {
-  width: 100%;
 }

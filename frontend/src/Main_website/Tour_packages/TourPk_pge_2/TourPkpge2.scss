@@ -1,8 +1,41 @@
-/* TourPkpge2.css */
+/* TourPkpge2.scss */
+
+/* =======================
+   Variables
+======================= */
+$tourpkpge2-bg-page: #f5f7fa;
+$tourpkpge2-bg-card: #fff;
+
+$tourpkpge2-color-primary: #1e88ff;
+
+$tourpkpge2-border: #e6e6e6;
+
+$tourpkpge2-radius-lg: 14px;
+
+$tourpkpge2-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+
+$tourpkpge2-breakpoint-md: 1024px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin tourpkpge2-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+/* =======================
+   Styles
+======================= */
 body {
   margin: 0;
-  background: #f5f7fa;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  background: $tourpkpge2-bg-page;
+  font-family: $tourpkpge2-font-family;
 }
 
 .tour-page {
@@ -18,8 +51,7 @@ body {
 .tour-content {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  gap: 20px;
+  @include tourpkpge2-flex(flex-start, stretch, 20px);
   padding: 0 16px 40px;
 }
 
@@ -30,13 +62,13 @@ body {
 
 /* top tab */
 .packages-tabs {
-  background: #fff;
+  background: $tourpkpge2-bg-card;
   padding: 14px 18px;
-  border-radius: 14px 14px 0 0;
+  border-radius: $tourpkpge2-radius-lg $tourpkpge2-radius-lg 0 0;
   font-size: 14px;
   font-weight: 600;
-  color: #1e88ff;
-  border-bottom: 1px solid #e6e6e6;
+  color: $tourpkpge2-color-primary;
+  border-bottom: 1px solid $tourpkpge2-border;
 }
 
 /* cards grid */
@@ -48,7 +80,7 @@ body {
 }
 
 /* responsive */
-@media (max-width: 1024px) {
+@media (max-width: $tourpkpge2-breakpoint-md) {
   .packages-grid {
     grid-template-columns: 1fr;
   }

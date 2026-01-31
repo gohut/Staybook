@@ -1,13 +1,76 @@
-/* HotelOverview.css */
+/* HotelOverview.scss */
+
+/* ===== Variables ===== */
+$hotel-white: #fff;
+
+$hotel-bg: #f2f2f2;
+
+$hotel-blue: #1a73e8;
+$hotel-blue-2: #4da6ff;
+$hotel-blue-3: #005eff;
+$hotel-blue-deep: #1f4db8;
+
+$hotel-yellow: #ffb400;
+
+$hotel-border: #eee;
+$hotel-border-tab: #dbe9ff;
+
+$hotel-text-444: #444;
+$hotel-text-555: #555;
+
+$hotel-gray-ddd: #ddd;
+
+$hotel-photo-badge-bg: rgba(0, 0, 0, 0.65);
+$hotel-view-bg: rgba(0, 0, 0, 0.6);
+
+$hotel-login-bg: #f2f9ff;
+$hotel-tabs-bg: #f4f9ff;
+$hotel-tab-active-bg: #e8f2ff;
+
+$hotel-more-bg: #f2f8ff;
+
+$hotel-max-width: 1180px;
+
+/* ===== Mixins ===== */
+@mixin hotel-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin hotel-card($radius, $pad: null, $border: null, $bg: $hotel-white) {
+  background: $bg;
+  border-radius: $radius;
+
+  @if $pad != null {
+    padding: $pad;
+  }
+
+  @if $border != null {
+    border: $border;
+  }
+}
+
+@mixin hotel-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Styles ===== */
 .hotel-wrap {
-  background: #f2f2f2;
+  background: $hotel-bg;
   padding: 24px 0;
 }
 
 .hotel-card {
-  max-width: 1180px;
+  max-width: $hotel-max-width;
   margin: auto;
-  background: #fff;
+  background: $hotel-white;
   padding: 20px;
   border-radius: 18px;
 }
@@ -16,11 +79,11 @@
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 16px;
-}
 
-.hotel-title span {
-  color: #ffb400;
-  font-size: 15px;
+  span {
+    color: $hotel-yellow;
+    font-size: 15px;
+  }
 }
 
 .hotel-grid {
@@ -38,7 +101,7 @@
 
 .gallery-main {
   height: 260px;
-  background: linear-gradient(135deg, #2b0b6e, #ffb400);
+  background: linear-gradient(135deg, #2b0b6e, $hotel-yellow);
   border-radius: 16px;
   position: relative;
 }
@@ -47,8 +110,8 @@
   position: absolute;
   bottom: 12px;
   left: 12px;
-  background: rgba(0, 0, 0, 0.65);
-  color: #fff;
+  background: $hotel-photo-badge-bg;
+  color: $hotel-white;
   padding: 6px 12px;
   border-radius: 18px;
   font-size: 13px;
@@ -61,7 +124,7 @@
 }
 
 .side-img {
-  background: #ddd;
+  background: $hotel-gray-ddd;
   border-radius: 16px;
   position: relative;
 }
@@ -70,8 +133,8 @@
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  background: $hotel-view-bg;
+  color: $hotel-white;
   padding: 4px 8px;
   font-size: 12px;
   border-radius: 12px;
@@ -79,130 +142,127 @@
 
 .about {
   margin-top: 16px;
-}
 
-.about p {
-  font-size: 14px;
-  color: #444;
+  p {
+    font-size: 14px;
+    color: $hotel-text-444;
+  }
 }
 
 .link {
-  color: #1a73e8;
+  color: $hotel-blue;
   cursor: pointer;
 }
 
 .tabs {
-  display: flex;
-  gap: 10px;
+  @include hotel-flex(flex-start, center, 10px);
   margin: 12px 0;
 }
 
 .tab {
   padding: 8px 12px;
   border-radius: 8px;
-  border: 1px solid #dbe9ff;
-  background: #f4f9ff;
-}
+  border: 1px solid $hotel-border-tab;
+  background: $hotel-tabs-bg;
 
-.tab.active {
-  background: #e8f2ff;
-  color: #1a73e8;
-  font-weight: 600;
+  &.active {
+    background: $hotel-tab-active-bg;
+    color: $hotel-blue;
+    font-weight: 600;
+  }
 }
 
 .amenities {
-  display: flex;
-  gap: 16px;
+  @include hotel-flex(flex-start, center, 16px);
   font-size: 14px;
   margin: 10px 0 16px;
 }
 
 .login-box {
-  background: #f2f9ff;
+  background: $hotel-login-bg;
   padding: 14px;
   border-radius: 12px;
 }
 
 .login-row {
-  display: flex;
-  gap: 10px;
+  @include hotel-flex(flex-start, center, 10px);
   margin-top: 8px;
-}
 
-.login-row input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
+  input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
 
-.login-row button {
-  padding: 10px 16px;
-  background: #fff;
-  color: #4da6ff;
-  border: 1px solid #4da6ff;
-  border-radius: 8px;
-  font-weight: 600;
+  button {
+    padding: 10px 16px;
+    background: $hotel-white;
+    color: $hotel-blue-2;
+    border: 1px solid $hotel-blue-2;
+    border-radius: 8px;
+    font-weight: 600;
+  }
 }
 
 /* RIGHT */
 .room-card,
 .rating-card {
-  border: 1px solid #eee;
+  border: 1px solid $hotel-border;
   border-radius: 16px;
   padding: 16px;
-  background: #fff;
+  background: $hotel-white;
 }
 
 .fits {
   font-size: 14px;
-  color: #555;
+  color: $hotel-text-555;
 }
 
-.room-card ul {
-  padding-left: 18px;
-  font-size: 14px;
-  margin: 10px 0;
+.room-card {
+  ul {
+    padding-left: 18px;
+    font-size: 14px;
+    margin: 10px 0;
+  }
 }
 
 .price {
   margin: 12px 0;
-}
 
-.price .final {
-  font-size: 22px;
-  font-weight: 700;
-}
+  .final {
+    font-size: 22px;
+    font-weight: 700;
+  }
 
-.price span {
-  font-size: 13px;
-  color: #555;
+  span {
+    font-size: 13px;
+    color: $hotel-text-555;
+  }
 }
 
 .book {
   width: 100%;
   padding: 12px;
-  background: linear-gradient(90deg, #4da6ff, #005eff);
-  color: #fff;
+  background: linear-gradient(90deg, $hotel-blue-2, $hotel-blue-3);
+  color: $hotel-white;
   border: none;
   border-radius: 10px;
   font-weight: 700;
 }
 
 .more-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f2f8ff;
+  @include hotel-flex(space-between, center);
+  background: $hotel-more-bg;
   padding: 12px;
   border-radius: 12px;
   margin-top: 12px;
 }
 
 .outline {
-  background: #fff;
-  border: 1px solid #4da6ff;
-  color: #4da6ff;
+  background: $hotel-white;
+  border: 1px solid $hotel-blue-2;
+  color: $hotel-blue-2;
   padding: 6px 12px;
   border-radius: 8px;
   font-weight: 600;
@@ -211,12 +271,10 @@
 .rating {
   width: 44px;
   height: 44px;
-  background: #1f4db8;
-  color: #fff;
+  background: $hotel-blue-deep;
+  color: $hotel-white;
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include hotel-center;
   font-weight: 700;
   font-size: 18px;
 }

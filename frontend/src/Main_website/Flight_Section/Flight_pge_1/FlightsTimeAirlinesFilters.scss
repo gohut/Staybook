@@ -1,126 +1,188 @@
+/* FlightsTimeAirlinesFilters.scss */
+
+/* ===== Variables ===== */
+$ftaf-white: #fff;
+
+$ftaf-border: #e9e9e9;
+$ftaf-border-soft: #efefef;
+$ftaf-border-light: #ededed;
+$ftaf-border-item: #f1f1f1;
+
+$ftaf-title: #222;
+$ftaf-text: #333;
+
+$ftaf-gray-777: #777;
+$ftaf-gray-6c: #6c6c6c;
+$ftaf-gray-bc: #bcbcbc;
+
+$ftaf-hover-bg: #fbfbfb;
+$ftaf-hover-blue-bg: #f7fbff;
+
+$ftaf-blue: #1a73e8;
+$ftaf-active-bg: #eaf3ff;
+$ftaf-active-border: #b9dbff;
+$ftaf-hover-border: #dbeaff;
+
+$ftaf-text-dark: #3b3b3b;
+
+$ftaf-air-dot: #ff8a00;
+
+$ftaf-footer-bg: #fafafa;
+
+$ftaf-width: 280px;
+$ftaf-card-radius: 10px;
+
+/* ===== Mixins ===== */
+@mixin ftaf-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin ftaf-grid($cols, $gap: null) {
+  display: grid;
+  grid-template-columns: $cols;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin ftaf-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+@mixin ftaf-card {
+  background: $ftaf-white;
+  border: 1px solid $ftaf-border;
+  border-radius: $ftaf-card-radius;
+  overflow: hidden;
+}
+
+@mixin ftaf-pill {
+  border-radius: 999px;
+}
+
+/* ===== Styles ===== */
 .ftaf-wrap {
-  width: 280px;
+  width: $ftaf-width;
 }
 
 .ftaf-card {
-  background: #fff;
-  border: 1px solid #e9e9e9;
-  border-radius: 10px;
-  overflow: hidden;
+  @include ftaf-card;
 }
 
 .ftaf-section {
   padding: 16px 14px;
-  border-bottom: 1px solid #efefef;
-}
+  border-bottom: 1px solid $ftaf-border-soft;
 
-.ftaf-section:last-child {
-  border-bottom: none;
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .ftaf-title {
   margin: 0 0 12px;
   font-size: 14px;
   font-weight: 900;
-  color: #222;
+  color: $ftaf-title;
 }
 
 /* time blocks grid */
 .ftaf-timeGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  @include ftaf-grid(repeat(4, 1fr), 10px);
 }
 
 .ftaf-timeBtn {
-  border: 1px solid #ededed;
-  background: #fff;
+  border: 1px solid $ftaf-border-light;
+  background: $ftaf-white;
   border-radius: 8px;
   height: 74px;
   cursor: pointer;
-  display: flex;
+  @include ftaf-flex(center, center, 8px);
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
 
-.ftaf-timeBtn:hover {
-  background: #f7fbff;
-  border-color: #dbeaff;
-}
+  &:hover {
+    background: $ftaf-hover-blue-bg;
+    border-color: $ftaf-hover-border;
+  }
 
-.ftaf-timeBtn.active {
-  background: #eaf3ff;
-  border-color: #b9dbff;
-  box-shadow: inset 0 -3px 0 #1a73e8;
+  &.active {
+    background: $ftaf-active-bg;
+    border-color: $ftaf-active-border;
+    box-shadow: inset 0 -3px 0 $ftaf-blue;
+
+    .ftaf-timeIcon {
+      color: $ftaf-blue;
+    }
+
+    .ftaf-timeText {
+      color: $ftaf-blue;
+    }
+  }
 }
 
 .ftaf-timeIcon {
   font-size: 18px;
-  color: #777;
-}
-
-.ftaf-timeBtn.active .ftaf-timeIcon {
-  color: #1a73e8;
+  color: $ftaf-gray-777;
 }
 
 .ftaf-timeText {
   font-size: 10px;
   font-weight: 900;
-  color: #3b3b3b;
+  color: $ftaf-text-dark;
   line-height: 1.05;
   text-align: center;
   display: flex;
   flex-direction: column;
 }
 
-.ftaf-timeBtn.active .ftaf-timeText {
-  color: #1a73e8;
-}
-
 /* list */
 .ftaf-list {
-  display: flex;
+  @include ftaf-flex(flex-start, stretch);
   flex-direction: column;
 }
 
 .ftaf-item {
   width: 100%;
-  display: grid;
-  grid-template-columns: 18px 1fr auto;
-  gap: 10px;
+  @include ftaf-grid(18px 1fr auto, 10px);
   align-items: center;
   padding: 10px 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  border-bottom: 1px solid #f1f1f1;
-  text-align: left;
-}
+  border-bottom: 1px solid $ftaf-border-item;
+  @include ftaf-btn-reset;
 
-.ftaf-item:last-child {
-  border-bottom: none;
-}
+  &:last-child {
+    border-bottom: none;
+  }
 
-.ftaf-item:hover {
-  background: #fbfbfb;
+  &:hover {
+    background: $ftaf-hover-bg;
+  }
+
+  &.active {
+    .ftaf-box {
+      color: $ftaf-blue;
+    }
+  }
 }
 
 .ftaf-box {
   font-size: 16px;
-  color: #bcbcbc;
+  color: $ftaf-gray-bc;
   display: inline-flex;
-}
-
-.ftaf-item.active .ftaf-box {
-  color: #1a73e8;
 }
 
 .ftaf-itemText {
   font-size: 12px;
   font-weight: 800;
-  color: #333;
+  color: $ftaf-text;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -130,20 +192,20 @@
   width: 8px;
   height: 8px;
   border-radius: 2px;
-  background: #ff8a00;
+  background: $ftaf-air-dot;
   display: inline-block;
 }
 
 .ftaf-price {
   font-size: 12px;
   font-weight: 900;
-  color: #333;
+  color: $ftaf-text;
 }
 
 .ftaf-footer {
   padding: 10px 14px;
   font-size: 12px;
   font-weight: 700;
-  color: #6c6c6c;
-  background: #fafafa;
+  color: $ftaf-gray-6c;
+  background: $ftaf-footer-bg;
 }

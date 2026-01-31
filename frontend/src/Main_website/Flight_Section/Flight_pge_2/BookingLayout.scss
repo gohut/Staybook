@@ -1,37 +1,67 @@
+/* BookingLayout.scss */
+
+/* ===== Variables ===== */
+$bl-bg: #e8f2f9;
+
+$bl-scrollbar-thumb: #cfe2f2;
+
+$bl-max-width: 1220px;
+$bl-right-width: 320px;
+
+$bl-gap: 16px;
+
+$bl-pad-top: 14px;
+$bl-pad-x: 14px;
+$bl-pad-bottom: 22px;
+
+$bl-left-height-offset: 90px;
+
+$bl-scrollbar-width: 8px;
+$bl-scrollbar-radius: 10px;
+
+/* ===== Mixins ===== */
+@mixin bl-grid($cols, $gap: null) {
+  display: grid;
+  grid-template-columns: $cols;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+/* ===== Styles ===== */
 .bl-wrap {
   width: 100%;
-  background: #e8f2f9;
+  background: $bl-bg;
   padding: 0;
 }
 
 .bl-inner {
   width: 100%;
-  max-width: 1220px;
+  max-width: $bl-max-width;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 16px;
-  padding: 14px 14px 22px;
+  @include bl-grid(1fr $bl-right-width, $bl-gap);
+  padding: $bl-pad-top $bl-pad-x $bl-pad-bottom;
   align-items: start;
 }
 
 .bl-leftScroll {
-  height: calc(100vh - 90px);
+  height: calc(100vh - #{$bl-left-height-offset});
   overflow-y: auto;
   padding-right: 6px;
-}
 
-.bl-leftScroll::-webkit-scrollbar {
-  width: 8px;
-}
+  &::-webkit-scrollbar {
+    width: $bl-scrollbar-width;
+  }
 
-.bl-leftScroll::-webkit-scrollbar-thumb {
-  background: #cfe2f2;
-  border-radius: 10px;
+  &::-webkit-scrollbar-thumb {
+    background: $bl-scrollbar-thumb;
+    border-radius: $bl-scrollbar-radius;
+  }
 }
 
 .bl-rightFixed {
   position: sticky;
-  top: 14px;
+  top: $bl-pad-top;
   height: fit-content;
 }

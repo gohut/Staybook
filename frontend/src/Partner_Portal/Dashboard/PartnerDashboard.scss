@@ -1,14 +1,101 @@
+
 .ptr-dashboard {
+
+/* Dashboard.scss */
+
+/* ==
+   Variables
+== */
+$dashboard-bg: #fff;
+
+$dashboard-color-white: #fff;
+
+$dashboard-color-primary: #2563eb;
+$dashboard-color-success: #10b981;
+$dashboard-color-success-2: #22c55e;
+
+$dashboard-color-purple: #8b5cf6;
+$dashboard-color-orange: #f97316;
+
+$dashboard-color-muted: #6b7280;
+$dashboard-color-muted-2: #9ca3af;
+
+$dashboard-border: #e5e7eb;
+
+$dashboard-bg-soft-green: #ecfdf5;
+$dashboard-bg-soft-blue: #eff6ff;
+$dashboard-bg-soft-purple: #f3e8ff;
+$dashboard-bg-soft-orange: #fff7ed;
+
+$dashboard-border-orange: #fed7aa;
+$dashboard-border-blue: #bfdbfe;
+$dashboard-border-green: #a7f3d0;
+
+$dashboard-radius-xl: 20px;
+$dashboard-radius-lg: 18px;
+$dashboard-radius-md: 16px;
+$dashboard-radius-sm: 14px;
+$dashboard-radius-pill: 999px;
+
+$dashboard-scroll-thumb: #cbd5e1;
+$dashboard-scroll-thumb-hover: #94a3b8;
+$dashboard-scroll-thumb-active: #6b7280;
+
+$dashboard-scroll-track: #f1f5f9;
+$dashboard-scroll-track-hover: #e2e8f0;
+$dashboard-scroll-track-active: #d1d5db;
+}
+/* ==
+   Mixins
+== */
+@mixin dashboard-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin dashboard-between {
+  @include dashboard-flex(space-between, center);
+}
+
+@mixin dashboard-card($radius, $padding) {
+  background: $dashboard-bg;
+  border-radius: $radius;
+  padding: $padding;
+}
+
+@mixin dashboard-badge($bg, $color: $dashboard-color-white) {
+  background: $bg;
+  color: $color;
+  padding: 4px 12px;
+  border-radius: $dashboard-radius-pill;
+  font-size: 12px;
+}
+
+/* ==
+   Styles
+== */
+.dashboard {
+
   width: 100%;
 }
 
-/* ================= STATS ================= */
+/* === STATS === */
+
 
 .ptr-db-stats {
+
+.stats {
+
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
+
 
 .ptr-db-stats.ptr-db-revenue {
   grid-template-columns: repeat(3, 1fr);
@@ -19,9 +106,20 @@
   background: #fff;
   border-radius: 18px;
   padding: 20px;
+
+  &.revenue {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 28px;
+  }
+}}
+
+.stat-card {
+  @include dashboard-card($dashboard-radius-lg, 20px);
+
   display: flex;
   justify-content: space-between;
-}
+
+
 
 .ptr-db-stat-card p {
   color: #6b7280;
@@ -31,7 +129,18 @@
 .ptr-db-stat-card h2 {
   font-size: 26px;
   margin: 6px 0;
-}
+
+  p {
+    color: $dashboard-color-muted;
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin: 6px 0;
+  }
+
+}}
 
 .ptr-db-stat-sub {
   font-size: 13px;
@@ -40,10 +149,32 @@
 
 .ptr-db-icon {
   padding: 14px;
-  border-radius: 14px;
-  color: #fff;
+  border-radius: $dashboard-radius-sm;
+  color: $dashboard-color-white;
   font-size: 22px;
+
+  &.blue {
+    background: $dashboard-color-primary;
+  }
+
+  &.green {
+    background: $dashboard-color-success;
+  }
+
+  &.purple {
+    background: $dashboard-color-purple;
+  }
+
+  &.orange {
+    background: $dashboard-color-orange;
+  }
+
+  &.gray {
+    background: $dashboard-border;
+    color: $dashboard-color-muted-2;
+  }
 }
+
 
 .ptr-db-icon.blue { background: #2563eb; }
 .ptr-db-icon.green { background: #10b981; }
@@ -51,38 +182,69 @@
 .ptr-db-icon.orange { background: #f97316; }
 .ptr-db-icon.gray { background: #e5e7eb; color: #9ca3af; }
 
-/* ================= CHECK-IN / OUT ================= */
+/* === CHECK-IN / OUT === */
 
 .ptr-db-cards-row {
+
+/* === CHECK-IN / OUT === */
+.cards-row {
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   margin-top: 28px;
 }
 
+
 .ptr-db-info-card {
   background: #fff;
   border-radius: 18px;
   padding: 20px;
-}
+}}
 
 .ptr-db-card-header {
   display: flex;
   justify-content: space-between;
+
+.info-card {
+  @include dashboard-card($dashboard-radius-lg, 20px);
+
+  &.green .guest {
+    background: $dashboard-bg-soft-green;
+  }
+
+  &.blue .guest {
+    background: $dashboard-bg-soft-blue;
+  }
+}}
+
+.card-header {
+  @include dashboard-between;
+
   margin-bottom: 16px;
-}
+
+
 
 .ptr-db-card-header button {
   border: 1px solid #e5e7eb;
   background: transparent;
   padding: 6px 14px;
   border-radius: 10px;
-}
+
+  button {
+    border: 1px solid $dashboard-border;
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: 10px;
+  }
+
+}}
 
 .ptr-db-guest {
   padding: 16px;
-  border-radius: 14px;
-}
+  border-radius: $dashboard-radius-sm;
+
+
 
 .ptr-db-info-card.green .guest { background: #ecfdf5; }
 .ptr-db-info-card.blue .guest { background: #eff6ff; }
@@ -93,9 +255,9 @@
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 12px;
-}
+}}
 
-/* ================= ROOM STATUS ================= */
+/* === ROOM STATUS === */
 
 .rptr-db-room-status {
   background: #fff;
@@ -112,8 +274,32 @@
 
 .ptr-db-icon-bed {
   background: #f3e8ff;
+
+  span {
+    background: $dashboard-color-success-2;
+    color: $dashboard-color-white;
+    padding: 4px 10px;
+    border-radius: $dashboard-radius-pill;
+    font-size: 12px;
+  }
+}
+
+/* === ROOM STATUS === */
+.room-status {
+  @include dashboard-card($dashboard-radius-xl, 24px);
+  margin-top: 30px;
+}
+
+.section-header {
+  @include dashboard-flex(flex-start, center, 12px);
+  margin-bottom: 20px;
+}
+
+.icon-bed {
+  background: $dashboard-bg-soft-purple;
+
   padding: 12px;
-  border-radius: 14px;
+  border-radius: $dashboard-radius-sm;
 }
 
 .ptr-db-room-grid {
@@ -121,6 +307,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
+
 
 .ptr-db-room-card {
   border: 1px solid #e5e7eb;
@@ -131,65 +318,82 @@
 .ptr-db-percent {
   background: #22c55e;
   color: #fff;
+
+.room-card {
+  border: 1px solid $dashboard-border;
+  border-radius: $dashboard-radius-lg - 2px;
+  padding: 18px;
+}}
+
+.percent {
+  @include dashboard-badge($dashboard-color-success-2);
+
   padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
 }
 
 .ptr-db-progress {
   height: 8px;
-  background: #e5e7eb;
-  border-radius: 999px;
+  background: $dashboard-border;
+  border-radius: $dashboard-radius-pill;
   margin-top: 10px;
 }
 
 .ptr-db-progress-fill {
   height: 100%;
-  background: #22c55e;
+  background: $dashboard-color-success-2;
 }
 
-/* ================= BOTTOM ================= */
+/* === BOTTOM === */
+
 
 .ptr-db-bottom-grid {
+
+.bottom-grid {
+
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
   margin-top: 30px;
+}
 }
 
 .ptr-db-table-card {
   background: #fff;
   border-radius: 20px;
   padding: 20px;
+
+.table-card {
+  @include dashboard-card($dashboard-radius-xl, 20px);
+
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-}
+}}
 
-th, td {
+th,
+td {
   padding: 14px 0;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid $dashboard-border;
   text-align: left;
 }
 
-td span {
-  display: block;
-  font-size: 12px;
-  color: #6b7280;
+td {
+  span {
+    display: block;
+    font-size: 12px;
+    color: $dashboard-color-muted;
+  }
 }
 
-.status.confirmed {
-  background: #10b981;
-  color: #fff;
-  padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 12px;
+.status {
+  &.confirmed {
+    @include dashboard-badge($dashboard-color-success);
+  }
 }
 
-/* ================= ALERTS ================= */
-
+/* === ALERTS === */
 .alerts {
   display: flex;
   flex-direction: column;
@@ -198,77 +402,96 @@ td span {
 
 .alert {
   padding: 18px;
-  border-radius: 16px;
+  border-radius: $dashboard-radius-md;
   display: flex;
   gap: 14px;
+
+  &.orange {
+    background: $dashboard-bg-soft-orange;
+    border: 1px solid $dashboard-border-orange;
+  }
+
+  &.blue {
+    background: $dashboard-bg-soft-blue;
+    border: 1px solid $dashboard-border-blue;
+  }
+
+  &.green {
+    background: $dashboard-bg-soft-green;
+    border: 1px solid $dashboard-border-green;
+  }
+
+  .icon {
+    font-size: 24px;
+    padding: 12px;
+    border-radius: $dashboard-radius-sm;
+    color: $dashboard-color-white;
+  }
+
+  &.orange .icon {
+    background: $dashboard-color-orange;
+  }
+
+  &.blue .icon {
+    background: $dashboard-color-primary;
+  }
+
+  &.green .icon {
+    background: $dashboard-color-success;
+  }
 }
 
-.alert.orange {
-  background: #fff7ed;
-  border: 1px solid #fed7aa;
+.alert-content {
+  h4 {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: 14px;
+    color: $dashboard-color-muted;
+  }
+
+  a {
+    font-size: 14px;
+    color: $dashboard-color-primary;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 
-.alert.blue {
-  background: #eff6ff;
-  border: 1px solid #bfdbfe;
-}
+/* === SCROLLBAR STYLES === */
+.content-scroll {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
-.alert.green {
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-}
-.alert .icon {
-  font-size: 24px;
-  padding: 12px;
-  border-radius: 14px;
-  color: #fff;
-}
-.alert.orange .icon {
-  background: #f97316;
-}
-.alert.blue .icon {
-  background: #2563eb;
-}
-.alert.green .icon {
-  background: #10b981;
-}
-.alert-content h4 {
-  font-size: 16px;
-  margin-bottom: 6px;
-}
-.alert-content p {
-  font-size: 14px;
-  color: #6b7280;
-}
-.alert-content a {
-  font-size: 14px;
-  color: #2563eb;
-  text-decoration: underline;
-}
-.alert-content a:hover {
-  text-decoration: none;
-}
-/* ================= SCROLLBAR STYLES ================= */
-.content-scroll::-webkit-scrollbar {
-  width: 8px;
-}
-.content-scroll::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-.content-scroll::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-.content-scroll::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 4px;
-}
-.content-scroll::-webkit-scrollbar-track:hover {
-  background: #e2e8f0;
-}
-.content-scroll::-webkit-scrollbar-track:active {
-  background: #d1d5db;
-}
-.content-scroll::-webkit-scrollbar-thumb:active {
-  background: #6b7280;
+  &::-webkit-scrollbar-thumb {
+    background: $dashboard-scroll-thumb;
+    border-radius: 4px;
+
+    &:hover {
+      background: $dashboard-scroll-thumb-hover;
+    }
+
+    &:active {
+      background: $dashboard-scroll-thumb-active;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $dashboard-scroll-track;
+    border-radius: 4px;
+
+    &:hover {
+      background: $dashboard-scroll-track-hover;
+    }
+
+    &:active {
+      background: $dashboard-scroll-track-active;
+    }
+  }
 }

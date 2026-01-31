@@ -1,89 +1,121 @@
-/* Vnavbar.css */
+/* Vnavbar.scss */
 
+/* ===== Variables ===== */
+$vnav-white: #ffffff;
+
+$vnav-blue-500: #3b82f6;
+$vnav-blue-600: #2563eb;
+
+$vnav-indigo-200: #c7d2fe;
+
+$vnav-slate-400: #94a3b8;
+$vnav-slate-500: #64748b;
+
+$vnav-bg-start: #0b1a33;
+$vnav-bg-end: #070f25;
+
+$vnav-hover-bg: rgba(59, 130, 246, 0.15);
+$vnav-footer-border: rgba(255, 255, 255, 0.08);
+
+$vnav-width: 260px;
+
+/* ===== Mixins ===== */
+@mixin vnav-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin vnav-transition($props...) {
+  transition: $props;
+}
+
+/* ===== Styles ===== */
 .v-navbar {
-  width: 260px;
+  width: $vnav-width;
   height: 100vh;
   position: fixed;
   inset: 0 auto 0 0;
-  background: linear-gradient(180deg, #0b1a33 0%, #070f25 100%);
+  background: linear-gradient(180deg, $vnav-bg-start 0%, $vnav-bg-end 100%);
   padding: 24px 18px;
-  display: flex;
+  @include vnav-flex(flex-start, stretch);
   flex-direction: column;
-  color: #ffffff;
-}
+  color: $vnav-white;
 
-/* Logo */
-.v-navbar .logo {
-  font-size: 26px;
-  font-weight: 700;
-  color: #3b82f6;
-  margin: 0;
-  line-height: 1.2;
-}
+  /* Logo */
+  .logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: $vnav-blue-500;
+    margin: 0;
+    line-height: 1.2;
+  }
 
-.v-navbar .subtitle {
-  font-size: 13px;
-  color: #94a3b8;
-  margin-top: 4px;
-  margin-bottom: 36px;
-}
+  .subtitle {
+    font-size: 13px;
+    color: $vnav-slate-400;
+    margin-top: 4px;
+    margin-bottom: 36px;
+  }
 
-/* Navigation */
-.v-navbar nav {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+  /* Navigation */
+  nav {
+    @include vnav-flex(flex-start, stretch, 6px);
+    flex-direction: column;
 
-.v-navbar nav a {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: 14.5px;
-  font-weight: 500;
-  color: #c7d2fe;
-  cursor: pointer;
-  transition: background 0.25s ease, color 0.25s ease;
-}
+    a {
+      @include vnav-flex(flex-start, center, 14px);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: $vnav-indigo-200;
+      cursor: pointer;
+      @include vnav-transition(background 0.25s ease, color 0.25s ease);
 
-/* Hover */
-.v-navbar nav a:hover {
-  background: rgba(59, 130, 246, 0.15);
-  color: #ffffff;
-}
+      /* Icon sizing consistency */
+      svg {
+        min-width: 20px;
+      }
 
-/* Active */
-.v-navbar nav a.active {
-  background: #2563eb;
-  color: #ffffff;
-  font-weight: 600;
-}
+      /* Hover */
+      &:hover {
+        background: $vnav-hover-bg;
+        color: $vnav-white;
+      }
 
-/* Icon sizing consistency */
-.v-navbar nav a svg {
-  min-width: 20px;
-}
+      /* Active */
+      &.active {
+        background: $vnav-blue-600;
+        color: $vnav-white;
+        font-weight: 600;
+      }
+    }
+  }
 
-/* Footer */
-.v-navbar .footer {
-  margin-top: auto;
-  padding-top: 18px;
-  font-size: 12px;
-  color: #64748b;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  /* Footer */
+  .footer {
+    margin-top: auto;
+    padding-top: 18px;
+    font-size: 12px;
+    color: $vnav-slate-500;
+    border-top: 1px solid $vnav-footer-border;
+  }
 }
 
 .vnav-logo {
-  /* background-color: #64748b; */
+  /* background-color: $vnav-slate-500; */
   width: 220px;
   height: 60px;
   overflow: hidden;
-}
 
-.vnav-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }

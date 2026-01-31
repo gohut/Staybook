@@ -1,34 +1,91 @@
-/* FlightPge4Header.css */
+/* FlightPge4Header.scss */
 
+/* ===== Variables ===== */
+$fp4h-white: #fff;
+
+$fp4h-border: #e6e6e6;
+$fp4h-border-soft: #e9e9e9;
+$fp4h-divider: #efefef;
+
+$fp4h-blue: #1a73e8;
+
+$fp4h-title: #222;
+$fp4h-text-333: #333;
+$fp4h-text-555: #555;
+$fp4h-text-666: #666;
+$fp4h-text-777: #777;
+
+$fp4h-green: #2f9e44;
+
+$fp4h-gray-b3: #b3b3b3;
+
+$fp4h-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+
+$fp4h-max-width: 1020px;
+$fp4h-right-width: 310px;
+
+$fp4h-gap: 16px;
+
+$fp4h-logo-grad-1: #ff3a3a;
+$fp4h-logo-grad-2: #c91414;
+$fp4h-logo-inner: #ffcc99;
+
+/* ===== Mixins ===== */
+@mixin fp4h-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin fp4h-grid($cols, $gap: null) {
+  display: grid;
+  grid-template-columns: $cols;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin fp4h-card($pad) {
+  background: $fp4h-white;
+  border: 1px solid $fp4h-border;
+  border-radius: 10px;
+  padding: $pad;
+  box-shadow: $fp4h-shadow;
+}
+
+@mixin fp4h-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
 .fp4h-wrap {
   width: 100%;
-  max-width: 1020px;
+  max-width: $fp4h-max-width;
   margin: 26px auto 0;
-  display: grid;
-  grid-template-columns: 1fr 310px;
-  gap: 16px;
+  @include fp4h-grid(1fr $fp4h-right-width, $fp4h-gap);
 }
 
 .fp4h-leftCard {
-  background: #fff;
-  border: 1px solid #e6e6e6;
-  border-radius: 10px;
-  padding: 14px 14px 10px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+  @include fp4h-card(14px 14px 10px);
 }
 
 .fp4h-leftTop {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
+  @include fp4h-flex(flex-start, flex-start, 12px);
 }
 
 .fp4h-logoBox {
   width: 42px;
   height: 42px;
   border-radius: 8px;
-  border: 1px solid #e9e9e9;
-  background: #fff;
+  border: 1px solid $fp4h-border-soft;
+  background: $fp4h-white;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -37,17 +94,21 @@
 .fp4h-logo {
   width: 40px;
   height: 40px;
-  background: linear-gradient(180deg, #ff3a3a, #c91414);
+  background: linear-gradient(180deg, $fp4h-logo-grad-1, $fp4h-logo-grad-2);
   border-radius: 8px;
   position: relative;
-}
 
-.fp4h-logo::after {
-  content: "";
-  position: absolute;
-  inset: 8px 10px 10px 10px;
-  background: radial-gradient(circle at 30% 30%, #ffcc99 0 35%, transparent 36%);
-  opacity: 0.9;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 8px 10px 10px 10px;
+    background: radial-gradient(
+      circle at 30% 30%,
+      $fp4h-logo-inner 0 35%,
+      transparent 36%
+    );
+    opacity: 0.9;
+  }
 }
 
 .fp4h-main {
@@ -56,35 +117,30 @@
 }
 
 .fp4h-titleRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  @include fp4h-flex(space-between, center, 12px);
 }
 
 .fp4h-title {
   font-size: 14px;
   font-weight: 900;
-  color: #222;
+  color: $fp4h-title;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .fp4h-viewBtn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: #1a73e8;
+  @include fp4h-btn-reset;
+  color: $fp4h-blue;
   font-weight: 900;
   font-size: 12px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-}
 
-.fp4h-viewBtn:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .fp4h-metaRow {
@@ -94,7 +150,7 @@
   gap: 16px;
   font-size: 12px;
   font-weight: 800;
-  color: #666;
+  color: $fp4h-text-666;
 }
 
 .fp4h-meta {
@@ -105,7 +161,7 @@
 
 .fp4h-divider {
   height: 1px;
-  background: #efefef;
+  background: $fp4h-divider;
   margin: 10px 0;
 }
 
@@ -115,7 +171,7 @@
   flex-wrap: wrap;
   font-size: 12px;
   font-weight: 800;
-  color: #777;
+  color: $fp4h-text-777;
 }
 
 .fp4h-user {
@@ -125,23 +181,19 @@
 }
 
 .fp4h-dotIc {
-  color: #b3b3b3;
+  color: $fp4h-gray-b3;
   font-size: 10px;
   transform: translateY(-1px);
 }
 
 .fp4h-smallIc {
-  color: #b3b3b3;
+  color: $fp4h-gray-b3;
   font-size: 16px;
 }
 
 /* RIGHT CARD */
 .fp4h-rightCard {
-  background: #fff;
-  border: 1px solid #e6e6e6;
-  border-radius: 10px;
-  padding: 12px 14px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+  @include fp4h-card(12px 14px);
 }
 
 .fp4h-rightHead {
@@ -154,33 +206,31 @@
 .fp4h-rightTitle {
   font-size: 14px;
   font-weight: 900;
-  color: #222;
+  color: $fp4h-title;
 }
 
 .fp4h-amount {
   font-size: 18px;
   font-weight: 900;
-  color: #2f9e44;
+  color: $fp4h-green;
 }
 
 .fp4h-rightLine {
   height: 1px;
-  background: #efefef;
+  background: $fp4h-divider;
   margin: 8px 0 10px;
 }
 
 .fp4h-breakRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include fp4h-flex(space-between, center);
   padding: 6px 0;
   font-size: 12px;
   font-weight: 800;
-  color: #555;
+  color: $fp4h-text-555;
 }
 
 .fp4h-breakRight {
-  color: #333;
+  color: $fp4h-text-333;
   font-weight: 900;
 }
 

@@ -1,26 +1,53 @@
+/* BookingTopNavbar.scss */
+
+/* ===== Variables ===== */
+$btnb-white: #fff;
+
+$btnb-blue: #1a73e8;
+
+$btnb-text: #555;
+
+$btnb-wrap-height: 74px;
+$btnb-inner-max: 1220px;
+
+$btnb-tab-gap: 34px;
+
+/* ===== Mixins ===== */
+@mixin btnb-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin btnb-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
 .btnb-wrap {
   width: 100%;
-  height: 74px;
-  background: #fff;
-  border-bottom: 2px solid #1a73e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: $btnb-wrap-height;
+  background: $btnb-white;
+  border-bottom: 2px solid $btnb-blue;
+  @include btnb-flex(center, center);
 }
 
 .btnb-inner {
   width: 100%;
-  max-width: 1220px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  max-width: $btnb-inner-max;
+  @include btnb-flex(space-between, center);
   padding: 0 18px;
 }
 
 .btnb-left {
   width: 190px;
-  display: flex;
-  align-items: center;
+  @include btnb-flex(flex-start, center);
 }
 
 .btnb-logo {
@@ -30,46 +57,39 @@
 
 .btnb-tabs {
   flex: 1;
-  display: flex;
-  justify-content: center;
-  gap: 34px;
+  @include btnb-flex(center, center, $btnb-tab-gap);
 }
 
 .btnb-tab {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
+  @include btnb-btn-reset;
+  @include btnb-flex(flex-start, center, 6px);
   flex-direction: column;
-  align-items: center;
-  gap: 6px;
   font-size: 12px;
   font-weight: 700;
-  color: #555;
+  color: $btnb-text;
+
+  svg {
+    font-size: 18px;
+    color: $btnb-text;
+  }
+
+  &:hover {
+    color: $btnb-blue;
+
+    svg {
+      color: $btnb-blue;
+    }
+  }
+
+  &.active {
+    color: $btnb-blue;
+
+    svg {
+      color: $btnb-blue;
+    }
+  }
 }
 
-.btnb-tab svg {
-  font-size: 18px;
-  color: #555;
-}
-
-.btnb-tab:hover {
-  color: #1a73e8;
-}
-
-.btnb-tab:hover svg {
-  color: #1a73e8;
-}
-
-.btnb-tab.active {
-  color: #1a73e8;
-}
-
-.btnb-tab.active svg {
-  color: #1a73e8;
-}
 .btnb-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}   
+  @include btnb-flex(flex-start, center, 14px);
+}

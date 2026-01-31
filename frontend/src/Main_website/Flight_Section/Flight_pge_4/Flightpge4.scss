@@ -1,9 +1,24 @@
+/* Flightpge4.scss */
+
+/* ===== Variables ===== */
+$fp4-bg: #f5f5f5;
+$fp4-min-height: 100vh;
+$fp4-padding-bottom: 80px;
+
+$fp4-empty-height: 600px;
+
+/* ===== Mixins ===== */
+@mixin fp4-full-height {
+  min-height: $fp4-min-height;
+}
+
+/* ===== Styles ===== */
 .fp4-page {
-  min-height: 100vh;
-  background: #f5f5f5;
-  padding-bottom: 80px;
+  @include fp4-full-height;
+  background: $fp4-bg;
+  padding-bottom: $fp4-padding-bottom;
 }
 
 .fp4-emptySpace {
-  height: 600px;
+  height: $fp4-empty-height;
 }

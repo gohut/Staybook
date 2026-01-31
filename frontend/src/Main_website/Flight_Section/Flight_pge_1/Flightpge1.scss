@@ -1,22 +1,46 @@
-.fp1-grid {
+/* Flightpge1.scss */
+
+/* ===== Variables ===== */
+$fp1-white: #fff;
+$fp1-bg: #f2f2f2;
+
+$fp1-sidebar-width: 280px;
+$fp1-gap: 18px;
+$fp1-pad-x: 18px;
+$fp1-pad-bottom: 18px;
+
+$fp1-topnav-z: 9999;
+$fp1-topnav-height: 74px;
+
+/* ===== Mixins ===== */
+@mixin fp1-grid($left, $gap) {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 18px;
-  padding: 0 18px 18px;
-  background: #f2f2f2;
+  grid-template-columns: $left 1fr;
+  gap: $gap;
   align-items: start;
 }
 
-.fp1-left {
+@mixin fp1-flex-col($gap) {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: $gap;
+}
+
+/* ===== Styles ===== */
+.fp1-grid {
+  @include fp1-grid($fp1-sidebar-width, $fp1-gap);
+  padding: 0 $fp1-pad-x $fp1-pad-bottom;
+  background: $fp1-bg;
+}
+
+.fp1-left {
+  @include fp1-flex-col($fp1-gap);
   align-self: start;
 }
 
 .fp1-right {
   align-self: start;
-}/* Flightpge1.css ✅ UPDATED */
+}
 
 /* ✅ fixed TopNavbar */
 .fp1-topnav-fixed {
@@ -24,32 +48,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999;
-  background: #fff;
+  z-index: $fp1-topnav-z;
+  background: $fp1-white;
 }
 
 /* ✅ Push page content below navbar height */
 .fp1-content {
-  padding-top: 74px; /* adjust if TopNavbar height differs */
-}
-
-/* existing layout */
-.fp1-grid {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 18px;
-  padding: 0 18px 18px;
-  background: #f2f2f2;
-  align-items: start;
-}
-
-.fp1-left {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  align-self: start;
-}
-
-.fp1-right {
-  align-self: start;
+  padding-top: $fp1-topnav-height; /* adjust if*
+} navbar height changes */
 }

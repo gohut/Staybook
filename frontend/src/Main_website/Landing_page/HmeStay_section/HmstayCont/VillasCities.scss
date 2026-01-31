@@ -1,35 +1,68 @@
-/* VillasCities.css */
+/* VillasCities.scss */
+
+/* =======================
+   Variables
+======================= */
+$villascities-bg: #fff;
+
+$villascities-color-muted: #666;
+
+$villascities-bg-avatar: #d9d9d9;
+
+$villascities-radius-lg: 16px;
+$villascities-radius-avatar: 50%;
+
+$villascities-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+/* =======================
+   Mixins
+======================= */
+@mixin villascities-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin villascities-title-reset {
+  margin: 0;
+}
+
+/* =======================
+   Styles
+======================= */
 .cities-wrapper {
-  background: #fff;
-  border-radius: 16px;
+  background: $villascities-bg;
+  border-radius: $villascities-radius-lg;
   padding: 26px 30px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   row-gap: 22px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: $villascities-shadow;
 }
 
 .city-item {
-  display: flex;
-  gap: 14px;
-  align-items: center;
+  @include villascities-flex(flex-start, center, 14px);
+
+  h4 {
+    @include villascities-title-reset;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: $villascities-color-muted;
+  }
 }
 
 .city-avatar {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
-  background: #d9d9d9;
-}
-
-.city-item h4 {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.city-item p {
-  margin: 2px 0 0;
-  font-size: 13px;
-  color: #666;
+  border-radius: $villascities-radius-avatar;
+  background: $villascities-bg-avatar;
 }

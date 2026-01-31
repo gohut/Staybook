@@ -1,20 +1,63 @@
+/* PropertyCard.scss */
+
+/* =======================
+   Variables
+======================= */
+$propertycard-font-family: Arial, sans-serif;
+
+$propertycard-bg-card: #fff;
+$propertycard-bg-viewall: rgba(0, 0, 0, 0.6);
+$propertycard-bg-badge: #e6f9f0;
+
+$propertycard-color-white: #fff;
+$propertycard-color-border: #e5e7eb;
+$propertycard-color-muted: #6b7280;
+$propertycard-color-primary: #2563eb;
+$propertycard-color-stars: #fbbf24;
+$propertycard-color-badge: #059669;
+$propertycard-color-points: #374151;
+$propertycard-color-del: #9ca3af;
+
+$propertycard-radius-lg: 12px;
+$propertycard-radius-md: 8px;
+$propertycard-radius-sm: 6px;
+
+/* =======================
+   Mixins
+======================= */
+@mixin propertycard-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin propertycard-muted-text($size) {
+  font-size: $size;
+  color: $propertycard-color-muted;
+}
+
+/* =======================
+   Styles
+======================= */
 .property-card {
   display: grid;
   grid-template-columns: 260px 1fr 220px;
   gap: 18px;
-  background: #fff;
+  background: $propertycard-bg-card;
   padding: 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  font-family: Arial, sans-serif;
+  border: 1px solid $propertycard-color-border;
+  border-radius: $propertycard-radius-lg;
+  font-family: $propertycard-font-family;
   position: relative;
 }
 
-.pc-images .main-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 8px;
+.pc-images {
+  .main-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: $propertycard-radius-md;
+  }
 }
 
 .thumbs {
@@ -22,119 +65,114 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 6px;
   margin-top: 6px;
+
+  img,
+  .view-all {
+    height: 50px;
+    border-radius: $propertycard-radius-sm;
+    object-fit: cover;
+  }
 }
 
-.thumbs img,
 .view-all {
-  height: 50px;
-  border-radius: 6px;
-  object-fit: cover;
-}
-
-.view-all {
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: $propertycard-bg-viewall;
+  color: $propertycard-color-white;
+  @include propertycard-flex-center;
   font-size: 12px;
 }
 
-.pc-details h3 {
-  font-size: 18px;
-  margin-bottom: 4px;
+.pc-details {
+  h3 {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
 }
 
 .stars {
-  color: #fbbf24;
+  color: $propertycard-color-stars;
   font-size: 14px;
 }
 
 .location {
-  font-size: 13px;
-  color: #6b7280;
+  @include propertycard-muted-text(13px);
   margin-bottom: 8px;
 }
 
 .badge {
-  background: #e6f9f0;
-  color: #059669;
+  background: $propertycard-bg-badge;
+  color: $propertycard-color-badge;
   font-size: 12px;
   padding: 4px 8px;
-  border-radius: 6px;
+  border-radius: $propertycard-radius-sm;
   display: inline-block;
   margin-bottom: 8px;
 }
-.pc-price
-{
+
+.pc-price {
   margin-top: 15px;
+  text-align: right;
 }
 
 .offer {
   font-size: 13px;
-  color: #2563eb;
+  color: $propertycard-color-primary;
   margin-bottom: 8px;
 }
 
 .points {
   padding-left: 16px;
   font-size: 13px;
-  color: #374151;
-}
+  color: $propertycard-color-points;
 
-.points li {
-  margin-bottom: 4px;
-}
-
-.pc-price {
-  text-align: right;
+  li {
+    margin-bottom: 4px;
+  }
 }
 
 .rating {
-  color: #2563eb;
+  color: $propertycard-color-primary;
   font-weight: 600;
+
+  span {
+    background: $propertycard-color-primary;
+    color: $propertycard-color-white;
+    padding: 2px 6px;
+    border-radius: $propertycard-radius-sm;
+    margin-left: 4px;
+    font-size: 12px;
+  }
+
+  p {
+    font-size: 12px;
+    color: $propertycard-color-muted;
+  }
 }
 
-.rating span {
-  background: #2563eb;
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 6px;
-  margin-left: 4px;
-  font-size: 12px;
-}
+.price {
+  del {
+    color: $propertycard-color-del;
+    font-size: 14px;
+  }
 
-.rating p {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-.price del {
-  color: #9ca3af;
-  font-size: 14px;
-}
-
-.price h2 {
-  margin: 4px 0;
-  font-size: 26px;
+  h2 {
+    margin: 4px 0;
+    font-size: 26px;
+  }
 }
 
 .tax {
-  font-size: 12px;
-  color: #6b7280;
+  @include propertycard-muted-text(12px);
 }
 
 .night {
-  font-size: 13px;
-  color: #6b7280;
+  @include propertycard-muted-text(13px);
 }
 
 .login {
   display: block;
   position: absolute;
-  transform: translate(35px,45px);
-
+  transform: translate(35px, 45px);
   font-size: 13px;
-  color: #2563eb;
+  color: $propertycard-color-primary;
   cursor: pointer;
 }

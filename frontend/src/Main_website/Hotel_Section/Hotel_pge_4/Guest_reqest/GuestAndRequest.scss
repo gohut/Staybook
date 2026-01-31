@@ -1,19 +1,71 @@
-/* GuestAndRequest.css */
+/* GuestAndRequest.scss */
+
+/* =======================
+   Variables
+======================= */
+$guestandrequest-font-family: Arial, sans-serif;
+
+$guestandrequest-bg-card: #fff;
+$guestandrequest-bg-strip: #eef6ff;
+
+$guestandrequest-color-text: #555;
+$guestandrequest-color-muted: #888;
+$guestandrequest-color-link: #0071c2;
+$guestandrequest-color-white: #fff;
+
+$guestandrequest-color-warning: #f5a623;
+$guestandrequest-color-pay: #4aa3ff;
+
+$guestandrequest-border-input: #ccc;
+
+$guestandrequest-radius-card: 6px;
+$guestandrequest-radius-sm: 4px;
+
+$guestandrequest-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+
+/* =======================
+   Mixins
+======================= */
+@mixin guestandrequest-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin guestandrequest-card($padding: 16px, $radius: $guestandrequest-radius-card) {
+  background: $guestandrequest-bg-card;
+  border-radius: $radius;
+  box-shadow: $guestandrequest-shadow;
+  padding: $padding;
+}
+
+@mixin guestandrequest-outline-btn($color: $guestandrequest-color-link) {
+  border: 1px solid $color;
+  background: $guestandrequest-bg-card;
+  color: $color;
+  border-radius: $guestandrequest-radius-sm;
+  cursor: pointer;
+}
+
+/* =======================
+   Styles
+======================= */
 .guest-wrapper {
   max-width: 900px;
   margin: 24px auto;
-  font-family: Arial, sans-serif;
+  font-family: $guestandrequest-font-family;
 }
 
 .guest-card {
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
-  padding: 16px;
-}
+  @include guestandrequest-card(16px, $guestandrequest-radius-card);
 
-.guest-card h3 {
-  margin-bottom: 16px;
+  h3 {
+    margin-bottom: 16px;
+  }
 }
 
 .form-row {
@@ -26,114 +78,99 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-}
 
-.field.small {
-  max-width: 80px;
-}
+  &.small {
+    max-width: 80px;
+  }
 
-.field label {
-  font-size: 11px;
-  color: #555;
-  margin-bottom: 4px;
-}
+  label {
+    font-size: 11px;
+    color: $guestandrequest-color-text;
+    margin-bottom: 4px;
 
-.field label span {
-  font-weight: normal;
-  color: #888;
-}
+    span {
+      font-weight: normal;
+      color: $guestandrequest-color-muted;
+    }
+  }
 
-.field input,
-.field select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  input,
+  select {
+    padding: 8px;
+    border: 1px solid $guestandrequest-border-input;
+    border-radius: $guestandrequest-radius-sm;
+  }
 }
 
 .mobile {
   display: flex;
-}
 
-.mobile select {
-  width: 70px;
-  border-right: none;
-  border-radius: 4px 0 0 4px;
-}
+  select {
+    width: 70px;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+  }
 
-.mobile input {
-  border-radius: 0 4px 4px 0;
+  input {
+    border-radius: 0 4px 4px 0;
+  }
 }
 
 .checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include guestandrequest-flex(flex-start, center, 8px);
   font-size: 14px;
   margin-top: 8px;
 }
 
 .add-guest {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #0071c2;
+  @include guestandrequest-flex(flex-start, center, 6px);
+  color: $guestandrequest-color-link;
   font-weight: 600;
   margin-top: 10px;
   cursor: pointer;
 }
 
 .login-strip {
-  background: #eef6ff;
+  background: $guestandrequest-bg-strip;
   margin-top: 14px;
   padding: 10px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 4px;
+  @include guestandrequest-flex(space-between, center);
+  border-radius: $guestandrequest-radius-sm;
   font-size: 13px;
-}
 
-.login-strip button {
-  border: 1px solid #0071c2;
-  background: #fff;
-  color: #0071c2;
-  padding: 4px 12px;
-  border-radius: 4px;
-  cursor: pointer;
+  button {
+    @include guestandrequest-outline-btn($guestandrequest-color-link);
+    padding: 4px 12px;
+  }
 }
 
 /* SPECIAL REQUEST */
 .request-card {
-  background: #fff;
+  @include guestandrequest-card(14px, $guestandrequest-radius-card);
   margin-top: 16px;
-  padding: 14px;
-  border-radius: 6px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include guestandrequest-flex(space-between, center);
 }
 
 .request-left {
   display: flex;
   gap: 10px;
-}
 
-.request-left svg {
-  color: #f5a623;
-  font-size: 20px;
-  margin-top: 2px;
-}
+  svg {
+    color: $guestandrequest-color-warning;
+    font-size: 20px;
+    margin-top: 2px;
+  }
 
-.request-left p {
-  font-size: 13px;
-  color: #555;
+  p {
+    font-size: 13px;
+    color: $guestandrequest-color-text;
+  }
 }
 
 .request-btn {
   background: none;
   border: none;
-  color: #0071c2;
+  color: $guestandrequest-color-link;
   font-weight: 600;
   cursor: pointer;
 }
@@ -147,23 +184,23 @@
   display: flex;
   gap: 8px;
   font-size: 12px;
-  color: #555;
-}
+  color: $guestandrequest-color-text;
 
-.agree a {
-  color: #0071c2;
-  text-decoration: none;
+  a {
+    color: $guestandrequest-color-link;
+    text-decoration: none;
+  }
 }
 
 .pay-btn {
   margin-top: 12px;
   width: 260px;
   padding: 12px;
-  background: #4aa3ff;
+  background: $guestandrequest-color-pay;
   border: none;
-  color: #fff;
+  color: $guestandrequest-color-white;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 4px;
+  border-radius: $guestandrequest-radius-sm;
   cursor: pointer;
 }

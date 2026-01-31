@@ -1,9 +1,52 @@
-/* PropertyCard.css */
-.property-card {
+/* PropertyCard.scss */
+
+/* ===== Variables ===== */
+$pc-white: #fff;
+
+$pc-border: #e0e0e0;
+$pc-border-right: #eee;
+
+$pc-blue: #1a73e8;
+
+$pc-text-000: #000;
+$pc-text-444: #444;
+$pc-text-555: #555;
+$pc-text-777: #777;
+
+$pc-thumb-overlay: rgba(0, 0, 0, 0.6);
+
+$pc-radius: 6px;
+$pc-thumb-radius: 4px;
+
+/* ===== Mixins ===== */
+@mixin pc-flex($justify: flex-start, $align: stretch, $gap: null) {
   display: flex;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin pc-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin pc-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
+.property-card {
+  @include pc-flex;
+  background: $pc-white;
+  border: 1px solid $pc-border;
+  border-radius: $pc-radius;
   padding: 14px;
   margin: 16px 0;
   font-family: Arial, sans-serif;
@@ -15,137 +58,136 @@
 
 .main-img {
   position: relative;
-}
 
-.main-img img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 6px;
+  img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: $pc-radius;
+  }
 }
 
 .wishlist {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #fff;
+  background: $pc-white;
   border-radius: 50%;
   padding: 6px;
   font-size: 14px;
-  color: #444;
+  color: $pc-text-444;
 }
 
 .thumbs {
-  display: flex;
-  gap: 6px;
+  @include pc-flex(flex-start, center, 6px);
   margin-top: 6px;
+
+  img,
+  .view-all {
+    width: 56px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: $pc-thumb-radius;
+  }
 }
 
-.thumbs img,
 .view-all {
-  width: 56px;
-  height: 44px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-.view-all {
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  background: $pc-thumb-overlay;
+  color: $pc-white;
   font-size: 11px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include pc-center;
 }
 
 .card-middle {
   flex: 1;
   padding: 0 18px;
-}
 
-.card-middle h3 {
-  font-size: 18px;
-  margin: 0 0 6px;
+  h3 {
+    font-size: 18px;
+    margin: 0 0 6px;
+  }
 }
 
 .like {
   font-size: 12px;
-  color: #777;
+  color: $pc-text-777;
   margin-left: 6px;
 }
 
 .location {
   font-size: 13px;
-  color: #555;
+  color: $pc-text-555;
   margin-bottom: 6px;
-}
 
-.location span {
-  color: #1a73e8;
-  font-weight: 600;
+  span {
+    color: $pc-blue;
+    font-weight: 600;
+  }
 }
 
 .type {
   font-size: 14px;
   font-weight: 600;
-  color: #000;
+  color: $pc-text-000;
 }
 
 .card-right {
   width: 220px;
-  border-left: 1px solid #eee;
+  border-left: 1px solid $pc-border-right;
   padding-left: 16px;
   text-align: right;
 }
 
-.rating .label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a73e8;
-}
+.rating {
+  .label {
+    font-size: 14px;
+    font-weight: 600;
+    color: $pc-blue;
+  }
 
-.rating .score {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: #1a73e8;
-  color: #fff;
-  padding: 4px 6px;
-  border-radius: 4px;
-  margin-left: 6px;
-  font-size: 13px;
-}
+  .score {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: $pc-blue;
+    color: $pc-white;
+    padding: 4px 6px;
+    border-radius: $pc-thumb-radius;
+    margin-left: 6px;
+    font-size: 13px;
+  }
 
-.rating .count {
-  display: block;
-  font-size: 12px;
-  color: #777;
-  margin-top: 4px;
+  .count {
+    display: block;
+    font-size: 12px;
+    color: $pc-text-777;
+    margin-top: 4px;
+  }
 }
 
 .price {
   margin-top: 18px;
   font-size: 22px;
   font-weight: 700;
-}
 
-.price span {
-  display: block;
-  font-size: 13px;
-  color: #777;
-  font-weight: normal;
-}
+  span {
+    display: block;
+    font-size: 13px;
+    color: $pc-text-777;
+    font-weight: normal;
+  }
 
-.price small {
-  display: block;
-  font-size: 13px;
-  color: #555;
+  small {
+    display: block;
+    font-size: 13px;
+    color: $pc-text-555;
+  }
 }
 
 .deal {
   margin-top: 14px;
   font-size: 13px;
-  color: #1a73e8;
+  color: $pc-blue;
   font-weight: 600;
   cursor: pointer;
 }

@@ -1,107 +1,160 @@
+/* FlightsSearchBar.scss */
+
+/* ===== Variables ===== */
+$fsb-white: #fff;
+
+$fsb-bg: #f2f2f2;
+$fsb-item-bg: #f7f7f7;
+
+$fsb-border: #ececec;
+
+$fsb-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+$fsb-blue: #1a73e8;
+$fsb-blue-soft: #eaf3ff;
+
+$fsb-search-bg: #9ec9f6;
+$fsb-search-hover: #7fb6f2;
+
+$fsb-gray-222: #222;
+$fsb-gray-2b: #2b2b2b;
+
+$fsb-gray-6f: #6f6f6f;
+$fsb-gray-7b: #7b7b7b;
+$fsb-gray-9a: #9a9a9a;
+
+$fsb-dot-border: #c7c7c7;
+
+$fsb-pink: #ff3b7a;
+
+$fsb-radius: 10px;
+
+/* ===== Mixins ===== */
+@mixin fsb-flex($justify: flex-start, $align: stretch, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin fsb-grid($cols, $gap: null) {
+  display: grid;
+  grid-template-columns: $cols;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin fsb-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+@mixin fsb-pill {
+  border-radius: 999px;
+}
+
+/* ===== Styles ===== */
 .fsb-wrap {
   width: 100%;
-  background: #f2f2f2;
+  background: $fsb-bg;
   padding: 14px 18px;
 }
 
 .fsb-card {
-  background: #fff;
-  border-radius: 10px;
+  background: $fsb-white;
+  border-radius: $fsb-radius;
   padding: 10px 12px 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: $fsb-shadow;
 }
 
 /* ROW 1 */
 .fsb-row1 {
-  display: grid;
-  grid-template-columns: 130px 220px 42px 220px 170px 170px 230px 140px;
-  gap: 10px;
+  @include fsb-grid(130px 220px 42px 220px 170px 170px 230px 140px, 10px);
   align-items: center;
 }
 
 .fsb-item {
-  background: #f7f7f7;
-  border: 1px solid #ececec;
-  border-radius: 10px;
+  background: $fsb-item-bg;
+  border: 1px solid $fsb-border;
+  border-radius: $fsb-radius;
   padding: 8px 10px;
   height: 56px;
-  display: flex;
+  @include fsb-flex(center, stretch);
   flex-direction: column;
-  justify-content: center;
 }
 
 .fsb-label {
   font-size: 11px;
   font-weight: 700;
-  color: #7b7b7b;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  color: $fsb-gray-7b;
+  @include fsb-flex(flex-start, center, 6px);
   letter-spacing: 0.4px;
 }
 
 .fsb-dd {
   font-size: 14px;
-  color: #7b7b7b;
+  color: $fsb-gray-7b;
   margin-top: 1px;
 }
 
 .fsb-value {
   font-size: 14px;
   font-weight: 700;
-  color: #222;
+  color: $fsb-gray-222;
   margin-top: 3px;
 }
 
 .fsb-muted {
   font-weight: 600;
-  color: #9a9a9a;
+  color: $fsb-gray-9a;
 }
 
 .fsb-swap {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  border: none;
-  background: transparent;
+  @include fsb-btn-reset;
   display: grid;
   place-items: center;
-  cursor: pointer;
-  color: #1a73e8;
-}
+  color: $fsb-blue;
 
-.fsb-swap:hover {
-  background: #eaf3ff;
+  &:hover {
+    background: $fsb-blue-soft;
+  }
 }
 
 .fsb-search {
   height: 56px;
   border: none;
-  border-radius: 10px;
-  background: #9ec9f6;
-  color: #fff;
+  border-radius: $fsb-radius;
+  background: $fsb-search-bg;
+  color: $fsb-white;
   font-weight: 800;
   font-size: 14px;
   letter-spacing: 0.5px;
   cursor: pointer;
-}
 
-.fsb-search:hover {
-  background: #7fb6f2;
+  &:hover {
+    background: $fsb-search-hover;
+  }
 }
 
 /* ROW 2 */
 .fsb-row2 {
-  display: flex;
-  align-items: center;
+  @include fsb-flex(flex-start, center, 16px);
   flex-wrap: wrap;
-  gap: 16px;
   padding: 10px 4px 0;
 }
 
 .fsb-fare {
   font-size: 12px;
-  color: #6f6f6f;
+  color: $fsb-gray-6f;
   font-weight: 600;
 }
 
@@ -112,45 +165,45 @@
   gap: 8px;
   font-size: 12px;
   font-weight: 600;
-  color: #2b2b2b;
+  color: $fsb-gray-2b;
   cursor: pointer;
   user-select: none;
-}
 
-.fsb-radio input {
-  display: none;
+  input {
+    display: none;
+
+    &:checked + .fsb-dot {
+      border-color: $fsb-blue;
+
+      &::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: $fsb-blue;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
 }
 
 .fsb-dot {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 2px solid #c7c7c7;
+  border: 2px solid $fsb-dot-border;
   position: relative;
   display: inline-block;
-}
-
-.fsb-radio input:checked + .fsb-dot {
-  border-color: #1a73e8;
-}
-
-.fsb-radio input:checked + .fsb-dot::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #1a73e8;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .fsb-new {
   margin-left: 6px;
   font-size: 10px;
   font-weight: 800;
-  color: #ff3b7a;
+  color: $fsb-pink;
 }
 
 /* Checkbox */
@@ -161,37 +214,37 @@
   gap: 10px;
   font-size: 12px;
   font-weight: 700;
-  color: #2b2b2b;
+  color: $fsb-gray-2b;
   cursor: pointer;
   user-select: none;
-}
 
-.fsb-check input {
-  display: none;
+  input {
+    display: none;
+
+    &:checked + .fsb-box {
+      border-color: $fsb-blue;
+      background: $fsb-blue;
+
+      &::after {
+        content: "";
+        width: 8px;
+        height: 4px;
+        border-left: 2px solid $fsb-white;
+        border-bottom: 2px solid $fsb-white;
+        position: absolute;
+        top: 4px;
+        left: 3px;
+        transform: rotate(-45deg);
+      }
+    }
+  }
 }
 
 .fsb-box {
   width: 16px;
   height: 16px;
   border-radius: 4px;
-  border: 2px solid #c7c7c7;
+  border: 2px solid $fsb-dot-border;
   display: inline-block;
   position: relative;
-}
-
-.fsb-check input:checked + .fsb-box {
-  border-color: #1a73e8;
-  background: #1a73e8;
-}
-
-.fsb-check input:checked + .fsb-box::after {
-  content: "";
-  width: 8px;
-  height: 4px;
-  border-left: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  position: absolute;
-  top: 4px;
-  left: 3px;
-  transform: rotate(-45deg);
 }
