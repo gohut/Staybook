@@ -46,8 +46,8 @@ function App() {
           <Route path="/hstaypge2" element={<Hmstaypge2/>} />
 
           <Route path="/admin" element={<Admin_portal/>} />
-                    <Route path="/user" element={<User_portal/>} />
-                              <Route path="/partner" element={<Partner_portal/>} />
+          <Route path="/user" element={<User_portal/>} />
+          <Route path="/partner" element={<Partner_portal/>} />
 
 
 

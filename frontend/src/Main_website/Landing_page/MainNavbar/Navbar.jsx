@@ -7,7 +7,9 @@ import {
   FaTrain,
   FaBus,
   FaTaxi,
+  FaUserCircle,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./navbar.scss";
 import bgimg from "../../../assets/bgimg.png";
 import logo from "../../../assets/logo.png";
@@ -15,22 +17,33 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import HotelNav from "../Hotel_section/Navbar_Cont/HotelNav";
 import FlightNav from "../Flight_section/Navbar/FlightNav";
 import VillasHomestaysSearch from "../HmeStay_section/Navbar/VillasHomestaysSearch";
-import HolidayNavbar from "../Package_section/packageNavbar/HolidayNavbar"
-const Navbar = ({ onLoginClick, activeTab, setActiveTab }) => {
+import HolidayNavbar from "../Package_section/packageNavbar/HolidayNavbar";
 
-
+const Navbar = ({ onLoginClick, activeTab, setActiveTab, user }) => {
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Flights", icon: <FaPlane /> },
     { name: "Hotels", icon: <FaHotel /> },
     { name: "Villas & Homestays", icon: <FaHome /> },
     { name: "Holiday Packages", icon: <FaUmbrellaBeach /> },
-
   ];
+
+  const handleProfileClick = () => {
+    if (user) {
+      if (user.role === 'admin') {
+        navigate('/admin');
+      } else if (user.role === 'partner') {
+        navigate('/partner');
+      } else if (user.role === 'user') {
+        navigate('/user');
+      }
+    }
+  };
 
   return (
     <nav className="navbar">
-            <div className="nav-items-container">
+      <div className="nav-items-container">
         <div className="nav-items">
           {navItems.map((item) => (
             <div
@@ -49,21 +62,26 @@ const Navbar = ({ onLoginClick, activeTab, setActiveTab }) => {
         <div className="navbar-logo">
           <img src={bgimg} alt="StayABook Logo" />
         </div>
-
-        {/* Login Button */}
       </div>
       <div className="lo-goin-cont">
         <div className="logo-img">
           <img src={logo} alt="" />
         </div>
-        <button className="login-button" onClick={onLoginClick}>Login</button>
+        {user ? (
+          <div className="user-profile" onClick={handleProfileClick}>
+            <FaUserCircle size={32} />
+            <span className="user-email">{user.email}</span>
+          </div>
+        ) : (
+          <button className="login-button" onClick={onLoginClick}>
+            Login
+          </button>
+        )}
       </div>
       {activeTab === "Hotels" && <HotelNav />}
       {activeTab === "Flights" && <FlightNav />}
       {activeTab === "Villas & Homestays" && <VillasHomestaysSearch />}
       {activeTab === "Holiday Packages" && <HolidayNavbar />}
-      {/* Navigation Items */}
-
     </nav>
   );
 };

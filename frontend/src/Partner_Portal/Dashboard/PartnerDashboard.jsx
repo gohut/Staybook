@@ -7,55 +7,52 @@ import {
 } from "react-icons/fi";
 import "./PartnerDashboard.scss";
 
-/* ================= REUSABLE COMPONENTS ================= */
 
 const StatCard = ({ title, value, sub, icon, color }) => (
-  <div className="stat-card">
+  <div className="ptr-db-stat-card">
     <div>
       <p>{title}</p>
       <h2>{value}</h2>
-      {sub && <span className="stat-sub">{sub}</span>}
+      {sub && <span className="ptr-db-stat-sub">{sub}</span>}
     </div>
-    <div className={`icon ${color}`}>{icon}</div>
+    <div className={`ptr-db-icon ${color}`}>{icon}</div>
   </div>
 );
 
 const RoomCard = ({ title, total, occupied, available, percent }) => (
-  <div className="room-card">
-    <div className="room-card-header">
+  <div className="ptr-db-room-card">
+    <div className="ptr-db-room-card-header">
       <h4>{title}</h4>
-      <span className="percent">{percent}%</span>
+      <span className="ptr-db-percent">{percent}%</span>
     </div>
 
     <p className="total">{total} total rooms</p>
 
-    <div className="room-stats">
+    <div className="ptr-db-room-stats">
       <p>Occupied: <strong>{occupied}</strong></p>
       <p className="available">Available: <strong>{available}</strong></p>
     </div>
 
-    <div className="progress">
-      <div className="progress-fill" style={{ width: `${percent}%` }} />
+    <div className="ptr-db-progress">
+      <div className="ptr-db-progress-fill" style={{ width: `${percent}%` }} />
     </div>
   </div>
 );
 
-/* ================= MAIN DASHBOARD ================= */
+
 
 const PartnerDashboard = () => {
   return (
-    <div className="dashboard">
+    <div className="ptr-dashboard">
 
-      {/* KPI STATS */}
-      <div className="stats">
-        <StatCard title="Total Rooms" value="48" icon={<FiHome />} color="blue" />
+      <div className="ptr-db-stats">
+        <StatCard title="Total Rooms" value="48" icon={<FiCalendar />} color="blue" />
         <StatCard title="Available Today" value="12" icon={<FiCalendar />} color="green" />
         <StatCard title="Active Reservations" value="4" icon={<FiCalendar />} color="purple" />
         <StatCard title="Check-ins Today" value="2" icon={<FiTrendingUp />} color="orange" />
       </div>
 
-      {/* REVENUE METRICS (NEW SECTION) */}
-      <div className="stats revenue">
+      <div className="ptr-db-stats ptr-db-revenue">
         <StatCard
           title="Average Nightly Rate"
           value="$285"
@@ -79,26 +76,26 @@ const PartnerDashboard = () => {
         />
       </div>
 
-      {/* CHECK-IN / CHECK-OUT */}
-      <div className="cards-row">
-        <div className="info-card green">
-          <div className="card-header">
+
+      <div className="ptr-db-cards-row">
+        <div className="ptr-db-info-card green">
+          <div className="ptr-db-card-header">
             <h3>Today's Check-ins</h3>
             <button>View All</button>
           </div>
-          <div className="guest">
+          <div className="ptr-db-guest">
             <h4>Emily Rodriguez <span>3:00 PM</span></h4>
             <p>Family Suite</p>
             <small>4 guests · 3 nights</small>
           </div>
         </div>
 
-        <div className="info-card blue">
-          <div className="card-header">
+        <div className="ptr-db-info-card blue">
+          <div className="ptr-db-card-header">
             <h3>Today's Check-outs</h3>
             <button>View All</button>
           </div>
-          <div className="guest">
+          <div className="ptr-db-guest">
             <h4>David Thompson <span>11:00 AM</span></h4>
             <p>Deluxe Ocean View</p>
             <small>$500 · paid</small>
@@ -106,17 +103,17 @@ const PartnerDashboard = () => {
         </div>
       </div>
 
-      {/* ROOM STATUS */}
-      <div className="room-status">
-        <div className="section-header">
-          <span className="icon-bed">🛏️</span>
+
+      <div className="ptr-db-room-status">
+        <div className="ptr-db-section-header">
+          <span className="ptr-db-icon-bed">🛏️</span>
           <div>
             <h3>Room Status Overview</h3>
             <p>Current availability by room type</p>
           </div>
         </div>
 
-        <div className="room-grid">
+        <div className="ptr-db-room-grid">
           <RoomCard title="Deluxe Ocean View" total={15} occupied={2} available={13} percent={13} />
           <RoomCard title="Executive Suite" total={8} occupied={3} available={5} percent={38} />
           <RoomCard title="Standard Double" total={20} occupied={2} available={18} percent={10} />
@@ -124,12 +121,11 @@ const PartnerDashboard = () => {
         </div>
       </div>
 
-      {/* RECENT RESERVATIONS + ALERTS */}
-      <div className="bottom-grid">
+      <div className="ptr-db-bottom-grid">
 
-        {/* TABLE */}
-        <div className="table-card">
-          <div className="card-header">
+
+        <div className="ptr-db-table-card">
+          <div className="ptr-db-card-header">
             <h3>Recent Reservations</h3>
             <button>View All</button>
           </div>

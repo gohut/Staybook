@@ -13,8 +13,10 @@ import {
   FiSave,
 } from "react-icons/fi";
 import "./Acsettings.scss";
+import { useNavigate } from "react-router-dom";
 
 const ProfileDetails = () => (
+  
   <div className="as-card">
     <div className="as-grid">
       <div className="as-field">
@@ -66,20 +68,27 @@ const ProfileDetails = () => (
   </div>
 );
 
-const DangerZone = () => (
+const DangerZone = ({handleLogout}) => (
+
   <div className="as-danger">
     <h3>Danger Zone</h3>
     <p>
       Once you delete your account, there is no going back. Please be certain.
     </p>
-    <button className="as-delete">
+    <button className="as-delete" onClick={handleLogout}>
       <FiTrash2 /> Delete Account
     </button>
   </div>
 );
 
 const Acsettings = () => {
+    const navigate = useNavigate();
   const [tab, setTab] = useState("profile");
+      const handleLogout = () => {
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userRole');
+    navigate('/');
+  };
 
   return (
     <div className="as-wrap">
@@ -107,7 +116,7 @@ const Acsettings = () => {
       </div>
 
       {tab === "profile" && <ProfileDetails />}
-      <DangerZone />
+      <DangerZone handleLogout={handleLogout}/>
     </div>
   );
 };

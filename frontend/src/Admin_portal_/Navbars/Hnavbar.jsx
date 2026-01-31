@@ -1,9 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { FiSearch, FiBell } from "react-icons/fi";
 import { MdPerson } from "react-icons/md";
 import "./Hnavbar.scss";
 
 const Hnavbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userRole');
+    navigate('/');
+  };
+
   return (
     <header className="h-navbar">
       {/* Search */}
@@ -31,6 +40,7 @@ const Hnavbar = () => {
           <div className="avatar">
             <MdPerson size={20} />
           </div>
+          <button onClick={handleLogout}>log-out</button>
         </div>
       </div>
     </header>

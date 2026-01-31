@@ -13,27 +13,38 @@ export default function Logincont({ onClose, onLoginSuccess }) {
   const handleLogin = () => {
     setError('');
     
-    // Validate inputs
     if (!email || !password) {
       setError('Please enter both email and password');
       return;
     }
 
-    // Role-based navigation logic
+    let userRole = '';
+    let shouldNavigate = false;
+
     if (email === 'admin@gmail.com') {
-
-      navigate('/admin');
+      userRole = 'admin';
+      // shouldNavigate = true;
     } else if (email === 'partner@gmail.com') {
-
-      navigate('/partner');
+      userRole = 'partner';
+      // shouldNavigate = true;
     } else if (email === 'user@gmail.com') {
-      localStorage.setItem('userEmail', email);
-      localStorage.setItem('userRole', 'user');
-      onLoginSuccess({ email, role: 'user' });
-      onClose();
-      // Stay on the same page (home), just close the modal
+      userRole = 'user';
+      // shouldNavigate = false;
     } else {
       setError('Invalid email or password');
+      return;
+    }
+
+    localStorage.setItem('userEmail', email);
+    localStorage.setItem('userRole', userRole);
+    
+    onLoginSuccess({ email, role: userRole });
+    onClose();
+
+    if (shouldNavigate) {
+      setTimeout(() => {
+        navigate(`/${userRole}`);
+      }, 100);
     }
   };
 

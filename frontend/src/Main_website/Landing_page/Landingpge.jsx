@@ -13,30 +13,66 @@ import OffersSection from './HmeStay_section/HmstayCont/OffersSection';
 import DealsAndDestinations from "./Package_section/PackageContent/DealsAndDestinations";
 
 export default function Landingpge() {
-    const [activeTab, setActiveTab] = useState("Hotels");
-      const [showLogin, setShowLogin] = useState(false);
-      
-      useEffect(() => {
-        document.body.style.overflow = showLogin ? "hidden" : "auto";
-        return () => (document.body.style.overflow = "auto");
-      }, [showLogin]);
+  const [activeTab, setActiveTab] = useState("Hotels");
+  const [showLogin, setShowLogin] = useState(false);
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('userEmail');
+    const storedRole = localStorage.getItem('userRole');
+    if (storedEmail && storedRole) {
+      setUser({ email: storedEmail, role: storedRole });
+    }
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = showLogin ? "hidden" : "auto";
+    return () => (document.body.style.overflow = "auto");
+  }, [showLogin]);
+
+  const handleLoginSuccess = (userData) => {
+    setUser(userData);
+  };
+
   return (
     <div>
-        <div className='hotelpage-mn'> 
-<Navbar
-  onLoginClick={() => setShowLogin(true)}
-  activeTab={activeTab}
-  setActiveTab={setActiveTab}
-/>
+      <div className='hotelpage-mn'> 
+        <Navbar
+          onLoginClick={() => setShowLogin(true)}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          user={user}
+        />
 
-      {showLogin && <Logincont onClose={() => setShowLogin(false)}  showlgn={showLogin}/>}
-      {activeTab === "Hotels" && <LuxeSelection />}
-      {activeTab === "Flights" && <div className='FlightContent'><ExperienceAirlines/><FlagshipHotels/><HandpickedCollections/>   </div>}
-      {activeTab === "Villas & Homestays" && <div className='Hmstaycontent' ><VillasCities/><OffersSection/>   </div>}
-      {activeTab === "Holiday Packages" && <div><DealsAndDestinations/>  </div>}
+        {showLogin && (
+          <Logincont 
+            onClose={() => setShowLogin(false)} 
+            onLoginSuccess={handleLoginSuccess}
+          />
+        )}
+        
+        {activeTab === "Hotels" && <LuxeSelection />}
+        {activeTab === "Flights" && (
+          <div className='FlightContent'>
+            <ExperienceAirlines/>
+            <FlagshipHotels/>
+            <HandpickedCollections/>
+          </div>
+        )}
+        {activeTab === "Villas & Homestays" && (
+          <div className='Hmstaycontent'>
+            <VillasCities/>
+            <OffersSection/>
+          </div>
+        )}
+        {activeTab === "Holiday Packages" && (
+          <div>
+            <DealsAndDestinations/>
+          </div>
+        )}
 
-      <Footer/>
-    </div>
+        <Footer/>
+      </div>
     </div>
   )   
 }
