@@ -61,10 +61,7 @@ const GuestAndRequest = () => {
           <span>Add Guest</span>
         </div>
 
-        <div className="login-strip">
-          <span>Login to prefill traveller details and get access to secret deals</span>
-          <button>LOGIN</button>
-        </div>
+
       </div>
 
       {/* SPECIAL REQUEST */}

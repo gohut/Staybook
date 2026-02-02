@@ -1,11 +1,4 @@
 
-.ptr-dashboard {
-
-/* Dashboard.scss */
-
-/* ==
-   Variables
-== */
 $dashboard-bg: #fff;
 
 $dashboard-color-white: #fff;
@@ -44,10 +37,8 @@ $dashboard-scroll-thumb-active: #6b7280;
 $dashboard-scroll-track: #f1f5f9;
 $dashboard-scroll-track-hover: #e2e8f0;
 $dashboard-scroll-track-active: #d1d5db;
-}
-/* ==
-   Mixins
-== */
+
+
 @mixin dashboard-flex($justify: flex-start, $align: stretch, $gap: null) {
   display: flex;
   justify-content: $justify;
@@ -77,58 +68,34 @@ $dashboard-scroll-track-active: #d1d5db;
 }
 
 /* ==
-   Styles
+   Base
 == */
 .dashboard {
-
   width: 100%;
 }
 
 /* === STATS === */
-
-
 .ptr-db-stats {
-
-.stats {
-
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 20px;
-}
+  justify-content: space-between;
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
 
-
-.ptr-db-stats.ptr-db-revenue {
-  grid-template-columns: repeat(3, 1fr);
-  margin-top: 28px;
-}
-
-.ptr-db-stat-card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 20px;
-
-  &.revenue {
+  &.ptr-db-revenue {
     grid-template-columns: repeat(3, 1fr);
     margin-top: 28px;
   }
-}}
-
-.stat-card {
-  @include dashboard-card($dashboard-radius-lg, 20px);
-
-  display: flex;
-  justify-content: space-between;
-
-
-
-.ptr-db-stat-card p {
-  color: #6b7280;
-  font-size: 14px;
 }
 
-.ptr-db-stat-card h2 {
-  font-size: 26px;
-  margin: 6px 0;
+.ptr-db-stat-card {
+  @include dashboard-card($dashboard-radius-lg, 20px);
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
 
   p {
     color: $dashboard-color-muted;
@@ -139,8 +106,7 @@ $dashboard-scroll-track-active: #d1d5db;
     font-size: 26px;
     margin: 6px 0;
   }
-
-}}
+}
 
 .ptr-db-stat-sub {
   font-size: 13px;
@@ -153,83 +119,37 @@ $dashboard-scroll-track-active: #d1d5db;
   color: $dashboard-color-white;
   font-size: 22px;
 
-  &.blue {
-    background: $dashboard-color-primary;
-  }
-
-  &.green {
-    background: $dashboard-color-success;
-  }
-
-  &.purple {
-    background: $dashboard-color-purple;
-  }
-
-  &.orange {
-    background: $dashboard-color-orange;
-  }
-
+  &.blue { background: $dashboard-color-primary; }
+  &.green { background: $dashboard-color-success; }
+  &.purple { background: $dashboard-color-purple; }
+  &.orange { background: $dashboard-color-orange; }
   &.gray {
     background: $dashboard-border;
     color: $dashboard-color-muted-2;
   }
 }
 
-
-.ptr-db-icon.blue { background: #2563eb; }
-.ptr-db-icon.green { background: #10b981; }
-.ptr-db-icon.purple { background: #8b5cf6; }
-.ptr-db-icon.orange { background: #f97316; }
-.ptr-db-icon.gray { background: #e5e7eb; color: #9ca3af; }
-
 /* === CHECK-IN / OUT === */
-
 .ptr-db-cards-row {
-
-/* === CHECK-IN / OUT === */
-.cards-row {
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 28px;
+  margin-top: 20px;
+  .cards-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 28px;
+  }
 }
 
-
 .ptr-db-info-card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 20px;
-}}
-
-.ptr-db-card-header {
-  display: flex;
-  justify-content: space-between;
-
-.info-card {
   @include dashboard-card($dashboard-radius-lg, 20px);
 
-  &.green .guest {
-    background: $dashboard-bg-soft-green;
-  }
+  &.green .ptr-db-guest { background: $dashboard-bg-soft-green; }
+  &.blue .ptr-db-guest { background: $dashboard-bg-soft-blue; }
+}
 
-  &.blue .guest {
-    background: $dashboard-bg-soft-blue;
-  }
-}}
-
-.card-header {
+.ptr-db-card-header {
   @include dashboard-between;
-
   margin-bottom: 16px;
-
-
-
-.ptr-db-card-header button {
-  border: 1px solid #e5e7eb;
-  background: transparent;
-  padding: 6px 14px;
-  border-radius: 10px;
 
   button {
     border: 1px solid $dashboard-border;
@@ -237,43 +157,11 @@ $dashboard-scroll-track-active: #d1d5db;
     padding: 6px 14px;
     border-radius: 10px;
   }
-
-}}
+}
 
 .ptr-db-guest {
   padding: 16px;
   border-radius: $dashboard-radius-sm;
-
-
-
-.ptr-db-info-card.green .guest { background: #ecfdf5; }
-.ptr-db-info-card.blue .guest { background: #eff6ff; }
-
-.ptr-db-guest span {
-  background: #22c55e;
-  color: #fff;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-}}
-
-/* === ROOM STATUS === */
-
-.rptr-db-room-status {
-  background: #fff;
-  border-radius: 20px;
-  padding: 24px;
-  margin-top: 30px;
-}
-
-.ptr-db-section-header {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.ptr-db-icon-bed {
-  background: #f3e8ff;
 
   span {
     background: $dashboard-color-success-2;
@@ -297,7 +185,6 @@ $dashboard-scroll-track-active: #d1d5db;
 
 .icon-bed {
   background: $dashboard-bg-soft-purple;
-
   padding: 12px;
   border-radius: $dashboard-radius-sm;
 }
@@ -308,27 +195,14 @@ $dashboard-scroll-track-active: #d1d5db;
   gap: 20px;
 }
 
-
-.ptr-db-room-card {
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
+.room-card {
+  border: 1px solid $dashboard-border;
+  border-radius: $dashboard-radius-md;
   padding: 18px;
 }
 
-.ptr-db-percent {
-  background: #22c55e;
-  color: #fff;
-
-.room-card {
-  border: 1px solid $dashboard-border;
-  border-radius: $dashboard-radius-lg - 2px;
-  padding: 18px;
-}}
-
 .percent {
   @include dashboard-badge($dashboard-color-success-2);
-
-  padding: 4px 10px;
 }
 
 .ptr-db-progress {
@@ -336,61 +210,45 @@ $dashboard-scroll-track-active: #d1d5db;
   background: $dashboard-border;
   border-radius: $dashboard-radius-pill;
   margin-top: 10px;
+
+  &-fill {
+    height: 100%;
+    background: $dashboard-color-success-2;
+  }
 }
 
-.ptr-db-progress-fill {
-  height: 100%;
-  background: $dashboard-color-success-2;
-}
-
-/* === BOTTOM === */
-
-
-.ptr-db-bottom-grid {
-
+/* === BOTTOM GRID === */
 .bottom-grid {
-
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
   margin-top: 30px;
 }
-}
-
-.ptr-db-table-card {
-  background: #fff;
-  border-radius: 20px;
-  padding: 20px;
 
 .table-card {
   @include dashboard-card($dashboard-radius-xl, 20px);
 
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}}
+  th,
+  td {
+    padding: 14px 0;
+    border-bottom: 1px solid $dashboard-border;
+    text-align: left;
+  }
 
-th,
-td {
-  padding: 14px 0;
-  border-bottom: 1px solid $dashboard-border;
-  text-align: left;
-}
-
-td {
-  span {
+  td span {
     display: block;
     font-size: 12px;
     color: $dashboard-color-muted;
   }
 }
 
-.status {
-  &.confirmed {
-    @include dashboard-badge($dashboard-color-success);
-  }
+.status.confirmed {
+  @include dashboard-badge($dashboard-color-success);
 }
 
 /* === ALERTS === */
@@ -428,42 +286,12 @@ td {
     color: $dashboard-color-white;
   }
 
-  &.orange .icon {
-    background: $dashboard-color-orange;
-  }
-
-  &.blue .icon {
-    background: $dashboard-color-primary;
-  }
-
-  &.green .icon {
-    background: $dashboard-color-success;
-  }
+  &.orange .icon { background: $dashboard-color-orange; }
+  &.blue .icon { background: $dashboard-color-primary; }
+  &.green .icon { background: $dashboard-color-success; }
 }
 
-.alert-content {
-  h4 {
-    font-size: 16px;
-    margin-bottom: 6px;
-  }
-
-  p {
-    font-size: 14px;
-    color: $dashboard-color-muted;
-  }
-
-  a {
-    font-size: 14px;
-    color: $dashboard-color-primary;
-    text-decoration: underline;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
-}
-
-/* === SCROLLBAR STYLES === */
+/* === SCROLLBAR === */
 .content-scroll {
   &::-webkit-scrollbar {
     width: 8px;
@@ -473,25 +301,15 @@ td {
     background: $dashboard-scroll-thumb;
     border-radius: 4px;
 
-    &:hover {
-      background: $dashboard-scroll-thumb-hover;
-    }
-
-    &:active {
-      background: $dashboard-scroll-thumb-active;
-    }
+    &:hover { background: $dashboard-scroll-thumb-hover; }
+    &:active { background: $dashboard-scroll-thumb-active; }
   }
 
   &::-webkit-scrollbar-track {
     background: $dashboard-scroll-track;
     border-radius: 4px;
 
-    &:hover {
-      background: $dashboard-scroll-track-hover;
-    }
-
-    &:active {
-      background: $dashboard-scroll-track-active;
-    }
+    &:hover { background: $dashboard-scroll-track-hover; }
+    &:active { background: $dashboard-scroll-track-active; }
   }
 }

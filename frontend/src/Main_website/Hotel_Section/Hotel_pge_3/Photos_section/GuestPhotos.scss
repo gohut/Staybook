@@ -165,8 +165,8 @@ $guestphotos-radius-sm: 6px;
   overflow-x: auto;
 
   img {
-    height: 60px;
-    width: 80px;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
     border-radius: $guestphotos-radius-sm;
     opacity: 0.5;

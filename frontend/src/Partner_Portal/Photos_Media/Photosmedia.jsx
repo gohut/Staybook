@@ -3,26 +3,26 @@ import "./Photosmedia.scss";
 import { FiUpload, FiImage } from "react-icons/fi";
 
 const Tab = ({ label, active }) => (
-  <button className={`pm-tab ${active ? "active" : ""}`}>{label}</button>
+  <button className={`ptrpm-pm-tab ${active ? "ptrpm-active" : ""}`}>{label}</button>
 );
 
 const UploadCard = () => (
-  <div className="upload-box">
-    <FiUpload className="upload-icon" />
+  <div className="ptrpm-upload-box">
+    <FiUpload className="ptrpm-upload-icon" />
     <p>Drag and drop images here, or click to browse</p>
     <span>Recommended: 1920×1080px, JPG or PNG, max 5MB</span>
   </div>
 );
 
 const PhotoCard = ({ src, featured }) => (
-  <div className="photo-card">
+  <div className="ptrpm-photo-card">
     {featured && <span className="featured-badge">⭐ Featured</span>}
     <img src={src} alt="" />
   </div>
 );
 
 const AddPhotoCard = () => (
-  <div className="photo-card add-photo">
+  <div className="ptrpm-photo-card ptrpm-add-photo">
     <FiImage />
     <p>Add Photo</p>
   </div>
@@ -30,13 +30,13 @@ const AddPhotoCard = () => (
 
 const Photosmedia = () => {
   return (
-    <div className="photos-page">
-      <div className="page-head">
+    <div className="ptr-photos-page">
+      <div className="ptrpm-page-head">
         <h2>Photos & Media</h2>
         <p>Upload and manage your property and room photos</p>
       </div>
 
-      <div className="tabs">
+      <div className="ptrpm-tabs">
         <Tab label="Property Photos" active />
         <Tab label="Deluxe Ocean View" />
         <Tab label="Executive Suite" />
@@ -44,15 +44,15 @@ const Photosmedia = () => {
         <Tab label="Family Suite" />
       </div>
 
-      <section className="card">
+      <section className="ptrpm-card">
         <h3>Property Photos</h3>
-        <p className="sub">
+        <p className="ptrpm-sub">
           Upload high-quality images of your hotel exterior, lobby, facilities, and common areas
         </p>
 
         <UploadCard />
 
-        <div className="photo-grid">
+        <div className="ptrpm-photo-grid">
           <PhotoCard
             src="https://images.unsplash.com/photo-1501117716987-c8e1ecb210b0"
             featured
@@ -67,7 +67,7 @@ const Photosmedia = () => {
         </div>
       </section>
 
-      <section className="guidelines">
+      <section className="ptrpm-guidelines">
         <h4>Photo Guidelines</h4>
         <ul>
           <li>Use high-resolution images (min 1920×1080px)</li>

@@ -75,12 +75,12 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
 /* =======================
    Styles
 ======================= */
-.hotel-wrap {
+.htl3-ho-hotel-wrap {
   background: $hoteloverview-bg-wrap;
   padding: 24px 0;
 }
 
-.hotel-card {
+.htl3ho-hotel-card {
   max-width: 1180px;
   margin: auto;
   background: $hoteloverview-bg-card;
@@ -88,7 +88,7 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   border-radius: $hoteloverview-radius-xl;
 }
 
-.hotel-title {
+.htl3ho-hotel-title {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 16px;
@@ -99,47 +99,54 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   }
 }
 
-.hotel-grid {
+.htl3ho-hotel-grid {
   display: grid;
   grid-template-columns: 2.2fr 1fr;
   gap: 20px;
 }
 
 /* LEFT */
-.gallery {
+.htl3ho-gallery {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 10px;
 }
 
-.gallery-main {
+.htl3ho-gallery-main {
   height: 260px;
   background: linear-gradient(135deg, $hoteloverview-gradient-gallery-start, $hoteloverview-gradient-gallery-end);
   border-radius: $hoteloverview-radius-lg;
   position: relative;
 }
 
-.photo-badge {
+.htl3ho-photo-badge {
   @include hoteloverview-abs-badge(12px, 12px, $hoteloverview-overlay-dark-65, $hoteloverview-radius-xl, 6px 12px, 13px);
 }
 
-.gallery-side {
+.htl3ho-gallery-side {
   display: grid;
   grid-template-rows: 1fr 1fr;
   gap: 10px;
 }
 
-.side-img {
+.htl3ho-side-img {
   background: $hoteloverview-bg-sideimg;
   border-radius: $hoteloverview-radius-lg;
-  position: relative;
+  overflow: hidden;
+  height: 125px; width: 300px;
 }
+.htl3ho-side-img  img
+{
+   width: 100%;height: 100%;
+   object-fit: cover
 
-.view {
+  }
+
+.htl3ho-view {
   @include hoteloverview-abs-badge(8px, 8px, $hoteloverview-overlay-dark-60, $hoteloverview-radius-md, 4px 8px, 12px);
 }
 
-.about {
+.htl3ho-about {
   margin-top: 16px;
 
   p {
@@ -148,44 +155,44 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   }
 }
 
-.link {
+.htl3ho-link {
   color: $hoteloverview-color-link;
   cursor: pointer;
 }
 
-.tabs {
+.htl3ho-tabs {
   display: flex;
   gap: 10px;
   margin: 12px 0;
 }
 
-.tab {
+.htl3ho-tab {
   padding: 8px 12px;
   border-radius: $hoteloverview-radius-xs;
   border: 1px solid $hoteloverview-border-tab;
   background: $hoteloverview-bg-tab;
 
-  &.active {
+  &.htl3ho-active {
     background: $hoteloverview-bg-tab-active;
     color: $hoteloverview-color-link;
     font-weight: 600;
   }
 }
 
-.amenities {
+.htl3ho-amenities {
   display: flex;
   gap: 16px;
   font-size: 14px;
   margin: 10px 0 16px;
 }
 
-.login-box {
+.htl3ho-login-box {
   background: $hoteloverview-bg-loginbox;
   padding: 14px;
   border-radius: $hoteloverview-radius-md;
 }
 
-.login-row {
+.htl3ho-login-row {
   display: flex;
   gap: 10px;
   margin-top: 8px;
@@ -208,17 +215,17 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
 }
 
 /* RIGHT */
-.room-card,
-.rating-card {
+.htl3ho-room-card,
+.htl3ho-rating-card {
   @include hoteloverview-card(1px solid $hoteloverview-border-soft, $hoteloverview-radius-lg, 16px);
 }
 
-.fits {
+.htl3ho-fits {
   font-size: 14px;
   color: $hoteloverview-color-muted;
 }
 
-.room-card {
+.htl3ho-room-card {
   ul {
     padding-left: 18px;
     font-size: 14px;
@@ -226,10 +233,10 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   }
 }
 
-.price {
+.htl3ho-price {
   margin: 12px 0;
 
-  .final {
+  .htl3ho-final {
     font-size: 22px;
     font-weight: 700;
   }
@@ -240,7 +247,7 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   }
 }
 
-.book {
+.htl3ho-book {
   width: 100%;
   padding: 12px;
   background: linear-gradient(90deg, $hoteloverview-gradient-book-start, $hoteloverview-gradient-book-end);
@@ -250,7 +257,7 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   font-weight: 700;
 }
 
-.more-options {
+.htl3ho-more-options {
   @include hoteloverview-flex(space-between, center);
   background: $hoteloverview-bg-moreoptions;
   padding: 12px;
@@ -258,7 +265,7 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   margin-top: 12px;
 }
 
-.outline {
+.htl3ho-outline {
   background: $hoteloverview-bg-card;
   border: 1px solid $hoteloverview-color-primary;
   color: $hoteloverview-color-primary;
@@ -267,7 +274,7 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   font-weight: 600;
 }
 
-.rating {
+.htl3ho-rating {
   width: 44px;
   height: 44px;
   background: $hoteloverview-color-rating;
@@ -278,11 +285,11 @@ $hoteloverview-overlay-dark-60: rgba(0, 0, 0, 0.6);
   font-size: 18px;
 }
 
-.rating-text {
+.htl3ho-rating-text {
   margin: 10px 0;
   font-size: 14px;
 }
 
-.location {
+.htl3ho-location {
   font-size: 14px;
 }

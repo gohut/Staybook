@@ -1,8 +1,16 @@
 // PHnavbar.jsx
 import { FiSearch, FiBell, FiChevronDown } from "react-icons/fi";
 import "./PHnavbar.scss";
+import { useNavigate } from "react-router-dom";
 
 const PHnavbar = () => {
+    const navigate = useNavigate();
+      const handleLogout = () => {
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userRole');
+    navigate('/');
+  };
+
   return (
     <header className="ptr-ph-navbar">
       <div className="ptr-ph-left">
@@ -19,7 +27,7 @@ const PHnavbar = () => {
           <FiBell />
           <span className="ptr-badge">2</span>
         </div>
-
+        <button onClick={handleLogout}>Log Out</button>  
         <div className="ptr-profile">
           <div className="ptr-avatar">PM</div>
           <div className="ptr-profile-info">

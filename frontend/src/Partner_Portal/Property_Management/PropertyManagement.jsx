@@ -3,26 +3,26 @@ import "./PropertyManagement.scss";
 import { FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
 
 const InfoField = ({ label, value, full }) => (
-  <div className={`info-field ${full ? "full" : ""}`}>
+  <div className={`ptrpm-info-field ${full ? "full" : ""}`}>
     <label>{label}</label>
-    <div className={full ? "textarea" : "input-box"}>{value}</div>
+    <div className={full ? "ptrpm-textarea" : "ptrpm-input-box"}>{value}</div>
   </div>
 );
 
 const RoomCard = ({ title, bed, price, guests, rooms, amenities }) => (
-  <div className="room-card">
-    <div className="room-header">
+  <div className="ptrpm-room-card">
+    <div className="ptrpm-room-header">
       <div>
         <h4>{title}</h4>
         <p>{bed}</p>
       </div>
-      <div className="room-actions">
+      <div className="ptrpm-room-actions">
         <FiEdit2 />
         <FiTrash2 />
       </div>
     </div>
 
-    <div className="room-meta">
+    <div className="ptrpm-room-meta">
       <div>
         <span>Base Price</span>
         <strong>{price}</strong>
@@ -37,7 +37,7 @@ const RoomCard = ({ title, bed, price, guests, rooms, amenities }) => (
       </div>
     </div>
 
-    <div className="amenities">
+    <div className="ptrpm-amenities">
       {amenities.map((a) => (
         <span key={a}>{a}</span>
       ))}
@@ -47,17 +47,17 @@ const RoomCard = ({ title, bed, price, guests, rooms, amenities }) => (
 
 const PropertyManagement = () => {
   return (
-    <div className="pm-page">
-      <section className="card">
-        <div className="card-header">
+    <div className="ptr-pm-page">
+      <section className="ptrpm-card">
+        <div className="ptrpm-card-header">
           <div>
             <h3>Property Information</h3>
             <p>Manage your hotel details and settings</p>
           </div>
-          <button className="primary-btn">Save Changes</button>
+          <button className="ptrpm-primary-btn">Save Changes</button>
         </div>
 
-        <div className="info-grid">
+        <div className="ptrpm-info-grid">
           <InfoField label="Hotel Name" value="Grand Plaza Hotel" />
           <InfoField label="Email" value="info@grandplaza.com" />
           <InfoField label="Address" value="123 Ocean Drive" />
@@ -73,18 +73,18 @@ const PropertyManagement = () => {
         </div>
       </section>
 
-      <section className="card">
-        <div className="card-header">
+      <section className="ptrpm-card">
+        <div className="ptrpm-card-header">
           <div>
             <h3>Room Types</h3>
             <p>Manage your room inventory and details</p>
           </div>
-          <button className="primary-btn">
+          <button className="ptrpm-primary-btn">
             <FiPlus /> Add Room Type
           </button>
         </div>
 
-        <div className="room-grid">
+        <div className="ptrpm-room-grid">
           <RoomCard
             title="Deluxe Ocean View"
             bed="King Bed"

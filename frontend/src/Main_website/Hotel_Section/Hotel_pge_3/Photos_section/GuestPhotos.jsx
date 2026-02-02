@@ -6,13 +6,17 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import "./GuestPhotos.scss";
-
+import img1 from "../../../../assets/touristPlace/timg1.jpg";
+import img2 from "../../../../assets/touristPlace/timg2.jpg";
+import img3 from "../../../../assets/touristPlace/timg3.jpg";
+import img4 from "../../../../assets/touristPlace/timg4.jpg";
 const photos = [
-  "/images/p1.jpg",
-  "/images/p2.jpg",
-  "/images/p3.jpg",
-  "/images/p4.jpg",
-  "/images/p5.jpg",
+   img1 ,
+    img2 , img3 ,
+
+    img4 ,
+ img1 ,
+
 ];
 
 const GuestPhotos = () => {
@@ -67,7 +71,7 @@ const GuestPhotos = () => {
             </button>
           </div>
 
-          <div className="modal-body">
+          <div className="modal-body" style={{transform:"translate(0px,-400px)"}}>
             <button className="nav left" onClick={prev}>
               <FaChevronLeft />
             </button>
@@ -91,14 +95,15 @@ const GuestPhotos = () => {
               <span>Others (1020)</span>
             </div>
 
-            <div className="thumbs">
+            <div className="thumbs" >
               {photos.map((img, i) => (
-                <img
+                <div style={{width: "400px", height:"200px", border:"solid red" }}>                <img
                   key={i}
                   src={img}
                   className={i === active ? "active" : ""}
                   onClick={() => setActive(i)}
-                />
+                /></div>
+      
               ))}
             </div>
           </div>

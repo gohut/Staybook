@@ -25,35 +25,35 @@ const PropertyCard = ({ data }) => {
       const navigate = useNavigate();
 
   return (
-    <div className="property-card" onClick={() => navigate("/hotel3")}>
+    <div className="htl4-property-card" onClick={() => navigate("/hotel3")}>
       {/* LEFT IMAGES */}
-      <div className="pc-images">
-        <img className="main-img" src={data.images.main} alt={data.name} />
-        <div className="thumbs">
+      <div className="htl4-pc-images">
+        <img className="htl4-main-img" src={data.images.main} alt={data.name} />
+        <div className="htl4-thumbs">
           {data.images.thumbs.map((img, i) => (
             <img key={i} src={img} alt="thumb" />
           ))}
-          <div className="view-all">View All</div>
+          <div className="htl4-view-all">View All</div>
         </div>
       </div>
 
       {/* DETAILS */}
-      <div className="pc-details">
+      <div className="htl4-pc-details">
         <h3>
           {data.name} <StarRating rating={data.starRating} />
         </h3>
 
-        <p className="location">
+        <p className="htl4-location">
           <FaMapMarkerAlt /> {data.location}
         </p>
 
-        <span className="badge">{data.badge}</span>
+        <span className="htl4-badge">{data.badge}</span>
 
-        <p className="offer">
+        <p className="htl4-offer">
           <FaSpa /> {data.offer}
         </p>
 
-        <ul className="points">
+        <ul className="htl4-points">
           {data.highlights.map((point, i) => (
             <li key={i}>{point}</li>
           ))}
@@ -61,20 +61,20 @@ const PropertyCard = ({ data }) => {
       </div>
 
       {/* PRICE */}
-      <div className="pc-price">
-        <div className="rating">
+      <div className="htl4-pc-price">
+        <div className="htl4-rating">
           {data.reviewLabel} <span>{data.reviewScore}</span>
           <p>({data.totalRatings} Ratings)</p>
         </div>
 
-        <div className="price">
+        <div className="htl4-price">
           <del>₹{data.originalPrice}</del>
           <h2>₹{data.discountedPrice}</h2>
-          <p className="tax">+ ₹{data.taxes} taxes & fees</p>
-          <p className="night">Per Night</p>
+          <p className="htl4-tax">+ ₹{data.taxes} taxes & fees</p>
+          <p className="htl4-night">Per Night</p>
         </div>
 
-        <a className="login">{data.ctaText}</a>
+        <a className="htl4-login">{data.ctaText}</a>
       </div>
     </div>
   );

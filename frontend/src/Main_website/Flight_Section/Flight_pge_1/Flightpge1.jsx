@@ -1,11 +1,13 @@
 // Flightpge1.jsx  ✅ UPDATED (TopNavbar fixed at TOP like the image)
 import React from "react";
-import FlightsSearchBar from "./FlightsSearchBar";
-import FlightsFiltersAndHeader from "./FlightsFiltersAndHeader";
-import FlightsFiltersSidebar from "./FlightsFiltersSidebar";
-import FlightsResultsList from "./FlightsResultsList";
-import FlightsTimeAirlinesFilters from "./FlightsTimeAirlinesFilters";
+
 import TopNavbar from "../../Top_Navbar/TopNavbar";
+import  FlightsSearchBar from "./Search_bar/FlightsSearchBar";
+import  FlightsFiltersAndHeader from "./FilterAndHeader/FlightsFiltersAndHeader";
+import  FlightsFiltersSidebar from "./FilterSidebar/FlightsFiltersSidebar";
+import  FlightsTimeAirlinesFilters from "./TimesAirlineFilter/FlightsTimeAirlinesFilters";
+import  FlightsResultsList from "./ResultList/FlightsResultsList";
+
 import "./Flightpge1.scss";
 
 export default function Flightpge1() {

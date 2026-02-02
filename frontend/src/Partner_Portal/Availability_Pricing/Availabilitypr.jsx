@@ -23,21 +23,21 @@ const DayCard = ({ day, price, status, available, active }) => (
 
 const Availabilitypr = () => {
   return (
-    <div className="availability-page">
+    <div className="pr-availability-page">
       <div className="page-head">
         <h2>Availability & Pricing</h2>
         <p>Manage room inventory and pricing</p>
       </div>
 
-      <section className="card filter-bar">
-        <div className="filter-left">
-          <div className="select-box">
+      <section className="pra-card pra-filter-bar">
+        <div className="pra-filter-left">
+          <div className="pra-select-box">
             Deluxe Ocean View (15 rooms)
           </div>
 
-          <button className="icon-btn"><FiChevronLeft /></button>
+          <button className="pra-icon-btn"><FiChevronLeft /></button>
           <h3>January 2026</h3>
-          <button className="icon-btn"><FiChevronRight /></button>
+          <button className="pra-icon-btn"><FiChevronRight /></button>
         </div>
 
         <div className="filter-right">

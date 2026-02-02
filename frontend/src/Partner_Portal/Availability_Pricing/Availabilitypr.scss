@@ -1,8 +1,4 @@
-/* Availabilitypr.scss */
 
-/* =======================
-   Variables
-======================= */
 $availabilitypr-bg: #fff;
 $availabilitypr-bg-soft: #f3f4f6;
 
@@ -20,13 +16,13 @@ $availabilitypr-radius-xs: 8px;
 
 $availabilitypr-dot-radius: 4px;
 
-/* Legend dots */
+
 $availabilitypr-dot-available: #dcfce7;
 $availabilitypr-dot-low: #fef9c3;
 $availabilitypr-dot-full: #fee2e2;
 $availabilitypr-dot-closed: #f3f4f6;
 
-/* Day card states */
+
 $availabilitypr-day-available-bg: #ecfdf5;
 $availabilitypr-day-available-border: #86efac;
 
@@ -36,9 +32,7 @@ $availabilitypr-day-low-border: #fde047;
 $availabilitypr-day-full-bg: #fef2f2;
 $availabilitypr-day-full-border: #fca5a5;
 
-/* =======================
-   Mixins
-======================= */
+
 @mixin availabilitypr-flex($justify: flex-start, $align: stretch, $gap: null) {
   display: flex;
   justify-content: $justify;
@@ -56,10 +50,8 @@ $availabilitypr-day-full-border: #fca5a5;
   border: 1px solid $availabilitypr-border;
 }
 
-/* =======================
-   Styles
-======================= */
-.availability-page {
+
+.pr-availability-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -77,26 +69,26 @@ $availabilitypr-day-full-border: #fca5a5;
   }
 }
 
-.card {
+.pra-card {
   @include availabilitypr-card(20px, $availabilitypr-radius-lg);
 }
 
-.filter-bar {
+.pra-filter-bar {
   @include availabilitypr-flex(space-between, center);
 }
 
-.filter-left {
+.pra-filter-left {
   @include availabilitypr-flex(flex-start, center, 12px);
 }
 
-.select-box {
+.pra-select-box {
   background: $availabilitypr-bg-soft;
   padding: 10px 14px;
   border-radius: $availabilitypr-radius-sm;
   font-size: 14px;
 }
 
-.icon-btn {
+.pra-icon-btn {
   border: 1px solid $availabilitypr-border;
   background: $availabilitypr-bg;
   padding: 8px;
