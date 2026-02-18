@@ -3,55 +3,69 @@ import { useNavigate } from 'react-router-dom'
 import "./loginpge.scss"
 import loginpge from "../../../assets/loginpge.png"
 import { FcGoogle } from "react-icons/fc";
-
+import { loginApi, registerApi } from "../../../Api/authApi.js";
 export default function Logincont({ onClose, onLoginSuccess }) {
+  const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+const handleLogin = async () => {
+  try {
+    const token = await loginApi(email, password);
+    localStorage.setItem("token", token);
+    localStorage.setItem("userEmail", email);
 
-  const handleLogin = () => {
-    setError('');
-    
-    if (!email || !password) {
-      setError('Please enter both email and password');
-      return;
-    }
+    navigate("/user");
 
-    let userRole = '';
-    let shouldNavigate = false;
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
-    if (email === 'admin@gmail.com') {
-      userRole = 'admin';
-      // shouldNavigate = true;
-    } else if (email === 'partner@gmail.com') {
-      userRole = 'partner';
-      // shouldNavigate = true;
-    } else if (email === 'user@gmail.com') {
-      userRole = 'user';
-      // shouldNavigate = false;
-    } else {
-      setError('Invalid email or password');
-      return;
-    }
+  
+const handleSignup = async () => {
+  setError('');
 
-    localStorage.setItem('userEmail', email);
-    localStorage.setItem('userRole', userRole);
-    
-    onLoginSuccess({ email, role: userRole });
-    onClose();
+  if (!name || !email || !password || !confirmPassword) {
+    setError('Please fill in all fields');
+    return;
+  }
 
-    if (shouldNavigate) {
-      setTimeout(() => {
-        navigate(`/${userRole}`);
-      }, 100);
-    }
-  };
+  if (password !== confirmPassword) {
+    setError('Passwords do not match');
+    return;
+  }
+  if (password.length < 6) {
+    setError('Password must be at least 6 characters');
+    return;
+  }
+
+  try {
+    await registerApi(name, email,password);
+    alert('Registration successful! Please login.');
+    toggleForm(); 
+  } catch (err) {
+    setError(err.message || 'Something went wrong');
+  }
+};
+
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      handleLogin();
+      isSignup ? handleSignup() : handleLogin();
     }
+  };
+
+  const toggleForm = () => {
+    setIsSignup(!isSignup);
+    setError('');
+    setEmail('');
+    setPassword('');
+    setName('');
+    setConfirmPassword('');
   };
 
   return (
@@ -60,12 +74,31 @@ export default function Logincont({ onClose, onLoginSuccess }) {
         <div className="mnlg-cn-cls" onClick={onClose}>X</div>
         <div className="mm-lg-cn-img"><img src={loginpge} alt="Login" /></div>
         <div className="mm-lg-cn-cn1">
-          <div className="mglgcn-cn11">
-            <div className="cn111">Welcome back!</div>
-            <div className="cn112">Get your tickets without any frustration, we are on your back!!!</div>
+          <div className={`mglgcn-cn11 ${isSignup ? 'signup-mode' : 'login-mode'}`}>
+            <div className="cn111">{isSignup ? 'Create Account' : 'Welcome back!'}</div>
+            <div className="cn112">
+              {isSignup 
+                ? 'Join us and get your tickets hassle-free!' 
+                : 'Get your tickets without any frustration, we are on your back!!!'}
+            </div>
             <br /><br />
             
-            {error && <div className="error-message" style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+            {error && <div className="error-message">{error}</div>}
+            
+            {isSignup && (
+              <>
+                <div className="cn113">
+                  <input 
+                    type="text" 
+                    placeholder='Full Name'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                  />
+                </div>
+                <br />
+              </>
+            )}
             
             <div className="cn113">
               <input 
@@ -86,8 +119,28 @@ export default function Logincont({ onClose, onLoginSuccess }) {
                 onKeyPress={handleKeyPress}
               />
             </div>
-            <div className="cn115">Forgot Password?</div>
-            <div className="cn116" onClick={handleLogin}>Login</div>
+            
+            {isSignup && (
+              <>
+                <br />
+                <div className="cn114">
+                  <input 
+                    type="password" 
+                    placeholder='Confirm Password'
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                  />
+                </div>
+              </>
+            )}
+            
+            {!isSignup && <div className="cn115">Forgot Password?</div>}
+            
+            <div className="cn116" onClick={isSignup ? handleSignup : handleLogin}>
+              {isSignup ? 'Sign Up' : 'Login'}
+            </div>
+            
             <div className="cn117">
               <div className="cn1171"></div>
               <div className="cn1172">or continue with</div>
@@ -100,7 +153,11 @@ export default function Logincont({ onClose, onLoginSuccess }) {
             </div>
 
             <div className="cn119">
-              Don't have an account? <span style={{color:'blue', fontWeight:"bold", cursor: 'pointer'}}>Sign up</span> Now
+              {isSignup ? (
+                <>Already have an account? <span onClick={toggleForm}>Back to Login</span></>
+              ) : (
+                <>Don't have an account? <span onClick={toggleForm}>Sign up</span> Now</>
+              )}
             </div>
           </div>
         </div>
