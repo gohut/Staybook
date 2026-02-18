@@ -1,23 +1,12 @@
 // GuestPhotos.jsx
 import { useState } from "react";
-import {
-  FaChevronLeft,
-  FaChevronRight,
-  FaTimes,
-} from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
 import "./GuestPhotos.scss";
 import img1 from "../../../../assets/touristPlace/timg1.jpg";
 import img2 from "../../../../assets/touristPlace/timg2.jpg";
 import img3 from "../../../../assets/touristPlace/timg3.jpg";
 import img4 from "../../../../assets/touristPlace/timg4.jpg";
-const photos = [
-   img1 ,
-    img2 , img3 ,
-
-    img4 ,
- img1 ,
-
-];
+const photos = [img1, img2, img3, img4, img1];
 
 const GuestPhotos = () => {
   const [open, setOpen] = useState(false);
@@ -28,13 +17,10 @@ const GuestPhotos = () => {
     setOpen(true);
   };
 
-  const next = () =>
-    setActive((prev) => (prev + 1) % photos.length);
+  const next = () => setActive((prev) => (prev + 1) % photos.length);
 
   const prev = () =>
-    setActive((prev) =>
-      prev === 0 ? photos.length - 1 : prev - 1
-    );
+    setActive((prev) => (prev === 0 ? photos.length - 1 : prev - 1));
 
   return (
     <>
@@ -71,7 +57,7 @@ const GuestPhotos = () => {
             </button>
           </div>
 
-          <div className="modal-body" style={{transform:"translate(0px,-400px)"}}>
+          <div className="modal-body">
             <button className="nav left" onClick={prev}>
               <FaChevronLeft />
             </button>
@@ -95,15 +81,23 @@ const GuestPhotos = () => {
               <span>Others (1020)</span>
             </div>
 
-            <div className="thumbs" >
+            <div className="thumbs">
               {photos.map((img, i) => (
-                <div style={{width: "400px", height:"200px", border:"solid red" }}>                <img
-                  key={i}
-                  src={img}
-                  className={i === active ? "active" : ""}
-                  onClick={() => setActive(i)}
-                /></div>
-      
+                <div
+                  style={{
+                    width: "400px",
+                    height: "200px",
+                    border: "solid red",
+                  }}
+                >
+                  {" "}
+                  <img
+                    key={i}
+                    src={img}
+                    className={i === active ? "active" : ""}
+                    onClick={() => setActive(i)}
+                  />
+                </div>
               ))}
             </div>
           </div>

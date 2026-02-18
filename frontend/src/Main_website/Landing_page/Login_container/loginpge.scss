@@ -1,26 +1,32 @@
-/* Login.scss */
+/* Login.scss - Enhanced Version */
 
 /* =======================
    Variables
 ======================= */
-$login-bg-overlay: rgba(129, 129, 176, 0.5);
-$login-bg-white: white;
-$login-bg-aqua: aqua;
+$login-bg-overlay: rgba(0, 0, 0, 0.6);
+$login-bg-white: #ffffff;
+$login-bg-aqua: #00d4ff;
 
-$login-color-black: black;
-$login-color-grey: grey;
-$login-color-gray: gray;
+$login-color-black: #1a1a1a;
+$login-color-grey: #6b7280;
+$login-color-gray: #9ca3af;
+$login-color-red: #ef4444;
 
 $login-color-focus: #4f46e5;
-$login-shadow-focus: 0 0 0 2px rgba(79, 70, 229, 0.3);
+$login-shadow-focus: 0 0 0 3px rgba(79, 70, 229, 0.2);
 
-$login-bg-btn: rgb(147, 147, 255);
+$login-bg-btn: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$login-bg-btn-hover: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 
-$login-border-radius-sm: 5px;
+$login-border-radius-sm: 12px;
+$login-border-radius-md: 8px;
 $login-border-radius-pill: 50px;
 $login-border-radius-pill-2: 25px;
 
 $login-z-overlay: 1000;
+
+$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-fast: all 0.2s ease;
 
 /* =======================
    Mixins
@@ -37,128 +43,435 @@ $login-z-overlay: 1000;
 }
 
 /* =======================
-   Styles
+   Main Container Styles
 ======================= */
 .login-cont {
   background-color: $login-bg-overlay;
-  @include login-size(1540px, 800px);
-  position: absolute;
-  transform: translate(0px, -600px);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: $login-z-overlay;
   @include login-flex-center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .main-log-cont {
   background-color: $login-bg-white;
-  @include login-size(850px, 550px);
+  @include login-size(900px, 580px);
   border-radius: $login-border-radius-sm;
   overflow: hidden;
   display: flex;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.mnlg-cn-cls {
-  position: absolute;
-  font-weight: bold;
-  transform: translate(830px, 0px);
-}
-
-.mm-lg-cn-img {
-  @include login-size(350px, 550px);
-  background-color: $login-bg-aqua;
-  overflow: hidden;
-
-  img {
-    width: 450px;
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
+/* =======================
+   Close Button
+======================= */
+.mnlg-cn-cls {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-weight: bold;
+  font-size: 24px;
+  color: $login-color-grey;
+  cursor: pointer;
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  @include login-flex-center;
+  border-radius: 50%;
+  transition: $transition-fast;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: $login-color-black;
+    transform: rotate(90deg);
+  }
+}
+
+/* =======================
+   Image Section
+======================= */
+.mm-lg-cn-img {
+  @include login-size(380px, 580px);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+  @include login-flex-center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* =======================
+   Form Container
+======================= */
 .mm-lg-cn-cn1 {
-  padding: 20px 50px;
+  flex: 1;
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
 }
 
 .mglgcn-cn11 {
-  /* background-color: aqua; */
-  @include login-size(400px, 500px);
+  width: 100%;
+  max-width: 420px;
+  transition: $transition-smooth;
+
+  &.login-mode,
+  &.signup-mode {
+    animation: formSlide 0.4s ease;
+  }
 }
 
+@keyframes formSlide {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =======================
+   Headers
+======================= */
 .cn111 {
-  font-weight: bold;
-  font-size: 25px;
+  font-weight: 700;
+  font-size: 28px;
   text-align: center;
+  color: $login-color-black;
+  margin-bottom: 8px;
 }
 
 .cn112 {
   text-align: center;
+  font-size: 14px;
+  color: $login-color-grey;
+  line-height: 1.5;
+  margin-bottom: 20px;
 }
 
+/* =======================
+   Error Message
+======================= */
+.error-message {
+  color: $login-color-red;
+  background-color: rgba(239, 68, 68, 0.1);
+  padding: 10px 15px;
+  border-radius: $login-border-radius-md;
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: center;
+  border-left: 3px solid $login-color-red;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* =======================
+   Input Fields
+======================= */
 .cn113,
 .cn114 {
   input {
-    @include login-size(400px, 40px);
-    background-color: transparent;
-    border: none;
-    border-bottom: solid 1px $login-color-gray;
-    padding: 10px 10px;
+    width: 100%;
+    height: 48px;
+    background-color: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: $login-border-radius-md;
+    padding: 12px 16px;
+    font-size: 15px;
+    color: $login-color-black;
+    transition: $transition-smooth;
     outline: none;
-  }
-}
 
-.cn133 {
-  input {
+    &::placeholder {
+      color: $login-color-gray;
+    }
+
     &:focus {
       border-color: $login-color-focus;
-      outline: none;
+      background-color: $login-bg-white;
       box-shadow: $login-shadow-focus;
+      transform: translateY(-1px);
+    }
+
+    &:hover:not(:focus) {
+      border-color: #d1d5db;
     }
   }
 }
 
+/* =======================
+   Forgot Password
+======================= */
 .cn115 {
-  /* background-color: #4f46e5; */
   font-size: 13px;
-  padding-left: 290px;
-  /* font-weight: bold; */
+  text-align: right;
+  color: $login-color-focus;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: $transition-fast;
+
+  &:hover {
+    text-decoration: underline;
+    color: darken($login-color-focus, 10%);
+  }
 }
 
+/* =======================
+   Login/Signup Button
+======================= */
 .cn116 {
-  background-color: $login-bg-btn;
-  width: fit-content;
-  margin: 20px 160px;
-  padding: 5px 25px;
+  background: $login-bg-btn;
+  color: white;
+  width: 100%;
+  margin: 24px 0 20px 0;
+  padding: 14px 28px;
   border-radius: $login-border-radius-pill;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: $transition-smooth;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+
+  &:hover {
+    background: $login-bg-btn-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+  }
 }
 
+/* =======================
+   Divider
+======================= */
 .cn117 {
   display: flex;
+  align-items: center;
+  margin: 20px 0;
 }
 
 .cn1172 {
   font-size: 13px;
-  width: 140px;
-  @include login-flex-center;
-  transform: translate(0px, -10px);
+  color: $login-color-grey;
+  white-space: nowrap;
+  padding: 0 12px;
 }
 
 .cn1171,
 .cn1173 {
-  @include login-size(200px, 1px);
-  background-color: $login-color-black;
+  flex: 1;
+  height: 1px;
+  background-color: #e5e7eb;
 }
 
+/* =======================
+   Google Sign In
+======================= */
 .cn118 {
   display: flex;
-  gap: 5px;
+  gap: 8px;
   justify-content: center;
   align-items: center;
-  border: $login-color-grey 1px solid;
-  width: 170px;
-  padding: 5px 10px;
+  border: 2px solid #e5e7eb;
+  width: 100%;
+  padding: 12px 20px;
   border-radius: $login-border-radius-pill-2;
-  margin: 20px 120px;
+  margin: 0 0 20px 0;
+  cursor: pointer;
+  transition: $transition-smooth;
+  background-color: $login-bg-white;
+
+  &:hover {
+    border-color: $login-color-grey;
+    background-color: #f9fafb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .cn1181 {
+    font-size: 15px;
+    color: $login-color-black;
+    display: flex;
+    align-items: center;
+
+    svg {
+      font-size: 20px;
+    }
+  }
 }
 
+/* =======================
+   Sign Up Link
+======================= */
 .cn119 {
   font-size: 14px;
-  margin: 10px 80px;
+  text-align: center;
+  color: $login-color-grey;
+
+  span {
+    color: $login-color-focus;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+      text-decoration: underline;
+      color: darken($login-color-focus, 10%);
+    }
+  }
+}
+
+/* =======================
+   Responsive Design
+======================= */
+
+/* Tablet */
+@media (max-width: 968px) {
+  .main-log-cont {
+    width: 90vw;
+    max-width: 750px;
+    height: auto;
+    min-height: 500px;
+  }
+
+  .mm-lg-cn-img {
+    width: 300px;
+  }
+
+  .mm-lg-cn-cn1 {
+    padding: 30px 35px;
+  }
+
+  .cn111 {
+    font-size: 24px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .main-log-cont {
+    flex-direction: column;
+    width: 95vw;
+    max-width: 450px;
+    height: auto;
+    max-height: 90vh;
+  }
+
+  .mm-lg-cn-img {
+    width: 100%;
+    height: 200px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .mm-lg-cn-cn1 {
+    padding: 30px 25px;
+    overflow-y: auto;
+  }
+
+  .mglgcn-cn11 {
+    max-width: 100%;
+  }
+
+  .cn111 {
+    font-size: 22px;
+  }
+
+  .cn112 {
+    font-size: 13px;
+  }
+
+  .cn116 {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+
+  .mnlg-cn-cls {
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .mm-lg-cn-cn1 {
+    padding: 25px 20px;
+  }
+
+  .cn111 {
+    font-size: 20px;
+  }
+
+  .cn112 {
+    font-size: 12px;
+  }
+
+  .cn113,
+  .cn114 {
+    input {
+      height: 44px;
+      font-size: 14px;
+      padding: 10px 14px;
+    }
+  }
+
+  .cn116 {
+    padding: 11px 20px;
+    font-size: 14px;
+  }
+
+  .cn118 {
+    padding: 10px 16px;
+
+    .cn1181 {
+      font-size: 14px;
+    }
+  }
 }

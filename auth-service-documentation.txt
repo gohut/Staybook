@@ -1,0 +1,730 @@
+================================================================================
+  STAYBOOK - AUTH-SERVICE MICROSERVICE DOCUMENTATION
+  Generated: 2026-02-18
+  Base Path: Backend/auth-service/
+================================================================================
+
+This document contains the complete source code of all files in the
+auth-service Spring Boot microservice for the Staybook application.
+
+TABLE OF CONTENTS
+-----------------
+ 1.  pom.xml
+ 2.  src/main/resources/application.yml
+ 3.  AuthServiceApplication.java
+ 4.  config/SecurityConfig.java
+ 5.  controller/AuthController.java
+ 6.  dto/LoginRequest.java
+ 7.  dto/RegisterRequest.java
+ 8.  entity/Role.java
+ 9.  entity/User.java
+10.  repository/UserRepository.java
+11.  security/CustomUserDetailsService.java
+12.  security/JwtAuthenticationFilter.java
+13.  security/JwtUtil.java
+14.  service/AuthService.java
+15.  test/AuthServiceApplicationTests.java
+
+================================================================================
+
+
+================================================================================
+FILE 1
+--------------------------------------------------------------------------------
+File Name : pom.xml
+Path      : Backend/auth-service/pom.xml
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.staybook</groupId>
+    <artifactId>auth-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>auth-service</name>
+    <description>auth-service</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.11.5</version>
+            <scope>runtime</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+================================================================================
+
+
+================================================================================
+FILE 2
+--------------------------------------------------------------------------------
+File Name : application.yml
+Path      : Backend/auth-service/src/main/resources/application.yml
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/staybook_auth
+    username: root
+    password: mysql
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  secret: mySuperSecretKeyForStayBookAuthService
+  expiration: 3600000
+================================================================================
+
+
+================================================================================
+FILE 3
+--------------------------------------------------------------------------------
+File Name : AuthServiceApplication.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/AuthServiceApplication.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class AuthServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AuthServiceApplication.class, args);
+    }
+
+}
+================================================================================
+
+
+================================================================================
+FILE 4
+--------------------------------------------------------------------------------
+File Name : SecurityConfig.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/config/SecurityConfig.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.config;
+
+import com.staybook.authservice.security.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
+@Configuration
+@RequiredArgsConstructor
+public class SecurityConfig {
+    private final JwtAuthenticationFilter jwtFilter;
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtFilter,
+                        UsernamePasswordAuthenticationFilter.class)
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable());
+
+
+        return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+================================================================================
+
+
+================================================================================
+FILE 5
+--------------------------------------------------------------------------------
+File Name : AuthController.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/controller/AuthController.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.controller;
+
+import com.staybook.authservice.dto.LoginRequest;
+import com.staybook.authservice.dto.RegisterRequest;
+import com.staybook.authservice.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthService authService;
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+
+        String response = authService.register(
+                request.getName(),
+                request.getEmail(),
+                request.getPassword(),
+                request.getRole()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+
+        String response = authService.login(
+                request.getEmail(),
+                request.getPassword()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+}
+================================================================================
+
+
+================================================================================
+FILE 6
+--------------------------------------------------------------------------------
+File Name : LoginRequest.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/dto/LoginRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.dto;
+
+import lombok.Data;
+
+@Data
+public class LoginRequest {
+
+    private String email;
+    private String password;
+}
+================================================================================
+
+
+================================================================================
+FILE 7
+--------------------------------------------------------------------------------
+File Name : RegisterRequest.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/dto/RegisterRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.dto;
+
+import com.staybook.authservice.entity.Role;
+import lombok.Data;
+
+@Data
+public class RegisterRequest {
+
+    private String name;
+    private String email;
+    private String password;
+    private Role role;
+}
+================================================================================
+
+
+================================================================================
+FILE 8
+--------------------------------------------------------------------------------
+File Name : Role.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/entity/Role.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.entity;
+
+public enum Role {
+    TRAVELER,
+    PARTNER,
+    ADMIN
+}
+================================================================================
+
+
+================================================================================
+FILE 9
+--------------------------------------------------------------------------------
+File Name : User.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/entity/User.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+}
+================================================================================
+
+
+================================================================================
+FILE 10
+--------------------------------------------------------------------------------
+File Name : UserRepository.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/repository/UserRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.repository;
+
+import com.staybook.authservice.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+}
+================================================================================
+
+
+================================================================================
+FILE 11
+--------------------------------------------------------------------------------
+File Name : CustomUserDetailsService.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/security/CustomUserDetailsService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.security;
+
+import com.staybook.authservice.entity.User;
+import com.staybook.authservice.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class CustomUserDetailsService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getEmail())
+                .password(user.getPassword())
+                .roles(user.getRole().name())
+                .build();
+    }
+}
+================================================================================
+
+
+================================================================================
+FILE 12
+--------------------------------------------------------------------------------
+File Name : JwtAuthenticationFilter.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/security/JwtAuthenticationFilter.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.security;
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+@Component
+@RequiredArgsConstructor
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService userDetailsService;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
+
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String token = authHeader.substring(7);
+
+        if (jwtUtil.validateToken(token)) {
+
+            String email = jwtUtil.extractEmail(token);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities());
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+
+        filterChain.doFilter(request, response);
+    }
+}
+================================================================================
+
+
+================================================================================
+FILE 13
+--------------------------------------------------------------------------------
+File Name : JwtUtil.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/security/JwtUtil.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.security;
+
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
+
+import java.security.Key;
+import java.util.Date;
+
+@Component
+public class JwtUtil {
+
+    private final String SECRET = "your-super-secret-key-your-super-secret-key";
+
+    private final Key key = Keys.hmacShaKeyFor(SECRET.getBytes());
+
+    public String generateToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String extractEmail(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}
+================================================================================
+
+
+================================================================================
+FILE 14
+--------------------------------------------------------------------------------
+File Name : AuthService.java
+Path      : Backend/auth-service/src/main/java/com/staybook/authservice/service/AuthService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice.service;
+
+import com.staybook.authservice.entity.Role;
+import com.staybook.authservice.entity.User;
+import com.staybook.authservice.repository.UserRepository;
+import com.staybook.authservice.security.JwtUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
+
+
+    public String register(String name, String email, String password, Role role) {
+
+        if (userRepository.existsByEmail(email)) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        User user = User.builder()
+                .name(name)
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .role(role)
+                .build();
+
+        userRepository.save(user);
+
+        return "User registered successfully";
+    }
+
+    public String login(String email, String password) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        return jwtUtil.generateToken(email);
+    }
+
+}
+================================================================================
+
+
+================================================================================
+FILE 15
+--------------------------------------------------------------------------------
+File Name : AuthServiceApplicationTests.java
+Path      : Backend/auth-service/src/test/java/com/staybook/authservice/AuthServiceApplicationTests.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.authservice;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class AuthServiceApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
+================================================================================
+
+
+================================================================================
+  END OF DOCUMENT
+  Total Files Documented: 15
+  Microservice: auth-service (Spring Boot)
+  Package Base: com.staybook.authservice
+  Server Port: 8081
+  Database: MySQL (staybook_auth)
+================================================================================
