@@ -110,6 +110,8 @@ $ss-wrap-pad-bottom: 80px;
   background: $ss-wrap-bg;
   padding: $ss-wrap-pad-top 0 $ss-wrap-pad-bottom; /* <-- spacing above seats block */
   @include ss-flex(center, stretch);
+  padding-left: -40px;
+  margin-left: -200px; /* Add left margin to align with containers above */
 }
 
 .ss-cardV2 {
@@ -349,6 +351,12 @@ $ss-wrap-pad-bottom: 80px;
     background: $ss-white;
     border: 1px solid $ss-seat-blocked-border;
     color: $ss-seat-blocked-text;
+  }
+
+  &.selected {
+    border: 3px solid #1a73e8;
+    box-shadow: 0 0 8px rgba(26, 115, 232, 0.4);
+    transform: scale(1.05);
   }
 }
 

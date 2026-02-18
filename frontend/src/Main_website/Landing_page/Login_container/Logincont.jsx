@@ -3,48 +3,53 @@ import { useNavigate } from 'react-router-dom'
 import "./loginpge.scss"
 import loginpge from "../../../assets/loginpge.png"
 import { FcGoogle } from "react-icons/fc";
+import { loginUser } from "../../../authApi";   // ✅ NEW IMPORT
 
 export default function Logincont({ onClose, onLoginSuccess }) {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  // ✅ REAL LOGIN USING BACKEND
+  const handleLogin = async () => {
+
     setError('');
-    
+
     if (!email || !password) {
       setError('Please enter both email and password');
       return;
     }
 
-    let userRole = '';
-    let shouldNavigate = false;
+    try {
 
-    if (email === 'admin@gmail.com') {
-      userRole = 'admin';
-      // shouldNavigate = true;
-    } else if (email === 'partner@gmail.com') {
-      userRole = 'partner';
-      // shouldNavigate = true;
-    } else if (email === 'user@gmail.com') {
-      userRole = 'user';
-      // shouldNavigate = false;
-    } else {
-      setError('Invalid email or password');
-      return;
-    }
+      // 🔥 call backend login API
+      const response = await loginUser({
+        email,
+        password
+      });
 
-    localStorage.setItem('userEmail', email);
-    localStorage.setItem('userRole', userRole);
-    
-    onLoginSuccess({ email, role: userRole });
-    onClose();
+      const token = response.data;
 
-    if (shouldNavigate) {
-      setTimeout(() => {
-        navigate(`/${userRole}`);
-      }, 100);
+      // ✅ save JWT token
+      localStorage.setItem("token", token);
+      localStorage.setItem("userEmail", email);
+
+      // OPTIONAL: decode role later (for now default user)
+      localStorage.setItem("userRole", "user");
+
+      // notify parent
+      onLoginSuccess({ email, role: "user" });
+
+      onClose();
+
+      // redirect after login
+      navigate("/");
+
+    } catch (err) {
+      console.error(err);
+      setError("Invalid email or password");
     }
   };
 
@@ -57,37 +62,64 @@ export default function Logincont({ onClose, onLoginSuccess }) {
   return (
     <div className='login-cont'>
       <div className="main-log-cont" onClick={(e) => e.stopPropagation()}>
+
         <div className="mnlg-cn-cls" onClick={onClose}>X</div>
-        <div className="mm-lg-cn-img"><img src={loginpge} alt="Login" /></div>
+
+        <div className="mm-lg-cn-img">
+          <img src={loginpge} alt="Login" />
+        </div>
+
         <div className="mm-lg-cn-cn1">
           <div className="mglgcn-cn11">
+
             <div className="cn111">Welcome back!</div>
-            <div className="cn112">Get your tickets without any frustration, we are on your back!!!</div>
+            <div className="cn112">
+              Get your tickets without any frustration, we are on your back!!!
+            </div>
+
             <br /><br />
-            
-            {error && <div className="error-message" style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-            
+
+            {error && (
+              <div style={{ color: 'red', marginBottom: '10px' }}>
+                {error}
+              </div>
+            )}
+
             <div className="cn113">
-              <input 
-                type="email" 
+              <input
+                type="email"
                 placeholder='Email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
             </div>
+
             <br />
+
             <div className="cn114">
-              <input 
-                type="password" 
+              <input
+                type="password"
                 placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
             </div>
+
             <div className="cn115">Forgot Password?</div>
-            <div className="cn116" onClick={handleLogin}>Login</div>
+
+            {/* ✅ LOGIN BUTTON */}
+            <div className="cn116"
+                onClick={() => {
+                  console.log("LOGIN BUTTON CLICKED");
+                  handleLogin();
+                }}
+              >
+                Login
+              </div>
+
+
             <div className="cn117">
               <div className="cn1171"></div>
               <div className="cn1172">or continue with</div>
@@ -100,11 +132,15 @@ export default function Logincont({ onClose, onLoginSuccess }) {
             </div>
 
             <div className="cn119">
-              Don't have an account? <span style={{color:'blue', fontWeight:"bold", cursor: 'pointer'}}>Sign up</span> Now
+              Don't have an account?
+              <span style={{color:'blue', fontWeight:"bold", cursor:'pointer'}}>
+                Sign up
+              </span> Now
             </div>
+
           </div>
         </div>
-      </div>    
+      </div>
     </div>
-  )
+  );
 }

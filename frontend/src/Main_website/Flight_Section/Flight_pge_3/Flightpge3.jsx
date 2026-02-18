@@ -22,6 +22,7 @@ export default function Flightpge3() {
 
       <div style={{ paddingTop: "78px" }}>
         <BookingTopSummaryBar />
+        <div style={{ marginBottom: "80px" }}></div>
         <SeatSelection />
       </div>
     </div>

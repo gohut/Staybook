@@ -1,10 +1,128 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SeatSelection.scss";
 import { FaChair } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export default function SeatSelection() {
     const navigate = useNavigate();
+    
+    // Seat categories with pricing
+    const seatCategories = {
+        free: { price: 0, label: 'Free', class: 'free' },
+        spiceMax: { price: 369, label: 'SpiceMax', class: 'paid' },
+        standard: { price: 211, label: 'Standard', class: 'blue' },
+        premium: { price: 422, label: 'Premium', class: 'blue' },
+        exitRow: { price: 350, label: 'Exit Row', class: 'empty' },
+        extraLegroom: { price: 300, label: 'Extra Legroom', class: 'light' }
+    };
+
+    // Generate seat data
+    const generateSeatData = () => {
+        const seats = [];
+        const columns = ['A', 'B', 'C', 'D', 'E', 'F'];
+        
+        for (let row = 1; row <= 20; row++) {
+            for (let col of columns) {
+                let category = 'standard';
+                let isAvailable = true;
+                let price = seatCategories.standard.price;
+                
+                // Define seat categories based on position
+                if (row <= 4) {
+                    category = 'spiceMax';
+                    price = seatCategories.spiceMax.price;
+                } else if (row >= 5 && row <= 8) {
+                    category = 'free';
+                    price = seatCategories.free.price;
+                } else if (row >= 9 && row <= 12) {
+                    category = 'standard';
+                    price = seatCategories.standard.price;
+                } else if (row >= 13 && row <= 15) {
+                    category = 'premium';
+                    price = seatCategories.premium.price;
+                } else if (row >= 16 && row <= 17) {
+                    category = 'exitRow';
+                    price = seatCategories.exitRow.price;
+                } else if (row >= 18) {
+                    category = 'extraLegroom';
+                    price = seatCategories.extraLegroom.price;
+                }
+                
+                // Block some seats (like 6E)
+                if (row === 6 && col === 'E') {
+                    isAvailable = false;
+                    category = 'blocked';
+                    price = 0;
+                }
+                
+                // Random availability for realism (deterministic based on seat position)
+                if (isAvailable && ((row * col.charCodeAt(0)) % 7 === 0)) {
+                    isAvailable = false;
+                }
+                
+                seats.push({
+                    id: `${row}${col}`,
+                    row,
+                    column: col,
+                    category,
+                    price,
+                    isAvailable,
+                    isSelected: false
+                });
+            }
+        }
+        
+        return seats;
+    };
+
+    const [seats, setSeats] = useState(generateSeatData());
+    const [selectedSeats, setSelectedSeats] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    // Handle seat selection
+    const handleSeatClick = (seatId) => {
+        setSeats(prevSeats => {
+            const updatedSeats = prevSeats.map(seat => {
+                if (seat.id === seatId && seat.isAvailable) {
+                    const newSelectedState = !seat.isSelected;
+                    
+                    if (newSelectedState) {
+                        setSelectedSeats(prev => [...prev, seat]);
+                        setTotalPrice(prev => prev + seat.price);
+                    } else {
+                        setSelectedSeats(prev => prev.filter(s => s.id !== seatId));
+                        setTotalPrice(prev => prev - seat.price);
+                    }
+                    
+                    return { ...seat, isSelected: newSelectedState };
+                }
+                return seat;
+            });
+            return updatedSeats;
+        });
+    };
+
+    // Get seat display text
+    const getSeatDisplayText = (seat) => {
+        if (!seat.isAvailable) return 'X';
+        if (seat.category === 'spiceMax' || seat.category === 'free') return 'XL';
+        if (seat.price > 0) return `₹${seat.price}`;
+        return '';
+    };
+
+    // Group seats by row for rendering
+    const getSeatsByRow = () => {
+        const rows = {};
+        seats.forEach(seat => {
+            if (!rows[seat.row]) {
+                rows[seat.row] = [];
+            }
+            rows[seat.row].push(seat);
+        });
+        return rows;
+    };
+
+    const seatsByRow = getSeatsByRow();
 
   return (
     <section className="ss-wrapV2">
@@ -30,11 +148,11 @@ export default function SeatSelection() {
         <div className="ss-subV2">
           <div className="ss-routeV2">
             <strong>New Delhi → Bengaluru</strong>
-            <div className="ss-subSmallV2">1 of 1 Seat(s) Selected</div>
+            <div className="ss-subSmallV2">{selectedSeats.length} of 1 Seat(s) Selected</div>
           </div>
 
           <div className="ss-priceV2">
-            <div className="ss-priceTopV2">₹ 369</div>
+            <div className="ss-priceTopV2">₹ {totalPrice}</div>
             <div className="ss-priceSubV2">Added to fare</div>
           </div>
         </div>
@@ -80,50 +198,50 @@ export default function SeatSelection() {
               <span />
             </div>
 
-            {/* Seats Rows (more like flight) */}
+            {/* Seats Rows */}
             <div className="ss-rowsV2">
-              {Array.from({ length: 20 }).map((_, idx) => {
-                const row = idx + 1;
-
-                // row type
-                const paid = row <= 4;
-                const green = row >= 5 && row <= 8;
-                //const blue = row >= 9;
-
+              {Object.keys(seatsByRow).map(row => {
+                const rowSeats = seatsByRow[row];
+                
                 return ( 
                   <div key={row} className="ss-rowV2">
                     <div className="ss-rowNumV2">{row}</div>
 
                     {/* A B C */}
-                    <div className={`ss-seatV2 ${paid ? "paid" : green ? "free" : "blue"}`}>
-                      {paid || green ? "XL" : ""}
-                    </div>
-                    <div className={`ss-seatV2 ${paid ? "paid" : green ? "free" : "blue"}`}>
-                      {paid || green ? "XL" : ""}
-                    </div>
-                    <div className={`ss-seatV2 ${paid ? "paid" : green ? "free" : "blue"}`}>
-                      {paid || green ? "XL" : ""}
-                    </div>
+                    {['A', 'B', 'C'].map(col => {
+                      const seat = rowSeats.find(s => s.column === col);
+                      if (!seat) return <div key={col} className="ss-seatV2" />;
+                      
+                      return (
+                        <div
+                          key={col}
+                          className={`ss-seatV2 ${seatCategories[seat.category]?.class || 'blocked'} ${seat.isSelected ? 'selected' : ''} ${!seat.isAvailable ? 'blocked' : ''}`}
+                          onClick={() => handleSeatClick(seat.id)}
+                          style={{ cursor: seat.isAvailable ? 'pointer' : 'not-allowed' }}
+                        >
+                          {getSeatDisplayText(seat)}
+                        </div>
+                      );
+                    })}
 
                     <div className="ss-gapV2" />
 
                     {/* D E F */}
-                    <div className={`ss-seatV2 ${paid ? "paid" : green ? "free" : "blue"}`}>
-                      {paid || green ? "XL" : ""}
-                    </div>
-
-                    {/* blocked sample */}
-                    {row === 6 ? (
-                      <div className="ss-seatV2 blocked">X</div>
-                    ) : (
-                      <div className={`ss-seatV2 ${paid ? "paid" : green ? "free" : "blue"}`}>
-                        {paid || green ? "XL" : ""}
-                      </div>
-                    )}
-
-                    <div className={`ss-seatV2 ${paid ? "paid" : green ? "free" : "blue"}`}>
-                      {paid || green ? "XL" : ""}
-                    </div>
+                    {['D', 'E', 'F'].map(col => {
+                      const seat = rowSeats.find(s => s.column === col);
+                      if (!seat) return <div key={col} className="ss-seatV2" />;
+                      
+                      return (
+                        <div
+                          key={col}
+                          className={`ss-seatV2 ${seatCategories[seat.category]?.class || 'blocked'} ${seat.isSelected ? 'selected' : ''} ${!seat.isAvailable ? 'blocked' : ''}`}
+                          onClick={() => handleSeatClick(seat.id)}
+                          style={{ cursor: seat.isAvailable ? 'pointer' : 'not-allowed' }}
+                        >
+                          {getSeatDisplayText(seat)}
+                        </div>
+                      );
+                    })}
 
                     <div className="ss-rowNumV2 right">{row}</div>
                   </div>

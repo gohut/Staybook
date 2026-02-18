@@ -1,0 +1,311 @@
+/* HmPaymentOptions.scss */
+
+/* ===== Variables ===== */
+$po-white: #fff;
+
+$po-border: #e7e7e7;
+$po-border-soft: #ededed;
+$po-border-item: #eeeeee;
+
+$po-title: #222;
+$po-text-444: #444;
+$po-text-666: #666;
+$po-text-7a: #7a7a7a;
+
+$po-hover-bg: #fafcff;
+
+$po-blue: #1a73e8;
+
+$po-shadow: 0 10px 26px rgba(0, 0, 0, 0.06);
+
+$po-max-width: 1020px;
+$po-right-width: 340px;
+
+$po-icon-bg: #f4f6f8;
+$po-icon-border: #e9eef2;
+
+$po-icon-default: #2862b6;
+$po-icon-upi: #ff7a00;
+$po-icon-card: #1d6fd8;
+$po-icon-emi: #21a28a;
+$po-icon-bank: #2462d2;
+$po-icon-later: #3a6b99;
+$po-icon-gift: #2462d2;
+
+$po-pill-bg: #2bd39a;
+
+$po-qr-border: #111;
+$po-qr-btn: #3aa2ff;
+$po-qr-btn-hover: #1f86e6;
+$po-qr-shadow: 0 8px 18px rgba(58, 162, 255, 0.25);
+
+$po-black: #111;
+
+$po-radius: 12px;
+
+/* ===== Mixins ===== */
+@mixin po-flex($justify: flex-start, $align: center, $gap: null) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin po-grid($cols, $gap: null) {
+  display: grid;
+  grid-template-columns: $cols;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+}
+
+@mixin po-card($pad: null) {
+  background: $po-white;
+  border-radius: $po-radius;
+  border: 1px solid $po-border;
+  box-shadow: $po-shadow;
+
+  @if $pad != null {
+    padding: $pad;
+  }
+}
+
+@mixin po-btn-reset {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* ===== Styles ===== */
+.po-wrap {
+  width: 100%;
+  max-width: $po-max-width;
+  margin: 14px auto 0;
+  @include po-grid(1fr $po-right-width, 18px);
+}
+
+/* LEFT CARD */
+.po-leftCard {
+  @include po-card;
+  overflow: hidden;
+}
+
+.po-title {
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 900;
+  color: $po-title;
+  border-bottom: 1px solid $po-border-soft;
+}
+
+.po-list {
+  @include po-flex(flex-start, stretch);
+  flex-direction: column;
+}
+
+.po-item {
+  padding: 16px 16px;
+  @include po-flex(space-between, center, 12px);
+  border-bottom: 1px solid $po-border-item;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: $po-hover-bg;
+  }
+
+  &.last {
+    border-bottom: none;
+  }
+}
+
+.po-left {
+  @include po-flex(flex-start, center, 14px);
+}
+
+.po-icBox {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  background: $po-icon-bg;
+  border: 1px solid $po-icon-border;
+  color: $po-icon-default;
+
+  &.upi {
+    color: $po-icon-upi;
+  }
+
+  &.card {
+    color: $po-icon-card;
+  }
+
+  &.emi {
+    color: $po-icon-emi;
+  }
+
+  &.bank {
+    color: $po-icon-bank;
+  }
+
+  &.later {
+    color: $po-icon-later;
+  }
+
+  &.gift {
+    color: $po-icon-gift;
+  }
+}
+
+.po-text {
+  .po-main {
+    font-size: 14px;
+    font-weight: 900;
+    color: $po-title;
+  }
+
+  .po-sub {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: $po-text-7a;
+  }
+}
+
+.po-arrow {
+  color: $po-blue;
+  font-size: 14px;
+}
+
+.po-right {
+  @include po-flex(flex-start, center, 10px);
+}
+
+.po-pill {
+  background: $po-pill-bg;
+  color: $po-white;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* RIGHT CARD */
+.po-rightCard {
+  @include po-card(14px 14px 10px);
+  height: fit-content;
+}
+
+.po-scanTop {
+  @include po-flex(space-between, flex-start, 12px);
+}
+
+.po-scanTitle {
+  font-size: 14px;
+  font-weight: 900;
+  color: $po-title;
+}
+
+.po-scanSub {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: $po-text-666;
+  line-height: 1.2;
+}
+
+.po-qrBox {
+  width: 140px;
+  height: 90px;
+  border: 2px solid $po-qr-border;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background: $po-white;
+}
+
+.po-qrFake {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.25) 0,
+    rgba(0, 0, 0, 0.25) 2px,
+    transparent 2px,
+    transparent 6px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.25) 0,
+      rgba(0, 0, 0, 0.25) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+  opacity: 0.25;
+}
+
+.po-qrBtn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  cursor: pointer;
+  background: $po-qr-btn;
+  color: $po-white;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 8px 18px;
+  border-radius: 8px;
+  box-shadow: $po-qr-shadow;
+
+  &:hover {
+    background: $po-qr-btn-hover;
+  }
+}
+
+.po-payIcons {
+  margin-top: 12px;
+  @include po-flex(flex-start, center, 10px);
+  padding-top: 10px;
+
+  svg {
+    font-size: 20px;
+    color: $po-text-444;
+  }
+}
+
+.po-upiMark {
+  color: $po-icon-upi !important;
+  font-size: 20px !important;
+}
+
+.po-miniBlack,
+.po-miniBlack2 {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: $po-black;
+  opacity: 0.92;
+}
+
+.po-miniBlack2 {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: $po-black;
+  opacity: 0.92;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+  .po-wrap {
+    grid-template-columns: 1fr;
+  }
+}
