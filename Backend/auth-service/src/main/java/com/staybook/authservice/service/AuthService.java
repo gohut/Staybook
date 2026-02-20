@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -15,7 +17,6 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-
 
     public String register(String name, String email, String password, Role role) {
 
@@ -35,7 +36,8 @@ public class AuthService {
         return "User registered successfully";
     }
 
-    public String login(String email, String password) {
+
+    public Map<String, Object> login(String email, String password) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
@@ -44,7 +46,9 @@ public class AuthService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        return jwtUtil.generateToken(email);
+        return Map.of(
+                "token", jwtUtil.generateToken(email),
+                "role", user.getRole().name()
+        );
     }
-
 }

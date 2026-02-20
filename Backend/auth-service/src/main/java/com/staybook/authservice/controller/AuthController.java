@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -28,13 +30,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody LoginRequest request) {
 
-        String response = authService.login(
-                request.getEmail(),
-                request.getPassword()
+        return ResponseEntity.ok(
+                authService.login(
+                        request.getEmail(),
+                        request.getPassword()
+                )
         );
-
-        return ResponseEntity.ok(response);
     }
 }

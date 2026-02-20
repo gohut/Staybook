@@ -1,6 +1,7 @@
 const BASE_URL = "http://localhost:8081";
 
 export const loginApi = async (email, password) => {
+  console.log("Sending:", email, password);
   const response = await fetch(`${BASE_URL}/api/auth/login`, {
     method: "POST",
     headers: {
@@ -9,13 +10,13 @@ export const loginApi = async (email, password) => {
     body: JSON.stringify({ email, password })
   });
 
-  const data = await response.text();
+  const data = await response.json();
 
   if (!response.ok) {
     throw new Error(data);
   }
 
-  return data; // JWT token
+  return data; 
 };
 
 export const registerApi = async (name, email, password) => {

@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import "./loginpge.scss"
 import loginpge from "../../../assets/loginpge.png"
 import { FcGoogle } from "react-icons/fc";
-
+import { loginApi, registerApi } from "../../../Api/authApi.js"
+import { jwtDecode } from "jwt-decode";
 export default function Logincont({ onClose, onLoginSuccess }) {
+
+  const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -12,41 +15,63 @@ export default function Logincont({ onClose, onLoginSuccess }) {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  // ✅ LOGIN CONNECTED TO BACKEND
+  const handleLogin = async () => {
     setError('');
-    
+
     if (!email || !password) {
       setError('Please enter both email and password');
       return;
     }
 
-    let userRole = '';
-    let shouldNavigate = false;
+    try {
+      const data = await loginApi(email.trim(), password.trim());
 
-    if (email === 'admin@gmail.com') {
-      userRole = 'admin';
-      // shouldNavigate = true;
-    } else if (email === 'partner@gmail.com') {
-      userRole = 'partner';
-      // shouldNavigate = true;
-    } else if (email === 'user@gmail.com') {
-      userRole = 'user';
-      // shouldNavigate = false;
-    } else {
-      setError('Invalid email or password');
+      // Save JWT
+
+      if (onLoginSuccess) {
+        onLoginSuccess({ data});
+      }
+
+      onClose();
+   if (data.role === "ADMIN")         navigate("/admin");
+   else if (data.role === "PARTNER")  navigate("/partner");
+   else if(data.role=="TRAVELER")     navigate("/user");  
+    else {
+      navigate("/");
+    }
+
+    } catch (err) {
+      setError(err.message || "Login failed");
+    }
+  };
+
+  // ✅ REGISTER CONNECTED TO BACKEND
+  const handleSignup = async () => {
+    setError('');
+
+    if (!name || !email || !password || !confirmPassword) {
+      setError('Please fill in all fields');
       return;
     }
 
-    localStorage.setItem('userEmail', email);
-    localStorage.setItem('userRole', userRole);
-    
-    onLoginSuccess({ email, role: userRole });
-    onClose();
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
 
-    if (shouldNavigate) {
-      setTimeout(() => {
-        navigate(`/${userRole}`);
-      }, 100);
+    try {
+      await registerApi(
+        name.trim(),
+        email.trim(),
+        password.trim()
+      );
+
+      alert("Registration successful. Please login.");
+      setIsSignup(false);
+
+    } catch (err) {
+      setError(err.message || "Registration failed");
     }
   };
 
@@ -77,19 +102,45 @@ export default function Logincont({ onClose, onLoginSuccess }) {
 
         <div className="mm-lg-cn-cn1">
           <div className="mglgcn-cn11">
-            <div className="cn111">Welcome back!</div>
-            <div className="cn112">Get your tickets without any frustration, we are on your back!!!</div>
+
+            <div className="cn111">
+              {isSignup ? "Create Account" : "Welcome back!"}
+            </div>
+
+            <div className="cn112">
+              Get your tickets without any frustration, we are on your back!!!
+            </div>
+
             <br /><br />
-            
-            {error && <div className="error-message" style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-            
+
+            {error && (
+              <div className="error-message" style={{ color: 'red', marginBottom: '10px' }}>
+                {error}
+              </div>
+            )}
+
+            {isSignup && (
+              <>
+                <div className="cn113">
+                  <input
+                    type="text"
+                    placeholder='Name'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                  />
+                </div>
+                <br />
+              </>
+            )}
+
             <div className="cn113">
               <input
                 type="email"
                 placeholder='Email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
               />
             </div>
 
@@ -101,11 +152,31 @@ export default function Logincont({ onClose, onLoginSuccess }) {
                 placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
               />
             </div>
+
+            {isSignup && (
+              <>
+                <br />
+                <div className="cn114">
+                  <input
+                    type="password"
+                    placeholder='Confirm Password'
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                  />
+                </div>
+              </>
+            )}
+
             <div className="cn115">Forgot Password?</div>
-            <div className="cn116" onClick={handleLogin}>Login</div>
+
+            <div className="cn116" onClick={isSignup ? handleSignup : handleLogin}>
+              {isSignup ? "Sign Up" : "Login"}
+            </div>
+
             <div className="cn117">
               <div className="cn1171"></div>
               <div className="cn1172">or continue with</div>
@@ -118,7 +189,13 @@ export default function Logincont({ onClose, onLoginSuccess }) {
             </div>
 
             <div className="cn119">
-              Don't have an account? <span style={{color:'blue', fontWeight:"bold", cursor: 'pointer'}}>Sign up</span> Now
+              {isSignup ? "Already have an account?" : "Don't have an account?"}
+              <span
+                style={{ color: 'blue', fontWeight: "bold", cursor: 'pointer', marginLeft: "5px" }}
+                onClick={toggleForm}
+              >
+                {isSignup ? "Login" : "Sign up"}
+              </span>
             </div>
 
           </div>

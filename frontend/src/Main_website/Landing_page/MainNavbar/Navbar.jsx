@@ -31,13 +31,15 @@ const Navbar = ({ onLoginClick, activeTab, setActiveTab, user }) => {
 
   const handleProfileClick = () => {
     if (user) {
-      if (user.role === 'admin') {
+      if (user.role === 'ADMIN') {
         navigate('/admin');
-      } else if (user.role === 'partner') {
+      } else if (user.role === 'PARTNER') {
         navigate('/partner');
-      } else if (user.role === 'user') {
+      } else if (user.role === 'TRAVELER') {
         navigate('/user');
       }
+      else console.log("Nothing was selected", user)
+    
     }
   };
 

@@ -19,6 +19,7 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JwtAuthenticationFilter jwtFilter;
 
     @Bean
@@ -35,7 +36,6 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());
-
 
         return http.build();
     }
@@ -54,7 +54,6 @@ public class SecurityConfig {
 
         return source;
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
