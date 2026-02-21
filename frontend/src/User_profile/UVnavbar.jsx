@@ -6,6 +6,7 @@ import {
   FiClock,
   FiFileText,
   FiSettings,
+  FiBriefcase,
 } from "react-icons/fi";
 import "./Vnavbar.scss";
 
@@ -41,6 +42,13 @@ const UVnavbar = ({ active, setActive }) => {
           onClick={() => setActive("vouchers")}
         >
           <FiFileText /> Vouchers
+        </button>
+
+        <button
+          className={active === "partner" ? "active" : ""}
+          onClick={() => setActive("partner")}
+        >
+          <FiBriefcase /> Partner Program
         </button>
 
         <button

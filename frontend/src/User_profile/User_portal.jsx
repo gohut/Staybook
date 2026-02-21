@@ -9,6 +9,7 @@ import Mytrips from "./My_trips/Mytrips";
 import Businesshis from "./Booking_history/Businesshis";
 import Vouchers from "./Vouchers/Vouchers";
 import Acsettings from "./Account_settings/Acsettings";
+import PartnerProgram from "./Partner_program/PartnerProgram";
 
 const User_portal = () => {
   const [active, setActive] = useState("profile");
@@ -21,6 +22,7 @@ const User_portal = () => {
         {active === "trips" && <Mytrips />}
         {active === "history" && <Businesshis />}
         {active === "vouchers" && <Vouchers />}
+        {active === "partner" && <PartnerProgram />}
         {active === "settings" && <Acsettings />}
       </main>
     </div>
