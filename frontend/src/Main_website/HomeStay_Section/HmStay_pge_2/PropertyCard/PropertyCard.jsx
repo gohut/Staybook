@@ -1,56 +1,55 @@
 // PropertyCard.jsx
 import { FaHeart, FaStar, FaMapMarkerAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./PropertyCard.scss";
-import { useNavigate } from "react-router-dom"; 
-const PropertyCard = () => {
-    const navigate = useNavigate();
+
+const PropertyCard = ({ data }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="property-card" onClick={() => navigate("/hotel3")}>
+    <div className="property-card" onClick={() => navigate("/hstaypge3")}>
       <div className="card-left">
         <div className="main-img">
-          <img
-            src="https://images.unsplash.com/photo-1505691938895-1758d7feb511"
-            alt="property"
-          />
+          <img src={data.images.main} alt={data.name} />
           <FaHeart className="wishlist" />
         </div>
 
         <div className="thumbs">
-          <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511" />
-          <img src="https://images.unsplash.com/photo-1560448075-bb485b067938" />
-          <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3b2d58" />
+          {data.images.thumbs.map((thumb, index) => (
+            <img key={`${data.id}-thumb-${index}`} src={thumb} alt={`${data.name} thumb`} />
+          ))}
           <div className="view-all">View All</div>
         </div>
       </div>
 
       <div className="card-middle">
         <h3>
-          Orbit Serviced Apartments <span className="like">Like a 4★</span>
+          {data.name} <span className="like">Like a {data.starRating} Star</span>
         </h3>
 
         <p className="location">
-          <FaMapMarkerAlt /> <span>Khar</span> | 2.7 km drive to Juhu Beach
+          <FaMapMarkerAlt /> <span>{data.locality}</span> | {data.locationDetail}
         </p>
 
-        <p className="type">Entire Serviced Apartment</p>
+        <p className="type">{data.propertyType}</p>
       </div>
 
       <div className="card-right">
         <div className="rating">
-          <span className="label">Excellent</span>
+          <span className="label">{data.reviewLabel}</span>
           <span className="score">
-            <FaStar /> 4.6
+            <FaStar /> {data.reviewScore}
           </span>
-          <span className="count">(20 Ratings)</span>
+          <span className="count">({data.totalRatings} Ratings)</span>
         </div>
 
         <div className="price">
-          ₹ 20,000
-          <span>+ ₹ 3,600 taxes & fees</span>
+          Rs {data.price}
+          <span>+ Rs {data.taxes} taxes & fees</span>
           <small>Per Night</small>
         </div>
 
-        <div className="deal">Login & unlock a secret deal!</div>
+        <div className="deal">{data.ctaText}</div>
       </div>
     </div>
   );

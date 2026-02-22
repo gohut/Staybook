@@ -41,24 +41,24 @@ $sh-radius: 6px;
   box-shadow: $sh-shadow;
 }
 
-.search-box {
+.hm-search-header-box {
   @include sh-flex(flex-start, center, 14px);
 }
 
-.field {
+.hm-search-header-field {
   @include sh-flex(flex-start, stretch);
   flex-direction: column;
   min-width: 200px;
 }
 
-.label {
+.hm-search-header-label {
   font-size: 11px;
   color: $sh-label;
   margin-bottom: 4px;
   font-weight: 600;
 }
 
-.input {
+.hm-search-header-input-wrap {
   @include sh-flex(flex-start, center, 8px);
   padding: 10px 12px;
   border: 1px solid $sh-border;
@@ -71,6 +71,16 @@ $sh-radius: 6px;
     color: $sh-icon;
     font-size: 14px;
   }
+}
+
+.search-header-input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: $sh-text;
 }
 
 .search-btn {

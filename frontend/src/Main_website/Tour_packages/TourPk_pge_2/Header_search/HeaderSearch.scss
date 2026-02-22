@@ -1,26 +1,16 @@
 /* HeaderSearch.scss */
 
-/* =======================
-   Variables
-======================= */
 $headersearch-bg-start: #0b2b47;
 $headersearch-bg-end: #0a3b63;
-
 $headersearch-field-bg: rgba(255, 255, 255, 0.08);
-
 $headersearch-color-label: #9fc4e8;
 $headersearch-color-white: #ffffff;
 $headersearch-color-muted: #cfdff0;
-
 $headersearch-btn-bg: #2b8cff;
 $headersearch-btn-hover: #1f78e0;
-
 $headersearch-radius-field: 6px;
 $headersearch-radius-btn: 22px;
 
-/* =======================
-   Mixins
-======================= */
 @mixin headersearch-flex($justify: flex-start, $align: center, $gap: null) {
   display: flex;
   justify-content: $justify;
@@ -31,22 +21,19 @@ $headersearch-radius-btn: 22px;
   }
 }
 
-/* =======================
-   Styles
-======================= */
-.header-wrapper {
+.tour-header-wrapper {
   width: 100%;
   background: linear-gradient(180deg, $headersearch-bg-start, $headersearch-bg-end);
   padding: 14px 24px;
 }
 
-.header-bar {
+.tour-header-bar {
   max-width: 1200px;
   margin: auto;
   @include headersearch-flex(flex-start, center, 12px);
 }
 
-.field {
+.tour-header-field {
   background: $headersearch-field-bg;
   border-radius: $headersearch-radius-field;
   padding: 6px 10px;
@@ -55,27 +42,37 @@ $headersearch-radius-btn: 22px;
   flex-direction: column;
 }
 
-.label {
+.tour-header-label {
   font-size: 10px;
   color: $headersearch-color-label;
   margin-bottom: 2px;
 }
 
-.input {
+.tour-header-input-row {
   @include headersearch-flex(flex-start, center, 6px);
   color: $headersearch-color-white;
   font-size: 14px;
 
   svg {
     font-size: 14px;
-  }
-
-  &.muted {
-    color: $headersearch-color-muted;
+    flex-shrink: 0;
   }
 }
 
-.search-btn {
+.tour-header-muted {
+  color: $headersearch-color-muted;
+}
+
+.tour-header-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+}
+
+.tour-header-search-btn {
   margin-left: auto;
   background: $headersearch-btn-bg;
   color: $headersearch-color-white;

@@ -2,43 +2,66 @@
 import { FaMapMarkerAlt, FaCalendarAlt, FaUser } from "react-icons/fa";
 import "./SearchHeader.scss";
 
-const SearchHeader = () => {
+const SearchHeader = ({ values, onFieldChange, onSearch }) => {
   return (
     <div className="search-header">
-      <div className="search-box">
-        <div className="field">
-          <span className="label">CITY, AREA OR PROPERTY</span>
-          <div className="input">
+      <div className="hm-search-header-box">
+        <div className="hm-search-header-field">
+          <span className="hm-search-header-label">CITY, AREA OR PROPERTY</span>
+          <div className="hm-search-header-input-wrap">
             <FaMapMarkerAlt />
-            <span>Mumbai</span>
+            <input
+              className="search-header-input"
+              value={values.city}
+              onChange={(event) => onFieldChange("city", event.target.value)}
+              placeholder="Search city"
+            />
           </div>
         </div>
 
-        <div className="field">
-          <span className="label">CHECK-IN</span>
-          <div className="input">
+        <div className="hm-search-header-field">
+          <span className="hm-search-header-label">CHECK-IN</span>
+          <div className="hm-search-header-input-wrap">
             <FaCalendarAlt />
-            <span>Tue, 3 Feb 2026</span>
+            <input
+              className="search-header-input"
+              type="date"
+              value={values.checkInDate}
+              onChange={(event) => onFieldChange("checkInDate", event.target.value)}
+            />
           </div>
         </div>
 
-        <div className="field">
-          <span className="label">CHECK-OUT</span>
-          <div className="input">
+        <div className="hm-search-header-field">
+          <span className="hm-search-header-label">CHECK-OUT</span>
+          <div className="hm-search-header-input-wrap">
             <FaCalendarAlt />
-            <span>Thu, 5 Feb 2026</span>
+            <input
+              className="search-header-input"
+              type="date"
+              min={values.checkInDate}
+              value={values.checkOutDate}
+              onChange={(event) => onFieldChange("checkOutDate", event.target.value)}
+            />
           </div>
         </div>
 
-        <div className="field">
-          <span className="label">GUESTS</span>
-          <div className="input">
+        <div className="hm-search-header-field">
+          <span className="hm-search-header-label">GUESTS</span>
+          <div className="hm-search-header-input-wrap">
             <FaUser />
-            <span>2 Adults</span>
+            <input
+              className="search-header-input"
+              value={values.guestSummary}
+              onChange={(event) => onFieldChange("guestSummary", event.target.value)}
+              placeholder="2 Adults"
+            />
           </div>
         </div>
 
-        <button className="search-btn">SEARCH</button>
+        <button className="search-btn" type="button" onClick={onSearch}>
+          SEARCH
+        </button>
       </div>
     </div>
   );

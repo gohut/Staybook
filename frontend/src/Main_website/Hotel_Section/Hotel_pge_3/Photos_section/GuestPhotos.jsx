@@ -58,15 +58,17 @@ const GuestPhotos = () => {
           </div>
 
           <div className="modal-body">
-            <button className="nav left" onClick={prev}>
-              <FaChevronLeft />
-            </button>
+            <div className="image-stage">
+              <button className="nav left" onClick={prev} aria-label="Previous image">
+                <FaChevronLeft />
+              </button>
 
-            <img src={photos[active]} alt="" />
+              <img src={photos[active]} alt={`Guest photo ${active + 1}`} />
 
-            <button className="nav right" onClick={next}>
-              <FaChevronRight />
-            </button>
+              <button className="nav right" onClick={next} aria-label="Next image">
+                <FaChevronRight />
+              </button>
+            </div>
           </div>
 
           <div className="modal-footer">
@@ -83,21 +85,14 @@ const GuestPhotos = () => {
 
             <div className="thumbs">
               {photos.map((img, i) => (
-                <div
-                  style={{
-                    width: "400px",
-                    height: "200px",
-                    border: "solid red",
-                  }}
+                <button
+                  key={i}
+                  type="button"
+                  className={`thumb-btn ${i === active ? "active" : ""}`}
+                  onClick={() => setActive(i)}
                 >
-                  {" "}
-                  <img
-                    key={i}
-                    src={img}
-                    className={i === active ? "active" : ""}
-                    onClick={() => setActive(i)}
-                  />
-                </div>
+                  <img src={img} alt={`Guest photo ${i + 1}`} />
+                </button>
               ))}
             </div>
           </div>

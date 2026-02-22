@@ -1,68 +1,59 @@
 import "./FlightsTimeAirlinesFilters.scss";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { FaRegSquare, FaCheckSquare } from "react-icons/fa";
 import { FiSunrise, FiSun, FiSunset, FiMoon } from "react-icons/fi";
 
-const TIME_BLOCKS = [
-  { id: "before6", label: "Before\n6 AM", icon: <FiSunrise /> },
-  { id: "6to12", label: "6 AM to\n12 PM", icon: <FiSun /> },
-  { id: "12to6", label: "12 PM to\n6 PM", icon: <FiSunset /> },
-  { id: "after6", label: "After\n6 PM", icon: <FiMoon /> },
-];
+const iconByTimeId = {
+  before6: <FiSunrise />,
+  "6to12": <FiSun />,
+  "12to6": <FiSunset />,
+  after6: <FiMoon />,
+};
 
-const AIRLINES = [
-  { id: "airindia", name: "Air India", price: "₹ 7,171" },
-  { id: "airindiaexpress", name: "Air India Express", price: "₹ 7,119" },
-  { id: "akasa", name: "Akasa Air", price: "₹ 7,018" },
-  { id: "indigo", name: "IndiGo", price: "₹ 7,121" },
-  { id: "spicejet", name: "SpiceJet", price: "₹ 7,237" },
-];
-
-const AIRCRAFT = [
-  { id: "large", name: "Large Aircraft", price: "₹ 8,233" },
-  { id: "smallmid", name: "Small / Mid - size aircraft", price: "₹ 7,018" },
-];
-
-export default function FlightsTimeAirlinesFilters() {
-  const [depTime, setDepTime] = useState(new Set([]));
-  const [arrTime, setArrTime] = useState(new Set([]));
-  const [airlines, setAirlines] = useState(new Set([]));
-  const [aircraft, setAircraft] = useState(new Set([]));
-
-  const toggle = (setter, setState, id) => {
-    setter((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const totals = useMemo(() => {
-    return depTime.size + arrTime.size + airlines.size + aircraft.size;
-  }, [depTime, arrTime, airlines, aircraft]);
+export default function FlightsTimeAirlinesFilters({
+  fromCity,
+  toCity,
+  timeBlocks,
+  selectedDepTime,
+  selectedArrTime,
+  onToggleDepTime,
+  onToggleArrTime,
+  airlines,
+  selectedAirlines,
+  onToggleAirline,
+  aircraft,
+  selectedAircraft,
+  onToggleAircraft,
+}) {
+  const totals = useMemo(
+    () =>
+      selectedDepTime.size +
+      selectedArrTime.size +
+      selectedAirlines.size +
+      selectedAircraft.size,
+    [selectedDepTime, selectedArrTime, selectedAirlines, selectedAircraft]
+  );
 
   return (
     <aside className="ftaf-wrap">
       <div className="ftaf-card">
-        {/* Departure time */}
         <div className="ftaf-section">
-          <h4 className="ftaf-title">Departure From New Delhi</h4>
+          <h4 className="ftaf-title">Departure From {fromCity}</h4>
 
           <div className="ftaf-timeGrid">
-            {TIME_BLOCKS.map((t) => {
-              const active = depTime.has(t.id);
+            {timeBlocks.map((timeBlock) => {
+              const active = selectedDepTime.has(timeBlock.id);
               return (
                 <button
-                  key={t.id}
+                  key={timeBlock.id}
                   type="button"
                   className={`ftaf-timeBtn ${active ? "active" : ""}`}
-                  onClick={() => toggle(setDepTime, depTime, t.id)}
+                  onClick={() => onToggleDepTime(timeBlock.id)}
                 >
-                  <span className="ftaf-timeIcon">{t.icon}</span>
+                  <span className="ftaf-timeIcon">{iconByTimeId[timeBlock.id]}</span>
                   <span className="ftaf-timeText">
-                    {t.label.split("\n").map((line, i) => (
-                      <span key={i}>{line}</span>
+                    {timeBlock.label.split("\n").map((line) => (
+                      <span key={`${timeBlock.id}-${line}`}>{line}</span>
                     ))}
                   </span>
                 </button>
@@ -71,24 +62,23 @@ export default function FlightsTimeAirlinesFilters() {
           </div>
         </div>
 
-        {/* Arrival time */}
         <div className="ftaf-section">
-          <h4 className="ftaf-title">Arrival at Bengaluru</h4>
+          <h4 className="ftaf-title">Arrival at {toCity}</h4>
 
           <div className="ftaf-timeGrid">
-            {TIME_BLOCKS.map((t) => {
-              const active = arrTime.has(t.id);
+            {timeBlocks.map((timeBlock) => {
+              const active = selectedArrTime.has(timeBlock.id);
               return (
                 <button
-                  key={t.id}
+                  key={timeBlock.id}
                   type="button"
                   className={`ftaf-timeBtn ${active ? "active" : ""}`}
-                  onClick={() => toggle(setArrTime, arrTime, t.id)}
+                  onClick={() => onToggleArrTime(timeBlock.id)}
                 >
-                  <span className="ftaf-timeIcon">{t.icon}</span>
+                  <span className="ftaf-timeIcon">{iconByTimeId[timeBlock.id]}</span>
                   <span className="ftaf-timeText">
-                    {t.label.split("\n").map((line, i) => (
-                      <span key={i}>{line}</span>
+                    {timeBlock.label.split("\n").map((line) => (
+                      <span key={`${timeBlock.id}-arr-${line}`}>{line}</span>
                     ))}
                   </span>
                 </button>
@@ -97,26 +87,18 @@ export default function FlightsTimeAirlinesFilters() {
           </div>
         </div>
 
-        {/* Airlines */}
         <div className="ftaf-section">
           <h4 className="ftaf-title">Airlines</h4>
 
           <div className="ftaf-list">
-            {AIRLINES.map((a) => {
-              const active = airlines.has(a.id);
+            {airlines.map((airline) => {
+              const active = selectedAirlines.has(airline.id);
               return (
                 <button
-                  key={a.id}
+                  key={airline.id}
                   type="button"
                   className={`ftaf-item ${active ? "active" : ""}`}
-                  onClick={() =>
-                    setAirlines((prev) => {
-                      const next = new Set(prev);
-                      if (next.has(a.id)) next.delete(a.id);
-                      else next.add(a.id);
-                      return next;
-                    })
-                  }
+                  onClick={() => onToggleAirline(airline.id)}
                 >
                   <span className="ftaf-box">
                     {active ? <FaCheckSquare /> : <FaRegSquare />}
@@ -124,43 +106,35 @@ export default function FlightsTimeAirlinesFilters() {
 
                   <span className="ftaf-itemText">
                     <span className="ftaf-airDot" />
-                    {a.name}
+                    {airline.name}
                   </span>
 
-                  <span className="ftaf-price">{a.price}</span>
+                  <span className="ftaf-price">{airline.priceLabel}</span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Aircraft size */}
         <div className="ftaf-section">
           <h4 className="ftaf-title">Aircraft Size</h4>
 
           <div className="ftaf-list">
-            {AIRCRAFT.map((a) => {
-              const active = aircraft.has(a.id);
+            {aircraft.map((item) => {
+              const active = selectedAircraft.has(item.id);
               return (
                 <button
-                  key={a.id}
+                  key={item.id}
                   type="button"
                   className={`ftaf-item ${active ? "active" : ""}`}
-                  onClick={() =>
-                    setAircraft((prev) => {
-                      const next = new Set(prev);
-                      if (next.has(a.id)) next.delete(a.id);
-                      else next.add(a.id);
-                      return next;
-                    })
-                  }
+                  onClick={() => onToggleAircraft(item.id)}
                 >
                   <span className="ftaf-box">
                     {active ? <FaCheckSquare /> : <FaRegSquare />}
                   </span>
 
-                  <span className="ftaf-itemText">{a.name}</span>
-                  <span className="ftaf-price">{a.price}</span>
+                  <span className="ftaf-itemText">{item.name}</span>
+                  <span className="ftaf-price">{item.priceLabel}</span>
                 </button>
               );
             })}

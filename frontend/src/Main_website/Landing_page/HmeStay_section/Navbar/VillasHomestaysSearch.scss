@@ -60,9 +60,10 @@ $villashomestayssearch-gradient-btn-end: #4da3ff;
   width: 100%;
   max-width: 1200px;
   margin: auto;
-  @include villashomestayssearch-panel(50px 20px, $villashomestayssearch-radius-lg, $villashomestayssearch-shadow-wrap);
+  @include villashomestayssearch-panel(50px 20px 56px, $villashomestayssearch-radius-lg, $villashomestayssearch-shadow-wrap);
   position: absolute;
   transform: translate(150px, -430px);
+  overflow: visible;
 }
 
 .vh-tabs {
@@ -132,17 +133,60 @@ $villashomestayssearch-gradient-btn-end: #4da3ff;
   }
 }
 
-.vh-search-btn {
-  display: block;
-  margin: 20px auto 0;
+.vh-control {
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px 10px;
+  border: 1px solid $villashomestayssearch-border;
+  border-radius: 8px;
+  font-size: 13px;
+  color: $villashomestayssearch-color-dark;
+  background: $villashomestayssearch-bg;
+  box-sizing: border-box;
+}
+
+.vh-city-input {
+  font-size: 19px;
+  font-weight: 700;
+  color: $villashomestayssearch-color-dark;
+}
+
+.vh-guest-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+
+  .vh-control {
+    margin-top: 0;
+    min-width: 0;
+  }
+}
+
+.homestay-search-btn {
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   background: linear-gradient(90deg, $villashomestayssearch-gradient-btn-start, $villashomestayssearch-gradient-btn-end);
   color: $villashomestayssearch-color-white;
   border: none;
-  padding: 12px 70px;
   border-radius: $villashomestayssearch-radius-pill;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
+  line-height: 1;
   cursor: pointer;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+  }
 }
 
 .vh-cities {

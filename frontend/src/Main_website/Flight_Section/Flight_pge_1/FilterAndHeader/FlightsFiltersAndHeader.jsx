@@ -1,6 +1,5 @@
-// FlightsFiltersAndHeader.jsx
 import "./FlightsFiltersAndHeader.scss";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   FaCheckSquare,
   FaRegSquare,
@@ -13,42 +12,39 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-const FILTERS = [
-  { id: "nonstop", label: "Non Stop", price: "₹ 7,018" },
-  { id: "nearby", label: "Hide Nearby Airports", price: "₹ 7,018" },
-  { id: "refundable", label: "Refundable Fares", price: "₹ 7,018" },
-  { id: "1stop", label: "1 Stop", price: "₹ 9,106" },
-];
+export default function FlightsFiltersAndHeader({
+  title,
+  flightsCount,
+  popularFilters,
+  selectedPopular,
+  appliedPills,
+  onTogglePopular,
+  onRemovePopular,
+  onClearPopular,
+  quickDates,
+  activeDate,
+  onDateChange,
+  sortModes,
+  activeSortMode,
+  sortSummaries,
+  onSortChange,
+}) {
+  const [dateOffset, setDateOffset] = useState(0);
 
-export default function FlightsFiltersAndHeader() {
-  const [selected, setSelected] = useState(new Set(["nonstop"])); // default like screenshot
+  useEffect(() => {
+    setDateOffset(0);
+  }, [quickDates]);
 
-  const applied = useMemo(() => {
-    return FILTERS.filter((f) => selected.has(f.id));
-  }, [selected]);
+  const visibleDates = useMemo(
+    () => quickDates.slice(dateOffset, dateOffset + 8),
+    [quickDates, dateOffset]
+  );
 
-  const toggle = (id) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const removeApplied = (id) => {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      next.delete(id);
-      return next;
-    });
-  };
-
-  const clearAll = () => setSelected(new Set());
+  const canGoLeft = dateOffset > 0;
+  const canGoRight = dateOffset + 8 < quickDates.length;
 
   return (
     <section className="ffh-wrap">
-      {/* LEFT FILTERS */}
       <aside className="ffh-left">
         <div className="ffh-filterCard">
           <div className="ffh-filterTop">
@@ -56,16 +52,16 @@ export default function FlightsFiltersAndHeader() {
               <h4>Applied Filters</h4>
 
               <div className="ffh-pillRow">
-                {applied.length === 0 ? (
+                {appliedPills.length === 0 ? (
                   <span className="ffh-pillEmpty">No filters applied</span>
                 ) : (
-                  applied.map((f) => (
-                    <span key={f.id} className="ffh-pill">
-                      {f.label.toUpperCase()}
+                  appliedPills.map((pill) => (
+                    <span key={pill.id} className="ffh-pill">
+                      {pill.label.toUpperCase()}
                       <button
                         className="ffh-pillClose"
-                        onClick={() => removeApplied(f.id)}
-                        aria-label={`remove ${f.label}`}
+                        onClick={() => onRemovePopular(pill.id)}
+                        aria-label={`remove ${pill.label}`}
                         type="button"
                       >
                         <FaTimes />
@@ -76,7 +72,7 @@ export default function FlightsFiltersAndHeader() {
               </div>
             </div>
 
-            <button className="ffh-clearAll" onClick={clearAll} type="button">
+            <button className="ffh-clearAll" onClick={onClearPopular} type="button">
               CLEAR ALL
             </button>
           </div>
@@ -84,34 +80,35 @@ export default function FlightsFiltersAndHeader() {
           <div className="ffh-filterSection">
             <h5>Popular Filters</h5>
 
-            {FILTERS.map((f) => {
-              const active = selected.has(f.id);
+            {popularFilters.map((filterItem) => {
+              const active = selectedPopular.has(filterItem.id);
               return (
                 <button
-                  key={f.id}
+                  key={filterItem.id}
                   type="button"
                   className={`ffh-filterItem ${active ? "active" : ""}`}
-                  onClick={() => toggle(f.id)}
+                  onClick={() => onTogglePopular(filterItem.id)}
                 >
                   <span className="ffh-check">
                     {active ? <FaCheckSquare /> : <FaRegSquare />}
                   </span>
-                  <span className="ffh-filterText">{f.label}</span>
-                  <span className="ffh-price">{f.price}</span>
+                  <span className="ffh-filterText">{filterItem.label}</span>
+                  <span className="ffh-price">{filterItem.priceLabel}</span>
                 </button>
               );
             })}
 
             <button className="ffh-more" type="button">
-              + 4 more
+              + Functional filters
             </button>
           </div>
         </div>
       </aside>
 
-      {/* RIGHT HEADER */}
       <main className="ffh-right">
-        <h2 className="ffh-title">Flights from New Delhi to Bengaluru</h2>
+        <h2 className="ffh-title">
+          {title} {flightsCount ? `(${flightsCount})` : ""}
+        </h2>
 
         <div className="ffh-cardsRow">
           <div className="ffh-promoCard">
@@ -119,8 +116,8 @@ export default function FlightsFiltersAndHeader() {
               <FaRegCreditCard />
             </div>
             <div className="ffh-promoText">
-              <div className="ffh-promoHead">Flat 10% Instant Discount ...</div>
-              <div className="ffh-promoSub">on IDFC FIRST Bank Credit Car...</div>
+              <div className="ffh-promoHead">Flat instant card discount available</div>
+              <div className="ffh-promoSub">Apply offers on selected cards</div>
             </div>
           </div>
 
@@ -131,107 +128,76 @@ export default function FlightsFiltersAndHeader() {
               alt="promo"
             />
             <div className="ffh-promoText">
-              <div className="ffh-promoHead">Meet and Greet & Porter S...</div>
-              <div className="ffh-promoSub">Elevate your travel experience ...</div>
+              <div className="ffh-promoHead">Meet and Greet & Porter Services</div>
+              <div className="ffh-promoSub">Add airport concierge assistance</div>
             </div>
           </div>
         </div>
 
         <div className="ffh-dateStrip">
-          <button className="ffh-navBtn" type="button">
+          <button
+            className="ffh-navBtn"
+            type="button"
+            onClick={() => setDateOffset((prev) => Math.max(0, prev - 1))}
+            disabled={!canGoLeft}
+          >
             <FaChevronLeft />
           </button>
 
           <div className="ffh-dateRow">
-            <button className="ffh-day" type="button">
-              <span>Mon, Jan 26</span>
-              <strong>₹ 8,075</strong>
-            </button>
-
-            <button className="ffh-day active" type="button">
-              <span>Tue, Jan 27</span>
-              <strong>₹ 7,018</strong>
-            </button>
-
-            <button className="ffh-day green" type="button">
-              <span>Wed, Jan 28</span>
-              <strong>₹ 6,024</strong>
-            </button>
-
-            <button className="ffh-day green" type="button">
-              <span>Thu, Jan 29</span>
-              <strong>₹ 6,024</strong>
-            </button>
-
-            <button className="ffh-day green" type="button">
-              <span>Fri, Jan 30</span>
-              <strong>₹ 6,024</strong>
-            </button>
-
-            <button className="ffh-day" type="button">
-              <span>Sat, Jan 31</span>
-              <strong>₹ 6,024</strong>
-            </button>
-
-            <button className="ffh-day green" type="button">
-              <span>Sun, Feb 1</span>
-              <strong>₹ 6,797</strong>
-            </button>
-
-            <button className="ffh-day green" type="button">
-              <span>Mon, Feb 2</span>
-              <strong>₹ 6,024</strong>
-            </button>
+            {visibleDates.map((day) => (
+              <button
+                key={day.dateValue}
+                className={`ffh-day ${activeDate === day.dateValue ? "active" : ""}`}
+                type="button"
+                onClick={() => onDateChange(day.dateValue)}
+              >
+                <span>{day.label}</span>
+                <strong>{day.priceLabel}</strong>
+              </button>
+            ))}
           </div>
 
-          <button className="ffh-navBtn" type="button">
+          <button
+            className="ffh-navBtn"
+            type="button"
+            onClick={() => setDateOffset((prev) => prev + 1)}
+            disabled={!canGoRight}
+          >
             <FaChevronRight />
           </button>
         </div>
 
         <div className="ffh-sortRow">
-          <button className="ffh-sortBox active" type="button">
-            <span className="ffh-sortIcon blue">₹</span>
-            <div>
-              <div className="ffh-sortHead">CHEAPEST</div>
-              <div className="ffh-sortSub">₹ 7,018 | 03h</div>
-            </div>
-          </button>
-
-          <button className="ffh-sortBox" type="button">
-            <span className="ffh-sortIcon">
-              <FaBolt />
-            </span>
-            <div>
-              <div className="ffh-sortHead">NONSTOP FIRST</div>
-              <div className="ffh-sortSub">₹ 7,018 | 03h</div>
-            </div>
-          </button>
-
-          <button className="ffh-sortBox" type="button">
-            <span className="ffh-sortIcon">
-              <FaStar />
-            </span>
-            <div>
-              <div className="ffh-sortHead">YOU MAY PREFER</div>
-              <div className="ffh-sortSub">₹ 7,018 | 03h</div>
-            </div>
-          </button>
-
-          <button className="ffh-sortBox small" type="button">
-            <span className="ffh-sortIcon">
-              <FaSlidersH />
-            </span>
-            <div>
-              <div className="ffh-sortHead">Other</div>
-              <div className="ffh-sortSub">Sort</div>
-            </div>
-          </button>
+          {sortModes.map((mode) => (
+            <button
+              key={mode.id}
+              className={`ffh-sortBox ${activeSortMode === mode.id ? "active" : ""} ${
+                mode.id === "other" ? "small" : ""
+              }`}
+              type="button"
+              onClick={() => onSortChange(mode.id)}
+            >
+              <span className={`ffh-sortIcon ${mode.id === "cheapest" ? "blue" : ""}`}>
+                {mode.id === "cheapest" ? (
+                  "Rs"
+                ) : mode.id === "nonstop" ? (
+                  <FaBolt />
+                ) : mode.id === "prefer" ? (
+                  <FaStar />
+                ) : (
+                  <FaSlidersH />
+                )}
+              </span>
+              <div>
+                <div className="ffh-sortHead">{mode.label}</div>
+                <div className="ffh-sortSub">{sortSummaries[mode.id] || "No fares"}</div>
+              </div>
+            </button>
+          ))}
         </div>
 
-        <div className="ffh-subtitle">
-          Flights sorted by Lowest fares on this route
-        </div>
+        <div className="ffh-subtitle">Flights sorted by your selected filters and search</div>
       </main>
     </section>
   );

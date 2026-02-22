@@ -40,6 +40,15 @@ $propertylistings-radius: 12px;
   @include propertylistings-flex-col(20px);
 }
 
+.empty-results {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  color: #4b5563;
+  font-size: 15px;
+}
+
 .property-divider {
   height: 1px;
   background: $propertylistings-divider;
@@ -50,4 +59,106 @@ $propertylistings-radius: 12px;
   width: 100%;
   min-height: 100vh;
   background: $propertylistings-bg-layout;
+}
+
+.staybook-map-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(17, 24, 39, 0.6);
+  padding: 42px;
+  box-sizing: border-box;
+}
+
+.staybook-map-sheet {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.staybook-map-canvas {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.staybook-map-search {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  right: 18px;
+  z-index: 2;
+
+  input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: #fff;
+  }
+}
+
+.staybook-map-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.staybook-map-filters {
+  width: 340px;
+  background: #fff;
+  border-left: 1px solid #e5e7eb;
+  overflow-y: auto;
+}
+
+.staybook-map-filters .hotel-filters-sidebar {
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.staybook-map-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.75);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 3;
+}
+
+@media (max-width: 900px) {
+  .staybook-map-overlay {
+    padding: 0;
+    background: #fff;
+  }
+
+  .staybook-map-sheet {
+    border-radius: 0;
+    flex-direction: column;
+  }
+
+  .staybook-map-canvas {
+    min-height: 58vh;
+  }
+
+  .staybook-map-filters {
+    width: 100%;
+    max-height: 42vh;
+    border-left: 0;
+    border-top: 1px solid #e5e7eb;
+  }
 }

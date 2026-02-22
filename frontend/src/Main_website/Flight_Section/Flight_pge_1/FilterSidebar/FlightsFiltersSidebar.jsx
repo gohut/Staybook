@@ -1,46 +1,66 @@
 import "./FlightsFiltersSidebar.scss";
-import { useMemo, useState } from "react";
+import { useMemo, useRef } from "react";
 import { FaCheckSquare, FaRegSquare } from "react-icons/fa";
 
-const FILTER_GROUPS = [
-  {
-    title: "Departure Airports",
-    key: "departureAirports",
-    items: [
-      { id: "igi", label: "Indira Gandhi International Airport", price: "₹ 7,018" },
-      { id: "hindon", label: "Hindon Airport (32Km)", price: "₹ 9,223" },
-    ],
-  },
-  {
-    title: "Stops From New Delhi",
-    key: "stops",
-    items: [
-      { id: "nonstop", label: "Non Stop", price: "₹ 7,018" },
-      { id: "1stop", label: "1 Stop", price: "₹ 9,106" },
-    ],
-  },
-];
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
-export default function FlightsFiltersSidebar() {
-  const [selected, setSelected] = useState({
-    departureAirports: new Set([]),
-    stops: new Set(["nonstop"]),
-  });
+export default function FlightsFiltersSidebar({
+  fromCity,
+  departureAirports,
+  selectedDepartureAirports,
+  onToggleDepartureAirport,
+  priceRange,
+  onPriceChange,
+  stopFilters,
+  selectedStops,
+  onToggleStop,
+}) {
+  const trackRef = useRef(null);
+  const minPrice = priceRange.min || 0;
+  const maxPrice = priceRange.max || minPrice;
+  const selectedMax = clamp(
+    Number(priceRange.selectedMax || maxPrice),
+    minPrice,
+    maxPrice
+  );
 
-  const toggle = (groupKey, id) => {
-    setSelected((prev) => {
-      const next = { ...prev };
-      const setCopy = new Set(next[groupKey]);
-      if (setCopy.has(id)) setCopy.delete(id);
-      else setCopy.add(id);
-      next[groupKey] = setCopy;
-      return next;
-    });
-  };
+  const percent = useMemo(() => {
+    if (maxPrice === minPrice) {
+      return 100;
+    }
+    return ((selectedMax - minPrice) / (maxPrice - minPrice)) * 100;
+  }, [maxPrice, minPrice, selectedMax]);
 
   const appliedCount = useMemo(() => {
-    return Object.values(selected).reduce((acc, s) => acc + s.size, 0);
-  }, [selected]);
+    const hasPriceFilter = selectedMax < maxPrice;
+    return (
+      selectedDepartureAirports.size +
+      selectedStops.size +
+      (hasPriceFilter ? 1 : 0)
+    );
+  }, [selectedDepartureAirports, selectedStops, selectedMax, maxPrice]);
+
+  const handleTrackClick = (event) => {
+    if (!trackRef.current || maxPrice === minPrice) {
+      return;
+    }
+    const rect = trackRef.current.getBoundingClientRect();
+    const ratio = clamp((event.clientX - rect.left) / rect.width, 0, 1);
+    const value = Math.round(minPrice + ratio * (maxPrice - minPrice));
+    onPriceChange(value);
+  };
+
+  const handleTrackKey = (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+      return;
+    }
+    const step = Math.max(50, Math.round((maxPrice - minPrice) / 25));
+    if (event.key === "ArrowLeft") {
+      onPriceChange(selectedMax - step);
+    } else {
+      onPriceChange(selectedMax + step);
+    }
+  };
 
   return (
     <aside className="ffs-wrap">
@@ -49,20 +69,20 @@ export default function FlightsFiltersSidebar() {
           <h4 className="ffs-title">Departure Airports</h4>
 
           <div className="ffs-list">
-            {FILTER_GROUPS[0].items.map((f) => {
-              const active = selected.departureAirports.has(f.id);
+            {departureAirports.map((airport) => {
+              const active = selectedDepartureAirports.has(airport.id);
               return (
                 <button
-                  key={f.id}
+                  key={airport.id}
                   type="button"
                   className={`ffs-item ${active ? "active" : ""}`}
-                  onClick={() => toggle("departureAirports", f.id)}
+                  onClick={() => onToggleDepartureAirport(airport.id)}
                 >
                   <span className="ffs-box">
                     {active ? <FaCheckSquare /> : <FaRegSquare />}
                   </span>
-                  <span className="ffs-label">{f.label}</span>
-                  <span className="ffs-price">{f.price}</span>
+                  <span className="ffs-label">{airport.label}</span>
+                  <span className="ffs-price">{airport.priceLabel}</span>
                 </button>
               );
             })}
@@ -73,36 +93,43 @@ export default function FlightsFiltersSidebar() {
           <h4 className="ffs-title">One Way Price</h4>
 
           <div className="ffs-slider">
-            <div className="ffs-track">
-              <div className="ffs-fill" />
-              <div className="ffs-knob" />
+            <div
+              className="ffs-track"
+              ref={trackRef}
+              role="button"
+              tabIndex={0}
+              onClick={handleTrackClick}
+              onKeyDown={handleTrackKey}
+            >
+              <div className="ffs-fill" style={{ width: `${percent}%` }} />
+              <div className="ffs-knob" style={{ right: `${100 - percent}%` }} />
             </div>
 
             <div className="ffs-range">
-              <span>₹ 7,018</span>
-              <span>₹ 22,500</span>
+              <span>{`Rs ${minPrice.toLocaleString("en-IN")}`}</span>
+              <span>{`Rs ${selectedMax.toLocaleString("en-IN")}`}</span>
             </div>
           </div>
         </div>
 
         <div className="ffs-section">
-          <h4 className="ffs-title">Stops From New Delhi</h4>
+          <h4 className="ffs-title">Stops From {fromCity}</h4>
 
           <div className="ffs-list">
-            {FILTER_GROUPS[1].items.map((f) => {
-              const active = selected.stops.has(f.id);
+            {stopFilters.map((stop) => {
+              const active = selectedStops.has(stop.id);
               return (
                 <button
-                  key={f.id}
+                  key={stop.id}
                   type="button"
                   className={`ffs-item ${active ? "active" : ""}`}
-                  onClick={() => toggle("stops", f.id)}
+                  onClick={() => onToggleStop(stop.id)}
                 >
                   <span className="ffs-box">
                     {active ? <FaCheckSquare /> : <FaRegSquare />}
                   </span>
-                  <span className="ffs-label">{f.label}</span>
-                  <span className="ffs-price">{f.price}</span>
+                  <span className="ffs-label">{stop.label}</span>
+                  <span className="ffs-price">{stop.priceLabel}</span>
                 </button>
               );
             })}

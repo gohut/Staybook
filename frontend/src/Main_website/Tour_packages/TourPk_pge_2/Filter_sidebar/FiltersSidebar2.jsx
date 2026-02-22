@@ -115,20 +115,6 @@ export default function FiltersSidebar2() {
 
       <div className="filters-section">
         <div className="filters-head">
-          <span>Package Type</span>
-          <FiChevronUp />
-        </div>
-
-        <div className="pill-row">
-          <div className="pill active">Customizable (24)</div>
-          <div className="pill disabled">Group Package (0)</div>
-        </div>
-      </div>
-
-      <div className="divider" />
-
-      <div className="filters-section">
-        <div className="filters-head">
           <span>Premium Packages</span>
           <FiChevronUp />
         </div>

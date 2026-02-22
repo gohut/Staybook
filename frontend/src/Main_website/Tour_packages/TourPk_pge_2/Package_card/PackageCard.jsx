@@ -1,55 +1,55 @@
 // PackageCard.jsx
 import { FaCheckCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./PackageCard.scss";
-import { useNavigate } from "react-router-dom"; 
-export default function PackageCard() {
-    const navigate = useNavigate();
+
+export default function PackageCard({ data }) {
+  const navigate = useNavigate();
 
   return (
     <div className="pkg-card" onClick={() => navigate("/tourpkge3")}>
-      <img
-        className="pkg-img"
-        src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
-        alt="package"
-      />
+      <img className="pkg-img" src={data.image} alt={data.title} />
 
       <div className="pkg-body">
         <div className="pkg-title-row">
-          <h3>Lakeside Wayanad - Terrace Resorts</h3>
-          <span className="pkg-tag">2N/3D</span>
+          <h3>{data.title}</h3>
+          <span className="pkg-tag">{data.duration}</span>
         </div>
 
-        <p className="pkg-sub">2N Wayanad</p>
+        <p className="pkg-sub">{data.itinerary}</p>
 
         <div className="pkg-divider" />
 
         <div className="pkg-info">
           <ul>
-            <li>• 4 Star Hotel</li>
-            <li>• Selected Meals</li>
+            <li>• {data.hotelCategory}</li>
+            <li>• {data.meals}</li>
           </ul>
           <ul>
-            <li>• 2 Activities</li>
+            <li>• {data.activities}</li>
           </ul>
         </div>
 
         <div className="pkg-free">
-          <span><FaCheckCircle /> Complimentary Hi-Tea</span>
-          <span><FaCheckCircle /> Complimentary Trekking</span>
+          {data.freebies.map((freeItem) => (
+            <span key={freeItem}>
+              <FaCheckCircle /> {freeItem}
+            </span>
+          ))}
         </div>
 
-        <button className="pkg-book">Book this package @ ₹2,000</button>
+        <button className="pkg-book">{data.bookOffer}</button>
 
         <div className="pkg-price-box">
           <div className="pkg-emi">
             <span>No Cost EMI at</span>
-            <strong>₹1,203/month</strong>
+            <strong>{data.emi}</strong>
           </div>
 
           <div className="pkg-price">
-            <strong>₹4,660</strong>
+            <strong>Rs{data.pricePerPerson}</strong>
             <span>/Person</span>
-            <p>Total Price ₹9,320</p>
+            <p>Total Price Rs{data.totalPrice}</p>
           </div>
         </div>
       </div>

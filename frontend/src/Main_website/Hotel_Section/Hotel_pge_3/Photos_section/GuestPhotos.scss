@@ -88,6 +88,7 @@ $guestphotos-radius-sm: 6px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .modal-header {
@@ -113,31 +114,48 @@ $guestphotos-radius-sm: 6px;
 .modal-body {
   flex: 1;
   @include guestphotos-center;
+  padding: 12px 20px;
+  min-height: 0;
+}
+
+.image-stage {
   position: relative;
+  width: min(92vw, 1180px);
+  height: min(68vh, calc(100vh - 230px));
+  max-height: 100%;
+  @include guestphotos-center;
 
   img {
-    max-height: 80%;
-    max-width: 80%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     border-radius: $guestphotos-radius-md;
   }
 }
 
 .nav {
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   background: $guestphotos-overlay-nav;
   border: none;
   color: $guestphotos-color-white;
   font-size: 22px;
-  padding: 10px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 1;
 
   &.left {
-    left: 30px;
+    left: 12px;
   }
 
   &.right {
-    right: 30px;
+    right: 12px;
   }
 }
 
@@ -152,6 +170,9 @@ $guestphotos-radius-sm: 6px;
   font-size: 13px;
   color: $guestphotos-color-tabs;
   margin-bottom: 10px;
+  white-space: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
 
   .active {
     color: $guestphotos-color-white;
@@ -161,20 +182,35 @@ $guestphotos-radius-sm: 6px;
 
 .thumbs {
   display: flex;
+  align-items: center;
   gap: 8px;
   overflow-x: auto;
+  padding-bottom: 4px;
 
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+  .thumb-btn {
+    flex: 0 0 auto;
+    height: 60px;
+    width: 80px;
+    padding: 0;
+    border: none;
+    background: transparent;
     border-radius: $guestphotos-radius-sm;
-    opacity: 0.5;
     cursor: pointer;
+    opacity: 0.5;
+    overflow: hidden;
 
     &.active {
       opacity: 1;
       outline: 2px solid $guestphotos-color-outline;
     }
+
+    img {
+      display: block;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: $guestphotos-radius-sm;
+    }
   }
+
 }

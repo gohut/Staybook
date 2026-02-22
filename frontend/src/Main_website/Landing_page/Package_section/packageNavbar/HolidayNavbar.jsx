@@ -1,15 +1,16 @@
 // HolidayNavbar.jsx
-import React, { useState } from "react";
-import "./HolidayNavbar.scss";
-import { useNavigate } from "react-router-dom"; 
+import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
-  FaPlane,
-  FaHotel,
-  FaUmbrellaBeach,
-  FaTrain,
-  FaBus,
-  FaTaxi,
-} from "react-icons/fa";
+  HOLIDAY_SEARCH_STORAGE_KEY,
+  addDays,
+  normalizeIsoDate,
+  parseInteger,
+  readStoredSearch,
+  todayIso,
+  writeStoredSearch,
+} from "../../../common/searchState";
+import "./HolidayNavbar.scss";
 
 const tabs = [
   "Search",
@@ -19,21 +20,86 @@ const tabs = [
   "Last Minute Deals",
 ];
 
+const CITY_OPTIONS = [
+  "New Delhi",
+  "Mumbai",
+  "Bengaluru",
+  "Hyderabad",
+  "Chennai",
+  "Goa",
+  "Kerala",
+  "Jaipur",
+  "Thailand",
+  "Bali",
+];
+
+const BUDGET_OPTIONS = [
+  "Any Budget",
+  "Below Rs 15000",
+  "Rs 15000 - Rs 30000",
+  "Rs 30000 - Rs 60000",
+  "Above Rs 60000",
+];
+
 export default function HolidayNavbar() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const storedHolidaySearch = useMemo(
+    () => readStoredSearch(HOLIDAY_SEARCH_STORAGE_KEY),
+    []
+  );
+
+  const defaultDate = addDays(todayIso(), 14);
   const [activeTab, setActiveTab] = useState("Search");
+  const [fromCity, setFromCity] = useState(storedHolidaySearch?.fromCity || "New Delhi");
+  const [toCity, setToCity] = useState(storedHolidaySearch?.toCity || "Goa");
+  const [departureDate, setDepartureDate] = useState(
+    normalizeIsoDate(storedHolidaySearch?.departureDate, defaultDate)
+  );
+  const [adults, setAdults] = useState(
+    parseInteger(storedHolidaySearch?.adults, 2, 1, 10)
+  );
+  const [rooms, setRooms] = useState(
+    parseInteger(storedHolidaySearch?.rooms, 1, 1, 4)
+  );
+  const [budget, setBudget] = useState(
+    storedHolidaySearch?.budget || BUDGET_OPTIONS[0]
+  );
+
+  const handleSearch = () => {
+    const payload = {
+      fromCity: fromCity.trim() || "New Delhi",
+      toCity: toCity.trim() || "Goa",
+      departureDate,
+      adults,
+      rooms,
+      budget,
+    };
+
+    writeStoredSearch(HOLIDAY_SEARCH_STORAGE_KEY, payload);
+
+    const searchParams = new URLSearchParams({
+      from: payload.fromCity,
+      to: payload.toCity,
+      date: payload.departureDate,
+      adults: String(payload.adults),
+      rooms: String(payload.rooms),
+      budget: payload.budget,
+    });
+
+    navigate(`/tourpkge2?${searchParams.toString()}`, {
+      state: {
+        searchPayload: payload,
+      },
+    });
+  };
 
   return (
     <div className="holiday-wrapper">
-      {/* TOP ICON NAV */}
-
-
-      {/* TAB NAV */}
-      <div className="tab-nav">
+      <div className="holiday-tab-nav">
         {tabs.map((tab) => (
           <div
             key={tab}
-            className={`tab-item ${activeTab === tab ? "active" : ""}`}
+            className={`holiday-tab-item ${activeTab === tab ? "active" : ""}`}
             onClick={() => setActiveTab(tab)}
           >
             {tab}
@@ -41,36 +107,105 @@ export default function HolidayNavbar() {
         ))}
       </div>
 
-      {/* CONTENT */}
-      <div className="tab-content">
+      <div className="holiday-tab-content">
         {activeTab === "Search" && (
-          <div className="search-box">
-            <div className="field">
+          <div className="holiday-search-box">
+            <div className="holiday-field">
               <span>From City</span>
-              <strong>New Delhi</strong>
-              <small>India</small>
+              <input
+                className="holiday-control"
+                list="holiday-from-city-options"
+                value={fromCity}
+                onChange={(event) => setFromCity(event.target.value)}
+                placeholder="Starting city"
+              />
             </div>
-            <div className="field">
+
+            <div className="holiday-field">
               <span>To City</span>
-              <strong>Goa</strong>
+              <input
+                className="holiday-control"
+                list="holiday-to-city-options"
+                value={toCity}
+                onChange={(event) => setToCity(event.target.value)}
+                placeholder="Destination"
+              />
             </div>
-            <div className="field">
+
+            <div className="holiday-field">
               <span>Departure</span>
-              <strong>6 Feb, 2026</strong>
-              <small>Friday</small>
+              <input
+                className="holiday-control"
+                type="date"
+                value={departureDate}
+                min={todayIso()}
+                onChange={(event) => setDepartureDate(event.target.value)}
+              />
             </div>
-            <div className="field">
+
+            <div className="holiday-field">
               <span>Guests</span>
-              <strong>3 Adults</strong>
-              <small>1 Room</small>
+              <div className="holiday-guest-row">
+                <select
+                  className="holiday-control"
+                  value={adults}
+                  onChange={(event) =>
+                    setAdults(parseInteger(event.target.value, adults, 1, 10))
+                  }
+                >
+                  {Array.from({ length: 10 }).map((_, index) => (
+                    <option key={`holiday-adult-${index + 1}`} value={index + 1}>
+                      {index + 1} Adult{index > 0 ? "s" : ""}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  className="holiday-control"
+                  value={rooms}
+                  onChange={(event) =>
+                    setRooms(parseInteger(event.target.value, rooms, 1, 4))
+                  }
+                >
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <option key={`holiday-room-${index + 1}`} value={index + 1}>
+                      {index + 1} Room{index > 0 ? "s" : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            {/* <button className="search-btn">SEARCH</button> */}
+
+            <div className="holiday-field">
+              <span>Budget</span>
+              <select
+                className="holiday-control"
+                value={budget}
+                onChange={(event) => setBudget(event.target.value)}
+              >
+                {BUDGET_OPTIONS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <datalist id="holiday-from-city-options">
+              {CITY_OPTIONS.map((city) => (
+                <option key={`from-${city}`} value={city} />
+              ))}
+            </datalist>
+            <datalist id="holiday-to-city-options">
+              {CITY_OPTIONS.map((city) => (
+                <option key={`to-${city}`} value={city} />
+              ))}
+            </datalist>
           </div>
         )}
 
         {activeTab === "Honeymoon" && (
-          <div className="dropdown">
-            <div className="left">
+          <div className="holiday-dropdown">
+            <div className="holiday-dropdown-left">
               <h4>MakeMyTrip Honeymoon Packages</h4>
               <ul>
                 <li>Maldives</li>
@@ -80,18 +215,18 @@ export default function HolidayNavbar() {
                 <li>Kerala</li>
               </ul>
             </div>
-            <div className="right">
-              <div className="card">Trending</div>
-              <div className="card">Bucket List</div>
-              <div className="card">Trip Finder</div>
-              <div className="card">View All</div>
+            <div className="holiday-dropdown-right">
+              <div className="holiday-card">Trending</div>
+              <div className="holiday-card">Bucket List</div>
+              <div className="holiday-card">Trip Finder</div>
+              <div className="holiday-card">View All</div>
             </div>
           </div>
         )}
 
         {activeTab === "Visa Free Packages" && (
-          <div className="dropdown">
-            <div className="left">
+          <div className="holiday-dropdown">
+            <div className="holiday-dropdown-left">
               <h4>Dream Destinations</h4>
               <ul>
                 <li>Malaysia</li>
@@ -101,17 +236,17 @@ export default function HolidayNavbar() {
                 <li>Seychelles</li>
               </ul>
             </div>
-            <div className="right">
-              <div className="card">Maldives</div>
-              <div className="card">Thailand</div>
-              <div className="card">Sri Lanka</div>
+            <div className="holiday-dropdown-right">
+              <div className="holiday-card">Maldives</div>
+              <div className="holiday-card">Thailand</div>
+              <div className="holiday-card">Sri Lanka</div>
             </div>
           </div>
         )}
 
         {activeTab === "Group Tour Packages" && (
-          <div className="dropdown">
-            <div className="left">
+          <div className="holiday-dropdown">
+            <div className="holiday-dropdown-left">
               <h4>Expertly Planned Tours</h4>
               <ul>
                 <li>Europe</li>
@@ -121,18 +256,18 @@ export default function HolidayNavbar() {
                 <li>Singapore</li>
               </ul>
             </div>
-            <div className="right">
-              <div className="card">Domestic</div>
-              <div className="card">Quick Fly</div>
-              <div className="card">Bucket List</div>
-              <div className="card">View All</div>
+            <div className="holiday-dropdown-right">
+              <div className="holiday-card">Domestic</div>
+              <div className="holiday-card">Quick Fly</div>
+              <div className="holiday-card">Bucket List</div>
+              <div className="holiday-card">View All</div>
             </div>
           </div>
         )}
 
         {activeTab === "Last Minute Deals" && (
-          <div className="dropdown">
-            <div className="left">
+          <div className="holiday-dropdown">
+            <div className="holiday-dropdown-left">
               <h4>Best Trips, Last Minute</h4>
               <ul>
                 <li>Goa</li>
@@ -142,16 +277,19 @@ export default function HolidayNavbar() {
                 <li>North East</li>
               </ul>
             </div>
-            <div className="right">
-              <div className="card">Jet Set Easy</div>
-              <div className="card">Mini Moon</div>
-              <div className="card">Staycations</div>
-              <div className="card">View All</div>
+            <div className="holiday-dropdown-right">
+              <div className="holiday-card">Jet Set Easy</div>
+              <div className="holiday-card">Mini Moon</div>
+              <div className="holiday-card">Staycations</div>
+              <div className="holiday-card">View All</div>
             </div>
           </div>
         )}
       </div>
-       <button className="vh-search-btn" onClick={() => navigate("/tourpkge2")}>SEARCH</button>
+
+      <button className="holiday-search-btn" onClick={handleSearch}>
+        SEARCH
+      </button>
     </div>
   );
 }

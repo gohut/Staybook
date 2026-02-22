@@ -103,6 +103,7 @@ $navbar-transition-normal: 0.3s ease;
   position: absolute;
   transform: translate(0px, -540px);
   font-weight: bold;
+  z-index: 260;
 }
 
 /* Login Button */
@@ -137,7 +138,7 @@ $navbar-transition-normal: 0.3s ease;
   display: flex;
   justify-content: center;
   position: absolute;
-  z-index: 100;
+  z-index: 300;
   transform: translate(760px, 50px);
 }
 
@@ -146,6 +147,7 @@ $navbar-transition-normal: 0.3s ease;
   gap: 0;
   background: $navbar-white;
   position: absolute;
+  z-index: 310;
   border-radius: $navbar-radius-nav;
   padding: 8px;
   box-shadow: 0 4px 12px $navbar-shadow-color;

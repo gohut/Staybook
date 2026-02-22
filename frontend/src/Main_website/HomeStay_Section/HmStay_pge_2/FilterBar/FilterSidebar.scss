@@ -42,26 +42,40 @@ $fs-muted: #888;
   font-family: Arial, sans-serif;
 }
 
-.map-box {
-  @include fs-flex(space-between, center);
+.homestay-map-box {
+  position: relative;
   background: $fs-map-bg;
   border: 1px solid $fs-map-border;
-  border-radius: 6px;
-  padding: 10px;
+  border-radius: 8px;
+  overflow: hidden;
   margin-bottom: 12px;
-
-  svg {
-    color: $fs-blue;
-  }
-
-  button {
-    @include fs-btn($fs-blue, $fs-white);
-    padding: 6px 10px;
-    font-size: 12px;
-  }
 }
 
-.search-box {
+.homestay-map-preview {
+  display: block;
+  width: 100%;
+  height: 130px;
+  border: 0;
+}
+
+.homestay-map-btn {
+  @include fs-btn(rgba(255, 255, 255, 0.96), $fs-blue, 6px);
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  width: calc(100% - 20px);
+  border: 1px solid $fs-blue;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
+.hm-filter-search {
+  position: relative;
   @include fs-flex(flex-start, center);
   border: 2px solid #e8f0fe;
   border-radius: 25px;
@@ -126,7 +140,19 @@ $fs-muted: #888;
   }
 }
 
-.section {
+.hm-clear-btn {
+  width: 100%;
+  border: 1px solid $fs-border-search;
+  background: #f8fafc;
+  color: $fs-text;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.hm-filter-section {
   margin-bottom: 20px;
 
   h4 {
@@ -139,7 +165,7 @@ $fs-muted: #888;
   }
 }
 
-.checkbox {
+.hm-filter-checkbox {
   @include fs-flex(flex-start, center, 8px);
   font-size: 12px;
   margin-bottom: 8px;
@@ -194,7 +220,7 @@ $fs-muted: #888;
   }
 }
 
-.budget {
+.hm-filter-budget {
   @include fs-flex(flex-start, center, 6px);
   margin-top: 10px;
   padding: 8px;

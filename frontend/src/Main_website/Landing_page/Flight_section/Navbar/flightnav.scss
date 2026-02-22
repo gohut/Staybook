@@ -3,24 +3,25 @@
 /* =======================
    Variables
 ======================= */
-$flightnav-bg: #fff;
-$flightnav-bg-swap: #f5f8ff;
+$flightnav-white: #fff;
+$flightnav-text: #1f2532;
+$flightnav-label: #687284;
+$flightnav-muted: #8490a5;
+$flightnav-disabled: #a8b0be;
 
-$flightnav-color-text: #555;
-$flightnav-color-label: #666;
-$flightnav-color-muted: #777;
-$flightnav-color-disabled: #aaa;
+$flightnav-primary: #1a73e8;
+$flightnav-primary-soft: #edf4ff;
 
-$flightnav-color-primary: #1a73e8;
+$flightnav-border: #dce3ee;
+$flightnav-border-soft: #e8edf5;
 
-$flightnav-border: #ddd;
-$flightnav-border-soft: #eee;
+$flightnav-shadow: 0 16px 40px rgba(20, 37, 63, 0.18);
+$flightnav-popover-shadow: 0 14px 36px rgba(17, 31, 52, 0.2);
 
-$flightnav-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-
-$flightnav-radius-sm: 5px;
-$flightnav-radius-md: 10px;
-$flightnav-radius-btn: 8px;
+$flightnav-radius-sm: 8px;
+$flightnav-radius-md: 12px;
+$flightnav-radius-lg: 14px;
+$flightnav-radius-pill: 999px;
 
 /* =======================
    Mixins
@@ -36,25 +37,25 @@ $flightnav-radius-btn: 8px;
 }
 
 @mixin flightnav-btn-base {
-  padding: 8px 14px;
-  border-radius: $flightnav-radius-btn;
   border: 1px solid $flightnav-border;
-  background: $flightnav-bg;
-  font-size: 13px;
+  border-radius: $flightnav-radius-sm;
+  background: $flightnav-white;
   cursor: pointer;
+  transition: all 0.18s ease;
 }
 
 /* =======================
    Styles
 ======================= */
 .flight-nav-wrapper {
-  width: 1200px;
-  background: $flightnav-bg;
-  padding: 100px 84px;
+  width: min(1220px, calc(100% - 80px));
+  background: $flightnav-white;
+  padding: 18px 20px 56px;
   box-shadow: $flightnav-shadow;
   position: absolute;
   transform: translate(150px, -450px);
   border-radius: $flightnav-radius-sm;
+  z-index: 140;
 }
 
 .trip-type {
@@ -62,83 +63,524 @@ $flightnav-radius-btn: 8px;
   font-size: 14px;
 
   label {
-    @include flightnav-flex(flex-start, center, 6px);
-    font-weight: 500;
+    @include flightnav-flex(flex-start, center, 7px);
+    font-weight: 600;
+    color: $flightnav-label;
+    cursor: pointer;
+    user-select: none;
+
+    input {
+      accent-color: $flightnav-primary;
+      cursor: pointer;
+      margin-top: 1px;
+    }
   }
 }
 
 .trip-right-text {
   margin-left: auto;
   font-size: 13px;
-  color: $flightnav-color-text;
+  color: #505b6f;
+  font-weight: 500;
 }
 
 .flight-search-box {
-  margin-top: 16px;
-  display: flex;
-  align-items: stretch;
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: minmax(195px, 1.1fr) 48px minmax(195px, 1.1fr) minmax(
+      165px,
+      0.9fr
+    ) minmax(165px, 0.9fr) minmax(200px, 1fr);
   border: 1px solid $flightnav-border;
-  border-radius: $flightnav-radius-md;
-  overflow: hidden;
+  border-radius: $flightnav-radius-lg;
+  background: $flightnav-white;
+  overflow: visible;
 }
 
 .field {
-  padding: 14px;
-  min-width: 180px;
+  padding: 12px 14px;
+  min-height: 98px;
   border-right: 1px solid $flightnav-border-soft;
+  position: relative;
+  transition: box-shadow 0.18s ease, background 0.18s ease;
 
   &:last-child {
     border-right: none;
   }
 
   .label {
-    font-size: 12px;
-    color: $flightnav-color-label;
     @include flightnav-flex(flex-start, center, 4px);
+    font-size: 12px;
+    color: $flightnav-label;
+    font-weight: 600;
+    letter-spacing: 0.1px;
   }
 
   h3 {
-    margin: 4px 0;
-    font-size: 22px;
+    margin: 6px 0 5px;
+    font-size: clamp(30px, 1.9vw, 35px);
+    line-height: 1.05;
+    color: $flightnav-text;
+    font-weight: 700;
+    letter-spacing: -0.3px;
   }
 
   p {
     font-size: 12px;
-    color: $flightnav-color-muted;
+    color: $flightnav-muted;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+
+  &.date h3,
+  &.travellers h3 {
+    font-size: clamp(31px, 1.7vw, 34px);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    color: $flightnav-disabled;
+    background: #fafbfd;
+
+    .label,
+    p {
+      color: $flightnav-disabled;
+    }
+  }
+}
+
+.clickable {
+  cursor: pointer;
+
+  &:hover {
+    background: #fbfdff;
+  }
+}
+
+.field.open {
+  box-shadow: inset 0 0 0 1px $flightnav-primary;
+  background: $flightnav-primary-soft;
 }
 
 .swap {
   @include flightnav-flex(center, center);
-  padding: 0 12px;
-  background: $flightnav-bg-swap;
+  border: none;
+  border-right: 1px solid $flightnav-border-soft;
+  background: #f6f9ff;
+  color: $flightnav-primary;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background: #eaf2ff;
+  }
 }
 
-.disabled {
-  color: $flightnav-color-disabled;
+.flight-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background: $flightnav-white;
+  border: 1px solid $flightnav-border;
+  border-radius: $flightnav-radius-md;
+  box-shadow: $flightnav-popover-shadow;
+  z-index: 55;
+}
+
+.location-popover {
+  width: 360px;
+  padding: 12px;
+
+  &.to-popover {
+    right: 0;
+    left: auto;
+  }
+}
+
+.airport-search {
+  width: 100%;
+  height: 38px;
+  padding: 0 11px;
+  border-radius: 9px;
+  border: 1px solid $flightnav-border;
+  font-size: 13px;
+  color: #2d3646;
+  outline: none;
+
+  &:focus {
+    border-color: $flightnav-primary;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.12);
+  }
+}
+
+.popover-subtitle {
+  margin: 10px 2px 8px;
+  font-size: 11px;
+  color: #788297;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.airport-list {
+  max-height: 276px;
+  overflow-y: auto;
+  @include flightnav-flex(flex-start, stretch, 6px);
+  flex-direction: column;
+}
+
+.airport-item {
+  @include flightnav-btn-base;
+  width: 100%;
+  padding: 10px 12px;
+  text-align: left;
+  @include flightnav-flex(space-between, center, 10px);
+
+  h5 {
+    margin: 0;
+    color: #202b3d;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  p {
+    margin-top: 2px;
+    font-size: 11px;
+    color: #74809a;
+    white-space: normal;
+  }
+
+  span {
+    color: $flightnav-primary;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    border-color: #bcd3f9;
+    background: $flightnav-primary-soft;
+  }
+}
+
+.calendar-popover {
+  width: 700px;
+  padding: 12px 14px 14px;
+}
+
+.calendar-popover.align-right {
+  right: 0;
+  left: auto;
+}
+
+.calendar-toolbar {
+  @include flightnav-flex(space-between, center);
+  margin-bottom: 10px;
+
+  span {
+    font-size: 13px;
+    color: #425068;
+    font-weight: 600;
+  }
+}
+
+.cal-nav-btn {
+  @include flightnav-btn-base;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 19px;
+  color: #2e3b53;
+  line-height: 1;
+  padding: 0;
+  @include flightnav-flex(center, center);
+
+  &:hover {
+    background: #f1f6ff;
+    border-color: #c2d5f7;
+  }
+}
+
+.calendar-months {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.calendar-month {
+  border: 1px solid $flightnav-border-soft;
+  border-radius: 10px;
+  padding: 9px 10px 10px;
+
+  h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #293549;
+    margin-bottom: 8px;
+  }
+}
+
+.calendar-week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 5px;
+
+  span {
+    text-align: center;
+    font-size: 11px;
+    color: #7b879c;
+    font-weight: 600;
+  }
+}
+
+.calendar-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.day-cell {
+  height: 32px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #273347;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  @include flightnav-flex(center, center);
+  padding: 0;
+  transition: all 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #f0f5ff;
+  }
+
+  &.today:not(.selected) {
+    border-color: #a4c6f9;
+    color: $flightnav-primary;
+  }
+
+  &.selected {
+    background: $flightnav-primary;
+    color: $flightnav-white;
+    border-color: $flightnav-primary;
+  }
+
+  &:disabled {
+    color: #b4bcc9;
+    cursor: not-allowed;
+  }
+}
+
+.day-cell-blank {
+  pointer-events: none;
+}
+
+.travellers-popover {
+  width: 430px;
+  right: 0;
+  left: auto;
+  padding: 12px;
+}
+
+.traveller-row {
+  @include flightnav-flex(space-between, center, 10px);
+  padding: 7px 0;
+
+  &.compact {
+    border-top: 1px solid $flightnav-border-soft;
+  }
+
+  h5 {
+    font-size: 13px;
+    color: #273247;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  p {
+    margin-top: 2px;
+    font-size: 11px;
+    color: #78849c;
+  }
+}
+
+.stepper {
+  @include flightnav-flex(center, center, 8px);
+  flex-shrink: 0;
+
+  button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid $flightnav-border;
+    border-radius: 7px;
+    background: $flightnav-white;
+    color: #2f3d53;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+
+    &:disabled {
+      color: #b9c0cb;
+      background: #f2f5f9;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    min-width: 18px;
+    text-align: center;
+    font-size: 14px;
+    color: #253147;
+    font-weight: 700;
+  }
+}
+
+.travel-class {
+  margin-top: 8px;
+  border-top: 1px solid $flightnav-border-soft;
+  padding-top: 10px;
+
+  h6 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.28px;
+    color: #6f7c94;
+    margin-bottom: 8px;
+  }
+}
+
+.class-options {
+  @include flightnav-flex(flex-start, center, 8px);
+  flex-wrap: wrap;
+
+  button {
+    @include flightnav-btn-base;
+    font-size: 12px;
+    padding: 7px 10px;
+    color: #35435a;
+
+    &.active {
+      border-color: $flightnav-primary;
+      background: $flightnav-primary;
+      color: $flightnav-white;
+    }
+  }
+}
+
+.traveller-footer {
+  margin-top: 12px;
+  @include flightnav-flex(space-between, center, 10px);
+
+  span {
+    font-size: 11px;
+    color: #79859c;
+  }
+}
+
+.apply-btn {
+  border: none;
+  background: linear-gradient(90deg, #1a73e8, #4da3ff);
+  color: $flightnav-white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: $flightnav-radius-pill;
+  padding: 8px 18px;
+  cursor: pointer;
 }
 
 .special-fares {
   margin-top: 14px;
-  @include flightnav-flex(flex-start, center, 10px);
+  @include flightnav-flex(flex-start, center, 9px);
   flex-wrap: wrap;
 
   .title {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 13px;
-    margin-right: 6px;
+    color: #344057;
+    margin-right: 3px;
   }
 
   button {
     @include flightnav-btn-base;
+    font-size: 12px;
+    color: #3a465d;
+    padding: 7px 11px;
+
+    &:hover {
+      border-color: #bdd3f7;
+      background: #f7faff;
+    }
 
     &.active {
-      border-color: $flightnav-color-primary;
-      color: $flightnav-color-primary;
+      border-color: $flightnav-primary;
+      background: $flightnav-primary-soft;
+      color: $flightnav-primary;
+      font-weight: 700;
     }
   }
 
   .tracker {
     margin-left: auto;
+  }
+}
+
+.flight-search-btn {
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 48px;
+  border: none;
+  border-radius: $flightnav-radius-pill;
+  background: linear-gradient(90deg, #1a73e8, #4da3ff);
+  color: $flightnav-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 1;
+  cursor: pointer;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    filter: brightness(1.05);
+    box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
+  }
+}
+
+@media (max-width: 1400px) {
+  .flight-nav-wrapper {
+    width: calc(100% - 50px);
+    transform: translate(24px, -450px);
+  }
+}
+
+@media (max-width: 1240px) {
+  .flight-nav-wrapper {
+    width: calc(100% - 36px);
+    transform: translate(18px, -450px);
+  }
+
+  .trip-right-text {
+    display: none;
+  }
+
+  .flight-search-box {
+    grid-template-columns: minmax(160px, 1fr) 42px minmax(160px, 1fr) minmax(
+        140px,
+        0.85fr
+      ) minmax(140px, 0.85fr) minmax(160px, 0.95fr);
+  }
+
+  .calendar-popover {
+    width: 620px;
   }
 }
