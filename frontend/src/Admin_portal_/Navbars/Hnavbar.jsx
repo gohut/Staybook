@@ -10,6 +10,7 @@ const Hnavbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userRole');
+    localStorage.removeItem('authToken');
     navigate('/');
   };
 

@@ -7,6 +7,7 @@ import {
   FiFileText,
   FiSettings,
   FiBriefcase,
+  FiBell,
 } from "react-icons/fi";
 import "./Vnavbar.scss";
 
@@ -56,6 +57,12 @@ const UVnavbar = ({ active, setActive }) => {
           onClick={() => setActive("settings")}
         >
           <FiSettings /> Account Settings
+        </button>
+        <button
+          className={active === "notifications" ? "active" : ""}
+          onClick={() => setActive("notifications")}
+        >
+          <FiBell /> Notifications
         </button>
       </nav>
     </aside>

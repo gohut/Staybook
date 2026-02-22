@@ -107,3 +107,29 @@
   padding: 10px 18px;
   border-radius: 10px;
 }
+.as-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 500px;
+}
+
+.as-eye {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #2563eb;
+  }
+
+  svg {
+    font-size: 1.1rem;
+  }
+}

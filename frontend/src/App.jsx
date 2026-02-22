@@ -49,6 +49,7 @@ function App() {
 
           <Route path="/admin" element={<Admin_portal/>} />
           <Route path="/user" element={<User_portal/>} />
+          <Route path="/user/:userId" element={<User_portal/>} />
           <Route path="/partner" element={<Partner_portal/>} />
 
 

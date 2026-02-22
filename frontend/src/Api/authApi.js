@@ -19,7 +19,7 @@ export const loginApi = async (email, password) => {
   return data; 
 };
 
-export const registerApi = async (name, email, password) => {
+export const registerApi = async (name, email, password, role = "TRAVELER") => {
   const response = await fetch(`${BASE_URL}/api/auth/register`, {
     method: "POST",
     headers: {
@@ -29,7 +29,7 @@ export const registerApi = async (name, email, password) => {
       name,
       email,
       password,
-      role: "TRAVELER"
+      role
     })
   });
 

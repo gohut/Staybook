@@ -22,6 +22,9 @@ $hr-pill-incomplete-text: #92400e;
 $hr-pill-pending-bg: #ffedd5;
 $hr-pill-pending-text: #9a3412;
 
+$hr-pill-review-bg: #e0e7ff;
+$hr-pill-review-text: #3730a3;
+
 $hr-pill-approved-bg: #dcfce7;
 $hr-pill-approved-text: #166534;
 
@@ -131,6 +134,10 @@ $hr-pill-rejected-text: #991b1b;
 
   &.pending {
     @include hr-pill($hr-pill-pending-bg, $hr-pill-pending-text);
+  }
+
+  &.under-review {
+    @include hr-pill($hr-pill-review-bg, $hr-pill-review-text);
   }
 
   &.approved {

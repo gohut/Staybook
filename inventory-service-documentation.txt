@@ -18,6 +18,10 @@ TABLE OF CONTENTS
  7.  repository/PartnerApplicationRepository.java
  8.  service/FileStorageService.java
  9.  test/InventoryServiceApplicationTests.java
+10. config/SecurityConfig.java
+11. ptnr_application/exception/GlobalExceptionHandler.java
+12. ptnr_application/model/ApplicationStatus.java
+13. ptnr_application/service/PartnerApplicationService.java
 
 ================================================================================
 
@@ -226,15 +230,26 @@ CODE:
 --------------------------------------------------------------------------------
 package com.staybook.inventory_service.ptnr_application.controller;
 
+import com.staybook.inventory_service.ptnr_application.model.ApplicationStatus;
 import com.staybook.inventory_service.ptnr_application.model.PartnerApplication;
 import com.staybook.inventory_service.ptnr_application.repository.PartnerApplicationRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import com.staybook.inventory_service.ptnr_application.service.FileStorageService;
+import com.staybook.inventory_service.ptnr_application.service.PartnerApplicationService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.time.LocalDate;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/test")
@@ -244,6 +259,8 @@ public class PartnerTestController {
     private final PartnerApplicationRepository repository;
     private final MongoTemplate mongoTemplate;
     private final FileStorageService fileStorageService;
+    private final PartnerApplicationService partnerApplicationService;
+
     @PostMapping("/create")
     public String create() {
         System.out.println("Connected DB: " + mongoTemplate.getDb().getName());
@@ -252,21 +269,97 @@ public class PartnerTestController {
                 .hotelName("Test Hotel")
                 .ownerName("Gowtham")
                 .email("gowtham@test.com")
-                .phone("9999999999")
+                .phone("99999599999")
                 .location("Chennai")
                 .regDate(LocalDate.now())
-                .status("PENDING")
+                .status(ApplicationStatus.PENDING)
                 .build();
 
         repository.save(application);
 
         return "Creation successful";
     }
+
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws  IOException
-    {
-        String fileId=fileStorageService.storeFile(file);
-        return  "File uploaded" + fileId;
+    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        String fileId = fileStorageService.storeFile(file);
+        return "File uploaded" + fileId;
+    }
+
+    @PostMapping("/submit")
+    public Map<String, Object> submitApplication(
+            @RequestParam String hotelName,
+            @RequestParam String ownerName,
+            @RequestParam String email,
+            @RequestParam String phone,
+            @RequestParam String location,
+            @RequestParam MultipartFile businessLicense,
+            @RequestParam MultipartFile idProof,
+            @RequestParam MultipartFile taxRegistration,
+            @RequestParam(required = false) List<MultipartFile> propertyPhotos
+    ) throws IOException {
+
+        PartnerApplication savedApplication =
+                partnerApplicationService.submitApplication(
+                        hotelName,
+                        ownerName,
+                        email,
+                        phone,
+                        location,
+                        businessLicense,
+                        idProof,
+                        taxRegistration,
+                        propertyPhotos
+                );
+
+        return Map.of(
+                "success", true,
+                "message", "Application submitted successfully",
+                "applicationId", savedApplication.getId()
+        );
+    }
+
+    @GetMapping("/status/{id}")
+    public Map<String, Object> getStatus(@PathVariable String id) {
+
+        PartnerApplication application = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found"));
+
+        return Map.of(
+                "success", true,
+                "applicationId", id,
+                "status", application.getStatus()
+        );
+    }
+
+    @PutMapping("/review/{id}")
+    public Map<String, Object> review(@PathVariable String id) {
+        PartnerApplication app = partnerApplicationService.moveToUnderReview(id);
+
+        return Map.of(
+                "success", true,
+                "status", app.getStatus()
+        );
+    }
+
+    @PutMapping("/approve/{id}")
+    public Map<String, Object> approve(@PathVariable String id) {
+        PartnerApplication app = partnerApplicationService.approveApplication(id);
+
+        return Map.of(
+                "success", true,
+                "status", app.getStatus()
+        );
+    }
+
+    @PutMapping("/reject/{id}")
+    public Map<String, Object> reject(@PathVariable String id) {
+        PartnerApplication app = partnerApplicationService.rejectApplication(id);
+
+        return Map.of(
+                "success", true,
+                "status", app.getStatus()
+        );
     }
 }
 ================================================================================
@@ -285,22 +378,30 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
+import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection="staybook_role")
-public class PartnerApplication
-{ @Id
-private String id;
+@Document(collection = "partner_applications")
+public class PartnerApplication {
+
+  @Id
+  private String id;
+
   private String hotelName;
   private String ownerName;
   private String email;
   private String phone;
   private String location;
   private LocalDate regDate;
-  private String status;
+  private ApplicationStatus status;
 
+  // File references
+  private String businessLicenseFileId;
+  private String idProofFileId;
+  private String taxRegistrationFileId;
+  private List<String> propertyPhotoFileIds;
 }
 ================================================================================
 
@@ -379,10 +480,265 @@ class InventoryServiceApplicationTests {
 
 
 ================================================================================
+FILE 10
+--------------------------------------------------------------------------------
+File Name : SecurityConfig.java
+Path      : Backend/Inventory_service/src/main/java/com/staybook/inventory_service/config/SecurityConfig.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.inventory_service.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> {})
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
+                )
+                .httpBasic(httpBasic -> httpBasic.disable())
+                .formLogin(form -> form.disable());
+
+        return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+}
+
+================================================================================
+
+
+================================================================================
+FILE 11
+--------------------------------------------------------------------------------
+File Name : GlobalExceptionHandler.java
+Path      : Backend/Inventory_service/src/main/java/com/staybook/inventory_service/ptnr_application/exception/GlobalExceptionHandler.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.inventory_service.ptnr_application.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Map;
+
+// @RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationException(IllegalArgumentException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of(
+                        "success", false,
+                        "error", ex.getMessage()
+                ));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of(
+                        "success", false,
+                        "error", "Something went wrong"
+                ));
+    }
+}
+
+================================================================================
+
+
+================================================================================
+FILE 12
+--------------------------------------------------------------------------------
+File Name : ApplicationStatus.java
+Path      : Backend/Inventory_service/src/main/java/com/staybook/inventory_service/ptnr_application/model/ApplicationStatus.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.inventory_service.ptnr_application.model;
+
+public enum ApplicationStatus {
+    PENDING,
+    UNDER_REVIEW,
+    APPROVED,
+    REJECTED
+}
+
+================================================================================
+
+
+================================================================================
+FILE 13
+--------------------------------------------------------------------------------
+File Name : PartnerApplicationService.java
+Path      : Backend/Inventory_service/src/main/java/com/staybook/inventory_service/ptnr_application/service/PartnerApplicationService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.inventory_service.ptnr_application.service;
+
+import com.staybook.inventory_service.ptnr_application.model.ApplicationStatus;
+import com.staybook.inventory_service.ptnr_application.model.PartnerApplication;
+import com.staybook.inventory_service.ptnr_application.model.PartnerApplication;
+import com.staybook.inventory_service.ptnr_application.repository.PartnerApplicationRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class PartnerApplicationService {
+
+    private final PartnerApplicationRepository repository;
+    private final FileStorageService fileStorageService;
+
+    public PartnerApplication submitApplication(
+            String hotelName,
+            String ownerName,
+            String email,
+            String phone,
+            String location,
+            MultipartFile businessLicense,
+            MultipartFile idProof,
+            MultipartFile taxRegistration,
+            List<MultipartFile> propertyPhotos
+    ) throws IOException {
+
+        if (businessLicense == null || businessLicense.isEmpty()) {
+            throw new IllegalArgumentException("Business License is required");
+        }
+
+        if (idProof == null || idProof.isEmpty()) {
+            throw new IllegalArgumentException("ID Proof is required");
+        }
+
+        if (taxRegistration == null || taxRegistration.isEmpty()) {
+            throw new IllegalArgumentException("Tax Registration document is required");
+        }
+
+        if (hotelName == null || hotelName.isBlank()) {
+            throw new IllegalArgumentException("Hotel name is required");
+        }
+
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Invalid email");
+        }
+
+        // Store PDFs
+        String businessLicenseId = fileStorageService.storeFile(businessLicense);
+        String idProofId = fileStorageService.storeFile(idProof);
+        String taxId = fileStorageService.storeFile(taxRegistration);
+
+        // Store images
+        List<String> photoIds = new ArrayList<>();
+        if (propertyPhotos != null) {
+            for (MultipartFile photo : propertyPhotos) {
+                photoIds.add(fileStorageService.storeFile(photo));
+            }
+        }
+
+        PartnerApplication application = PartnerApplication.builder()
+                .hotelName(hotelName)
+                .ownerName(ownerName)
+                .email(email)
+                .phone(phone)
+                .location(location)
+                .regDate(LocalDate.now())
+                .status(ApplicationStatus.PENDING)
+                .businessLicenseFileId(businessLicenseId)
+                .idProofFileId(idProofId)
+                .taxRegistrationFileId(taxId)
+                .propertyPhotoFileIds(photoIds)
+                .build();
+
+        return repository.save(application);
+    }
+
+    public PartnerApplication moveToUnderReview(String id) {
+        PartnerApplication app = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found"));
+
+        if (app.getStatus() != ApplicationStatus.PENDING) {
+            throw new IllegalArgumentException("Only PENDING applications can move to UNDER_REVIEW");
+        }
+
+        app.setStatus(ApplicationStatus.UNDER_REVIEW);
+        return repository.save(app);
+    }
+
+    public PartnerApplication approveApplication(String id) {
+        PartnerApplication app = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found"));
+
+        if (app.getStatus() != ApplicationStatus.UNDER_REVIEW) {
+            throw new IllegalArgumentException("Application must be UNDER_REVIEW to approve");
+        }
+
+        app.setStatus(ApplicationStatus.APPROVED);
+        return repository.save(app);
+    }
+
+    public PartnerApplication rejectApplication(String id) {
+        PartnerApplication app = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found"));
+
+        if (app.getStatus() != ApplicationStatus.UNDER_REVIEW) {
+            throw new IllegalArgumentException("Application must be UNDER_REVIEW to reject");
+        }
+
+        app.setStatus(ApplicationStatus.REJECTED);
+        return repository.save(app);
+    }
+}
+
+================================================================================
+
+
+================================================================================
   END OF DOCUMENT
-  Total Files Documented: 9
+  Total Files Documented: 13
   Microservice: Inventory_service (Spring Boot)
   Package Base: com.staybook.inventory_service
   Server Port: 8085
-  Database: MongoDB (staybook_role)
+  Database: MongoDB (partner_applications)
 ================================================================================

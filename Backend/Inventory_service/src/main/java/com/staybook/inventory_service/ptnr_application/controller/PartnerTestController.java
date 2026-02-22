@@ -122,7 +122,7 @@ public class PartnerTestController {
         );
     }
 
-    @PutMapping("/reject/{id}")
+        @PutMapping("/reject/{id}")
     public Map<String, Object> reject(@PathVariable String id) {
         PartnerApplication app = partnerApplicationService.rejectApplication(id);
 

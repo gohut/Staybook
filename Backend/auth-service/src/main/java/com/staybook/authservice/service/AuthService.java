@@ -21,6 +21,14 @@ public class AuthService {
     public String register(String name, String email, String password, Role role) {
 
         if (userRepository.existsByEmail(email)) {
+            if (role == Role.PARTNER) {
+                User existingUser = userRepository.findByEmail(email)
+                        .orElseThrow(() -> new RuntimeException("User not found"));
+                existingUser.setRole(Role.PARTNER);
+                existingUser.setPassword(passwordEncoder.encode(password));
+                userRepository.save(existingUser);
+                return "Partner account updated successfully";
+            }
             throw new RuntimeException("Email already exists");
         }
 

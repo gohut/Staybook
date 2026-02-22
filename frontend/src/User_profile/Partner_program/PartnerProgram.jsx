@@ -1,8 +1,9 @@
 // PartnerProgram.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiUpload, FiCheck, FiEye, FiX, FiMapPin, FiCalendar } from "react-icons/fi";
 import "./PartnerProgram.scss";
-import axios from "axios";
+import { submitPartnerApplication, getPartnerApplicationStatus } from "../../Api/partnerApplication";
+import { createNotification } from "../../Api/userProfile/userProfileApi";
 const PartnerProgram = () => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,6 +22,65 @@ const PartnerProgram = () => {
   });
 
   const [uploadedPhotos, setUploadedPhotos] = useState([]);
+  const [submittedApplication, setSubmittedApplication] = useState(null);
+  const [loadingStatus, setLoadingStatus] = useState(false);
+
+  const APPLICATION_ID_KEY = "partnerApplicationId";
+  const APPLICATION_NAME_KEY = "partnerApplicationHotelName";
+  const APPLICATION_DATE_KEY = "partnerApplicationDate";
+  const APPROVAL_NOTICE_KEY = "partnerApplicationApprovedNotified";
+  const SUBMIT_NOTICE_KEY = "partnerApplicationSubmittedNotified";
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("userEmail");
+    if (storedEmail) {
+      setFormData((prev) => ({ ...prev, email: storedEmail }));
+    }
+  }, []);
+
+  useEffect(() => {
+    const loadExistingApplication = async () => {
+      const existingId = localStorage.getItem(APPLICATION_ID_KEY);
+      if (!existingId) return;
+
+      setLoadingStatus(true);
+      try {
+        const statusResponse = await getPartnerApplicationStatus(existingId);
+        const storedHotelName = localStorage.getItem(APPLICATION_NAME_KEY) || "Your Property";
+        const storedDate = localStorage.getItem(APPLICATION_DATE_KEY) || new Date().toLocaleDateString();
+
+        setSubmittedApplication({
+          id: existingId,
+          hotelName: storedHotelName,
+          status: statusResponse.status,
+          date: storedDate,
+        });
+
+        if (
+          statusResponse.status === "APPROVED" &&
+          !localStorage.getItem(APPROVAL_NOTICE_KEY)
+        ) {
+          try {
+            await createNotification({
+              title: "Partner Application Update",
+              message: "Your Application has approved",
+              from: "ADMIN",
+              type: "SYSTEM",
+            });
+            localStorage.setItem(APPROVAL_NOTICE_KEY, "true");
+          } catch (notificationError) {
+            console.error(notificationError);
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoadingStatus(false);
+      }
+    };
+
+    loadExistingApplication();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +116,6 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    // Validate required documents
     if (
       !uploadedDocs.businessLicense ||
       !uploadedDocs.idProof ||
@@ -73,32 +132,50 @@ const handleSubmit = async (e) => {
 
     const data = new FormData();
 
-    // Text Fields
     data.append("hotelName", formData.hotelName);
     data.append("ownerName", formData.ownerName);
     data.append("email", formData.email);
     data.append("phone", formData.phone);
     data.append("location", formData.location);
 
-    // PDF Documents
     data.append("businessLicense", uploadedDocs.businessLicense);
     data.append("idProof", uploadedDocs.idProof);
     data.append("taxRegistration", uploadedDocs.taxRegistration);
 
-    // Multiple Photos
     uploadedPhotos.forEach((photo) => {
       data.append("propertyPhotos", photo);
     });
 
-    // 🚨 DO NOT manually set Content-Type header
-    const response = await axios.post(
-      "http://localhost:8085/test/submit",
-      data
-    );
+    const response = await submitPartnerApplication(data);
 
     alert(
-      `Application submitted successfully!\nApplication ID: ${response.data.applicationId}`
+      `Application submitted successfully!\nApplication ID: ${response.applicationId}`
     );
+
+    setSubmittedApplication({
+      id: response.applicationId,
+      hotelName: formData.hotelName,
+      status: "PENDING",
+      date: new Date().toLocaleDateString(),
+    });
+
+    localStorage.setItem(APPLICATION_ID_KEY, response.applicationId);
+    localStorage.setItem(APPLICATION_NAME_KEY, formData.hotelName);
+    localStorage.setItem(APPLICATION_DATE_KEY, new Date().toLocaleDateString());
+
+    if (!localStorage.getItem(SUBMIT_NOTICE_KEY)) {
+      try {
+        await createNotification({
+          title: "Partner Application Submitted",
+          message: "your application was sent to the ADMIN successfully",
+          from: "SYSTEM",
+          type: "SYSTEM",
+        });
+        localStorage.setItem(SUBMIT_NOTICE_KEY, "true");
+      } catch (notificationError) {
+        console.error(notificationError);
+      }
+    }
 
     setShowForm(false);
 
@@ -149,6 +226,34 @@ const handleSubmit = async (e) => {
               Send Application
             </button>
           </div>
+
+          {loadingStatus && <p>Checking your application status...</p>}
+
+          {submittedApplication && (
+            <div className="application-status-card">
+              <h3>My Application Status</h3>
+              <div className="status-info-grid">
+                <div className="status-item">
+                  <label>Property Name</label>
+                  <p>{submittedApplication.hotelName}</p>
+                </div>
+                <div className="status-item">
+                  <label>Application ID</label>
+                  <p>{submittedApplication.id}</p>
+                </div>
+                <div className="status-item">
+                  <label>Submission Date</label>
+                  <p>{submittedApplication.date}</p>
+                </div>
+                <div className="status-item">
+                  <label>Current Status</label>
+                  <span className={`status-badge ${submittedApplication.status.toLowerCase().replace('_', '-')}`}>
+                    {submittedApplication.status}
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

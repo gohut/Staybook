@@ -1,0 +1,1665 @@
+﻿================================================================================
+  STAYBOOK - USER_PROFILE_SERVICE MICROSERVICE DOCUMENTATION
+  Generated: 2026-02-22
+  Base Path: backend/user_profile_service/
+================================================================================
+
+This document contains the complete source code of all files in the
+user_profile_service Spring Boot microservice for the Staybook application.
+
+TABLE OF CONTENTS
+-----------------
+  1.  pom.xml
+  2.  application.properties
+  3.  UserProfileServiceApplication.java
+  4.  ApiResponse.java
+  5.  BusinessException.java
+  6.  FileStorageService.java
+  7.  GlobalExceptionHandler.java
+  8.  MongoConfig.java
+  9.  SecurityConfig.java
+ 10.  JwtAuthenticationFilter.java
+ 11.  JwtUtil.java
+ 12.  TravelerController.java
+ 13.  TravelerBookingResponse.java
+ 14.  TravelerNotificationRequest.java
+ 15.  TravelerNotificationResponse.java
+ 16.  TravelerRequest.java
+ 17.  TravelerResponse.java
+ 18.  TravelerVoucherResponse.java
+ 19.  BookingStatus.java
+ 20.  NotificationType.java
+ 21.  Traveler.java
+ 22.  TravelerBooking.java
+ 23.  TravelerNotification.java
+ 24.  TravelerVoucher.java
+ 25.  VoucherStatus.java
+ 26.  TravelerBookingRepository.java
+ 27.  TravelerNotificationRepository.java
+ 28.  TravelerRepository.java
+ 29.  TravelerVoucherRepository.java
+ 30.  TravelerBookingService.java
+ 31.  TravelerNotificationService.java
+ 32.  TravelerService.java
+ 33.  TravelerVoucherService.java
+ 34.  UserProfileServiceApplicationTests.java
+
+================================================================================
+
+================================================================================
+FILE 1
+--------------------------------------------------------------------------------
+File Name : pom.xml
+Path      : backend/user_profile_service/pom.xml
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.staybook</groupId>
+    <artifactId>user_profile_service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>user_profile_service</name>
+    <description>user_profile_service</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>21</java.version>
+        <jjwt.version>0.11.5</jjwt.version>
+        <lombok.version>1.18.36</lombok.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+================================================================================
+
+================================================================================
+FILE 2
+--------------------------------------------------------------------------------
+File Name : application.properties
+Path      : backend/user_profile_service/src/main/resources/application.properties
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+server.port=8082
+
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=staybookUserProfile
+spring.data.mongodb.uri=mongodb://localhost:27017/staybookUserProfile
+jwt.secret=your-super-secret-key-your-super-secret-key
+================================================================================
+
+================================================================================
+FILE 3
+--------------------------------------------------------------------------------
+File Name : UserProfileServiceApplication.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/UserProfileServiceApplication.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service;
+
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class UserProfileServiceApplication {
+    @Value("${spring.data.mongodb.uri}")
+    private String mongoUri;
+
+    @PostConstruct
+    public void printMongoUri() {
+        System.out.println("Mongo URI: " + mongoUri);
+    }
+    public static void main(String[] args) {
+        SpringApplication.run(UserProfileServiceApplication.class, args);
+    }
+
+}
+================================================================================
+
+================================================================================
+FILE 4
+--------------------------------------------------------------------------------
+File Name : ApiResponse.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/common/ApiResponse.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.common;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class ApiResponse<T> {
+
+    private boolean success;
+    private String message;
+    private T data;
+}
+================================================================================
+
+================================================================================
+FILE 5
+--------------------------------------------------------------------------------
+File Name : BusinessException.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/common/BusinessException.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.common;
+
+public class BusinessException extends RuntimeException {
+
+    public BusinessException(String message) {
+        super(message);
+    }
+}
+================================================================================
+
+================================================================================
+FILE 6
+--------------------------------------------------------------------------------
+File Name : FileStorageService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/common/FileStorageService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.common;
+
+import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+@Service
+@RequiredArgsConstructor
+public class FileStorageService {
+
+    private final GridFsTemplate gridFsTemplate;
+
+    public String storeFile(MultipartFile file) throws IOException {
+
+        ObjectId fileId = gridFsTemplate.store(
+                file.getInputStream(),
+                file.getOriginalFilename(),
+                file.getContentType()
+        );
+
+        return fileId.toString();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 7
+--------------------------------------------------------------------------------
+File Name : GlobalExceptionHandler.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/common/GlobalExceptionHandler.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.common;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<?> handleBusinessException(BusinessException ex) {
+
+        return ApiResponse.builder()
+                .success(false)
+                .message(ex.getMessage())
+                .data(null)
+                .build();
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<?> handleRuntimeException(RuntimeException ex) {
+
+        return ApiResponse.builder()
+                .success(false)
+                .message(ex.getMessage())
+                .data(null)
+                .build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResponse<?> handleGeneralException(Exception ex) {
+
+        return ApiResponse.builder()
+                .success(false)
+                .message("Internal server error")
+                .data(null)
+                .build();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 8
+--------------------------------------------------------------------------------
+File Name : MongoConfig.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/config/MongoConfig.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.config;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+
+@Configuration
+public class MongoConfig {
+
+    @Bean
+    @Primary
+    public MongoDatabaseFactory mongoDatabaseFactory(
+            @Value("${spring.data.mongodb.uri:}") String uri,
+            @Value("${spring.data.mongodb.host:localhost}") String host,
+            @Value("${spring.data.mongodb.port:27017}") int port,
+            @Value("${spring.data.mongodb.database:}") String database) {
+
+        String db = database == null ? "" : database.trim();
+        String resolvedUri = uri;
+        if (resolvedUri == null || resolvedUri.isBlank()) {
+            if (db.isBlank()) {
+                db = "staybookUserProfile";
+            }
+            resolvedUri = "mongodb://" + host + ":" + port + "/" + db;
+        }
+
+        ConnectionString connectionString = new ConnectionString(resolvedUri);
+        if (db.isBlank()) {
+            String uriDb = connectionString.getDatabase();
+            if (uriDb != null && !uriDb.isBlank()) {
+                db = uriDb;
+            }
+        }
+        if (db.isBlank()) {
+            db = "staybookUserProfile";
+        }
+
+        MongoClient client = MongoClients.create(connectionString);
+        return new SimpleMongoClientDatabaseFactory(client, db);
+    }
+}
+================================================================================
+
+================================================================================
+FILE 9
+--------------------------------------------------------------------------------
+File Name : SecurityConfig.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/config/SecurityConfig.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.config;
+
+import com.staybook.user_profile_service.security.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@Configuration
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtFilter;
+    @Bean
+    public CommandLineRunner printDb(
+            org.springframework.data.mongodb.core.MongoTemplate mongoTemplate) {
+        return args -> {
+            System.out.println("CONNECTED DB >>> "
+                    + mongoTemplate.getDb().getName());
+        };
+    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 10
+--------------------------------------------------------------------------------
+File Name : JwtAuthenticationFilter.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/security/JwtAuthenticationFilter.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.security;
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+
+@Component
+@RequiredArgsConstructor
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private final JwtUtil jwtUtil;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
+            throws ServletException, IOException {
+
+        String header = request.getHeader("Authorization");
+
+        if (header != null && header.startsWith("Bearer ")) {
+
+            String token = header.substring(7);
+
+            if (jwtUtil.validateToken(token)) {
+
+                String email = jwtUtil.extractEmail(token);
+
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(email, null, null);
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        }
+
+        filterChain.doFilter(request, response);
+    }
+}
+================================================================================
+
+================================================================================
+FILE 11
+--------------------------------------------------------------------------------
+File Name : JwtUtil.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/security/JwtUtil.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.security;
+
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.security.Key;
+
+@Component
+public class JwtUtil {
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+    private Key getKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
+
+    public String extractEmail(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}
+================================================================================
+
+================================================================================
+FILE 12
+--------------------------------------------------------------------------------
+File Name : TravelerController.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/controller/TravelerController.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.controller;
+
+import com.staybook.user_profile_service.common.ApiResponse;
+import com.staybook.user_profile_service.traveler.dto.TravelerRequest;
+import com.staybook.user_profile_service.traveler.dto.TravelerResponse;
+import com.staybook.user_profile_service.traveler.dto.TravelerBookingResponse;
+import com.staybook.user_profile_service.traveler.dto.TravelerNotificationResponse;
+import com.staybook.user_profile_service.traveler.dto.TravelerNotificationRequest;
+import com.staybook.user_profile_service.traveler.dto.TravelerVoucherResponse;
+import com.staybook.user_profile_service.traveler.entity.BookingStatus;
+import com.staybook.user_profile_service.traveler.entity.VoucherStatus;
+import com.staybook.user_profile_service.traveler.service.TravelerBookingService;
+import com.staybook.user_profile_service.traveler.service.TravelerNotificationService;
+import com.staybook.user_profile_service.traveler.service.TravelerService;
+import com.staybook.user_profile_service.traveler.service.TravelerVoucherService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.io.IOException;
+import java.time.LocalDate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
+@RestController
+@RequestMapping("/api/traveler")
+@RequiredArgsConstructor
+public class TravelerController {
+
+    private final TravelerService travelerService;
+    private final TravelerBookingService bookingService;
+    private final TravelerNotificationService notificationService;
+    private final TravelerVoucherService voucherService;
+    private final GridFsTemplate gridFsTemplate;
+
+    @PostMapping(consumes = "multipart/form-data")
+    public ApiResponse<TravelerResponse> createProfile(Authentication authentication,
+                                                       @RequestParam String firstName,
+                                                       @RequestParam String lastName,
+                                                       @RequestParam String phone,
+                                                       @RequestParam String dob,
+                                                       @RequestParam String nationality,
+                                                       @RequestParam(value = "avatar", required = false) MultipartFile avatar
+    ) throws IOException {
+
+        String email = authentication.getName();
+
+        TravelerRequest request = new TravelerRequest();
+        request.setFirstName(firstName);
+        request.setLastName(lastName);
+        request.setPhone(phone);
+        request.setDob(LocalDate.parse(dob));
+        request.setNationality(nationality);
+
+        TravelerResponse response =
+                travelerService.createProfile(email, request, avatar);
+
+        return ApiResponse.<TravelerResponse>builder()
+                .success(true)
+                .message("Profile created successfully")
+                .data(response)
+                .build();
+    }
+
+    @GetMapping
+    public ApiResponse<TravelerResponse> getProfile(Authentication authentication) {
+
+        String email = authentication.getName();
+        TravelerResponse response = travelerService.getProfile(email);
+
+        return ApiResponse.<TravelerResponse>builder()
+                .success(true)
+                .message("Profile fetched successfully")
+                .data(response)
+                .build();
+    }
+
+    @PutMapping
+    public ApiResponse<TravelerResponse> updateProfile(Authentication authentication,
+                                                       @RequestBody TravelerRequest request) {
+
+        String email = authentication.getName();
+        TravelerResponse response = travelerService.updateProfile(email, request);
+
+        return ApiResponse.<TravelerResponse>builder()
+                .success(true)
+                .message("Profile updated successfully")
+                .data(response)
+                .build();
+    }
+
+    @GetMapping("/trips")
+    public ApiResponse<Page<TravelerBookingResponse>> getTrips(
+            Authentication authentication,
+            @RequestParam(required = false) BookingStatus status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        String email = authentication.getName();
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<TravelerBookingResponse> trips =
+                bookingService.getTrips(email, status, pageable);
+
+        return ApiResponse.<Page<TravelerBookingResponse>>builder()
+                .success(true)
+                .message("Trips fetched successfully")
+                .data(trips)
+                .build();
+    }
+
+    @GetMapping("/notifications")
+    public ApiResponse<Page<TravelerNotificationResponse>> getNotifications(
+            Authentication authentication,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        String email = authentication.getName();
+        Pageable pageable =
+                PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<TravelerNotificationResponse> notifications =
+                notificationService.getNotifications(email, pageable);
+
+        return ApiResponse.<Page<TravelerNotificationResponse>>builder()
+                .success(true)
+                .message("Notifications fetched successfully")
+                .data(notifications)
+                .build();
+    }
+
+    @PostMapping("/notifications")
+    public ApiResponse<TravelerNotificationResponse> createNotification(
+            Authentication authentication,
+            @RequestBody TravelerNotificationRequest request) {
+
+        String email = authentication.getName();
+        TravelerNotificationResponse response =
+                notificationService.createNotification(email, request);
+
+        return ApiResponse.<TravelerNotificationResponse>builder()
+                .success(true)
+                .message("Notification created successfully")
+                .data(response)
+                .build();
+    }
+
+    @GetMapping("/notifications/unread-count")
+    public ApiResponse<Long> getUnreadCount(Authentication authentication) {
+
+        String email = authentication.getName();
+        long count = notificationService.getUnreadCount(email);
+
+        return ApiResponse.<Long>builder()
+                .success(true)
+                .message("Unread count fetched successfully")
+                .data(count)
+                .build();
+    }
+
+    @PutMapping("/notifications/{id}/read")
+    public ApiResponse<Void> markNotificationAsRead(Authentication authentication,
+                                                    @PathVariable String id) {
+
+        String email = authentication.getName();
+        notificationService.markAsRead(email, id);
+
+        return ApiResponse.<Void>builder()
+                .success(true)
+                .message("Notification marked as read")
+                .data(null)
+                .build();
+    }
+
+    @GetMapping("/vouchers")
+    public ApiResponse<List<TravelerVoucherResponse>> getVouchers(Authentication authentication,
+                                                                  @RequestParam(required = false) VoucherStatus status) {
+
+        String email = authentication.getName();
+        List<TravelerVoucherResponse> vouchers = voucherService.getVouchers(email, status);
+
+        return ApiResponse.<List<TravelerVoucherResponse>>builder()
+                .success(true)
+                .message("Vouchers fetched successfully")
+                .data(vouchers)
+                .build();
+    }
+
+    @GetMapping("/avatar/{fileId}")
+    public ResponseEntity<byte[]> getAvatar(@PathVariable String fileId)
+            throws IOException {
+
+        GridFsResource resource = gridFsTemplate
+                .getResource(
+                        gridFsTemplate.findOne(
+                                Query.query(Criteria.where("_id").is(fileId))
+                        )
+                );
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE,
+                        resource.getContentType())
+                .body(resource.getInputStream().readAllBytes());
+    }
+}
+================================================================================
+
+================================================================================
+FILE 13
+--------------------------------------------------------------------------------
+File Name : TravelerBookingResponse.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerBookingResponse.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.dto;
+
+import com.staybook.user_profile_service.traveler.entity.BookingStatus;
+import lombok.Builder;
+import lombok.Data;
+
+import java.time.LocalDate;
+
+@Data
+@Builder
+public class TravelerBookingResponse {
+
+    private String bookingId;
+
+    private String hotelName;
+    private String location;
+
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+
+    private String roomType;
+
+    private int guestsCount;
+    private int nights;
+
+    private BookingStatus status;
+
+    private String imageUrl;
+}
+================================================================================
+
+================================================================================
+FILE 14
+--------------------------------------------------------------------------------
+File Name : TravelerNotificationRequest.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerNotificationRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.dto;
+
+import com.staybook.user_profile_service.traveler.entity.NotificationType;
+import lombok.Data;
+
+@Data
+public class TravelerNotificationRequest {
+
+    private String title;
+    private String message;
+    private String from;
+    private NotificationType type;
+}
+================================================================================
+
+================================================================================
+FILE 15
+--------------------------------------------------------------------------------
+File Name : TravelerNotificationResponse.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerNotificationResponse.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.dto;
+
+import com.staybook.user_profile_service.traveler.entity.NotificationType;
+import lombok.Builder;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+public class TravelerNotificationResponse {
+
+    private String id;
+    private String title;
+    private String message;
+    private String from;
+    private NotificationType type;
+    private boolean isRead;
+    private LocalDateTime createdAt;
+}
+================================================================================
+
+================================================================================
+FILE 16
+--------------------------------------------------------------------------------
+File Name : TravelerRequest.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import java.time.LocalDate;
+
+@Data
+public class TravelerRequest {
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
+
+    @Size(min = 10, max = 15)
+    private String phone;
+    private LocalDate dob;
+    private String nationality;
+}
+================================================================================
+
+================================================================================
+FILE 17
+--------------------------------------------------------------------------------
+File Name : TravelerResponse.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerResponse.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+import java.time.LocalDate;
+
+@Data
+@Builder
+public class TravelerResponse {
+
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private LocalDate dob;
+    private String nationality;
+    private String avatarFileId;
+    private String profileTier;
+}
+================================================================================
+
+================================================================================
+FILE 18
+--------------------------------------------------------------------------------
+File Name : TravelerVoucherResponse.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerVoucherResponse.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.dto;
+
+import com.staybook.user_profile_service.traveler.entity.VoucherStatus;
+import lombok.Builder;
+import lombok.Data;
+
+import java.time.LocalDate;
+
+@Data
+@Builder
+public class TravelerVoucherResponse {
+
+    private String bookingId;
+
+    private String hotelName;
+    private String location;
+
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+
+    private String roomType;
+    private int guestsCount;
+
+    private VoucherStatus status;
+}
+================================================================================
+
+================================================================================
+FILE 19
+--------------------------------------------------------------------------------
+File Name : BookingStatus.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/BookingStatus.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.entity;
+
+public enum BookingStatus {
+    PENDING,
+    CONFIRMED,
+    COMPLETED,
+    CANCELLED,
+    NOT_SHOWN
+}
+================================================================================
+
+================================================================================
+FILE 20
+--------------------------------------------------------------------------------
+File Name : NotificationType.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/NotificationType.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.entity;
+
+public enum NotificationType {
+    INFO,
+    BOOKING,
+    SYSTEM,
+    ALERT
+}
+================================================================================
+
+================================================================================
+FILE 21
+--------------------------------------------------------------------------------
+File Name : Traveler.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/Traveler.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.entity;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Document(collection = "travelers")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Traveler {
+
+    @Id
+    private String id;
+
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private LocalDate dob;
+    private String nationality;
+    private String avatarFileId;
+
+    private String profileTier;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+================================================================================
+
+================================================================================
+FILE 22
+--------------------------------------------------------------------------------
+File Name : TravelerBooking.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/TravelerBooking.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.entity;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Document(collection = "traveler_bookings")
+@CompoundIndex(name = "email_status_index",
+        def = "{'email': 1, 'status': 1}")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class TravelerBooking {
+
+    @Id
+    private String id;
+
+    private String email; // link to traveler
+
+    private String bookingId;
+
+    private String hotelName;
+    private String location;
+    private String roomType;
+
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+
+    private int guestsCount;
+    private int nights;
+
+    private double totalPaid;
+    private String currency;
+
+    private BookingStatus status;
+
+    private String imageUrl;
+
+    private LocalDateTime createdAt;
+}
+================================================================================
+
+================================================================================
+FILE 23
+--------------------------------------------------------------------------------
+File Name : TravelerNotification.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/TravelerNotification.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.entity;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+
+@Document(collection = "traveler_notifications")
+@CompoundIndex(name = "email_createdAt_index",
+        def = "{'email': 1, 'createdAt': -1}")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class TravelerNotification {
+
+    @Id
+    private String id;
+
+    private String email;
+
+    private String title;
+    private String message;
+
+    private String from; // system / hotel / admin
+
+    private NotificationType type;
+
+    private boolean isRead;
+
+    private LocalDateTime createdAt;
+}
+================================================================================
+
+================================================================================
+FILE 24
+--------------------------------------------------------------------------------
+File Name : TravelerVoucher.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/TravelerVoucher.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.entity;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
+
+@Document(collection = "traveler_vouchers")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class TravelerVoucher {
+
+    @Id
+    private String id;
+
+    private String email;
+
+    private String bookingId;
+
+    private String hotelName;
+    private String location;
+    private String roomType;
+
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+
+    private int guestsCount;
+
+    private VoucherStatus status;
+}
+================================================================================
+
+================================================================================
+FILE 25
+--------------------------------------------------------------------------------
+File Name : VoucherStatus.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/VoucherStatus.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.entity;
+
+public enum VoucherStatus {
+    UPCOMING,
+    COMPLETED
+}
+================================================================================
+
+================================================================================
+FILE 26
+--------------------------------------------------------------------------------
+File Name : TravelerBookingRepository.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/repository/TravelerBookingRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.repository;
+
+import com.staybook.user_profile_service.traveler.entity.BookingStatus;
+import com.staybook.user_profile_service.traveler.entity.TravelerBooking;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface TravelerBookingRepository extends MongoRepository<TravelerBooking, String> {
+
+    Page<TravelerBooking> findByEmail(String email, Pageable pageable);
+
+    Page<TravelerBooking> findByEmailAndStatus(String email,
+                                               BookingStatus status,
+                                               Pageable pageable);
+}
+================================================================================
+
+================================================================================
+FILE 27
+--------------------------------------------------------------------------------
+File Name : TravelerNotificationRepository.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/repository/TravelerNotificationRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.repository;
+
+import com.staybook.user_profile_service.traveler.entity.TravelerNotification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface TravelerNotificationRepository extends MongoRepository<TravelerNotification, String> {
+
+    Page<TravelerNotification> findByEmail(String email, Pageable pageable);
+
+    long countByEmailAndIsReadFalse(String email);
+}
+================================================================================
+
+================================================================================
+FILE 28
+--------------------------------------------------------------------------------
+File Name : TravelerRepository.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/repository/TravelerRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.repository;
+
+import com.staybook.user_profile_service.traveler.entity.Traveler;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Optional;
+
+public interface TravelerRepository extends MongoRepository<Traveler, String> {
+
+    Optional<Traveler> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+}
+================================================================================
+
+================================================================================
+FILE 29
+--------------------------------------------------------------------------------
+File Name : TravelerVoucherRepository.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/repository/TravelerVoucherRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.repository;
+
+import com.staybook.user_profile_service.traveler.entity.TravelerVoucher;
+import com.staybook.user_profile_service.traveler.entity.VoucherStatus;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.List;
+
+public interface TravelerVoucherRepository extends MongoRepository<TravelerVoucher, String> {
+
+    List<TravelerVoucher> findByEmail(String email);
+
+    List<TravelerVoucher> findByEmailAndStatus(String email, VoucherStatus status);
+}
+================================================================================
+
+================================================================================
+FILE 30
+--------------------------------------------------------------------------------
+File Name : TravelerBookingService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/service/TravelerBookingService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.service;
+
+import com.staybook.user_profile_service.traveler.dto.TravelerBookingResponse;
+import com.staybook.user_profile_service.traveler.entity.BookingStatus;
+import com.staybook.user_profile_service.traveler.entity.TravelerBooking;
+import com.staybook.user_profile_service.traveler.repository.TravelerBookingRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+@Service
+@RequiredArgsConstructor
+public class TravelerBookingService {
+
+    private final TravelerBookingRepository bookingRepository;
+
+    public Page<TravelerBookingResponse> getTrips(String email,
+                                                  BookingStatus status,
+                                                  Pageable pageable) {
+
+        Page<TravelerBooking> bookings;
+
+        if (status != null) {
+            bookings = bookingRepository.findByEmailAndStatus(email, status, pageable);
+        } else {
+            bookings = bookingRepository.findByEmail(email, pageable);
+        }
+
+        return bookings.map(this::mapToResponse);
+    }
+
+    private TravelerBookingResponse mapToResponse(TravelerBooking booking) {
+
+        return TravelerBookingResponse.builder()
+                .bookingId(booking.getBookingId())
+                .hotelName(booking.getHotelName())
+                .location(booking.getLocation())
+                .checkInDate(booking.getCheckInDate())
+                .checkOutDate(booking.getCheckOutDate())
+                .roomType(booking.getRoomType())
+                .guestsCount(booking.getGuestsCount())
+                .nights(booking.getNights())
+                .status(booking.getStatus())
+                .imageUrl(booking.getImageUrl())
+                .build();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 31
+--------------------------------------------------------------------------------
+File Name : TravelerNotificationService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/service/TravelerNotificationService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.service;
+
+import com.staybook.user_profile_service.common.BusinessException;
+import com.staybook.user_profile_service.traveler.dto.TravelerNotificationResponse;
+import com.staybook.user_profile_service.traveler.dto.TravelerNotificationRequest;
+import com.staybook.user_profile_service.traveler.entity.NotificationType;
+import com.staybook.user_profile_service.traveler.entity.TravelerNotification;
+import com.staybook.user_profile_service.traveler.repository.TravelerNotificationRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import java.time.LocalDateTime;
+
+@Service
+@RequiredArgsConstructor
+public class TravelerNotificationService {
+
+    private final TravelerNotificationRepository notificationRepository;
+
+    public Page<TravelerNotificationResponse> getNotifications(String email,
+                                                               Pageable pageable) {
+
+        Page<TravelerNotification> notifications =
+                notificationRepository.findByEmail(email, pageable);
+
+        return notifications.map(this::mapToResponse);
+    }
+
+    public long getUnreadCount(String email) {
+        return notificationRepository.countByEmailAndIsReadFalse(email);
+    }
+
+    public void markAsRead(String email, String notificationId) {
+
+        TravelerNotification notification = notificationRepository
+                .findById(notificationId)
+                .orElseThrow(() -> new BusinessException("Notification not found"));
+
+        if (!notification.getEmail().equals(email)) {
+            throw new BusinessException("Unauthorized access");
+        }
+
+        notification.setRead(true);
+        notificationRepository.save(notification);
+    }
+
+    public TravelerNotificationResponse createNotification(String email,
+                                                           TravelerNotificationRequest request) {
+        String from = request.getFrom() != null ? request.getFrom() : "SYSTEM";
+
+        TravelerNotification notification = TravelerNotification.builder()
+                .email(email)
+                .title(request.getTitle())
+                .message(request.getMessage())
+                .from(from)
+                .type(request.getType() != null ? request.getType() : NotificationType.INFO)
+                .isRead(false)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        notificationRepository.save(notification);
+
+        return mapToResponse(notification);
+    }
+
+    private TravelerNotificationResponse mapToResponse(TravelerNotification notification) {
+
+        return TravelerNotificationResponse.builder()
+                .id(notification.getId())
+                .title(notification.getTitle())
+                .message(notification.getMessage())
+                .from(notification.getFrom())
+                .type(notification.getType())
+                .isRead(notification.isRead())
+                .createdAt(notification.getCreatedAt())
+                .build();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 32
+--------------------------------------------------------------------------------
+File Name : TravelerService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/service/TravelerService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.service;
+
+import com.staybook.user_profile_service.common.BusinessException;
+import com.staybook.user_profile_service.common.FileStorageService;
+import com.staybook.user_profile_service.traveler.dto.TravelerRequest;
+import com.staybook.user_profile_service.traveler.dto.TravelerResponse;
+import com.staybook.user_profile_service.traveler.entity.Traveler;
+import com.staybook.user_profile_service.traveler.repository.TravelerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+
+@Service
+@RequiredArgsConstructor
+public class TravelerService {
+
+    private final TravelerRepository travelerRepository;
+    private final FileStorageService fileStorageService;
+
+    public TravelerResponse createProfile(String email,
+                                          TravelerRequest request,
+                                          MultipartFile avatar) throws IOException {
+
+        if (travelerRepository.existsByEmail(email)) {
+            throw new BusinessException("Profile already exists");
+        }
+
+        String fileId = null;
+
+        if (avatar != null && !avatar.isEmpty()) {
+            fileId = fileStorageService.storeFile(avatar);
+        }
+
+        Traveler traveler = Traveler.builder()
+                .email(email)
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .phone(request.getPhone())
+                .dob(request.getDob())
+                .nationality(request.getNationality())
+                .avatarFileId(fileId)
+                .profileTier("SILVER")
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        travelerRepository.save(traveler);
+
+        return mapToResponse(traveler);
+    }
+
+    public TravelerResponse getProfile(String email) {
+
+        Traveler traveler = travelerRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException("Profile not found"));
+
+        return mapToResponse(traveler);
+    }
+
+    public TravelerResponse updateProfile(String email, TravelerRequest request) {
+
+        Traveler traveler = travelerRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException("Profile not found"));
+
+        traveler.setFirstName(request.getFirstName());
+        traveler.setLastName(request.getLastName());
+        traveler.setPhone(request.getPhone());
+        traveler.setDob(request.getDob());
+        traveler.setNationality(request.getNationality());
+        traveler.setUpdatedAt(LocalDateTime.now());
+
+        travelerRepository.save(traveler);
+
+        return mapToResponse(traveler);
+    }
+
+    private TravelerResponse mapToResponse(Traveler traveler) {
+        return TravelerResponse.builder()
+                .email(traveler.getEmail())
+                .firstName(traveler.getFirstName())
+                .lastName(traveler.getLastName())
+                .phone(traveler.getPhone())
+                .dob(traveler.getDob())
+                .nationality(traveler.getNationality())
+                .avatarFileId(traveler.getAvatarFileId())
+                .profileTier(traveler.getProfileTier())
+                .build();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 33
+--------------------------------------------------------------------------------
+File Name : TravelerVoucherService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/service/TravelerVoucherService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.service;
+
+import com.staybook.user_profile_service.traveler.dto.TravelerVoucherResponse;
+import com.staybook.user_profile_service.traveler.entity.TravelerVoucher;
+import com.staybook.user_profile_service.traveler.entity.VoucherStatus;
+import com.staybook.user_profile_service.traveler.repository.TravelerVoucherRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class TravelerVoucherService {
+
+    private final TravelerVoucherRepository voucherRepository;
+
+    public List<TravelerVoucherResponse> getVouchers(String email, VoucherStatus status) {
+
+        List<TravelerVoucher> vouchers;
+
+        if (status != null) {
+            vouchers = voucherRepository.findByEmailAndStatus(email, status);
+        } else {
+            vouchers = voucherRepository.findByEmail(email);
+        }
+
+        return vouchers.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    private TravelerVoucherResponse mapToResponse(TravelerVoucher voucher) {
+
+        return TravelerVoucherResponse.builder()
+                .bookingId(voucher.getBookingId())
+                .hotelName(voucher.getHotelName())
+                .location(voucher.getLocation())
+                .checkInDate(voucher.getCheckInDate())
+                .checkOutDate(voucher.getCheckOutDate())
+                .roomType(voucher.getRoomType())
+                .guestsCount(voucher.getGuestsCount())
+                .status(voucher.getStatus())
+                .build();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 34
+--------------------------------------------------------------------------------
+File Name : UserProfileServiceApplicationTests.java
+Path      : backend/user_profile_service/src/test/java/com/staybook/user_profile_service/UserProfileServiceApplicationTests.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class UserProfileServiceApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
+================================================================================
+
+
+================================================================================
+  END OF DOCUMENT
+  Total Files Documented: 34
+  Microservice: user_profile_service (Spring Boot)
+  Package Base: com.staybook.user_profile_service
+  Server Port: 8082
+  Database: MongoDB (staybookUserProfile)
+  
+  FEATURES INCLUDED:
+  - Traveler profile creation, update, and retrieval
+  - Avatar upload and retrieval via GridFS
+  - Trips listing with status filter and pagination
+  - Notifications (create, list, unread count, mark read)
+  - Voucher listing with status filter
+  - JWT-based request authentication
+================================================================================

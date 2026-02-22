@@ -1,5 +1,5 @@
 // Mytrips.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FiMapPin,
   FiCalendar,
@@ -7,98 +7,67 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 import "./mytrips.scss";
-
-const trips = [
-  {
-    name: "Sunset Paradise Resort",
-    location: "Bali, Indonesia",
-    checkin: "Feb 15, 2026",
-    checkout: "Feb 20, 2026",
-    duration: "5 nights",
-    room: "Deluxe Ocean View",
-    guests: "2 Guests",
-    id: "BK001",
-    status: "confirmed",
-    img: "https://images.unsplash.com/photo-1501117716987-c8e1ecb2101d",
-  },
-  {
-    name: "Mountain View Lodge",
-    location: "Swiss Alps, Switzerland",
-    checkin: "Mar 10, 2026",
-    checkout: "Mar 15, 2026",
-    duration: "5 nights",
-    room: "Premium Mountain Suite",
-    guests: "4 Guests",
-    id: "BK002",
-    status: "confirmed",
-    img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
-  },
-  {
-    name: "Urban Boutique Hotel",
-    location: "Tokyo, Japan",
-    checkin: "Apr 1, 2026",
-    checkout: "Apr 5, 2026",
-    duration: "4 nights",
-    room: "Executive Suite",
-    guests: "2 Guests",
-    id: "BK003",
-    status: "pending",
-    img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb",
-  },
-];
+import { fetchTrips } from "../../Api/userProfile/userProfileApi";
 
 const TripCard = ({ trip }) => {
   const {
-    name,
+    hotelName,
     location,
-    checkin,
-    checkout,
-    duration,
-    room,
-    guests,
-    id,
+    checkInDate,
+    checkOutDate,
+    nights,
+    roomType,
+    guestsCount,
+    bookingId,
     status,
-    img,
+    imageUrl,
   } = trip;
+
+  const statusLabel = status ? status.toLowerCase() : "pending";
+
+  const formatDate = (value) =>
+    value ? new Date(value).toLocaleDateString() : "-";
 
   return (
     <div className="trip-row">
-      <img src={img} alt={name} />
+      <img src={imageUrl || ""} alt={hotelName} />
 
       <div className="trip-mid">
-        <h3>{name}</h3>
+        <h3>{hotelName}</h3>
         <p className="loc">
           <FiMapPin /> {location}
         </p>
 
         <div className="meta">
           <div>
-            <FiCalendar /> <strong>{checkin}</strong>
+            <FiCalendar />{" "}
+            <strong>{formatDate(checkInDate)}</strong>
           </div>
           <div>
-            <FiCalendar /> <strong>{checkout}</strong>
+            <FiCalendar />{" "}
+            <strong>{formatDate(checkOutDate)}</strong>
           </div>
           <div>
-            <strong>{duration}</strong>
+            <strong>{nights} nights</strong>
           </div>
         </div>
 
         <p>
-          Room: <strong>{room}</strong>
+          Room: <strong>{roomType}</strong>
         </p>
         <p>
-          <FiUsers /> {guests}
+          <FiUsers /> {guestsCount} Guests
         </p>
-        <p className="bid">Booking ID: {id}</p>
+        <p className="bid">Booking ID: {bookingId}</p>
       </div>
 
       <div className="trip-actions">
-        <span className={`status ${status}`}>{status}</span>
+        <span className={`status ${statusLabel}`}>{statusLabel}</span>
         <button className="primary">
           View Details <FiChevronRight />
         </button>
         <button className="outline">Modify Dates</button>
-        <button className={`danger ${status === "pending" ? "disabled" : ""}`}>
+        <button className={`danger ${statusLabel === "pending" ? "disabled" : ""}`}>
           Cancel Booking
         </button>
       </div>
@@ -107,13 +76,48 @@ const TripCard = ({ trip }) => {
 };
 
 const Mytrips = () => {
+  const [trips, setTrips] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let isActive = true;
+    const loadTrips = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const data = await fetchTrips({ page: 0, size: 10 });
+        if (!isActive) return;
+        setTrips(data);
+      } catch (err) {
+        if (!isActive) return;
+        setError(err?.message || "Failed to load trips");
+      } finally {
+        if (isActive) setLoading(false);
+      }
+    };
+
+    loadTrips();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   return (
     <div className="mt-wrap">
       <h2>My Trips</h2>
       <p className="sub">Manage your upcoming stays</p>
 
+      {loading && <p>Loading your trips...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      {!loading && !error && trips.length === 0 && (
+        <p>No trips found yet.</p>
+      )}
+
       {trips.map((trip) => (
-        <TripCard key={trip.id} trip={trip} />
+        <TripCard key={trip.bookingId} trip={trip} />
       ))}
     </div>
   );

@@ -26,20 +26,45 @@ export default function Logincont({ onClose, onLoginSuccess }) {
 
     try {
       const data = await loginApi(email.trim(), password.trim());
+      const trimmedEmail = email.trim();
+      let decodedEmail = trimmedEmail;
+
+      if (data?.token) {
+        try {
+          const decoded = jwtDecode(data.token);
+          if (decoded?.sub) {
+            decodedEmail = decoded.sub;
+          }
+        } catch (decodeError) {
+          console.warn("Failed to decode token for email fallback.");
+        }
+      }
+
+      if (data?.token) {
+        localStorage.setItem("authToken", data.token);
+      }
+      if (data?.role) {
+        localStorage.setItem("userRole", data.role);
+      }
+      if (decodedEmail) {
+        localStorage.setItem("userEmail", decodedEmail);
+      }
 
       // Save JWT
 
       if (onLoginSuccess) {
-        onLoginSuccess({ data});
+        onLoginSuccess({ email: decodedEmail, role: data?.role });
       }
 
       onClose();
-   if (data.role === "ADMIN")         navigate("/admin");
-   else if (data.role === "PARTNER")  navigate("/partner");
-   else if(data.role=="TRAVELER")     navigate("/user");  
-    else {
-      navigate("/");
-    }
+      if (data.role === "ADMIN") navigate("/admin");
+      else if (data.role === "PARTNER") navigate("/partner");
+      else if (data.role === "TRAVELER") {
+        const userId = encodeURIComponent(decodedEmail || trimmedEmail);
+        navigate(`/user/${userId}`);
+      } else {
+        navigate("/");
+      }
 
     } catch (err) {
       setError(err.message || "Login failed");
