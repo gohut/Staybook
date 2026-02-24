@@ -41,3 +41,27 @@ export const registerApi = async (name, email, password, role = "TRAVELER") => {
 
   return data;
 };
+
+export const changePasswordApi = async (currentPassword, newPassword) => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    throw new Error("Authentication token missing. Please log in again.");
+  }
+
+  const response = await fetch(`${BASE_URL}/api/auth/password`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+
+  const data = await response.text();
+
+  if (!response.ok) {
+    throw new Error(data || "Failed to update password");
+  }
+
+  return data;
+};

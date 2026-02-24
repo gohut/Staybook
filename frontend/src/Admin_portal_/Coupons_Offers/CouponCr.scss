@@ -48,7 +48,8 @@ $couponcr-blue-600: #2563eb;
 }
 
 .form-grid {
-  
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
   margin-top: 20px;
 
@@ -58,6 +59,21 @@ $couponcr-blue-600: #2563eb;
     border: 1px solid $couponcr-gray-200;
     border-radius: 8px;
   }
+
+  input[readonly] {
+    background: #f8fafc;
+    color: #64748b;
+  }
+}
+
+.form-error {
+  color: #b91c1c;
+  margin-top: 10px;
+}
+
+.form-success {
+  color: #166534;
+  margin-top: 10px;
 }
 
 .actions {

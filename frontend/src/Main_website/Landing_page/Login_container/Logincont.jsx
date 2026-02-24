@@ -58,7 +58,7 @@ export default function Logincont({ onClose, onLoginSuccess }) {
 
       onClose();
       if (data.role === "ADMIN") navigate("/admin");
-      else if (data.role === "PARTNER") navigate("/partner");
+      else if (data.role === "PARTNER" || data.role === "SUB_PARTNER") navigate("/partner");
       else if (data.role === "TRAVELER") {
         const userId = encodeURIComponent(decodedEmail || trimmedEmail);
         navigate(`/user/${userId}`);

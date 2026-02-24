@@ -1,0 +1,213 @@
+Staybook Backend Services Documentation
+======================================
+
+Generated from the current repository state.
+
+1) Service Overview
+-------------------
+- auth-service
+  - Port: 8081
+  - Database: MySQL (jdbc:mysql://localhost:3306/staybook_auth)
+  - Purpose: authentication, user registration, JWT issuance
+
+- user_profile_service
+  - Port: 8082
+  - Database: MongoDB (mongodb://localhost:27017/staybookUserProfile)
+  - Purpose: traveler profiles & bookings, partner profiles & hotels, public hotel catalog, admin settings/coupons
+
+- Inventory_service
+  - Port: 8085
+  - Database: MongoDB (mongodb://localhost:27017, db: staybook_role)
+  - Purpose: partner applications & booking inventory
+  - File storage: GridFS for partner application documents
+
+2) auth-service
+---------------
+Tables (SQL)
+- users (JPA entity: com.staybook.authservice.entity.User)
+  - id (PK), name, email (unique), password, role, createdAt
+  - Role enum: TRAVELER, PARTNER, ADMIN, SUB_PARTNER
+
+Endpoints
+- POST /api/auth/register
+- POST /api/auth/login
+- PUT  /api/auth/password
+
+Frontend connections
+- frontend/src/Api/authApi.js
+  - loginApi() -> /api/auth/login
+  - registerApi() -> /api/auth/register
+  - changePasswordApi() -> /api/auth/password
+- Used in:
+  - Main_website/Landing_page/Login_container/Logincont.jsx (login/signup)
+  - Admin_portal_/Hotel_Registration/PartnerCredentialsPop.jsx (create partner login)
+  - Admin_portal_/Settings/Settings.jsx (create users)
+  - Partner_portal/Settings/PartnerSettings.jsx (change password)
+
+3) Inventory_service
+--------------------
+Collections (MongoDB)
+- partner_applications (Document: com.staybook.inventory_service.ptnr_application.model.PartnerApplication)
+  - id, hotelName, ownerName, email, phone, location, regDate, status
+  - businessLicenseFileId, idProofFileId, taxRegistrationFileId, propertyPhotoFileIds
+  - File IDs reference GridFS files stored in the same Mongo database
+
+- hotel_booking (Document: com.staybook.inventory_service.registration.model.HotelBooking)
+  - id, bookingId, hotelName, guestNames, guestEmail
+  - bookingAmount, checkInDate, checkOutDate
+  - adultCount, childrenCount, commission
+  - paymentStatus, bookingStatus, createdAt
+
+Endpoints
+- Partner applications
+  - GET    /api/partner-applications
+  - GET    /api/partner-applications/{id}
+  - PUT    /api/partner-applications/{id}/review
+  - PUT    /api/partner-applications/{id}/approve
+  - PUT    /api/partner-applications/{id}/reject
+  - DELETE /api/partner-applications/{id}
+  - GET    /api/partner-applications/file/{fileId}
+
+- Bookings
+  - POST   /api/bookings
+  - GET    /api/bookings
+  - GET    /api/bookings/{bookingId}
+  - PUT    /api/bookings/{bookingId}/payment
+  - PUT    /api/bookings/{bookingId}/status
+
+Frontend connections
+- frontend/src/Api/partnerApplication.js
+  - submitPartnerApplication(), listPartnerApplications(), approve/reject/review/delete
+- frontend/src/Api/booking/bookingApi.js
+  - createHotelBooking(), listHotelBookings(), updateHotelBookingStatus(), markBookingPaid()
+- Used in:
+  - User_profile/Partner_program/PartnerProgram.jsx (partner application submission)
+  - Admin_portal_/Hotel_Registration/HotelRegistration.jsx (review/approve/delete)
+  - Admin_portal_/Booking_Revenue/BookingRevenue.jsx (list bookings)
+  - Partner_portal/Reservation/Reservation.jsx (search & edit booking status)
+  - Main_website/.../Hotel_pge_4/Hotelpge4.jsx (create booking)
+  - Main_website/.../HomeStay_Section/Hotel_pge_4/Hotelpge4.jsx (create booking)
+
+4) user_profile_service
+-----------------------
+Collections (MongoDB)
+- travelers (Document: com.staybook.user_profile_service.traveler.entity.Traveler)
+  - id, email, firstName, lastName, phone, dob, nationality, avatarFileId, profileTier, createdAt, updatedAt
+
+- traveler_bookings (Document: com.staybook.user_profile_service.traveler.entity.TravelerBooking)
+  - id, email, bookingId, hotelName, location, roomType
+  - checkInDate, checkOutDate, guestsCount, nights, totalPaid, currency
+  - status, imageUrl, createdAt
+
+- traveler_vouchers (Document: com.staybook.user_profile_service.traveler.entity.TravelerVoucher)
+  - id, email, bookingId, hotelName, location, roomType
+  - checkInDate, checkOutDate, guestsCount, status
+
+- traveler_notifications (Document: com.staybook.user_profile_service.traveler.entity.TravelerNotification)
+  - id, email, title, message, from, type, isRead, createdAt
+
+- partners (Document: com.staybook.user_profile_service.partner.entity.Partner)
+  - id, email (JWT subject), name, phone, role, parentAdminEmail, hotelIds, createdAt, updatedAt
+
+- hotels (Document: com.staybook.user_profile_service.partner.entity.Hotel)
+  - id, partnerId, name, starRating, description
+  - location (embedded), contact (embedded)
+  - checkInTime, checkOutTime, status, createdAt, updatedAt
+
+- hotel_details (Document: com.staybook.user_profile_service.partner.entity.HotelDetails)
+  - id, hotelId
+  - roomTypes (embedded list), ratePlans (embedded list), reviews (embedded list), photos (embedded list)
+
+- hotel_photos (Document: com.staybook.user_profile_service.partner.entity.HotelPhoto)
+  - id, hotelId, roomTypeId, fileId (GridFS), type, isPrimary, uploadedAt
+
+- admin_coupons (Document: com.staybook.user_profile_service.admin.entity.AdminCoupon)
+  - id, name, code, discountType, discountValue
+  - generationCondition, costValue, validFrom, validTo
+  - usageLimit, usageCount, appliesTo, createdAt, updatedAt
+
+- admin_settings (Document: com.staybook.user_profile_service.admin.entity.AdminSettings)
+  - id (GLOBAL), defaultCommissionRate, minCommissionRate, maxCommissionRate
+  - serviceFeeType, serviceFeeValue
+  - autoApproveHotels, requireTaxRegistration, requireBusinessLicense, requireEmailVerification
+  - maxCouponUsagePerUser, allowMultipleCouponsPerBooking, suspiciousActivityThreshold
+
+Embedded models (not separate collections)
+- Location, Contact (in hotels)
+- RoomType, RatePlan, Review (in hotel_details)
+
+Endpoints
+- Traveler
+  - /api/traveler (profile create/get/update)
+  - /api/traveler/trips
+  - /api/traveler/bookings
+  - /api/traveler/bookings/{bookingId}/payment
+  - /api/traveler/notifications, /api/traveler/notifications/{id}/read, /api/traveler/notifications/unread-count
+  - /api/traveler/vouchers
+  - /api/traveler/avatar/{fileId}
+  - /api/traveler/admin/notifications (create notification for any email)
+
+- Partner
+  - /api/partner (get/update partner profile)
+  - /api/partner/hotels (create/list/update hotel)
+  - /api/partner/hotels/{hotelId}/details
+  - /api/partner/hotels/{hotelId}/room-types (add/update/delete)
+  - /api/partner/hotels/{hotelId}/photos (upload/list)
+  - /api/partner/hotels/photos/{fileId} (download)
+
+- Public hotels
+  - /api/public/hotels (list)
+  - /api/public/hotels/{hotelId} (details)
+  - /api/public/hotels/{hotelId}/photos (list)
+  - /api/public/hotels/photos/{fileId} (download)
+
+- Admin
+  - /api/admin/coupons (list/create)
+  - /api/admin/settings (get/update)
+  - /api/admin/sub-partners (create)
+
+Frontend connections
+- frontend/src/Api/userProfile/userProfileApi.js
+  - traveler profile, bookings, notifications, vouchers, avatar
+- frontend/src/Api/partner/partnerApi.js
+  - partner profile, hotels, room types, hotel photos
+- frontend/src/Api/publicHotels/publicHotelsApi.js
+  - public hotel list/details/photos
+- frontend/src/Api/admin/adminApi.js
+  - admin coupons, settings, sub-partners
+- Used in:
+  - Partner_portal (property management, photos, settings)
+  - Main website public hotel pages
+  - Admin portal settings & coupons
+  - Traveler profile and notifications
+
+5) Cross-Service Connections
+----------------------------
+- Auth -> User Profile
+  - auth-service issues JWT; user_profile_service expects Authorization: Bearer <token> for most endpoints.
+  - Partner email in user_profile_service is the JWT subject (auth email).
+
+- Inventory bookings -> Traveler bookings
+  - Main website creates a booking in Inventory_service (hotel_booking) and also creates a traveler booking in user_profile_service (traveler_bookings) when logged in.
+  - traveler_bookings.bookingId corresponds to inventory_service.hotel_booking.bookingId
+
+- Partner applications -> Admin & Partner creation
+  - Inventory_service stores partner_applications + document files (GridFS).
+  - Admin portal reviews applications and creates partner auth accounts (auth-service) and partner profiles (user_profile_service).
+
+- Hotel media
+  - user_profile_service stores hotel photos in GridFS; hotel_photos.fileId references the file in GridFS.
+  - Public and partner endpoints stream the photo bytes from GridFS.
+
+6) Frontend Placement Summary
+-----------------------------
+- Admin portal (frontend/src/Admin_portal_)
+  - Uses adminApi.js, partnerApplication.js, bookingApi.js, authApi.js
+- Partner portal (frontend/src/Partner_portal/)
+  - Uses partnerApi.js, bookingApi.js, authApi.js
+- Main website (frontend/src/Main_website/)
+  - Uses publicHotelsApi.js and bookingApi.js to create bookings
+- User profile (frontend/src/User_profile/)
+  - Uses userProfileApi.js for traveler data and notifications
+
+End of document

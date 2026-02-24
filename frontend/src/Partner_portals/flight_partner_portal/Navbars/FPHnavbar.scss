@@ -1,0 +1,150 @@
+.fp-header {
+  position: fixed;
+  top: 0;
+  left: 280px;
+  right: 0;
+  height: 86px;
+  background: var(--fp-card);
+  box-shadow: 0 10px 24px rgba(15, 42, 68, 0.08);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.fp-layout.collapsed .fp-header {
+  left: 90px;
+}
+
+.fp-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  h1 {
+    margin: 0;
+    font-size: 20px;
+  }
+
+  p {
+    margin: 2px 0 0;
+    color: var(--fp-muted);
+    font-size: 13px;
+  }
+}
+
+.fp-menu {
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(47, 128, 237, 0.1);
+  color: var(--fp-accent);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.fp-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fp-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  border-radius: 999px;
+  padding: 8px 12px;
+  min-width: 280px;
+
+  input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: inherit;
+  }
+}
+
+.fp-bell {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(15, 42, 68, 0.08);
+  display: grid;
+  place-items: center;
+  color: var(--fp-primary);
+}
+
+.fp-badge {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: var(--fp-warning);
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.fp-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 42, 68, 0.05);
+  border-radius: 999px;
+  padding: 6px 12px;
+
+  span {
+    display: block;
+  }
+}
+
+.fp-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: var(--fp-primary);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+
+.fp-user-name {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.fp-user-role {
+  font-size: 11px;
+  color: var(--fp-muted);
+}
+
+@media (max-width: 1100px) {
+  .fp-header {
+    left: 90px;
+  }
+
+  .fp-search {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .fp-header {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    gap: 12px;
+  }
+
+  .fp-content {
+    margin-top: 130px;
+    height: calc(100vh - 130px);
+  }
+}

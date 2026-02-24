@@ -174,7 +174,12 @@ $br-orange-800: #9a3412;
   color: $br-gray-500;
 }
 
-.status {
+.muted {
+  color: $br-slate-300;
+  font-size: 12px;
+}
+
+.pill {
   font-size: 12px;
   font-weight: 600;
   padding: 4px 10px;
@@ -182,16 +187,23 @@ $br-orange-800: #9a3412;
   display: inline-block;
 }
 
-.status.paid {
+.pill.paid,
+.pill.settled {
   @include br-chip($br-emerald-50, $br-emerald-800);
 }
 
-.status.pending {
+.pill.pending {
   @include br-chip($br-orange-100, $br-orange-800);
 }
 
-.status.failed {
+.pill.failed,
+.pill.cancelled {
   @include br-chip($br-indigo-100, $br-indigo-800);
+}
+
+.pill.confirmed,
+.pill.completed {
+  @include br-chip($br-sky-50, $br-sky-800);
 }
 
 /* ===== Responsive ===== */

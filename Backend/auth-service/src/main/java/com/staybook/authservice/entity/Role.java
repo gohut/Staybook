@@ -3,5 +3,6 @@ package com.staybook.authservice.entity;
 public enum Role {
     TRAVELER,
     PARTNER,
-    ADMIN
+    ADMIN,
+    SUB_PARTNER
 }

@@ -1,0 +1,354 @@
+$pd-white: #ffffff;
+$pd-slate-50: #f8fafc;
+$pd-slate-100: #f1f5f9;
+$pd-slate-200: #e2e8f0;
+$pd-slate-400: #94a3b8;
+$pd-slate-600: #475569;
+$pd-slate-800: #1e293b;
+$pd-blue-600: #2563eb;
+$pd-green-600: #16a34a;
+$pd-red-600: #dc2626;
+
+.pd-container {
+  h1 {
+    margin-bottom: 6px;
+  }
+
+  .pd-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+
+    p {
+      color: $pd-slate-600;
+      margin: 0;
+    }
+  }
+
+  .pd-tabs {
+    display: flex;
+    gap: 10px;
+
+    button {
+      border: 1px solid $pd-slate-200;
+      background: $pd-white;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 600;
+      color: $pd-slate-600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+
+      &.active,
+      &:hover {
+        background: rgba(37, 99, 235, 0.08);
+        color: $pd-blue-600;
+        border-color: $pd-blue-600;
+      }
+    }
+  }
+
+  .pd-card {
+    margin-top: 22px;
+    background: $pd-white;
+    border: 1px solid $pd-slate-200;
+    border-radius: 18px;
+    padding: 20px;
+  }
+
+  .pd-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+
+    button {
+      border: 1px solid $pd-slate-200;
+      background: $pd-slate-50;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      color: $pd-slate-600;
+
+      &.active,
+      &:hover {
+        background: rgba(37, 99, 235, 0.1);
+        color: $pd-blue-600;
+        border-color: $pd-blue-600;
+      }
+    }
+  }
+
+  .pd-table {
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid $pd-slate-100;
+        font-size: 14px;
+      }
+
+      th {
+        color: $pd-slate-600;
+        font-weight: 600;
+      }
+
+      tbody tr {
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &:hover {
+          background: $pd-slate-50;
+        }
+      }
+    }
+  }
+
+  .inspect {
+    border: none;
+    background: rgba(37, 99, 235, 0.1);
+    color: $pd-blue-600;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .pd-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    .back {
+      border: none;
+      background: none;
+      color: $pd-blue-600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      width: fit-content;
+    }
+  }
+
+  .pd-detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .pd-detail-card {
+    border: 1px solid $pd-slate-200;
+    border-radius: 16px;
+    padding: 18px;
+    background: $pd-slate-50;
+
+    h3 {
+      margin-top: 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: $pd-white;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid $pd-slate-100;
+      }
+    }
+  }
+
+  .pd-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+
+    span {
+      display: block;
+      color: $pd-slate-400;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    strong {
+      color: $pd-slate-800;
+      font-weight: 600;
+    }
+  }
+
+  .pd-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .danger {
+      border: none;
+      background: rgba(220, 38, 38, 0.1);
+      color: $pd-red-600;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  .pd-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .pd-modal-card {
+    background: $pd-white;
+    border-radius: 20px;
+    padding: 24px;
+    width: min(920px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .pd-modal-head {
+    h2 {
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin: 0;
+      color: $pd-slate-600;
+    }
+  }
+
+  .pd-commission-form {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid $pd-slate-200;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    .note {
+      align-self: end;
+      color: $pd-slate-600;
+      font-weight: 600;
+      background: $pd-slate-50;
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+  }
+
+  .pd-room-table {
+    margin-top: 18px;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid $pd-slate-100;
+      }
+
+      th {
+        color: $pd-slate-600;
+      }
+    }
+  }
+
+  .pd-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    margin-top: 12px;
+    background: $pd-slate-50;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+
+  .pd-modal-actions {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+
+    .primary {
+      border: none;
+      background: $pd-blue-600;
+      color: $pd-white;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    border: none;
+    background: $pd-slate-50;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  .muted {
+    color: $pd-slate-400;
+
+    &.error {
+      color: $pd-red-600;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .pd-container {
+    .pd-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .pd-detail-grid,
+    .pd-commission-form {
+      grid-template-columns: 1fr;
+    }
+  }
+}

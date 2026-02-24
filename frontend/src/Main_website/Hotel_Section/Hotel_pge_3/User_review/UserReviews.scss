@@ -52,14 +52,14 @@ $userreviews-radius-xs: 6px;
 /* =======================
    Styles
 ======================= */
-.reviews-wrapper {
+.htl3-ur-reviews-wrapper {
   max-width: 1180px;
   margin: 20px auto;
   @include userreviews-panel(16px, $userreviews-radius-lg);
   border: 1px solid $userreviews-border-soft;
 }
 
-.review-tabs {
+.htl3-ur-review-tabs {
   display: flex;
   gap: 18px;
   border-bottom: 1px solid $userreviews-border-soft;
@@ -78,22 +78,22 @@ $userreviews-radius-xs: 6px;
   }
 }
 
-.review-grid {
+.htl3-ur-review-grid {
   display: grid;
   grid-template-columns: 1.2fr 2.5fr;
   gap: 20px;
 }
 
 /* LEFT */
-.review-summary {
+.htl3-ur-review-summary {
   font-size: 14px;
 }
 
-.overall {
+.htl3-ur-overall {
   @include userreviews-flex(flex-start, center, 12px);
 }
 
-.overall-score {
+.htl3-ur-overall-score {
   background: $userreviews-color-rating-bg;
   color: $userreviews-color-white;
   font-size: 20px;
@@ -104,11 +104,11 @@ $userreviews-radius-xs: 6px;
   @include userreviews-center;
 }
 
-.bars {
+.htl3-ur-bars {
   margin: 14px 0;
 }
 
-.bar-row {
+.htl3-ur-bar-row {
   display: grid;
   grid-template-columns: 80px 1fr 40px;
   gap: 8px;
@@ -116,7 +116,7 @@ $userreviews-radius-xs: 6px;
   font-size: 13px;
 }
 
-.bar {
+.htl3-ur-bar {
   height: 6px;
   background: $userreviews-border-soft;
   border-radius: $userreviews-radius-xs;
@@ -128,11 +128,11 @@ $userreviews-radius-xs: 6px;
   }
 }
 
-.last-ratings {
+.htl3-ur-last-ratings {
   margin: 16px 0;
 }
 
-.rating-bubbles {
+.htl3-ur-rating-bubbles {
   display: flex;
   gap: 6px;
   margin-top: 6px;
@@ -144,26 +144,26 @@ $userreviews-radius-xs: 6px;
   }
 }
 
-.categories {
-  .cat-row {
+.htl3-ur-categories {
+  .htl3-ur-cat-row {
     display: flex;
     justify-content: space-between;
     margin-top: 6px;
   }
 }
 
-.cat-score {
+.htl3-ur-cat-score {
   @include userreviews-outline-pill($userreviews-radius-xs);
   padding: 2px 6px;
   font-size: 12px;
 }
 
 /* RIGHT */
-.review-top {
+.htl3-ur-review-top {
   @include userreviews-flex(space-between, flex-start);
 }
 
-.filters {
+.htl3-ur-filters {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
@@ -183,7 +183,7 @@ $userreviews-radius-xs: 6px;
   }
 }
 
-.sort {
+.htl3-ur-sort {
   select {
     padding: 6px;
     border-radius: $userreviews-radius-xs;
@@ -191,14 +191,14 @@ $userreviews-radius-xs: 6px;
   }
 }
 
-.review-card {
+.htl3-ur-review-card {
   display: flex;
   gap: 12px;
   padding: 14px 0;
   border-bottom: 1px solid $userreviews-border-soft;
 }
 
-.review-score {
+.htl3-ur-review-score {
   min-width: 36px;
   height: 36px;
   @include userreviews-outline-pill($userreviews-radius-sm);
@@ -206,7 +206,7 @@ $userreviews-radius-xs: 6px;
   @include userreviews-center;
 }
 
-.review-content {
+.htl3-ur-review-content {
   b {
     font-size: 14px;
   }
@@ -217,20 +217,20 @@ $userreviews-radius-xs: 6px;
   }
 }
 
-.review-meta {
+.htl3-ur-review-meta {
   display: block;
   font-size: 12px;
   color: $userreviews-color-meta;
 }
 
-.review-footer {
+.htl3-ur-review-footer {
   font-size: 12px;
   color: $userreviews-color-text;
   display: flex;
   gap: 14px;
 }
 
-.pagination {
+.htl3-ur-pagination {
   display: flex;
   gap: 8px;
   justify-content: center;

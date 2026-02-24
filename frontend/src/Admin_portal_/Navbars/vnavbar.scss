@@ -67,7 +67,8 @@ $vnav-width: 260px;
     @include vnav-flex(flex-start, stretch, 6px);
     flex-direction: column;
 
-    a {
+    a,
+    button {
       @include vnav-flex(flex-start, center, 14px);
       padding: 12px 16px;
       border-radius: 12px;
@@ -76,6 +77,9 @@ $vnav-width: 260px;
       color: $vnav-indigo-200;
       cursor: pointer;
       @include vnav-transition(background 0.25s ease, color 0.25s ease);
+      background: transparent;
+      border: none;
+      text-align: left;
 
       /* Icon sizing consistency */
       svg {
@@ -93,6 +97,16 @@ $vnav-width: 260px;
         background: $vnav-blue-600;
         color: $vnav-white;
         font-weight: 600;
+      }
+    }
+
+    .vnav-logout {
+      margin-top: 4px;
+      color: $vnav-slate-400;
+
+      &:hover {
+        background: $vnav-hover-bg;
+        color: $vnav-white;
       }
     }
   }

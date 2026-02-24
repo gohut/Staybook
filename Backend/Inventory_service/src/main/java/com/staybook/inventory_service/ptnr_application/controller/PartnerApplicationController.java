@@ -60,6 +60,12 @@ public class PartnerApplicationController {
         return applicationService.rejectApplication(id);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        applicationService.deleteApplication(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/file/{fileId}")
     public ResponseEntity<byte[]> getFile(@PathVariable String fileId) throws IOException {
 

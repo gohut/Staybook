@@ -3,8 +3,10 @@ import "./hotelregistration.scss";
 import ReviewPop from "./ReviewPop";
 import {
   listPartnerApplications,
+  deletePartnerApplication,
 } from "../../Api/partnerApplication";
 import PartnerCredentialsPop from "./PartnerCredentialsPop";
+import { FiX } from "react-icons/fi";
 
 const isDocsComplete = (app) => {
   return Boolean(
@@ -16,7 +18,7 @@ const isDocsComplete = (app) => {
   );
 };
 
-const HotelRegistration = () => {
+const HotelRegistration = ({ searchQuery = "" }) => {
   const [open, setOpen] = useState(false);
   const [applications, setApplications] = useState([]);
   const [selectedApplication, setSelectedApplication] = useState(null);
@@ -24,6 +26,8 @@ const HotelRegistration = () => {
   const [approvedApplication, setApprovedApplication] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [deletingId, setDeletingId] = useState(null);
+  const [deleteError, setDeleteError] = useState("");
 
   const loadApplications = async () => {
     setLoading(true);
@@ -42,18 +46,28 @@ const HotelRegistration = () => {
     loadApplications();
   }, []);
 
+  const filteredApplications = useMemo(() => {
+    if (!searchQuery.trim()) return applications;
+    const needle = searchQuery.toLowerCase();
+    return applications.filter((app) =>
+      [app.hotelName, app.ownerName, app.email, app.location]
+        .filter(Boolean)
+        .some((val) => val.toString().toLowerCase().includes(needle))
+    );
+  }, [applications, searchQuery]);
+
   const stats = useMemo(() => {
-    const total = applications.length;
-    const pending = applications.filter((app) =>
+    const total = filteredApplications.length;
+    const pending = filteredApplications.filter((app) =>
       ["PENDING", "UNDER_REVIEW"].includes(app.status)
     ).length;
-    const approved = applications.filter((app) => app.status === "APPROVED")
+    const approved = filteredApplications.filter((app) => app.status === "APPROVED")
       .length;
-    const incomplete = applications.filter((app) => !isDocsComplete(app)).length;
+    const incomplete = filteredApplications.filter((app) => !isDocsComplete(app)).length;
     const approvalRate = total > 0 ? Math.round((approved / total) * 100) : 0;
 
     return { pending, approved, incomplete, approvalRate };
-  }, [applications]);
+  }, [filteredApplications]);
 
   const handleReviewClick = (app) => {
     setSelectedApplication(app);
@@ -72,6 +86,29 @@ const HotelRegistration = () => {
   const handleApproved = (updated) => {
     setApprovedApplication(updated);
     setShowCredentials(true);
+  };
+
+  const handleDelete = async (app) => {
+    if (!app?.id) return;
+    setDeleteError("");
+    const confirmed = window.confirm(
+      `Delete application for ${app.hotelName || "this hotel"}? This cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    setDeletingId(app.id);
+    try {
+      await deletePartnerApplication(app.id);
+      setApplications((prev) => prev.filter((item) => item.id !== app.id));
+      if (selectedApplication?.id === app.id) {
+        setSelectedApplication(null);
+        setOpen(false);
+      }
+    } catch (err) {
+      setDeleteError(err?.message || "Failed to delete application.");
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   return (
@@ -105,7 +142,7 @@ const HotelRegistration = () => {
           <p className="muted">Loading applications...</p>
         ) : error ? (
           <p className="muted">{error}</p>
-        ) : applications.length === 0 ? (
+        ) : filteredApplications.length === 0 ? (
           <p className="muted">No applications found.</p>
         ) : (
           <table>
@@ -120,7 +157,7 @@ const HotelRegistration = () => {
               </tr>
             </thead>
             <tbody>
-              {applications.map((app) => {
+              {filteredApplications.map((app) => {
                 const docsComplete = isDocsComplete(app);
                 return (
                   <tr key={app.id}>
@@ -156,12 +193,22 @@ const HotelRegistration = () => {
                       </span>
                     </td>
                     <td>
-                      <button
-                        className="review-btn"
-                        onClick={() => handleReviewClick(app)}
-                      >
-                        Review
-                      </button>
+                      <div className="action-group">
+                        <button
+                          className="review-btn"
+                          onClick={() => handleReviewClick(app)}
+                        >
+                          Review
+                        </button>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDelete(app)}
+                          disabled={deletingId === app.id}
+                          title="Delete application"
+                        >
+                          <FiX /> Close
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );
@@ -169,6 +216,7 @@ const HotelRegistration = () => {
             </tbody>
           </table>
         )}
+        {deleteError && <p className="muted error-text">{deleteError}</p>}
       </div>
       {open && selectedApplication && (
         <ReviewPop

@@ -33,7 +33,7 @@ const Navbar = ({ onLoginClick, activeTab, setActiveTab, user }) => {
     if (user) {
       if (user.role === 'ADMIN') {
         navigate('/admin');
-      } else if (user.role === 'PARTNER') {
+      } else if (user.role === 'PARTNER' || user.role === 'SUB_PARTNER') {
         navigate('/partner');
       } else if (user.role === 'TRAVELER') {
         navigate('/user');

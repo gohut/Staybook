@@ -1,5 +1,6 @@
 // Vnavbar.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png"
 import {
   MdDashboard,
@@ -8,11 +9,22 @@ import {
   MdLocalOffer,
   MdDescription,
   MdSettings,
+  MdPeople,
+  MdMailOutline,
+  MdLogout,
 } from "react-icons/md";
 import "./Vnavbar.scss";
 
 const Vnavbar = ({ active, setActive }) => {
   const s = 25;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("authToken");
+    navigate("/");
+  };
 
   return (
     <aside className="v-navbar">
@@ -42,9 +54,21 @@ const Vnavbar = ({ active, setActive }) => {
           <MdDescription size={s} /> Reports
         </a>
 
+        <a className={active === "partnerDetails" ? "active" : ""} onClick={() => setActive("partnerDetails")}>
+          <MdPeople size={s} /> Partner Details
+        </a>
+
         <a className={active === "settings" ? "active" : ""} onClick={() => setActive("settings")}>
           <MdSettings size={s} /> Settings
         </a>
+
+        <a className={active === "messages" ? "active" : ""} onClick={() => setActive("messages")}>
+          <MdMailOutline size={s} /> Messages
+        </a>
+
+        <button type="button" className="vnav-logout" onClick={handleLogout}>
+          <MdLogout size={s} /> Log Out
+        </button>
       </nav>
 
       <div className="footer">© 2026 StayBook Admin</div>

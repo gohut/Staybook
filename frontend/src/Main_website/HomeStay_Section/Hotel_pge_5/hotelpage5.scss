@@ -65,3 +65,16 @@ $hotelpge5-color-footer: #555;
   font-size: 14px;
   color: $hotelpge5-color-footer;
 }
+
+.payment-sync-status {
+  margin: 20px auto 0;
+  max-width: 820px;
+  font-family: $hotelpge5-font-family;
+  font-size: 14px;
+  color: #475569;
+  text-align: center;
+}
+
+.payment-sync-status.error {
+  color: #dc2626;
+}

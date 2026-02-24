@@ -1,26 +1,32 @@
-/* SearchbarRow.scss */
+/* GuestAndRequest.scss */
 
-/* ===== Variables ===== */
-$sbr-white: #ffffff;
+/* =======================
+   Variables
+======================= */
+$guestandrequest-font-family: Arial, sans-serif;
 
-$sbr-border: #e6e6e6;
-$sbr-border-input: #dcdcdc;
+$guestandrequest-bg-card: #fff;
+$guestandrequest-bg-strip: #eef6ff;
 
-$sbr-field-bg: #f8f8f8;
+$guestandrequest-color-text: #555;
+$guestandrequest-color-muted: #888;
+$guestandrequest-color-link: #0071c2;
+$guestandrequest-color-white: #fff;
 
-$sbr-text-000: #000;
-$sbr-text-555: #555;
-$sbr-text-666: #666;
-$sbr-text-999: #999;
+$guestandrequest-color-warning: #f5a623;
+$guestandrequest-color-pay: #4aa3ff;
 
-$sbr-blue: #1a73e8;
-$sbr-btn-blue-1: #4da6ff;
-$sbr-btn-blue-2: #0066ff;
+$guestandrequest-border-input: #ccc;
 
-$sbr-bc-bg: #fafafa;
+$guestandrequest-radius-card: 6px;
+$guestandrequest-radius-sm: 4px;
 
-/* ===== Mixins ===== */
-@mixin sbr-flex($justify: flex-start, $align: center, $gap: null) {
+$guestandrequest-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+
+/* =======================
+   Mixins
+======================= */
+@mixin guestandrequest-flex($justify: flex-start, $align: stretch, $gap: null) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
@@ -30,75 +36,214 @@ $sbr-bc-bg: #fafafa;
   }
 }
 
-@mixin sbr-btn-reset {
-  border: none;
+@mixin guestandrequest-card($padding: 16px, $radius: $guestandrequest-radius-card) {
+  background: $guestandrequest-bg-card;
+  border-radius: $radius;
+  box-shadow: $guestandrequest-shadow;
+  padding: $padding;
+}
+
+@mixin guestandrequest-outline-btn($color: $guestandrequest-color-link) {
+  border: 1px solid $color;
+  background: $guestandrequest-bg-card;
+  color: $color;
+  border-radius: $guestandrequest-radius-sm;
   cursor: pointer;
 }
 
-/* ===== Styles ===== */
-.searchbar-row {
-  @include sbr-flex(flex-start, center, 12px);
-  padding: 14px 20px;
-  background: $sbr-white;
-  border-bottom: 1px solid $sbr-border;
+/* =======================
+   Styles
+======================= */
+.guest-wrapper {
+  max-width: 860px;
+  margin-left: 160px;margin-bottom: 50px;
+  font-family: $guestandrequest-font-family;
 }
 
-.search-field {
-  background: $sbr-field-bg;
-  border: 1px solid $sbr-border-input;
-  border-radius: 8px;
-  padding: 6px 10px;
-  min-width: 170px;
+.guest-card {
+  @include guestandrequest-card(16px, $guestandrequest-radius-card);
 
-  &.large {
-    min-width: 320px;
+  h3 {
+    margin-bottom: 16px;
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  &.small {
+    max-width: 80px;
   }
 
   label {
     font-size: 11px;
-    color: $sbr-text-666;
-    display: block;
-    margin-bottom: 2px;
+    color: $guestandrequest-color-text;
+    margin-bottom: 4px;
+
+    span {
+      font-weight: normal;
+      color: $guestandrequest-color-muted;
+    }
   }
 
-  .value {
-    font-size: 14px;
-    font-weight: 600;
-    color: $sbr-text-000;
+  input,
+  select {
+    padding: 8px;
+    border: 1px solid $guestandrequest-border-input;
+    border-radius: $guestandrequest-radius-sm;
   }
 }
 
-.search-btn {
-  margin-left: auto;
-  padding: 12px 36px;
-  font-size: 15px;
+.mobile {
+  display: flex;
+
+  select {
+    width: 70px;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+  }
+
+  input {
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+.checkbox {
+  @include guestandrequest-flex(flex-start, center, 8px);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.add-guest {
+  @include guestandrequest-flex(flex-start, center, 6px);
+  color: $guestandrequest-color-link;
   font-weight: 600;
-  color: $sbr-white;
-  background: linear-gradient(90deg, $sbr-btn-blue-1, $sbr-btn-blue-2);
-  border: none;
-  border-radius: 8px;
+  margin-top: 10px;
   cursor: pointer;
 }
 
-/* breadcrumb */
-.breadcrumb-row {
-  padding: 10px 20px;
+.login-strip {
+  background: $guestandrequest-bg-strip;
+  margin-top: 14px;
+  padding: 10px 12px;
+  @include guestandrequest-flex(space-between, center);
+  border-radius: $guestandrequest-radius-sm;
   font-size: 13px;
-  background: $sbr-bc-bg;
-  color: $sbr-text-555;
 
-  .link {
-    color: $sbr-blue;
-    cursor: pointer;
+  button {
+    @include guestandrequest-outline-btn($guestandrequest-color-link);
+    padding: 4px 12px;
+  }
+}
+
+/* SPECIAL REQUEST */
+.request-card {
+  @include guestandrequest-card(14px, $guestandrequest-radius-card);
+  margin-top: 16px;
+  @include guestandrequest-flex(space-between, center);
+}
+
+.request-left {
+  display: flex;
+  gap: 10px;
+
+  svg {
+    color: $guestandrequest-color-warning;
+    font-size: 20px;
+    margin-top: 2px;
   }
 
-  .sep {
-    margin: 0 6px;
-    color: $sbr-text-999;
+  p {
+    font-size: 13px;
+    color: $guestandrequest-color-text;
   }
+}
 
-  .current {
-    color: $sbr-text-000;
-    font-weight: 500;
+.request-btn {
+  background: none;
+  border: none;
+  color: $guestandrequest-color-link;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* PAY SECTION */
+.pay-section {
+  margin-top: 16px;
+}
+
+.agree {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: $guestandrequest-color-text;
+
+  a {
+    color: $guestandrequest-color-link;
+    text-decoration: none;
   }
+}
+
+.pay-btn {
+  margin-top: 12px;
+  width: 260px;
+  padding: 12px;
+  background: $guestandrequest-color-pay;
+  border: none;
+  color: $guestandrequest-color-white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: $guestandrequest-radius-sm;
+  cursor: pointer;
+}
+
+.pay-later {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: $guestandrequest-color-text;
+}
+
+.booking-error {
+  margin-top: 10px;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.booking-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+}
+
+.booking-modal-card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  width: min(420px, 90vw);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+}
+
+.booking-modal-btn {
+  margin-top: 14px;
+  border: none;
+  background: $guestandrequest-color-pay;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
 }

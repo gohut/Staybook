@@ -17,6 +17,8 @@ $hnav-sidebar-width: 260px;
 
 $hnav-search-width: 420px;
 $hnav-search-height: 50px;
+$hnav-panel-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+$hnav-panel-radius: 14px;
 
 /* ===== Mixins ===== */
 @mixin hnav-flex($justify: flex-start, $align: center, $gap: null) {
@@ -43,8 +45,10 @@ $hnav-search-height: 50px;
   position: fixed;
   top: 0;
   right: 0;
-  width: calc(100% - #{$hnav-sidebar-width});
+  left: $hnav-sidebar-width;
+  width: auto;
   z-index: 10;
+  box-sizing: border-box;
 }
 
 /* Search */
@@ -62,6 +66,16 @@ $hnav-search-height: 50px;
     outline: none;
     width: 100%;
     font-size: 14px;
+  }
+
+  .clear {
+    border: none;
+    background: $hnav-slate-300;
+    color: $hnav-slate-700;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    cursor: pointer;
   }
 }
 
@@ -94,10 +108,86 @@ $hnav-search-height: 50px;
   }
 }
 
+.notif-panel {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 320px;
+  background: $hnav-white;
+  border: 1px solid $hnav-border;
+  border-radius: $hnav-panel-radius;
+  box-shadow: $hnav-panel-shadow;
+  padding: 14px;
+  z-index: 20;
+
+  .notif-head {
+    @include hnav-flex(space-between, center);
+    font-weight: 600;
+    margin-bottom: 10px;
+
+    button {
+      border: none;
+      background: transparent;
+      color: $hnav-blue-600;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  .notif-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .notif-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 12px;
+    background: #f8fafc;
+
+    &.unread {
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    strong {
+      display: block;
+      font-size: 13px;
+      color: $hnav-slate-900;
+    }
+
+    p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: $hnav-slate-500;
+    }
+
+    .mark {
+      border: none;
+      background: $hnav-blue-600;
+      color: $hnav-white;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+  }
+
+  .muted {
+    color: $hnav-slate-500;
+    font-size: 13px;
+  }
+}
+
 /* Profile */
 .profile {
   @include hnav-flex(flex-start, center, 12px);
   cursor: pointer;
+  position: relative;
 }
 
 .profile-text {
@@ -125,4 +215,38 @@ $hnav-search-height: 50px;
   border-radius: 50%;
   @include hnav-flex(center, center);
   color: $hnav-white;
+}
+
+.chevron {
+  color: $hnav-slate-500;
+}
+
+.profile-panel {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  width: 220px;
+  background: $hnav-white;
+  border: 1px solid $hnav-border;
+  border-radius: $hnav-panel-radius;
+  box-shadow: $hnav-panel-shadow;
+  padding: 14px;
+  z-index: 20;
+
+  p {
+    margin: 4px 0 12px;
+    color: $hnav-slate-500;
+    font-size: 12px;
+  }
+
+  button {
+    width: 100%;
+    border: none;
+    background: $hnav-blue-600;
+    color: $hnav-white;
+    padding: 8px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+  }
 }

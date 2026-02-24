@@ -7,6 +7,7 @@ import FilterSidebar from "./FilterBar/FilterSidebar";
 import { HOMESTAY_PRICE_OPTIONS } from "./FilterBar/filterOptions";
 import ResultsHeader from "./ResultHeader/ResultsHeader";
 import PropertyCard from "./PropertyCard/PropertyCard";
+import { getPublicHotelPhotoUrl, listPublicHotels } from "../../../Api/publicHotels/publicHotelsApi";
 import {
   HOMESTAY_SEARCH_STORAGE_KEY,
   addDays,
@@ -20,6 +21,14 @@ import {
 import "./hmstaypge2.scss";
 
 const DEFAULT_CITY = "Goa";
+const DEFAULT_DB_IMAGES = {
+  main: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+  thumbs: [
+    "https://images.unsplash.com/photo-1501117716987-c8e1ecb210c7",
+    "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
+    "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
+  ],
+};
 
 const HOMESTAY_PROPERTIES = [
   {
@@ -314,6 +323,82 @@ const Hmstaypge2 = () => {
   const [activeSort, setActiveSort] = useState("popularity");
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [manualMapQuery, setManualMapQuery] = useState("");
+  const [dbHotels, setDbHotels] = useState([]);
+  const [dbError, setDbError] = useState("");
+
+  useEffect(() => {
+    let isActive = true;
+    const loadHotels = async () => {
+      try {
+        const hotels = await listPublicHotels();
+        if (!isActive) return;
+        setDbHotels(hotels || []);
+      } catch (err) {
+        if (!isActive) return;
+        setDbError(err?.message || "Failed to load homestay listings.");
+      }
+    };
+
+    loadHotels();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  const mappedDbHotels = useMemo(() => {
+    if (!dbHotels.length) {
+      return [];
+    }
+
+    return dbHotels.map((hotel) => {
+      const city = hotel.location?.city || DEFAULT_CITY;
+      const locality = hotel.location?.address || hotel.location?.city || city;
+      const locationDetail = hotel.location?.address || "Partner listing";
+      const price = hotel.minPrice ? Math.round(hotel.minPrice) : 0;
+      const taxes = price ? Math.round(price * 0.12) : 0;
+      const heroPhoto = hotel.heroPhotoFileId
+        ? getPublicHotelPhotoUrl(hotel.heroPhotoFileId)
+        : DEFAULT_DB_IMAGES.main;
+      const thumbs = hotel.heroPhotoFileId
+        ? [heroPhoto, ...DEFAULT_DB_IMAGES.thumbs]
+        : DEFAULT_DB_IMAGES.thumbs;
+      const ratingScore = hotel.averageRating || 0;
+
+      return {
+        id: `db-${hotel.id}`,
+        dbHotelId: hotel.id,
+        city,
+        locality,
+        locationDetail,
+        name: hotel.name || "Partner Homestay",
+        propertyType: "Homestay",
+        starRating: hotel.starRating || 4,
+        reviewLabel: ratingScore >= 4.5 ? "Excellent" : ratingScore >= 4 ? "Very Good" : "Good",
+        reviewScore: ratingScore || 0,
+        totalRatings: hotel.reviewCount || 0,
+        price,
+        taxes,
+        ctaText: "Book with Staybook",
+        suggested: {
+          earlyBirdDeals: false,
+          entireHomes: true,
+          topRated: ratingScore >= 4.5,
+          pool: false,
+          kitchen: true,
+        },
+        images: {
+          main: heroPhoto,
+          thumbs,
+        },
+      };
+    });
+  }, [dbHotels]);
+
+  const allProperties = useMemo(
+    () => [...HOMESTAY_PROPERTIES, ...mappedDbHotels],
+    [mappedDbHotels]
+  );
 
   useEffect(() => {
     if (!isMapOpen) {
@@ -346,7 +431,7 @@ const Hmstaypge2 = () => {
         ? Number.POSITIVE_INFINITY
         : parseInteger(filters.appliedMaxBudget, Number.POSITIVE_INFINITY, 0, 1000000);
 
-    const base = HOMESTAY_PROPERTIES.filter((property) => {
+    const base = allProperties.filter((property) => {
       const matchesCity =
         !cityQuery ||
         property.city.toLowerCase().includes(cityQuery) ||
@@ -402,7 +487,7 @@ const Hmstaypge2 = () => {
     }
 
     return sorted;
-  }, [activeSort, filters, searchValues.city]);
+  }, [activeSort, filters, searchValues.city, allProperties]);
 
   const generatedMapQuery = useMemo(() => {
     const localities =
@@ -548,6 +633,7 @@ const Hmstaypge2 = () => {
             activeSort={activeSort}
             onSortChange={setActiveSort}
           />
+          {dbError && <div className="hm-empty-results">{dbError}</div>}
           {filteredProperties.length > 0 ? (
             filteredProperties.map((property) => (
               <PropertyCard key={property.id} data={property} />

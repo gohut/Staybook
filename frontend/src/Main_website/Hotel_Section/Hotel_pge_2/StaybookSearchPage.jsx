@@ -6,6 +6,7 @@ import ListingsHeader from "./Listing_header/ListingsHeader";
 import PropertyCard from "./Property_Cards/PropertyCard";
 import FiltersSidebar from "./Side_Barfilter/FiltersSidebar";
 import { HOTEL_PRICE_OPTIONS } from "./Side_Barfilter/filterOptions";
+import { getPublicHotelPhotoUrl, listPublicHotels } from "../../../Api/publicHotels/publicHotelsApi";
 import {
   HOTEL_SEARCH_STORAGE_KEY,
   addDays,
@@ -19,6 +20,13 @@ import {
 import "./StaybookSrh.scss";
 
 const DEFAULT_CITY = "Goa";
+const DEFAULT_DB_IMAGES = {
+  main: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
+  thumbs: [
+    "https://images.unsplash.com/photo-1501117716987-c8e1ecb210c7",
+    "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
+  ],
+};
 
 const HOTEL_PROPERTIES = [
   {
@@ -473,6 +481,89 @@ const StaybookSearchPage = () => {
   const [activeSort, setActiveSort] = useState("popularity");
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [manualMapQuery, setManualMapQuery] = useState("");
+  const [dbHotels, setDbHotels] = useState([]);
+  const [dbError, setDbError] = useState("");
+
+  useEffect(() => {
+    let isActive = true;
+    const loadHotels = async () => {
+      try {
+        const hotels = await listPublicHotels();
+        if (!isActive) return;
+        setDbHotels(hotels || []);
+      } catch (err) {
+        if (!isActive) return;
+        setDbError(err?.message || "Failed to load hotel listings.");
+      }
+    };
+
+    loadHotels();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  const mappedDbHotels = useMemo(() => {
+    if (!dbHotels.length) {
+      return [];
+    }
+
+    return dbHotels.map((hotel) => {
+      const city = hotel.location?.city || DEFAULT_CITY;
+      const locality = hotel.location?.address || hotel.location?.city || city;
+      const locationText = [hotel.location?.city, hotel.location?.address]
+        .filter(Boolean)
+        .join(" | ");
+      const minPrice = hotel.minPrice || 0;
+      const taxes = minPrice ? Math.round(minPrice * 0.12) : 0;
+      const heroPhoto = hotel.heroPhotoFileId
+        ? getPublicHotelPhotoUrl(hotel.heroPhotoFileId)
+        : DEFAULT_DB_IMAGES.main;
+      const thumbs = hotel.heroPhotoFileId
+        ? [heroPhoto, ...DEFAULT_DB_IMAGES.thumbs]
+        : DEFAULT_DB_IMAGES.thumbs;
+      const ratingScore = hotel.averageRating || 0;
+
+      return {
+        id: `db-${hotel.id}`,
+        dbHotelId: hotel.id,
+        city,
+        locality,
+        name: hotel.name || "Partner Hotel",
+        starRating: hotel.starRating || 4,
+        location: locationText || locality,
+        badge: hotel.status || "Partner Listing",
+        offer: "Book direct with Staybook",
+        highlights: hotel.description
+          ? hotel.description.split(".").map((item) => item.trim()).filter(Boolean).slice(0, 3)
+          : ["Partner managed stay", "Verified amenities", "Flexible check-in"],
+        reviewLabel: ratingScore >= 4.5 ? "Excellent" : ratingScore >= 4 ? "Very Good" : "Good",
+        reviewScore: ratingScore || 0,
+        totalRatings: hotel.reviewCount || 0,
+        originalPrice: minPrice ? Math.round(minPrice * 1.15) : 0,
+        discountedPrice: minPrice ? Math.round(minPrice) : 0,
+        taxes,
+        ctaText: "Book now with Staybook",
+        propertyType: "Hotel",
+        suggested: {
+          rushDeal: false,
+          lastMinuteDeals: false,
+          freeCancellation: false,
+          coupleFriendly: true,
+        },
+        images: {
+          main: heroPhoto,
+          thumbs,
+        },
+      };
+    });
+  }, [dbHotels]);
+
+  const allProperties = useMemo(
+    () => [...HOTEL_PROPERTIES, ...mappedDbHotels],
+    [mappedDbHotels]
+  );
 
   useEffect(() => {
     if (!isMapOpen) {
@@ -505,7 +596,7 @@ const StaybookSearchPage = () => {
         ? Number.POSITIVE_INFINITY
         : parseInteger(filters.appliedMaxBudget, Number.POSITIVE_INFINITY, 0, 1000000);
 
-    const base = HOTEL_PROPERTIES.filter((property) => {
+    const base = allProperties.filter((property) => {
       const matchesCity =
         !cityQuery ||
         property.city.toLowerCase().includes(cityQuery) ||
@@ -569,7 +660,7 @@ const StaybookSearchPage = () => {
     }
 
     return sorted;
-  }, [activeSort, filters, searchValues.city]);
+  }, [activeSort, filters, searchValues.city, allProperties]);
 
   const generatedMapQuery = useMemo(() => {
     const priceHint =
@@ -730,6 +821,7 @@ const StaybookSearchPage = () => {
             activeSort={activeSort}
             onSortChange={setActiveSort}
           />
+          {dbError && <div className="empty-results">{dbError}</div>}
           <div className="property-listings">
             <div className="property-listings-inner">
               {filteredProperties.length > 0 ? (

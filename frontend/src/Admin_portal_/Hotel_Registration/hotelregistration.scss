@@ -155,6 +155,41 @@ $hr-pill-rejected-text: #991b1b;
   border-radius: 8px;
 }
 
+.action-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.delete-btn {
+  @include hr-btn(transparent, $hr-pill-rejected-text);
+  border: 1px solid $hr-gray-200;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  svg {
+    font-size: 16px;
+  }
+
+  &:hover:not(:disabled) {
+    background: $hr-pill-rejected-bg;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.error-text {
+  color: $hr-pill-rejected-text;
+  margin-top: 10px;
+}
+
 /* add to hotelregistration.scss */
 .blur-wrap {
   filter: blur(4px);

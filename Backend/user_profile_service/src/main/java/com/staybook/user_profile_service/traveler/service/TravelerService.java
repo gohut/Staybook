@@ -1,10 +1,13 @@
 package com.staybook.user_profile_service.traveler.service;
 
+import com.staybook.user_profile_service.admin.dto.AdminNotificationRequest;
+import com.staybook.user_profile_service.admin.service.AdminNotificationService;
 import com.staybook.user_profile_service.common.BusinessException;
 import com.staybook.user_profile_service.common.FileStorageService;
 import com.staybook.user_profile_service.traveler.dto.TravelerRequest;
 import com.staybook.user_profile_service.traveler.dto.TravelerResponse;
 import com.staybook.user_profile_service.traveler.entity.Traveler;
+import com.staybook.user_profile_service.traveler.entity.NotificationType;
 import com.staybook.user_profile_service.traveler.repository.TravelerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ public class TravelerService {
 
     private final TravelerRepository travelerRepository;
     private final FileStorageService fileStorageService;
+    private final AdminNotificationService adminNotificationService;
 
     public TravelerResponse createProfile(String email,
                                           TravelerRequest request,
@@ -47,6 +51,19 @@ public class TravelerService {
                 .build();
 
         travelerRepository.save(traveler);
+
+        AdminNotificationRequest notification = new AdminNotificationRequest();
+        notification.setTitle("New Traveler Request");
+        notification.setMessage(String.format(
+                "Traveler %s %s (%s) created a new profile request.",
+                traveler.getFirstName(),
+                traveler.getLastName(),
+                traveler.getEmail()
+        ));
+        notification.setFrom(traveler.getEmail());
+        notification.setFromRole("TRAVELER");
+        notification.setType(NotificationType.INFO);
+        adminNotificationService.createNotification(notification);
 
         return mapToResponse(traveler);
     }

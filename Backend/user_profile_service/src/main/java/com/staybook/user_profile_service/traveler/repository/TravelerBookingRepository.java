@@ -13,4 +13,6 @@ public interface TravelerBookingRepository extends MongoRepository<TravelerBooki
     Page<TravelerBooking> findByEmailAndStatus(String email,
                                                BookingStatus status,
                                                Pageable pageable);
+
+    java.util.Optional<TravelerBooking> findByEmailAndBookingId(String email, String bookingId);
 }

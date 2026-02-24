@@ -162,17 +162,17 @@ Create New Coupon</div>
       <div className="admn-bsd-card">
         <h3>Commission Revenue by Hotel</h3>
         {[
-          ["Grand Plaza", "$24,500"],
-          ["Ocean View Resort", "$31,200"],
-          ["City Center Hotel", "$18,900"],
-          ["Mountain Lodge", "$22,100"],
-          ["Beachside Inn", "$27,800"],
+          ["Grand Plaza", "₹24,500"],
+          ["Ocean View Resort", "₹31,200"],
+          ["City Center Hotel", "₹18,900"],
+          ["Mountain Lodge", "₹22,100"],
+          ["Beachside Inn", "₹27,800"],
         ].map(([h, v]) => (
           <ProgressRow key={h} label={h} value={v} percent="85%" color="green" />
         ))}
         <div className="total green">
           <span>Total Commission Revenue</span>
-          <strong>$124,500</strong>
+          <strong>₹124,500</strong>
         </div>
       </div>
     </div>

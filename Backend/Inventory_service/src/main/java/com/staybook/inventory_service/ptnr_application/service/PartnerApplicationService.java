@@ -116,4 +116,20 @@ public class PartnerApplicationService {
         app.setStatus(ApplicationStatus.REJECTED);
         return repository.save(app);
     }
+
+    public void deleteApplication(String id) {
+        PartnerApplication app = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found"));
+
+        fileStorageService.deleteFileIfExists(app.getBusinessLicenseFileId());
+        fileStorageService.deleteFileIfExists(app.getIdProofFileId());
+        fileStorageService.deleteFileIfExists(app.getTaxRegistrationFileId());
+        if (app.getPropertyPhotoFileIds() != null) {
+            for (String photoId : app.getPropertyPhotoFileIds()) {
+                fileStorageService.deleteFileIfExists(photoId);
+            }
+        }
+
+        repository.deleteById(id);
+    }
 }

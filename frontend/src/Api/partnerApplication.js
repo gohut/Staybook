@@ -50,5 +50,10 @@ export const rejectPartnerApplication = async (applicationId) => {
   return response.data;
 };
 
+export const deletePartnerApplication = async (applicationId) => {
+  const response = await axios.delete(`${ADMIN_BASE_URL}/${applicationId}`);
+  return response.data;
+};
+
 export const getPartnerApplicationFileUrl = (fileId) =>
   `${ADMIN_BASE_URL}/file/${fileId}`;

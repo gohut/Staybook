@@ -4,13 +4,13 @@ import { FiDownload, FiCalendar } from "react-icons/fi";
 import "./Reports.scss";
 
 const trends = [
-  ["Jul", 234, "+12%", "$45,600"],
-  ["Aug", 289, "+23%", "$52,300"],
-  ["Sep", 312, "+8%", "$58,900"],
-  ["Oct", 278, "-11%", "$51,200"],
-  ["Nov", 334, "+20%", "$62,800"],
-  ["Dec", 398, "+19%", "$74,500"],
-  ["Jan", 421, "+6%", "$83,200"],
+  ["Jul", 234, "+12%", "₹45,600"],
+  ["Aug", 289, "+23%", "₹52,300"],
+  ["Sep", 312, "+8%", "₹58,900"],
+  ["Oct", 278, "-11%", "₹51,200"],
+  ["Nov", 334, "+20%", "₹62,800"],
+  ["Dec", 398, "+19%", "₹74,500"],
+  ["Jan", 421, "+6%", "₹83,200"],
 ];
 
 const sources = [
@@ -48,17 +48,17 @@ const Reports = () => {
         </div>
         <div className="stat-card">
           <span>Total Revenue</span>
-          <h2>$534,200</h2>
+          <h2>₹534,200</h2>
           <small className="up">+18.7%</small>
         </div>
         <div className="stat-card">
           <span>Commission Earned</span>
-          <h2>$80,130</h2>
+          <h2>₹80,130</h2>
           <small className="up">+21.3%</small>
         </div>
         <div className="stat-card">
           <span>Avg. Booking Value</span>
-          <h2>$598</h2>
+          <h2>₹598</h2>
           <small className="down">-3.2%</small>
         </div>
       </div>

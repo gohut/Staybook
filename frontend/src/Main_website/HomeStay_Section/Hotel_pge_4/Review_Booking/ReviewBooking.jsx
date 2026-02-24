@@ -1,61 +1,70 @@
 // ReviewBooking.jsx
 import "./ReviewBooking.scss";
-import {
-  FaStar,
-  FaUtensils,
-  FaSpa,
-  FaGlassCheers,
-  FaTag,
-} from "react-icons/fa";
+import { FaStar, FaUtensils, FaSpa, FaGlassCheers, FaTag } from "react-icons/fa";
 
-export default function ReviewBooking() {
+export default function ReviewBooking({
+  hotel,
+  bookingSelection,
+  checkInDateLabel,
+  checkOutDateLabel,
+  nights,
+  adults,
+  children,
+  locationLabel,
+}) {
+  const roomName = bookingSelection?.roomTypeName || "Selected Room";
+  const hotelName = bookingSelection?.hotelName || hotel?.name || "Staybook Hotel";
+  const hotelAddress =
+    hotel?.location?.address ||
+    hotel?.location?.city ||
+    locationLabel ||
+    "Staybook, India";
+  const hotelImage =
+    bookingSelection?.imageUrl ||
+    "https://upload.wikimedia.org/wikipedia/commons/4/4e/Hard_Rock_Cafe_logo.svg";
+
   return (
     <div className="rb-wrap">
-      {/* LEFT CARD */}
       <div className="rb-left">
         <div className="rb-hotel">
           <div className="rb-hotel-info">
-            <h2>Hard Rock Hotel Goa Calangute</h2>
+            <h2>{hotelName}</h2>
             <div className="rb-rating">
-              <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
+              <FaStar />
+              <FaStar />
+              <FaStar />
+              <FaStar />
+              <FaStar />
               <span className="rb-chip">Couple Friendly</span>
             </div>
-            <p className="rb-address">
-              370/14/15 Porba Vaddo Calangute Bardez Goa, Goa, India
-            </p>
+            <p className="rb-address">{hotelAddress}</p>
           </div>
-          <img
-            className="rb-hotel-img"
-            src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Hard_Rock_Cafe_logo.svg"
-            alt=""
-          />
+          <img className="rb-hotel-img" src={hotelImage} alt="" />
         </div>
 
         <div className="rb-dates">
           <div className="rb-date">
             <span>CHECK IN</span>
-            <strong>Sat 24 Jan 2026</strong>
-            <small>3 PM</small>
+            <strong>{checkInDateLabel}</strong>
+            <small>{hotel?.checkInTime || "3 PM"}</small>
           </div>
 
-          <div className="rb-night">1 NIGHT</div>
+          <div className="rb-night">{nights} NIGHT{nights > 1 ? "S" : ""}</div>
 
           <div className="rb-date">
             <span>CHECK OUT</span>
-            <strong>Sun 25 Jan 2026</strong>
-            <small>12 PM</small>
+            <strong>{checkOutDateLabel}</strong>
+            <small>{hotel?.checkOutTime || "12 PM"}</small>
           </div>
 
           <div className="rb-summary">
-            1 Night | 2 Adults | 1 Room
+            {nights} Night{nights > 1 ? "s" : ""} | {adults} Adults{children ? ` | ${children} Children` : ""} | 1 Room
           </div>
         </div>
 
         <div className="rb-room">
           <div className="rb-room-head">
-            <h3>
-              Rock Platinum Suite with 30 Mins Couple Massage (Once Per Stay)
-            </h3>
+            <h3>{roomName}</h3>
             <a>See Inclusions</a>
           </div>
 
@@ -81,13 +90,12 @@ export default function ReviewBooking() {
             <strong>Upgrade Your Stay</strong>
             <label>
               <input type="radio" />
-              Add Lunch/Dinner for ₹1814 for all guests
+              Add Lunch/Dinner for Rs 1814 for all guests
             </label>
           </div>
         </div>
       </div>
 
-      {/* RIGHT CARD */}
       <div className="rb-right">
         <h3>Coupon Codes</h3>
 
@@ -96,13 +104,9 @@ export default function ReviewBooking() {
           <button disabled>APPLY</button>
         </div>
 
-        <p className="rb-note">
-          No coupon codes applicable for this property.
-        </p>
+        <p className="rb-note">No coupon codes applicable for this property.</p>
 
-        <div className="rb-gift">
-          MMT Gift Cards can be applied at payment step
-        </div>
+        <div className="rb-gift">MMT Gift Cards can be applied at payment step</div>
       </div>
     </div>
   );

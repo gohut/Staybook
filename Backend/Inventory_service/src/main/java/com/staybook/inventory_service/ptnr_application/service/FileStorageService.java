@@ -1,6 +1,9 @@
 package com.staybook.inventory_service.ptnr_application.service;
 import lombok.*;
 import org.bson.types.ObjectId;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,4 +34,14 @@ public class FileStorageService {
         return fileId.toHexString();
     }
 
+    public void deleteFileIfExists(String fileId) {
+        if (fileId == null || fileId.isBlank()) {
+            return;
+        }
+        try {
+            gridFsTemplate.delete(Query.query(Criteria.where("_id").is(new ObjectId(fileId))));
+        } catch (IllegalArgumentException ex) {
+            // Ignore invalid ids to avoid breaking delete flow
+        }
+    }
 }

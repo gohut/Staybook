@@ -21,10 +21,10 @@ public class AuthService {
     public String register(String name, String email, String password, Role role) {
 
         if (userRepository.existsByEmail(email)) {
-            if (role == Role.PARTNER) {
+            if (role == Role.PARTNER || role == Role.SUB_PARTNER) {
                 User existingUser = userRepository.findByEmail(email)
                         .orElseThrow(() -> new RuntimeException("User not found"));
-                existingUser.setRole(Role.PARTNER);
+                existingUser.setRole(role);
                 existingUser.setPassword(passwordEncoder.encode(password));
                 userRepository.save(existingUser);
                 return "Partner account updated successfully";
@@ -58,5 +58,20 @@ public class AuthService {
                 "token", jwtUtil.generateToken(email),
                 "role", user.getRole().name()
         );
+    }
+
+    public String changePassword(String email, String currentPassword, String newPassword) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new RuntimeException("Invalid current password");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        return "Password updated successfully";
     }
 }

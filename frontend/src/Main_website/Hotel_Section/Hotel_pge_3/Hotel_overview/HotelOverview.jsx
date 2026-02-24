@@ -1,38 +1,57 @@
 // HotelOverview.jsx
 import "./HotelOverview.scss";
-import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 import img1 from "../../../../assets/touristPlace/timg1.jpg";
-const HotelOverview = () => {
-    const navigate = useNavigate();
+
+const buildStarString = (rating) => {
+  const stars = Math.max(1, Math.min(5, Math.round(rating || 4)));
+  return "★".repeat(stars);
+};
+
+const HotelOverview = ({ hotel, photos = [], onSelectRoom }) => {
+  const starString = useMemo(() => buildStarString(hotel?.starRating), [hotel]);
+  const propertyPhotos = photos.length ? photos : [img1, img1, img1];
+  const primaryRoom = hotel?.roomTypes?.[0];
+
+  const handleSelect = () => {
+    if (primaryRoom && onSelectRoom) {
+      onSelectRoom(primaryRoom);
+    }
+  };
+
   return (
     <div className="htl3-ho-hotel-wrap">
       <div className="htl3ho-hotel-card">
         <h2 className="htl3ho-hotel-title">
-          Hard Rock Hotel Goa Calangute <span>★★★★★</span>
+          {hotel?.name || "Hard Rock Hotel Goa Calangute"} <span>{starString}</span>
         </h2>
 
         <div className="htl3ho-hotel-grid">
-          {/* LEFT */}
           <div className="htl3ho-left">
             <div className="htl3ho-gallery">
-              <div className="htl3ho-gallery-main">
-                <span className="htl3ho-photo-badge">1993 Property & Guest Photos →</span>
+              <div
+                className="htl3ho-gallery-main"
+                style={{ backgroundImage: `url(${propertyPhotos[0]})` }}
+              >
+                <span className="htl3ho-photo-badge">
+                  {hotel?.photos?.length || 0} Property Photos →
+                </span>
               </div>
               <div className="htl3ho-gallery-side">
                 <div className="htl3ho-side-img">
-                   <img src={img1} alt="" />
+                  <img src={propertyPhotos[1] || propertyPhotos[0]} alt="" />
                 </div>
-                <div className="htl3ho-side-img" />
-              
+                <div className="htl3ho-side-img">
+                  <img src={propertyPhotos[2] || propertyPhotos[0]} alt="" />
+                </div>
               </div>
             </div>
 
             <div className="htl3ho-about">
               <h3>About Property</h3>
               <p>
-                Nestled in Calangute’s heart, Hard Rock Hotel is a complete
-                entertainment destination where one lives like a rockstar with
-                top leisure amenities and proximity to top attractions.
+                {hotel?.description ||
+                  "Nestled in the heart of the city, this property blends comfort with easy access to local attractions."}
                 <span className="link"> More</span>
               </p>
 
@@ -43,20 +62,19 @@ const HotelOverview = () => {
 
               <h4>Amenities</h4>
               <div className="htl3ho-amenities">
-                <span>🏊 Swimming Pool</span>
-                <span>🍽 Restaurant</span>
+                <span>Swimming Pool</span>
+                <span>Restaurant</span>
                 <span className="htl3ho-link">+ More Amenities</span>
               </div>
-
-    
             </div>
           </div>
 
-          {/* RIGHT */}
           <div className="htl3ho-right">
             <div className="htl3ho-room-card">
-              <h3>Deluxe Room King Bed</h3>
-              <p className="htl3ho-fits">Fits 2 Adults</p>
+              <h3>{primaryRoom?.name || "Deluxe Room King Bed"}</h3>
+              <p className="htl3ho-fits">
+                Fits {primaryRoom?.maxGuests || 2} Adults
+              </p>
 
               <ul>
                 <li>Breakfast included</li>
@@ -68,13 +86,23 @@ const HotelOverview = () => {
               <a className="htl3ho-link">View All</a>
 
               <div className="htl3ho-price">
-                <small>₹15,624 Per Night</small>
+                <small>
+                  {primaryRoom?.currency || "INR"}{" "}
+                  {primaryRoom?.basePrice
+                    ? Math.round(primaryRoom.basePrice * 1.1)
+                    : 15624}{" "}
+                  Per Night
+                </small>
                 <div className="htl3ho-final">
-                  ₹12,499 <span>+ ₹2,619 taxes & fees</span>
+                  {primaryRoom?.currency || "INR"}{" "}
+                  {primaryRoom?.basePrice ? Math.round(primaryRoom.basePrice) : 12499}{" "}
+                  <span>+ {primaryRoom?.currency || "INR"} 2,619 taxes & fees</span>
                 </div>
               </div>
 
-              <button className="htl3ho-book" onClick={() => navigate("/hotel4")}>BOOK THIS NOW</button>
+              <button className="htl3ho-book" onClick={handleSelect}>
+                BOOK THIS NOW
+              </button>
 
               <div className="htl3ho-more-options">
                 <div>
@@ -86,16 +114,24 @@ const HotelOverview = () => {
             </div>
 
             <div className="htl3ho-rating-card">
-              <div className="htl3ho-rating">3.9</div>
+              <div className="htl3ho-rating">
+                {hotel?.averageRating ? hotel.averageRating.toFixed(1) : "3.9"}
+              </div>
               <div className="htl3ho-rating-text">
-                <b>Very Good</b>
-                <span>(6312 ratings)</span>
+                <b>
+                  {hotel?.averageRating >= 4.5
+                    ? "Excellent"
+                    : hotel?.averageRating >= 4
+                    ? "Very Good"
+                    : "Good"}
+                </b>
+                <span>({hotel?.reviewCount || 0} ratings)</span>
                 <a className="htl3ho-link">All Reviews</a>
               </div>
 
               <div className="htl3ho-location">
-                <b>Calangute</b>
-                <p>1.3 km drive to Calangute Beach</p>
+                <b>{hotel?.location?.city || "Calangute"}</b>
+                <p>{hotel?.location?.address || "1.3 km drive to Calangute Beach"}</p>
                 <a className="htl3ho-link">See on Map</a>
               </div>
             </div>

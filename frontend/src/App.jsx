@@ -3,12 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 // import Hotelpage from "./HotelPage/Hotelpage"
 import Admin_portal from './Admin_portal_/Admin_portal';
 import User_portal from './User_profile/User_portal';
-import Partner_portal from './Partner_Portal/Partner_portal';
+import Hotel_partner_portal from './Partner_portals/Hotel_partner_portal/Hotel_partner_portal';
+import Flight_partner_portal from './Partner_portals/flight_partner_portal/flight_partner_portal';
+import Package_partner_portal from './Partner_portals/package_partner_portal/package_partner_portal';
 import StaybookSearchPage from "./Main_website/Hotel_Section/Hotel_pge_2/StaybookSearchPage"
 
 import Hotelpge3 from './Main_website/Hotel_Section/Hotel_pge_3/Hotelpge3';
 import Hotelpge4 from './Main_website/Hotel_Section/Hotel_pge_4/Hotelpge4';
 import Hotelpge5 from './Main_website/Hotel_Section/Hotel_pge_5/Hotelpge5';
+
 import Hmstaypge2 from './Main_website/HomeStay_Section/HmStay_pge_2/Hmstaypge2';
 import Hmstaypge3 from './Main_website/HomeStay_Section/HmStay_pge_3/Hmstaypge3';
 
@@ -40,6 +43,7 @@ function App() {
         <Route path="/hotel5" element={<Hotelpge5/>} />
 
 
+
          <Route path="/tourpkge2" element={<TourPkpge2/>} />
           <Route path="/tourpkge3" element={<Tourpkpge3/>} />
           <Route path="/tourpkge4" element={<Tourpkpge4/>} />
@@ -50,7 +54,9 @@ function App() {
           <Route path="/admin" element={<Admin_portal/>} />
           <Route path="/user" element={<User_portal/>} />
           <Route path="/user/:userId" element={<User_portal/>} />
-          <Route path="/partner" element={<Partner_portal/>} />
+          <Route path="/partner" element={<Hotel_partner_portal/>} />
+          <Route path="/flight-partner" element={<Flight_partner_portal/>} />
+          <Route path="/package-partner" element={<Package_partner_portal/>} />
 
 
 

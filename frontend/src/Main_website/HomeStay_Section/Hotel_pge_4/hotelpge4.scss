@@ -1,36 +1,55 @@
 /* ReviewBookingHeader.scss */
 
-/* ===== Variables ===== */
-$rbh-white: #ffffff;
+/* =======================
+   Variables
+======================= */
+$reviewbookingheader-bg: #ffffff;
+$reviewbookingheader-color-text: #000000;
 
-$rbh-border: #e5e5e5;
+$reviewbookingheader-border: #e5e5e5;
 
-$rbh-text: #000000;
-
-$rbh-max-width: 1200px;
-
-/* ===== Mixins ===== */
-@mixin rbh-container {
-  max-width: $rbh-max-width;
+/* =======================
+   Mixins
+======================= */
+@mixin reviewbookingheader-container($max-width: 1200px) {
+  max-width: $max-width;
   margin: 0 auto;
 }
 
-@mixin rbh-full-width {
-  width: 100%;
-}
-
-/* ===== Styles ===== */
+/* =======================
+   Styles
+======================= */
 .review-booking-wrapper {
-  @include rbh-full-width;
-  background: $rbh-white;
-  border-bottom: 1px solid $rbh-border;
+  width: 100%;
+  background: $reviewbookingheader-bg;
+  border-bottom: 1px solid $reviewbookingheader-border;
 }
 
 .review-booking-header {
-  @include rbh-container;
+  @include reviewbookingheader-container(1200px);
   padding: 18px 24px;
   font-size: 22px;
   font-weight: 700;
-  color: $rbh-text;
+  color: $reviewbookingheader-color-text;
   text-align: left;
+}
+
+.booking-date-bar {
+  @include reviewbookingheader-container(1200px);
+  display: flex;
+  gap: 16px;
+  padding: 12px 24px 0;
+}
+
+.booking-date-bar label {
+  display: block;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.booking-date-bar input {
+  padding: 8px 10px;
+  border: 1px solid $reviewbookingheader-border;
+  border-radius: 6px;
 }

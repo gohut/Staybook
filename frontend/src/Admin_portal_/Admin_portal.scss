@@ -2,7 +2,6 @@
 
 /* ===== Variables ===== */
 $layout-sidebar-width: 260px;
-$layout-sidebar-offset: 280px;
 $layout-header-height: 70px;
 $layout-padding: 24px;
 $layout-blur: 4px;
@@ -23,7 +22,7 @@ $layout-blur: 4px;
 }
 
 .right-section_A {
-  margin-left: $layout-sidebar-offset;
+  margin-left: $layout-sidebar-width;
   @include layout-calc-width($layout-sidebar-width);
 }
 
@@ -35,7 +34,7 @@ $layout-blur: 4px;
 }
 
 .blurred {
-  .right-section {
+  .right-section_A {
     filter: blur($layout-blur);
     pointer-events: none;
   }

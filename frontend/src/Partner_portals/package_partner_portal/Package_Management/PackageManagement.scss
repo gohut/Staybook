@@ -1,0 +1,45 @@
+.pp-package-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pp-package-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.pp-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pp-actions select {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.pp-name strong {
+  display: block;
+  font-size: 13px;
+}
+
+.pp-name span {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.pp-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+}

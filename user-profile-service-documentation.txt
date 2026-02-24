@@ -1,6 +1,6 @@
-﻿================================================================================
+================================================================================
   STAYBOOK - USER_PROFILE_SERVICE MICROSERVICE DOCUMENTATION
-  Generated: 2026-02-22
+  Generated: 2026-02-23
   Base Path: backend/user_profile_service/
 ================================================================================
 
@@ -18,31 +18,55 @@ TABLE OF CONTENTS
   7.  GlobalExceptionHandler.java
   8.  MongoConfig.java
   9.  SecurityConfig.java
- 10.  JwtAuthenticationFilter.java
- 11.  JwtUtil.java
- 12.  TravelerController.java
- 13.  TravelerBookingResponse.java
- 14.  TravelerNotificationRequest.java
- 15.  TravelerNotificationResponse.java
- 16.  TravelerRequest.java
- 17.  TravelerResponse.java
- 18.  TravelerVoucherResponse.java
- 19.  BookingStatus.java
- 20.  NotificationType.java
- 21.  Traveler.java
- 22.  TravelerBooking.java
- 23.  TravelerNotification.java
- 24.  TravelerVoucher.java
- 25.  VoucherStatus.java
- 26.  TravelerBookingRepository.java
- 27.  TravelerNotificationRepository.java
- 28.  TravelerRepository.java
- 29.  TravelerVoucherRepository.java
- 30.  TravelerBookingService.java
- 31.  TravelerNotificationService.java
- 32.  TravelerService.java
- 33.  TravelerVoucherService.java
- 34.  UserProfileServiceApplicationTests.java
+  10.  HotelController.java
+  11.  PartnerController.java
+  12.  HotelRequest.java
+  13.  PartnerRequest.java
+  14.  PartnerUpdateRequest.java
+  15.  RoomTypeRequest.java
+  16.  Contact.java
+  17.  Hotel.java
+  18.  HotelDetails.java
+  19.  HotelPhoto.java
+  20.  Location.java
+  21.  Partner.java
+  22.  RatePlan.java
+  23.  Review.java
+  24.  RoomType.java
+  25.  HotelDetailsRepository.java
+  26.  HotelPhotoRepository.java
+  27.  HotelRepository.java
+  28.  PartnerRepository.java
+  29.  HotelDetailsService.java
+  30.  HotelService.java
+  31.  PartnerService.java
+  32.  PhotoStorageService.java
+  33.  JwtAuthenticationFilter.java
+  34.  JwtUtil.java
+  35.  TravelerController.java
+  36.  TravelerAdminNotificationRequest.java
+  37.  TravelerBookingResponse.java
+  38.  TravelerNotificationRequest.java
+  39.  TravelerNotificationResponse.java
+  40.  TravelerRequest.java
+  41.  TravelerResponse.java
+  42.  TravelerVoucherResponse.java
+  43.  BookingStatus.java
+  44.  NotificationType.java
+  45.  Traveler.java
+  46.  TravelerBooking.java
+  47.  TravelerNotification.java
+  48.  TravelerVoucher.java
+  49.  VoucherStatus.java
+  50.  TravelerBookingRepository.java
+  51.  TravelerNotificationRepository.java
+  52.  TravelerRepository.java
+  53.  TravelerVoucherRepository.java
+  54.  TravelerBookingService.java
+  55.  TravelerNotificationService.java
+  56.  TravelerService.java
+  57.  TravelerVoucherService.java
+  58.  UserProfileServiceApplicationTests.java
 
 ================================================================================
 
@@ -197,7 +221,7 @@ spring.data.mongodb.host=localhost
 spring.data.mongodb.port=27017
 spring.data.mongodb.database=staybookUserProfile
 spring.data.mongodb.uri=mongodb://localhost:27017/staybookUserProfile
-jwt.secret=your-super-secret-key-your-super-secret-key
+jwt.secret=mySuperSecretKeyForStayBookAuthService
 ================================================================================
 
 ================================================================================
@@ -432,9 +456,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -453,19 +484,1291 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/traveler/admin/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }
 ================================================================================
 
 ================================================================================
 FILE 10
+--------------------------------------------------------------------------------
+File Name : HotelController.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/controller/HotelController.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.controller;
+
+import com.staybook.user_profile_service.common.ApiResponse;
+import com.staybook.user_profile_service.common.BusinessException;
+import com.staybook.user_profile_service.partner.dto.HotelRequest;
+import com.staybook.user_profile_service.partner.dto.RoomTypeRequest;
+import com.staybook.user_profile_service.partner.entity.Hotel;
+import com.staybook.user_profile_service.partner.entity.HotelDetails;
+import com.staybook.user_profile_service.partner.entity.HotelPhoto;
+import com.staybook.user_profile_service.partner.entity.RoomType;
+import com.staybook.user_profile_service.partner.repository.HotelPhotoRepository;
+import com.staybook.user_profile_service.partner.service.HotelDetailsService;
+import com.staybook.user_profile_service.partner.service.HotelService;
+import com.staybook.user_profile_service.partner.service.PhotoStorageService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/partner/hotels")
+@RequiredArgsConstructor
+public class HotelController {
+
+    private final HotelService hotelService;
+    private final HotelDetailsService hotelDetailsService;
+    private final HotelPhotoRepository hotelPhotoRepository;
+    private final PhotoStorageService photoStorageService;
+    private final GridFsTemplate gridFsTemplate;
+
+    @PostMapping
+    public ApiResponse<Hotel> createHotel(Authentication authentication,
+                                          @RequestBody HotelRequest request) {
+
+        String authUserId = authentication.getName();
+
+        Hotel hotel = hotelService.createHotel(authUserId, request);
+
+        return ApiResponse.<Hotel>builder()
+                .success(true)
+                .message("Hotel created successfully")
+                .data(hotel)
+                .build();
+    }
+
+    @GetMapping
+    public ApiResponse<List<Hotel>> listHotels(Authentication authentication) {
+
+        String authUserId = authentication.getName();
+
+        List<Hotel> hotels = hotelService.getHotelsForPartner(authUserId);
+
+        return ApiResponse.<List<Hotel>>builder()
+                .success(true)
+                .message("Hotels fetched successfully")
+                .data(hotels)
+                .build();
+    }
+
+    @GetMapping("/{hotelId}")
+    public ApiResponse<Hotel> getHotel(@PathVariable String hotelId) {
+
+        Hotel hotel = hotelService.getHotelById(hotelId);
+
+        return ApiResponse.<Hotel>builder()
+                .success(true)
+                .message("Hotel fetched successfully")
+                .data(hotel)
+                .build();
+    }
+
+    @PutMapping("/{hotelId}")
+    public ApiResponse<Hotel> updateHotel(Authentication authentication,
+                                          @PathVariable String hotelId,
+                                          @RequestBody HotelRequest request) {
+
+        String authUserId = authentication.getName();
+        Hotel hotel = hotelService.updateHotel(authUserId, hotelId, request);
+
+        return ApiResponse.<Hotel>builder()
+                .success(true)
+                .message("Hotel updated successfully")
+                .data(hotel)
+                .build();
+    }
+
+    @GetMapping("/{hotelId}/details")
+    public ApiResponse<HotelDetails> getHotelDetails(Authentication authentication,
+                                                     @PathVariable String hotelId) {
+
+        String authUserId = authentication.getName();
+        HotelDetails details = hotelDetailsService.getDetails(authUserId, hotelId);
+
+        return ApiResponse.<HotelDetails>builder()
+                .success(true)
+                .message("Hotel details fetched successfully")
+                .data(details)
+                .build();
+    }
+
+    @PostMapping("/{hotelId}/room-types")
+    public ApiResponse<RoomType> addRoomType(Authentication authentication,
+                                             @PathVariable String hotelId,
+                                             @RequestBody RoomTypeRequest request) {
+
+        String authUserId = authentication.getName();
+        RoomType roomType = hotelDetailsService.addRoomType(authUserId, hotelId, request);
+
+        return ApiResponse.<RoomType>builder()
+                .success(true)
+                .message("Room type added successfully")
+                .data(roomType)
+                .build();
+    }
+
+    @PutMapping("/{hotelId}/room-types/{roomTypeId}")
+    public ApiResponse<RoomType> updateRoomType(Authentication authentication,
+                                                @PathVariable String hotelId,
+                                                @PathVariable String roomTypeId,
+                                                @RequestBody RoomTypeRequest request) {
+
+        String authUserId = authentication.getName();
+        RoomType roomType =
+                hotelDetailsService.updateRoomType(authUserId, hotelId, roomTypeId, request);
+
+        return ApiResponse.<RoomType>builder()
+                .success(true)
+                .message("Room type updated successfully")
+                .data(roomType)
+                .build();
+    }
+
+    @DeleteMapping("/{hotelId}/room-types/{roomTypeId}")
+    public ApiResponse<Void> deleteRoomType(Authentication authentication,
+                                            @PathVariable String hotelId,
+                                            @PathVariable String roomTypeId) {
+
+        String authUserId = authentication.getName();
+        hotelDetailsService.deleteRoomType(authUserId, hotelId, roomTypeId);
+
+        return ApiResponse.<Void>builder()
+                .success(true)
+                .message("Room type deleted successfully")
+                .data(null)
+                .build();
+    }
+
+    @PostMapping("/{hotelId}/photos")
+    public ApiResponse<HotelPhoto> uploadPhoto(Authentication authentication,
+                                               @PathVariable String hotelId,
+                                               @RequestParam MultipartFile file,
+                                               @RequestParam String type,
+                                               @RequestParam(required = false) String roomTypeId,
+                                               @RequestParam(required = false) Boolean isPrimary) throws IOException {
+
+        String authUserId = authentication.getName();
+        hotelDetailsService.getDetails(authUserId, hotelId);
+
+        String fileId = photoStorageService.storeFile(file);
+
+        HotelPhoto photo = HotelPhoto.builder()
+                .hotelId(hotelId)
+                .roomTypeId(roomTypeId)
+                .fileId(fileId)
+                .type(type)
+                .isPrimary(isPrimary != null ? isPrimary : Boolean.FALSE)
+                .uploadedAt(LocalDateTime.now())
+                .build();
+
+        hotelPhotoRepository.save(photo);
+
+        return ApiResponse.<HotelPhoto>builder()
+                .success(true)
+                .message("Photo uploaded")
+                .data(photo)
+                .build();
+    }
+
+    @GetMapping("/{hotelId}/photos")
+    public ApiResponse<List<HotelPhoto>> listPhotos(Authentication authentication,
+                                                    @PathVariable String hotelId,
+                                                    @RequestParam(required = false) String roomTypeId) {
+
+        String authUserId = authentication.getName();
+        hotelDetailsService.getDetails(authUserId, hotelId);
+
+        List<HotelPhoto> photos;
+        if (roomTypeId != null && !roomTypeId.isBlank()) {
+            photos = hotelPhotoRepository.findByRoomTypeId(roomTypeId)
+                    .stream()
+                    .filter(photo -> hotelId.equals(photo.getHotelId()))
+                    .toList();
+        } else {
+            photos = hotelPhotoRepository.findByHotelId(hotelId);
+        }
+
+        return ApiResponse.<List<HotelPhoto>>builder()
+                .success(true)
+                .message("Photos fetched successfully")
+                .data(photos)
+                .build();
+    }
+
+    @GetMapping("/photos/{fileId}")
+    public ResponseEntity<byte[]> getPhoto(@PathVariable String fileId) throws IOException {
+
+        var file = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));
+        if (file == null) {
+            throw new BusinessException("Photo not found");
+        }
+
+        GridFsResource resource = gridFsTemplate.getResource(file);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, resource.getContentType())
+                .body(resource.getInputStream().readAllBytes());
+    }
+}
+================================================================================
+
+================================================================================
+FILE 11
+--------------------------------------------------------------------------------
+File Name : PartnerController.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/controller/PartnerController.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.controller;
+
+import com.staybook.user_profile_service.common.ApiResponse;
+import com.staybook.user_profile_service.partner.dto.PartnerUpdateRequest;
+import com.staybook.user_profile_service.partner.entity.Partner;
+import com.staybook.user_profile_service.partner.service.PartnerService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/partner")
+@RequiredArgsConstructor
+public class PartnerController {
+
+    private final PartnerService partnerService;
+
+    @GetMapping
+    public ApiResponse<Partner> getPartner(Authentication authentication) {
+
+        String email = authentication.getName();
+
+        Partner partner = partnerService.getOrCreatePartner(email);
+
+        return ApiResponse.<Partner>builder()
+                .success(true)
+                .message("Partner fetched successfully")
+                .data(partner)
+                .build();
+    }
+
+    @PutMapping
+    public ApiResponse<Partner> updatePartner(Authentication authentication,
+                                              @RequestBody PartnerUpdateRequest request) {
+
+        String email = authentication.getName();
+
+        Partner partner = partnerService.updatePartner(email, request);
+
+        return ApiResponse.<Partner>builder()
+                .success(true)
+                .message("Partner updated successfully")
+                .data(partner)
+                .build();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 12
+--------------------------------------------------------------------------------
+File Name : HotelRequest.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/dto/HotelRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.dto;
+
+import lombok.Data;
+
+@Data
+public class HotelRequest {
+
+    private String name;
+    private Integer starRating;
+    private String description;
+
+    private String address;
+    private String city;
+    private String state;
+    private String country;
+    private String pincode;
+
+    private Double latitude;
+    private Double longitude;
+
+    private String phone;
+    private String email;
+
+    private String checkInTime;
+    private String checkOutTime;
+}
+================================================================================
+
+================================================================================
+FILE 13
+--------------------------------------------------------------------------------
+File Name : PartnerRequest.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/dto/PartnerRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.dto;
+
+import lombok.Data;
+
+@Data
+public class PartnerRequest {
+
+    private String name;
+    private String email;
+    private String phone;
+}
+================================================================================
+
+================================================================================
+FILE 14
+--------------------------------------------------------------------------------
+File Name : PartnerUpdateRequest.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/dto/PartnerUpdateRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.dto;
+
+import lombok.Data;
+
+@Data
+public class PartnerUpdateRequest {
+
+    private String name;
+    private String phone;
+    private String role;
+}
+================================================================================
+
+================================================================================
+FILE 15
+--------------------------------------------------------------------------------
+File Name : RoomTypeRequest.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/dto/RoomTypeRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.dto;
+
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class RoomTypeRequest {
+
+    private String name;
+    private String bedType;
+    private Integer maxGuests;
+    private Integer roomSizeSqFt;
+    private Integer totalRooms;
+    private List<String> amenities;
+    private Double basePrice;
+    private String currency;
+    private Boolean isActive;
+}
+================================================================================
+
+================================================================================
+FILE 16
+--------------------------------------------------------------------------------
+File Name : Contact.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/Contact.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Contact {
+
+    private String phone;
+    private String email;
+}
+================================================================================
+
+================================================================================
+FILE 17
+--------------------------------------------------------------------------------
+File Name : Hotel.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/Hotel.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+
+@Document(collection = "hotels")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Hotel {
+
+    @Id
+    private String id;
+
+    private String partnerId;
+
+    private String name;
+    private Integer starRating;
+    private String description;
+
+    private Location location;
+    private Contact contact;
+
+    private String checkInTime;
+    private String checkOutTime;
+
+    private String status; // ACTIVE / INACTIVE / DRAFT
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+================================================================================
+
+================================================================================
+FILE 18
+--------------------------------------------------------------------------------
+File Name : HotelDetails.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/HotelDetails.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+
+@Document(collection = "hotel_details")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class HotelDetails {
+
+    @Id
+    private String id;
+
+    private String hotelId;
+
+    private List<RoomType> roomTypes;
+    private List<RatePlan> ratePlans;
+    private List<Review> reviews;
+    private List<HotelPhoto> photos;
+}
+================================================================================
+
+================================================================================
+FILE 19
+--------------------------------------------------------------------------------
+File Name : HotelPhoto.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/HotelPhoto.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+
+@Document(collection = "hotel_photos")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class HotelPhoto {
+
+    @Id
+    private String id;
+
+    private String hotelId;
+    private String roomTypeId; // nullable
+
+    private String fileId; // GridFS file reference
+
+    private String type; // HOTEL / ROOM / DINING / POOL
+
+    private Boolean isPrimary;
+
+    private LocalDateTime uploadedAt;
+}
+================================================================================
+
+================================================================================
+FILE 20
+--------------------------------------------------------------------------------
+File Name : Location.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/Location.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Location {
+
+    private String address;
+    private String city;
+    private String state;
+    private String country;
+    private String pincode;
+
+    private Double latitude;
+    private Double longitude;
+}
+================================================================================
+
+================================================================================
+FILE 21
+--------------------------------------------------------------------------------
+File Name : Partner.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/Partner.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Document(collection = "partners")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Partner {
+
+    @Id
+    private String id;
+
+    private String email; // This is JWT subject from auth-service
+
+    private String name;
+    private String phone;
+
+    private String role; // HOTEL_ADMIN
+
+    private List<String> hotelIds;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+================================================================================
+
+================================================================================
+FILE 22
+--------------------------------------------------------------------------------
+File Name : RatePlan.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/RatePlan.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class RatePlan {
+
+    private String id;
+
+    private String roomTypeId;
+
+    private String planName;
+
+    private Boolean breakfast;
+    private Boolean lunch;
+    private Boolean dinner;
+
+    private Boolean isRefundable;
+
+    private List<String> benefits;
+
+    private Boolean isActive;
+}
+================================================================================
+
+================================================================================
+FILE 23
+--------------------------------------------------------------------------------
+File Name : Review.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/Review.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Review {
+
+    private String id;
+
+    private String userId;
+    private String bookingId;
+
+    private Double rating;
+
+    private Double cleanliness;
+    private Double hospitality;
+    private Double location;
+    private Double valueForMoney;
+
+    private String reviewTitle;
+    private String reviewText;
+    private String travelMonth;
+
+    private String roomTypeId;
+
+    private LocalDateTime createdAt;
+}
+================================================================================
+
+================================================================================
+FILE 24
+--------------------------------------------------------------------------------
+File Name : RoomType.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/entity/RoomType.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.entity;
+
+import lombok.*;
+
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class RoomType {
+
+    private String id;
+
+    private String name;
+    private String bedType;
+    private Integer maxGuests;
+    private Integer roomSizeSqFt;
+    private Integer totalRooms;
+
+    private List<String> amenities;
+
+    private Double basePrice;
+    private String currency;
+
+    private Boolean isActive;
+}
+================================================================================
+
+================================================================================
+FILE 25
+--------------------------------------------------------------------------------
+File Name : HotelDetailsRepository.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/repository/HotelDetailsRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.repository;
+
+import com.staybook.user_profile_service.partner.entity.HotelDetails;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Optional;
+
+public interface HotelDetailsRepository extends MongoRepository<HotelDetails, String> {
+
+    Optional<HotelDetails> findByHotelId(String hotelId);
+}
+================================================================================
+
+================================================================================
+FILE 26
+--------------------------------------------------------------------------------
+File Name : HotelPhotoRepository.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/repository/HotelPhotoRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.repository;
+
+import com.staybook.user_profile_service.partner.entity.HotelPhoto;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.List;
+
+public interface HotelPhotoRepository extends MongoRepository<HotelPhoto, String> {
+
+    List<HotelPhoto> findByHotelId(String hotelId);
+
+    List<HotelPhoto> findByRoomTypeId(String roomTypeId);
+}
+================================================================================
+
+================================================================================
+FILE 27
+--------------------------------------------------------------------------------
+File Name : HotelRepository.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/repository/HotelRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.repository;
+
+import com.staybook.user_profile_service.partner.entity.Hotel;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.List;
+
+public interface HotelRepository extends MongoRepository<Hotel, String> {
+
+    List<Hotel> findByPartnerId(String partnerId);
+}
+================================================================================
+
+================================================================================
+FILE 28
+--------------------------------------------------------------------------------
+File Name : PartnerRepository.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/repository/PartnerRepository.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.repository;
+
+import com.staybook.user_profile_service.partner.entity.Partner;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Optional;
+
+public interface PartnerRepository extends MongoRepository<Partner, String> {
+
+    Optional<Partner> findByAuthUserId(String authUserId);
+
+    Optional<Partner> findByEmail(String email);
+}
+================================================================================
+
+================================================================================
+FILE 29
+--------------------------------------------------------------------------------
+File Name : HotelDetailsService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/service/HotelDetailsService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.service;
+
+import com.staybook.user_profile_service.common.BusinessException;
+import com.staybook.user_profile_service.partner.dto.RoomTypeRequest;
+import com.staybook.user_profile_service.partner.entity.Hotel;
+import com.staybook.user_profile_service.partner.entity.HotelDetails;
+import com.staybook.user_profile_service.partner.entity.Partner;
+import com.staybook.user_profile_service.partner.entity.RoomType;
+import com.staybook.user_profile_service.partner.repository.HotelDetailsRepository;
+import com.staybook.user_profile_service.partner.repository.HotelRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+public class HotelDetailsService {
+
+    private final HotelDetailsRepository hotelDetailsRepository;
+    private final HotelRepository hotelRepository;
+    private final PartnerService partnerService;
+
+    public HotelDetails getDetails(String authUserId, String hotelId) {
+        validateAccess(authUserId, hotelId);
+        return getOrCreateDetails(hotelId);
+    }
+
+    public RoomType addRoomType(String authUserId, String hotelId, RoomTypeRequest request) {
+        HotelDetails details = getDetails(authUserId, hotelId);
+        List<RoomType> roomTypes = ensureRoomTypes(details);
+
+        RoomType roomType = RoomType.builder()
+                .id(UUID.randomUUID().toString())
+                .name(request.getName())
+                .bedType(request.getBedType())
+                .maxGuests(request.getMaxGuests())
+                .roomSizeSqFt(request.getRoomSizeSqFt())
+                .totalRooms(request.getTotalRooms())
+                .amenities(request.getAmenities())
+                .basePrice(request.getBasePrice())
+                .currency(request.getCurrency())
+                .isActive(request.getIsActive() != null ? request.getIsActive() : Boolean.TRUE)
+                .build();
+
+        roomTypes.add(roomType);
+        details.setRoomTypes(roomTypes);
+        hotelDetailsRepository.save(details);
+
+        return roomType;
+    }
+
+    public RoomType updateRoomType(String authUserId,
+                                   String hotelId,
+                                   String roomTypeId,
+                                   RoomTypeRequest request) {
+        HotelDetails details = getDetails(authUserId, hotelId);
+        List<RoomType> roomTypes = ensureRoomTypes(details);
+
+        RoomType roomType = roomTypes.stream()
+                .filter(rt -> rt.getId() != null && rt.getId().equals(roomTypeId))
+                .findFirst()
+                .orElseThrow(() -> new BusinessException("Room type not found"));
+
+        if (request.getName() != null) {
+            roomType.setName(request.getName());
+        }
+        if (request.getBedType() != null) {
+            roomType.setBedType(request.getBedType());
+        }
+        if (request.getMaxGuests() != null) {
+            roomType.setMaxGuests(request.getMaxGuests());
+        }
+        if (request.getRoomSizeSqFt() != null) {
+            roomType.setRoomSizeSqFt(request.getRoomSizeSqFt());
+        }
+        if (request.getTotalRooms() != null) {
+            roomType.setTotalRooms(request.getTotalRooms());
+        }
+        if (request.getAmenities() != null) {
+            roomType.setAmenities(request.getAmenities());
+        }
+        if (request.getBasePrice() != null) {
+            roomType.setBasePrice(request.getBasePrice());
+        }
+        if (request.getCurrency() != null) {
+            roomType.setCurrency(request.getCurrency());
+        }
+        if (request.getIsActive() != null) {
+            roomType.setIsActive(request.getIsActive());
+        }
+
+        hotelDetailsRepository.save(details);
+        return roomType;
+    }
+
+    public void deleteRoomType(String authUserId, String hotelId, String roomTypeId) {
+        HotelDetails details = getDetails(authUserId, hotelId);
+        List<RoomType> roomTypes = ensureRoomTypes(details);
+
+        boolean removed = roomTypes.removeIf(rt -> rt.getId() != null && rt.getId().equals(roomTypeId));
+        if (!removed) {
+            throw new BusinessException("Room type not found");
+        }
+
+        details.setRoomTypes(roomTypes);
+        hotelDetailsRepository.save(details);
+    }
+
+    private void validateAccess(String authUserId, String hotelId) {
+        Partner partner = partnerService.getOrCreatePartner(authUserId);
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new BusinessException("Hotel not found"));
+
+        if (!hotel.getPartnerId().equals(partner.getId())) {
+            throw new BusinessException("Unauthorized access");
+        }
+    }
+
+    private HotelDetails getOrCreateDetails(String hotelId) {
+        return hotelDetailsRepository.findByHotelId(hotelId)
+                .orElseGet(() -> hotelDetailsRepository.save(
+                        HotelDetails.builder()
+                                .hotelId(hotelId)
+                                .roomTypes(new ArrayList<>())
+                                .ratePlans(new ArrayList<>())
+                                .reviews(new ArrayList<>())
+                                .photos(new ArrayList<>())
+                                .build()
+                ));
+    }
+
+    private List<RoomType> ensureRoomTypes(HotelDetails details) {
+        if (details.getRoomTypes() == null) {
+            details.setRoomTypes(new ArrayList<>());
+        }
+        return details.getRoomTypes();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 30
+--------------------------------------------------------------------------------
+File Name : HotelService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/service/HotelService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.service;
+
+import com.staybook.user_profile_service.common.BusinessException;
+import com.staybook.user_profile_service.partner.dto.HotelRequest;
+import com.staybook.user_profile_service.partner.entity.*;
+import com.staybook.user_profile_service.partner.repository.HotelDetailsRepository;
+import com.staybook.user_profile_service.partner.repository.HotelRepository;
+import com.staybook.user_profile_service.partner.repository.PartnerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class HotelService {
+
+    private final HotelRepository hotelRepository;
+    private final HotelDetailsRepository hotelDetailsRepository;
+    private final PartnerRepository partnerRepository;
+    private final PartnerService partnerService;
+
+    public Hotel createHotel(String authUserId, HotelRequest request) {
+
+        Partner partner = partnerService.getOrCreatePartner(authUserId);
+
+        Hotel hotel = Hotel.builder()
+                .partnerId(partner.getId())
+                .name(request.getName())
+                .starRating(request.getStarRating())
+                .description(request.getDescription())
+                .location(buildLocation(request))
+                .contact(buildContact(request))
+                .checkInTime(request.getCheckInTime())
+                .checkOutTime(request.getCheckOutTime())
+                .status("DRAFT")
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        Hotel savedHotel = hotelRepository.save(hotel);
+
+        // Add hotelId to partner
+        partner.getHotelIds().add(savedHotel.getId());
+        partner.setUpdatedAt(LocalDateTime.now());
+        partnerRepository.save(partner);
+
+        // Auto create empty HotelDetails document
+        HotelDetails hotelDetails = HotelDetails.builder()
+                .hotelId(savedHotel.getId())
+                .roomTypes(new ArrayList<>())
+                .ratePlans(new ArrayList<>())
+                .reviews(new ArrayList<>())
+                .photos(new ArrayList<>())
+                .build();
+
+        hotelDetailsRepository.save(hotelDetails);
+
+        return savedHotel;
+    }
+
+    public Hotel getHotelById(String hotelId) {
+        return hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new BusinessException("Hotel not found"));
+    }
+
+    public List<Hotel> getHotelsForPartner(String authUserId) {
+        Partner partner = partnerService.getOrCreatePartner(authUserId);
+        return hotelRepository.findByPartnerId(partner.getId());
+    }
+
+    public Hotel updateHotel(String authUserId, String hotelId, HotelRequest request) {
+        Partner partner = partnerService.getOrCreatePartner(authUserId);
+        Hotel hotel = hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new BusinessException("Hotel not found"));
+
+        if (!hotel.getPartnerId().equals(partner.getId())) {
+            throw new BusinessException("Unauthorized access");
+        }
+
+        if (request.getName() != null) {
+            hotel.setName(request.getName());
+        }
+        if (request.getStarRating() != null) {
+            hotel.setStarRating(request.getStarRating());
+        }
+        if (request.getDescription() != null) {
+            hotel.setDescription(request.getDescription());
+        }
+        if (request.getCheckInTime() != null) {
+            hotel.setCheckInTime(request.getCheckInTime());
+        }
+        if (request.getCheckOutTime() != null) {
+            hotel.setCheckOutTime(request.getCheckOutTime());
+        }
+
+        hotel.setLocation(mergeLocation(hotel.getLocation(), request));
+        hotel.setContact(mergeContact(hotel.getContact(), request));
+        hotel.setUpdatedAt(LocalDateTime.now());
+
+        return hotelRepository.save(hotel);
+    }
+
+    private Location buildLocation(HotelRequest request) {
+        return Location.builder()
+                .address(request.getAddress())
+                .city(request.getCity())
+                .state(request.getState())
+                .country(request.getCountry())
+                .pincode(request.getPincode())
+                .latitude(request.getLatitude())
+                .longitude(request.getLongitude())
+                .build();
+    }
+
+    private Contact buildContact(HotelRequest request) {
+        return Contact.builder()
+                .phone(request.getPhone())
+                .email(request.getEmail())
+                .build();
+    }
+
+    private Location mergeLocation(Location existing, HotelRequest request) {
+        Location location = existing != null ? existing : new Location();
+        if (request.getAddress() != null) {
+            location.setAddress(request.getAddress());
+        }
+        if (request.getCity() != null) {
+            location.setCity(request.getCity());
+        }
+        if (request.getState() != null) {
+            location.setState(request.getState());
+        }
+        if (request.getCountry() != null) {
+            location.setCountry(request.getCountry());
+        }
+        if (request.getPincode() != null) {
+            location.setPincode(request.getPincode());
+        }
+        if (request.getLatitude() != null) {
+            location.setLatitude(request.getLatitude());
+        }
+        if (request.getLongitude() != null) {
+            location.setLongitude(request.getLongitude());
+        }
+        return location;
+    }
+
+    private Contact mergeContact(Contact existing, HotelRequest request) {
+        Contact contact = existing != null ? existing : new Contact();
+        if (request.getPhone() != null) {
+            contact.setPhone(request.getPhone());
+        }
+        if (request.getEmail() != null) {
+            contact.setEmail(request.getEmail());
+        }
+        return contact;
+    }
+}
+================================================================================
+
+================================================================================
+FILE 31
+--------------------------------------------------------------------------------
+File Name : PartnerService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/service/PartnerService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.service;
+
+import com.staybook.user_profile_service.common.BusinessException;
+import com.staybook.user_profile_service.partner.dto.PartnerUpdateRequest;
+import com.staybook.user_profile_service.partner.entity.Partner;
+import com.staybook.user_profile_service.partner.repository.PartnerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+@Service
+@RequiredArgsConstructor
+public class PartnerService {
+
+    private final PartnerRepository partnerRepository;
+
+    public Partner getOrCreatePartner(String email) {
+
+        return partnerRepository.findByEmail(email)
+                .orElseGet(() -> {
+
+                    Partner newPartner = Partner.builder()
+                            .authUserId(email)
+                            .email(email)
+                            .name("New Partner")
+                            .phone("")
+                            .role("HOTEL_ADMIN")
+                            .hotelIds(new ArrayList<>())
+                            .createdAt(LocalDateTime.now())
+                            .build();
+
+                    return partnerRepository.save(newPartner);
+                });
+    }
+
+    public Partner getPartner(String email) {
+        return partnerRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException("Partner not found"));
+    }
+
+    public Partner updatePartner(String email, PartnerUpdateRequest request) {
+        Partner partner = partnerRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException("Partner not found"));
+
+        if (request.getName() != null && !request.getName().isBlank()) {
+            partner.setName(request.getName());
+        }
+        if (request.getPhone() != null) {
+            partner.setPhone(request.getPhone());
+        }
+        if (request.getRole() != null && !request.getRole().isBlank()) {
+            partner.setRole(request.getRole());
+        }
+
+        partner.setUpdatedAt(LocalDateTime.now());
+
+        return partnerRepository.save(partner);
+    }
+}
+================================================================================
+
+================================================================================
+FILE 32
+--------------------------------------------------------------------------------
+File Name : PhotoStorageService.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/partner/service/PhotoStorageService.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.partner.service;
+
+import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+@Service
+@RequiredArgsConstructor
+public class PhotoStorageService {
+
+    private final GridFsTemplate gridFsTemplate;
+
+    public String storeFile(MultipartFile file) throws IOException {
+
+        ObjectId fileId = gridFsTemplate.store(
+                file.getInputStream(),
+                file.getOriginalFilename(),
+                file.getContentType()
+        );
+
+        return fileId.toHexString();
+    }
+}
+================================================================================
+
+================================================================================
+FILE 33
 --------------------------------------------------------------------------------
 File Name : JwtAuthenticationFilter.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/security/JwtAuthenticationFilter.java
@@ -519,7 +1822,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 ================================================================================
 
 ================================================================================
-FILE 11
+FILE 34
 --------------------------------------------------------------------------------
 File Name : JwtUtil.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/security/JwtUtil.java
@@ -569,7 +1872,7 @@ public class JwtUtil {
 ================================================================================
 
 ================================================================================
-FILE 12
+FILE 35
 --------------------------------------------------------------------------------
 File Name : TravelerController.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/controller/TravelerController.java
@@ -584,6 +1887,7 @@ import com.staybook.user_profile_service.traveler.dto.TravelerResponse;
 import com.staybook.user_profile_service.traveler.dto.TravelerBookingResponse;
 import com.staybook.user_profile_service.traveler.dto.TravelerNotificationResponse;
 import com.staybook.user_profile_service.traveler.dto.TravelerNotificationRequest;
+import com.staybook.user_profile_service.traveler.dto.TravelerAdminNotificationRequest;
 import com.staybook.user_profile_service.traveler.dto.TravelerVoucherResponse;
 import com.staybook.user_profile_service.traveler.entity.BookingStatus;
 import com.staybook.user_profile_service.traveler.entity.VoucherStatus;
@@ -731,6 +2035,25 @@ public class TravelerController {
                 .build();
     }
 
+    @PostMapping("/admin/notifications")
+    public ApiResponse<Void> createAdminNotification(
+            @RequestBody TravelerAdminNotificationRequest request) {
+
+        notificationService.createNotificationForEmail(
+                request.getEmail(),
+                request.getTitle(),
+                request.getMessage(),
+                request.getFrom(),
+                request.getType()
+        );
+
+        return ApiResponse.<Void>builder()
+                .success(true)
+                .message("Notification created successfully")
+                .data(null)
+                .build();
+    }
+
     @GetMapping("/notifications/unread-count")
     public ApiResponse<Long> getUnreadCount(Authentication authentication) {
 
@@ -792,7 +2115,30 @@ public class TravelerController {
 ================================================================================
 
 ================================================================================
-FILE 13
+FILE 36
+--------------------------------------------------------------------------------
+File Name : TravelerAdminNotificationRequest.java
+Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerAdminNotificationRequest.java
+--------------------------------------------------------------------------------
+CODE:
+--------------------------------------------------------------------------------
+package com.staybook.user_profile_service.traveler.dto;
+
+import com.staybook.user_profile_service.traveler.entity.NotificationType;
+import lombok.Data;
+
+@Data
+public class TravelerAdminNotificationRequest {
+    private String email;
+    private String title;
+    private String message;
+    private String from;
+    private NotificationType type;
+}
+================================================================================
+
+================================================================================
+FILE 37
 --------------------------------------------------------------------------------
 File Name : TravelerBookingResponse.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerBookingResponse.java
@@ -831,7 +2177,7 @@ public class TravelerBookingResponse {
 ================================================================================
 
 ================================================================================
-FILE 14
+FILE 38
 --------------------------------------------------------------------------------
 File Name : TravelerNotificationRequest.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerNotificationRequest.java
@@ -854,7 +2200,7 @@ public class TravelerNotificationRequest {
 ================================================================================
 
 ================================================================================
-FILE 15
+FILE 39
 --------------------------------------------------------------------------------
 File Name : TravelerNotificationResponse.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerNotificationResponse.java
@@ -884,7 +2230,7 @@ public class TravelerNotificationResponse {
 ================================================================================
 
 ================================================================================
-FILE 16
+FILE 40
 --------------------------------------------------------------------------------
 File Name : TravelerRequest.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerRequest.java
@@ -915,7 +2261,7 @@ public class TravelerRequest {
 ================================================================================
 
 ================================================================================
-FILE 17
+FILE 41
 --------------------------------------------------------------------------------
 File Name : TravelerResponse.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerResponse.java
@@ -945,7 +2291,7 @@ public class TravelerResponse {
 ================================================================================
 
 ================================================================================
-FILE 18
+FILE 42
 --------------------------------------------------------------------------------
 File Name : TravelerVoucherResponse.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/dto/TravelerVoucherResponse.java
@@ -980,7 +2326,7 @@ public class TravelerVoucherResponse {
 ================================================================================
 
 ================================================================================
-FILE 19
+FILE 43
 --------------------------------------------------------------------------------
 File Name : BookingStatus.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/BookingStatus.java
@@ -999,7 +2345,7 @@ public enum BookingStatus {
 ================================================================================
 
 ================================================================================
-FILE 20
+FILE 44
 --------------------------------------------------------------------------------
 File Name : NotificationType.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/NotificationType.java
@@ -1017,7 +2363,7 @@ public enum NotificationType {
 ================================================================================
 
 ================================================================================
-FILE 21
+FILE 45
 --------------------------------------------------------------------------------
 File Name : Traveler.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/Traveler.java
@@ -1060,7 +2406,7 @@ public class Traveler {
 ================================================================================
 
 ================================================================================
-FILE 22
+FILE 46
 --------------------------------------------------------------------------------
 File Name : TravelerBooking.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/TravelerBooking.java
@@ -1116,7 +2462,7 @@ public class TravelerBooking {
 ================================================================================
 
 ================================================================================
-FILE 23
+FILE 47
 --------------------------------------------------------------------------------
 File Name : TravelerNotification.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/TravelerNotification.java
@@ -1161,7 +2507,7 @@ public class TravelerNotification {
 ================================================================================
 
 ================================================================================
-FILE 24
+FILE 48
 --------------------------------------------------------------------------------
 File Name : TravelerVoucher.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/TravelerVoucher.java
@@ -1205,7 +2551,7 @@ public class TravelerVoucher {
 ================================================================================
 
 ================================================================================
-FILE 25
+FILE 49
 --------------------------------------------------------------------------------
 File Name : VoucherStatus.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/entity/VoucherStatus.java
@@ -1221,7 +2567,7 @@ public enum VoucherStatus {
 ================================================================================
 
 ================================================================================
-FILE 26
+FILE 50
 --------------------------------------------------------------------------------
 File Name : TravelerBookingRepository.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/repository/TravelerBookingRepository.java
@@ -1247,7 +2593,7 @@ public interface TravelerBookingRepository extends MongoRepository<TravelerBooki
 ================================================================================
 
 ================================================================================
-FILE 27
+FILE 51
 --------------------------------------------------------------------------------
 File Name : TravelerNotificationRepository.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/repository/TravelerNotificationRepository.java
@@ -1270,7 +2616,7 @@ public interface TravelerNotificationRepository extends MongoRepository<Traveler
 ================================================================================
 
 ================================================================================
-FILE 28
+FILE 52
 --------------------------------------------------------------------------------
 File Name : TravelerRepository.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/repository/TravelerRepository.java
@@ -1293,7 +2639,7 @@ public interface TravelerRepository extends MongoRepository<Traveler, String> {
 ================================================================================
 
 ================================================================================
-FILE 29
+FILE 53
 --------------------------------------------------------------------------------
 File Name : TravelerVoucherRepository.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/repository/TravelerVoucherRepository.java
@@ -1317,7 +2663,7 @@ public interface TravelerVoucherRepository extends MongoRepository<TravelerVouch
 ================================================================================
 
 ================================================================================
-FILE 30
+FILE 54
 --------------------------------------------------------------------------------
 File Name : TravelerBookingService.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/service/TravelerBookingService.java
@@ -1376,7 +2722,7 @@ public class TravelerBookingService {
 ================================================================================
 
 ================================================================================
-FILE 31
+FILE 55
 --------------------------------------------------------------------------------
 File Name : TravelerNotificationService.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/service/TravelerNotificationService.java
@@ -1450,6 +2796,33 @@ public class TravelerNotificationService {
         return mapToResponse(notification);
     }
 
+    public TravelerNotificationResponse createNotificationForEmail(String email,
+                                                                   String title,
+                                                                   String message,
+                                                                   String from,
+                                                                   NotificationType type) {
+        if (email == null || email.isBlank()) {
+            throw new BusinessException("Email is required");
+        }
+
+        String resolvedFrom = (from == null || from.isBlank()) ? "SYSTEM" : from;
+        NotificationType resolvedType = (type == null) ? NotificationType.INFO : type;
+
+        TravelerNotification notification = TravelerNotification.builder()
+                .email(email)
+                .title(title)
+                .message(message)
+                .from(resolvedFrom)
+                .type(resolvedType)
+                .isRead(false)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        notificationRepository.save(notification);
+
+        return mapToResponse(notification);
+    }
+
     private TravelerNotificationResponse mapToResponse(TravelerNotification notification) {
 
         return TravelerNotificationResponse.builder()
@@ -1466,7 +2839,7 @@ public class TravelerNotificationService {
 ================================================================================
 
 ================================================================================
-FILE 32
+FILE 56
 --------------------------------------------------------------------------------
 File Name : TravelerService.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/service/TravelerService.java
@@ -1567,7 +2940,7 @@ public class TravelerService {
 ================================================================================
 
 ================================================================================
-FILE 33
+FILE 57
 --------------------------------------------------------------------------------
 File Name : TravelerVoucherService.java
 Path      : backend/user_profile_service/src/main/java/com/staybook/user_profile_service/traveler/service/TravelerVoucherService.java
@@ -1624,7 +2997,7 @@ public class TravelerVoucherService {
 ================================================================================
 
 ================================================================================
-FILE 34
+FILE 58
 --------------------------------------------------------------------------------
 File Name : UserProfileServiceApplicationTests.java
 Path      : backend/user_profile_service/src/test/java/com/staybook/user_profile_service/UserProfileServiceApplicationTests.java
@@ -1646,10 +3019,9 @@ class UserProfileServiceApplicationTests {
 }
 ================================================================================
 
-
 ================================================================================
   END OF DOCUMENT
-  Total Files Documented: 34
+  Total Files Documented: 58
   Microservice: user_profile_service (Spring Boot)
   Package Base: com.staybook.user_profile_service
   Server Port: 8082
@@ -1659,7 +3031,10 @@ class UserProfileServiceApplicationTests {
   - Traveler profile creation, update, and retrieval
   - Avatar upload and retrieval via GridFS
   - Trips listing with status filter and pagination
-  - Notifications (create, list, unread count, mark read)
+  - Notifications (create, list, unread count, mark read, admin create)
   - Voucher listing with status filter
+  - Partner onboarding and profile updates
+  - Hotel management (create/get/update hotels, room types, photos)
   - JWT-based request authentication
+  - CORS configuration for local frontend
 ================================================================================

@@ -1,9 +1,11 @@
 package com.staybook.authservice.controller;
 
+import com.staybook.authservice.dto.ChangePasswordRequest;
 import com.staybook.authservice.dto.LoginRequest;
 import com.staybook.authservice.dto.RegisterRequest;
 import com.staybook.authservice.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,5 +40,19 @@ public class AuthController {
                         request.getPassword()
                 )
         );
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<String> changePassword(Authentication authentication,
+                                                 @RequestBody ChangePasswordRequest request) {
+
+        String email = authentication.getName();
+        String response = authService.changePassword(
+                email,
+                request.getCurrentPassword(),
+                request.getNewPassword()
+        );
+
+        return ResponseEntity.ok(response);
     }
 }

@@ -6,8 +6,17 @@ import "./PropertyCard.scss";
 const PropertyCard = ({ data }) => {
   const navigate = useNavigate();
 
+  const handleSelect = () => {
+    if (data?.dbHotelId) {
+      localStorage.setItem("staybook_selected_hotel_id", data.dbHotelId);
+      navigate("/hotel3", { state: { hotelId: data.dbHotelId } });
+      return;
+    }
+    navigate("/hstaypge3");
+  };
+
   return (
-    <div className="property-card" onClick={() => navigate("/hstaypge3")}>
+    <div className="property-card" onClick={handleSelect}>
       <div className="card-left">
         <div className="main-img">
           <img src={data.images.main} alt={data.name} />

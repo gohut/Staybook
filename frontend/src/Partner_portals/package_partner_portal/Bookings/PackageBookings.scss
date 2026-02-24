@@ -1,0 +1,29 @@
+.pp-bookings-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pp-bookings-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.pp-bookings-search {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+}
+
+.pp-fare {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: #475569;
+}

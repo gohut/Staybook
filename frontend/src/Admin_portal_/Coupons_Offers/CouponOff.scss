@@ -70,6 +70,10 @@ $co-green-text: #166534;
 
 .coupon-grid {
   @include co-grid(2, 20px);
+
+  .muted {
+    grid-column: 1 / -1;
+  }
 }
 
 .coupon-card {
@@ -98,6 +102,22 @@ $co-green-text: #166534;
     border-radius: 999px;
     font-size: 12px;
   }
+
+  &.inactive {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #fef2f2;
+    color: #991b1b;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+  }
+}
+
+.muted {
+  color: $co-slate-500;
+  font-size: 13px;
 }
 
 .meta {

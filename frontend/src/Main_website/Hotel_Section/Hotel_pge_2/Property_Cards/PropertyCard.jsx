@@ -24,8 +24,17 @@ const StarRating = ({ rating }) => {
 const PropertyCard = ({ data }) => {
       const navigate = useNavigate();
 
+  const handleSelect = () => {
+    if (data?.dbHotelId) {
+      localStorage.setItem("staybook_selected_hotel_id", data.dbHotelId);
+      navigate("/hotel3", { state: { hotelId: data.dbHotelId } });
+      return;
+    }
+    navigate("/hotel3");
+  };
+
   return (
-    <div className="htl4-property-card" onClick={() => navigate("/hotel3")}>
+    <div className="htl4-property-card" onClick={handleSelect}>
       {/* LEFT IMAGES */}
       <div className="htl4-pc-images">
         <img className="htl4-main-img" src={data.images.main} alt={data.name} />

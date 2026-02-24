@@ -1,0 +1,87 @@
+.pp-dashboard .pp-metric h2 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.pp-metric-note {
+  font-size: 12px;
+  color: #22c55e;
+}
+
+.pp-analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.pp-analytics-grid span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.pp-analytics-grid h3 {
+  margin: 6px 0 0;
+  font-size: 16px;
+}
+
+.pp-chart {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  align-items: end;
+  gap: 8px;
+  height: 140px;
+}
+
+.pp-chart span {
+  background: linear-gradient(180deg, #06b6d4, #3b82f6);
+  border-radius: 10px 10px 0 0;
+}
+
+.pp-chart.secondary span {
+  background: linear-gradient(180deg, #a855f7, #ec4899);
+}
+
+.pp-alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pp-alert {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.pp-alert h4 {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.pp-alert p {
+  margin: 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.pp-departure {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.pp-departure h4 {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.pp-departure p {
+  margin: 0;
+  font-size: 12px;
+  color: #94a3b8;
+}

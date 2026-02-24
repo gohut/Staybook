@@ -1,0 +1,42 @@
+.pp-itinerary-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pp-summary {
+  gap: 12px;
+}
+
+.pp-day-card {
+  border: 1px solid #e2e8f0;
+}
+
+.pp-day-drag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.pp-activities {
+  gap: 8px;
+}
+
+.pp-preview {
+  background: #f8fafc;
+}
+
+.pp-preview-day {
+  background: #ffffff;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+}

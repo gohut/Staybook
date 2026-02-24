@@ -1,0 +1,156 @@
+/* Photosmedia.css */
+.ptr-photos-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ptrpm-page-head h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.ptrpm-page-head p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.ptrpm-tabs {
+  display: flex;
+  gap: 8px;
+  background: #f3f4f6;
+  padding: 6px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.ptrpm-pm-tab {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ptrpm-pm-tab.active {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  font-weight: 600;
+}
+
+.ptrpm-pm-tab.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ptrpm-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+}
+
+.ptrpm-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ptrpm-card .ptrpm-sub {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.ptrpm-upload-box {
+  border: 2px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 40px;
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.ptrpm-upload-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.ptrpm-upload-box span {
+  font-size: 12px;
+}
+
+.ptrpm-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.ptrpm-photo-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 140px;
+}
+
+.ptrpm-photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ptrpm-add-photo {
+  border: 2px dashed #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.ptrpm-featured-badge,
+.featured-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #facc15;
+  color: #000;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.ptrpm-guidelines {
+  background: #eff6ff;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.ptrpm-guidelines h4 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.ptrpm-guidelines ul {
+  padding-left: 16px;
+  font-size: 13px;
+  color: #374151;
+}
+
+.ptrpm-guidelines li {
+  margin-bottom: 6px;
+}
+
+.ptrpm-muted {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.ptrpm-error {
+  font-size: 13px;
+  color: #dc2626;
+  margin-bottom: 10px;
+}

@@ -4,6 +4,8 @@ import com.staybook.user_profile_service.common.ApiResponse;
 import com.staybook.user_profile_service.traveler.dto.TravelerRequest;
 import com.staybook.user_profile_service.traveler.dto.TravelerResponse;
 import com.staybook.user_profile_service.traveler.dto.TravelerBookingResponse;
+import com.staybook.user_profile_service.traveler.dto.TravelerBookingRequest;
+import com.staybook.user_profile_service.traveler.dto.TravelerBookingPaymentRequest;
 import com.staybook.user_profile_service.traveler.dto.TravelerNotificationResponse;
 import com.staybook.user_profile_service.traveler.dto.TravelerNotificationRequest;
 import com.staybook.user_profile_service.traveler.dto.TravelerAdminNotificationRequest;
@@ -116,6 +118,37 @@ public class TravelerController {
                 .success(true)
                 .message("Trips fetched successfully")
                 .data(trips)
+                .build();
+    }
+
+    @PostMapping("/bookings")
+    public ApiResponse<TravelerBookingResponse> createBooking(
+            Authentication authentication,
+            @RequestBody TravelerBookingRequest request) {
+
+        String email = authentication.getName();
+        TravelerBookingResponse response = bookingService.createBooking(email, request);
+
+        return ApiResponse.<TravelerBookingResponse>builder()
+                .success(true)
+                .message("Booking created successfully")
+                .data(response)
+                .build();
+    }
+
+    @PutMapping("/bookings/{bookingId}/payment")
+    public ApiResponse<TravelerBookingResponse> updateBookingPayment(
+            Authentication authentication,
+            @PathVariable String bookingId,
+            @RequestBody TravelerBookingPaymentRequest request) {
+
+        String email = authentication.getName();
+        TravelerBookingResponse response = bookingService.updatePayment(email, bookingId, request);
+
+        return ApiResponse.<TravelerBookingResponse>builder()
+                .success(true)
+                .message("Payment updated successfully")
+                .data(response)
                 .build();
     }
 

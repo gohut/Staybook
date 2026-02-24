@@ -65,7 +65,7 @@ $st-dashed-border: #cbd5f5;
   margin-bottom: 22px;
 }
 
-.admst-card-head {
+.adm-st-card-head {
   @include st-flex(flex-start, stretch, 14px);
   margin-bottom: 18px;
 
@@ -94,7 +94,7 @@ select {
   @include st-input;
 }
 
-.toggle-row {
+.adm-st-toggle-row {
   @include st-flex(space-between, center);
   padding: 14px 0;
   border-top: 1px solid $st-slate-50;
@@ -170,21 +170,43 @@ select {
   color: $st-blue-600;
 }
 
+.adm-st-span {
+  grid-column: 1 / -1;
+}
+
+.adm-st-user-actions {
+  @include st-flex(flex-start, center, 12px);
+  margin-top: 16px;
+}
+
+.adm-st-error {
+  color: #b91c1c;
+  margin-bottom: 10px;
+}
+
+.adm-st-success {
+  color: #166534;
+  margin-bottom: 10px;
+}
+
 .adm-st-actions {
   @include st-flex(flex-end, center, 12px);
 
-  .adm-st-outline {
-    background: $st-white;
-    border: 1px solid $st-dashed-border;
-    padding: 8px 16px;
-    border-radius: 10px;
-  }
-
+  .adm-st-outline,
   .adm-st-primary {
-    background: $st-blue-600;
-    color: $st-white;
-    border: none;
-    padding: 8px 18px;
     border-radius: 10px;
   }
+}
+
+.adm-st-outline {
+  background: $st-white;
+  border: 1px solid $st-dashed-border;
+  padding: 8px 16px;
+}
+
+.adm-st-primary {
+  background: $st-blue-600;
+  color: $st-white;
+  border: none;
+  padding: 8px 18px;
 }

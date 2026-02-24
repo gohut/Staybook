@@ -1,0 +1,27 @@
+.pp-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.pp-note.read {
+  opacity: 0.7;
+}
+
+.pp-note h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pp-note p {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: #64748b;
+}
